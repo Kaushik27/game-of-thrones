@@ -437,7 +437,7 @@ const relations = [
   { source: "euron-greyjoy", target: "yara-greyjoy", type: "conflict", subtype: "enemy", label: "rival for the Salt Throne" },
   { source: "harrag-greyjoy", target: "yara-greyjoy", type: "allegiance", subtype: "bannerman", label: "sworn bannerman" },
   { source: "dagmer-cleftjaw", target: "theon-greyjoy", type: "allegiance", subtype: "sworn", label: "sworn to" },
-  { source: "euron-greyjoy", target: "jaime-lannister", type: "conflict", subtype: "enemy", label: "killed by" },
+  { source: "euron-greyjoy", target: "jaime-lannister", type: "conflict", subtype: "enemy", label: "rivals" },
   { source: "jaime-lannister", target: "euron-greyjoy", type: "conflict", subtype: "killed", label: "killed" },
   { source: "euron-greyjoy", target: "cersei-lannister", type: "bond", subtype: "friend", label: "allied with" },
   { source: "theon-greyjoy", target: "ned-stark", type: "bond", subtype: "protector", label: "raised as ward" },
@@ -445,7 +445,7 @@ const relations = [
   { source: "theon-greyjoy", target: "bran-stark", type: "conflict", subtype: "enemy", label: "betrayed by seizing Winterfell" },
   { source: "theon-greyjoy", target: "bran-stark", type: "bond", subtype: "protector", label: "died protecting" },
   { source: "yara-greyjoy", target: "daenerys-targaryen", type: "allegiance", subtype: "sworn", label: "swore fealty to" },
-  { source: "obara-sand", target: "euron-greyjoy", type: "conflict", subtype: "killed", label: "killed by" },
+  { source: "euron-greyjoy", target: "obara-sand", type: "conflict", subtype: "killed", label: "killed" },
 
   // Lannister family
   { source: "tywin-lannister", target: "cersei-lannister", type: "family", subtype: "parent", label: "father of" },
@@ -545,7 +545,7 @@ const relations = [
   { source: "loras-tyrell", target: "renly-baratheon", type: "marriage", subtype: "betrothed", label: "secret lovers" },
   { source: "olenna-tyrell", target: "joffrey-baratheon", type: "conflict", subtype: "killed", label: "poisoned" },
   { source: "olenna-tyrell", target: "cersei-lannister", type: "conflict", subtype: "enemy", label: "bitter rivals" },
-  { source: "olenna-tyrell", target: "jaime-lannister", type: "conflict", subtype: "killed", label: "killed by" },
+  { source: "jaime-lannister", target: "olenna-tyrell", type: "conflict", subtype: "killed", label: "killed" },
   { source: "high-sparrow", target: "margaery-tyrell", type: "conflict", subtype: "enemy", label: "imprisoned for false testimony" },
   { source: "high-sparrow", target: "loras-tyrell", type: "conflict", subtype: "enemy", label: "imprisoned for heresy" },
   { source: "high-sparrow", target: "mace-tyrell", type: "conflict", subtype: "killed", label: "died alongside in the Sept" },
@@ -581,7 +581,7 @@ const relations = [
   { source: "areo-hotah", target: "doran-martell", type: "allegiance", subtype: "sworn", label: "sworn bodyguard" },
   { source: "cersei-lannister", target: "tyene-sand", type: "conflict", subtype: "killed", label: "poisoned in revenge" },
   { source: "cersei-lannister", target: "ellaria-sand", type: "conflict", subtype: "enemy", label: "imprisoned" },
-  { source: "obara-sand", target: "euron-greyjoy", type: "conflict", subtype: "enemy", label: "killed by" },
+  { source: "euron-greyjoy", target: "obara-sand", type: "conflict", subtype: "enemy", label: "killed" },
 
   // Targaryen and allies
   { source: "aerys-targaryen", target: "rhaegar-targaryen", type: "family", subtype: "parent", label: "father of" },
@@ -649,7 +649,7 @@ const relations = [
   { source: "arya-stark", target: "petyr-baelish", type: "conflict", subtype: "killed", label: "condemned and executed" },
   { source: "petyr-baelish", target: "dontos-hollard", type: "allegiance", subtype: "sworn", label: "used to extract Sansa" },
   { source: "dontos-hollard", target: "sansa-stark", type: "bond", subtype: "protector", label: "helped her escape" },
-  { source: "dontos-hollard", target: "petyr-baelish", type: "conflict", subtype: "killed", label: "killed by" },
+  { source: "petyr-baelish", target: "dontos-hollard", type: "conflict", subtype: "killed", label: "killed" },
   { source: "petyr-baelish", target: "symon-silver-tongue", type: "conflict", subtype: "killed", label: "had killed to keep secrets" },
   { source: "varys", target: "daenerys-targaryen", type: "allegiance", subtype: "sworn", label: "Master of Whisperers" },
   { source: "varys", target: "daenerys-targaryen", type: "conflict", subtype: "enemy", label: "plotted against" },
@@ -669,7 +669,7 @@ const relations = [
   { source: "lady-crane", target: "arya-stark", type: "bond", subtype: "protector", label: "sheltered and healed" },
   { source: "rorge", target: "yoren", type: "conflict", subtype: "enemy", label: "prisoner in his convoy" },
   { source: "jaqen-hghar", target: "rorge", type: "conflict", subtype: "killed", label: "killed wearing his face" },
-  { source: "biter", target: "sandor-clegane", type: "conflict", subtype: "killed", label: "killed by" },
+  { source: "sandor-clegane", target: "biter", type: "conflict", subtype: "killed", label: "killed" },
   { source: "arya-stark", target: "mycah", type: "bond", subtype: "friend", label: "friends" },
   { source: "sandor-clegane", target: "mycah", type: "conflict", subtype: "killed", label: "killed on Joffrey's order" },
   { source: "arya-stark", target: "hot-pie", type: "bond", subtype: "friend", label: "traveled together" },
@@ -714,7 +714,7 @@ const relations = [
   { source: "grenn", target: "pyp", type: "bond", subtype: "friend", label: "Night's Watch brothers" },
   { source: "alliser-thorne", target: "jon-snow", type: "conflict", subtype: "enemy", label: "led the mutiny that killed" },
   { source: "jon-snow", target: "alliser-thorne", type: "conflict", subtype: "killed", label: "executed for mutiny" },
-  { source: "jon-snow", target: "bowen-marsh", type: "conflict", subtype: "killed", label: "killed retaking Castle Black" },
+  { source: "bowen-marsh", target: "jon-snow", type: "conflict", subtype: "killed", label: "one of the mutineers who stabbed him" },
   { source: "othell-yarwyck", target: "alliser-thorne", type: "allegiance", subtype: "sworn", label: "joined the mutiny" },
   { source: "janos-slynt", target: "jon-snow", type: "conflict", subtype: "enemy", label: "defied his orders" },
   { source: "jon-snow", target: "janos-slynt", type: "conflict", subtype: "killed", label: "executed for insubordination" },
@@ -734,7 +734,6 @@ const relations = [
   { source: "jon-snow", target: "mance-rayder", type: "bond", subtype: "friend", label: "granted a swift death out of respect" },
   { source: "stannis-baratheon", target: "mance-rayder", type: "conflict", subtype: "killed", label: "sentenced to burn" },
   { source: "ygritte", target: "jon-snow", type: "marriage", subtype: "betrothed", label: "lovers" },
-  { source: "jon-snow", target: "ygritte", type: "conflict", subtype: "killed", label: "held as she died from an arrow" },
   { source: "jon-snow", target: "ygritte", type: "bond", subtype: "protector", label: "held her as she died" },
   { source: "orell", target: "ygritte", type: "conflict", subtype: "enemy", label: "rival for her affection" },
   { source: "jon-snow", target: "orell", type: "conflict", subtype: "killed", label: "killed" },
@@ -1033,6 +1032,9 @@ function applyHighlight() {
   if (!treeSvg.empty()) {
     treeSvg.selectAll(".tree-node circle").attr("opacity", d =>
       !hasHighlight ? (d.data.status === "dead" ? 0.4 : 1) : (state.highlightIds.has(d.data.id) ? 1 : 0.12)
+    );
+    treeSvg.selectAll(".tree-node text").attr("opacity", d =>
+      !hasHighlight ? 1 : (state.highlightIds.has(d.data.id) ? 1 : 0.12)
     );
     treeSvg.selectAll(".tree-link").attr("opacity", d => {
       const sId = d.source.data.id, tId = d.target.data.id;
