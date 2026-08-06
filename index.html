@@ -49,6 +49,10 @@
   #filter-panel { width: 220px; background: var(--panel-bg); border-right: 1px solid var(--panel-border); overflow-y: auto; padding: 12px; }
   #canvas-area { flex: 1; position: relative; }
   #graph-view, #tree-view { width: 100%; height: 100%; }
+  #tree-house-selector { padding: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
+  #tree-house-selector button { background: var(--panel-bg); border: 1px solid; color: var(--text); padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+  #tree-house-selector button.active { background: var(--panel-border); }
+  #tree-svg-host { width: 100%; height: calc(100% - 50px); overflow: auto; }
   #detail-panel { width: 300px; background: var(--panel-bg); border-left: 1px solid var(--panel-border); overflow-y: auto; padding: 12px; display: none; }
   #detail-panel.open { display: block; }
   #relation-list { list-style: none; padding: 0; }
@@ -1018,6 +1022,91 @@ function redrawActiveView() {
   else if (typeof renderTree === "function") renderTree();
 }
 renderFilterPanel();
+
+state.selectedHouse = "Stark";
+
+function buildFamilyHierarchy(houseName) {
+  const houseChars = getVisibleCharacters().filter(c => c.house === houseName);
+  const houseIds = new Set(houseChars.map(c => c.id));
+  const parentEdges = getVisibleRelations().filter(r => r.type === "family" && r.subtype === "parent" && houseIds.has(r.source) && houseIds.has(r.target));
+  const childIds = new Set(parentEdges.map(e => e.target));
+  const roots = houseChars.filter(c => !childIds.has(c.id));
+
+  function buildNode(char) {
+    const children = parentEdges.filter(e => e.source === char.id).map(e => characters.find(c => c.id === e.target)).filter(Boolean);
+    return { ...char, children: children.map(buildNode) };
+  }
+
+  if (roots.length === 0) return null;
+  if (roots.length === 1) return buildNode(roots[0]);
+  return { id: `__root_${houseName}`, name: houseName, house: houseName, sigilColor: HOUSE_COLORS[houseName], virtual: true, children: roots.map(buildNode) };
+}
+
+function renderTree() {
+  const container = document.getElementById("tree-view");
+  container.innerHTML = "";
+
+  const selector = document.createElement("div");
+  selector.id = "tree-house-selector";
+  selector.innerHTML = Object.keys(HOUSE_COLORS).map(h =>
+    `<button data-house="${h}" style="border-color:${HOUSE_COLORS[h]}" class="${h === state.selectedHouse ? 'active' : ''}">${h}</button>`
+  ).join("");
+  container.appendChild(selector);
+  selector.querySelectorAll("button").forEach(btn => {
+    btn.addEventListener("click", () => { state.selectedHouse = btn.getAttribute("data-house"); renderTree(); });
+  });
+
+  const svgHost = document.createElement("div");
+  svgHost.id = "tree-svg-host";
+  container.appendChild(svgHost);
+
+  const width = container.clientWidth || 800;
+  const height = (container.clientHeight || 600) - 50;
+  const svg = d3.select(svgHost).append("svg").attr("width", width).attr("height", height);
+  const g = svg.append("g").attr("transform", "translate(60,40)");
+
+  const hierarchyData = buildFamilyHierarchy(state.selectedHouse);
+  if (!hierarchyData) {
+    g.append("text").attr("fill", "var(--text-dim)").text("No family tree data for this house under current filters.");
+    return;
+  }
+
+  const root = d3.hierarchy(hierarchyData);
+  d3.tree().size([height - 80, width - 160])(root);
+
+  g.selectAll(".tree-link").data(root.links()).join("path")
+    .attr("class", "tree-link")
+    .attr("fill", "none").attr("stroke", "var(--panel-border)").attr("stroke-width", 1.5)
+    .attr("d", d3.linkHorizontal().x(d => d.y).y(d => d.x));
+
+  const node = g.selectAll(".tree-node").data(root.descendants()).join("g")
+    .attr("class", "tree-node")
+    .attr("transform", d => `translate(${d.y},${d.x})`)
+    .style("cursor", d => d.data.virtual ? "default" : "pointer");
+
+  node.append("circle").attr("r", 8).attr("fill", d => d.data.sigilColor)
+    .attr("opacity", d => d.data.status === "dead" ? 0.4 : 1);
+  node.append("text").attr("dy", 4).attr("x", 12).attr("fill", "var(--text)").style("font-size", "0.8rem").text(d => d.data.name);
+  node.filter(d => !d.data.virtual).on("click", (event, d) => selectCharacter(d.data.id));
+
+  // Cross-links: marriage/allegiance/conflict/bond touching any node currently drawn
+  const drawnIds = new Set(root.descendants().filter(d => !d.data.virtual).map(d => d.data.id));
+  const posById = new Map(root.descendants().filter(d => !d.data.virtual).map(d => [d.data.id, d]));
+  const crossLinks = getVisibleRelations().filter(r =>
+    r.type !== "family" && drawnIds.has(r.source) && drawnIds.has(r.target)
+  );
+  g.selectAll(".cross-link").data(crossLinks).join("path")
+    .attr("class", "cross-link")
+    .attr("fill", "none")
+    .attr("stroke", d => RELATION_STYLE[d.type].color)
+    .attr("stroke-dasharray", d => RELATION_STYLE[d.type].dash)
+    .attr("stroke-width", 1.5).attr("opacity", 0.7)
+    .attr("d", d => {
+      const s = posById.get(d.source), t = posById.get(d.target);
+      if (!s || !t) return "";
+      return `M${s.y},${s.x} Q${(s.y+t.y)/2},${(s.x+t.x)/2 - 30} ${t.y},${t.x}`;
+    });
+}
 
 function initSearch() {
   const input = document.getElementById("search-input");
