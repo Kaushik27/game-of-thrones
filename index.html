@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game of Thrones — Relations Explorer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+  :root {
+    --bg: #0d0d0f;
+    --panel-bg: #17171b;
+    --panel-border: #2a2a30;
+    --text: #e8e6df;
+    --text-dim: #8a8a93;
+    --house-stark: #c8ced6;
+    --house-lannister: #b8862e;
+    --house-lannister-red: #8f1d21;
+    --house-targaryen: #8f1d21;
+    --house-targaryen-black: #14141a;
+    --house-baratheon: #d4af37;
+    --house-greyjoy: #d4af37;
+    --house-tyrell: #4c7a3f;
+    --house-martell: #d16a2e;
+    --house-nightswatch: #45454d;
+    --house-tully: #3f6ea5;
+    --house-arryn: #6fa9d1;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    background: var(--bg); color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  }
+  h1, h2, h3, .display {
+    font-family: 'Cinzel', Georgia, 'Times New Roman', serif;
+  }
+  #top-bar {
+    display: flex; align-items: center; gap: 24px;
+    padding: 12px 20px; background: var(--panel-bg);
+    border-bottom: 1px solid var(--panel-border);
+  }
+  #app-title { margin: 0; font-size: 1.4rem; letter-spacing: 1px; }
+  #d3-missing-warning {
+    display: none; padding: 40px; text-align: center; color: var(--text-dim);
+  }
+</style>
+</head>
+<body>
+  <div id="top-bar">
+    <h1 id="app-title">Game of Thrones — Relations Explorer</h1>
+    <div id="view-toggle"></div>
+    <div id="search-container"></div>
+  </div>
+  <div id="d3-missing-warning">Requires internet on first load to fetch D3.js. Please connect and reload.</div>
+  <div id="main-layout"></div>
+  <script>
+    if (typeof d3 === 'undefined') {
+      document.getElementById('d3-missing-warning').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
