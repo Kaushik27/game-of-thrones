@@ -51,6 +51,9 @@
   #graph-view, #tree-view { width: 100%; height: 100%; }
   #detail-panel { width: 300px; background: var(--panel-bg); border-left: 1px solid var(--panel-border); overflow-y: auto; padding: 12px; display: none; }
   #detail-panel.open { display: block; }
+  #relation-list { list-style: none; padding: 0; }
+  #relation-list li { padding: 6px 0; border-bottom: 1px solid var(--panel-border); font-size: 0.9rem; }
+  #relation-list li:hover { color: var(--house-baratheon); }
 </style>
 </head>
 <body>
@@ -908,10 +911,63 @@ function renderGraph() {
   });
 }
 
-// Placeholder until Task 5 defines selection/highlight behavior fully.
+function relationsFor(id) {
+  return relations
+    .filter(r => r.source === id || r.target === id)
+    .map(r => {
+      const otherId = r.source === id ? r.target : r.source;
+      return { other: characters.find(c => c.id === otherId), rel: r };
+    })
+    .filter(x => x.other);
+}
+
+const TYPE_ICON = { family: "🩸", marriage: "💍", allegiance: "🛡", conflict: "⚔", bond: "🤝" };
+
 function selectCharacter(id) {
   state.selectedId = id;
-  console.log("selected:", id);
+  const panel = document.getElementById("detail-panel");
+
+  if (!id) {
+    state.highlightIds = new Set();
+    panel.classList.remove("open");
+    applyHighlight();
+    return;
+  }
+
+  const character = characters.find(c => c.id === id);
+  const rels = relationsFor(id);
+  state.highlightIds = new Set([id, ...rels.map(r => r.other.id)]);
+  applyHighlight();
+
+  panel.innerHTML = `
+    <h2 class="display" style="color:${character.sigilColor}">${character.name}</h2>
+    <p><strong>House:</strong> ${character.house}</p>
+    <p><strong>Status:</strong> ${character.status === "alive" ? "Alive" : "Dead"}</p>
+    <p><strong>Actor:</strong> ${character.actor}</p>
+    <p>${character.bio}</p>
+    <h3>Relations</h3>
+    <ul id="relation-list">
+      ${rels.map(r => `<li data-jump="${r.other.id}">${TYPE_ICON[r.rel.type]} ${r.rel.label} — <strong>${r.other.name}</strong></li>`).join("")}
+    </ul>
+  `;
+  panel.querySelectorAll("[data-jump]").forEach(el => {
+    el.style.cursor = "pointer";
+    el.addEventListener("click", () => selectCharacter(el.getAttribute("data-jump")));
+  });
+  panel.classList.add("open");
+}
+
+function applyHighlight() {
+  const svg = d3.select("#graph-view svg");
+  if (svg.empty()) return;
+  const hasHighlight = state.highlightIds.size > 0;
+  svg.selectAll("circle").attr("opacity", d =>
+    !hasHighlight ? (d.status === "dead" ? 0.4 : 1) : (state.highlightIds.has(d.id) ? 1 : 0.12)
+  );
+  svg.selectAll("line").attr("opacity", d => {
+    const sId = d.source.id || d.source, tId = d.target.id || d.target;
+    return !hasHighlight ? 0.6 : (state.highlightIds.has(sId) && state.highlightIds.has(tId) ? 0.9 : 0.05);
+  });
 }
   </script>
   <script>
