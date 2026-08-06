@@ -833,6 +833,33 @@ const relations = [
   { source: "daenerys-targaryen", target: "mirri-maz-duur", type: "conflict", subtype: "killed", label: "burned alive in revenge" }
 ];
 
+function findShortestPath(startId, endId) {
+  if (startId === endId) return { path: [startId], edges: [] };
+  const adjacency = new Map();
+  relations.forEach(r => {
+    if (!adjacency.has(r.source)) adjacency.set(r.source, []);
+    if (!adjacency.has(r.target)) adjacency.set(r.target, []);
+    adjacency.get(r.source).push({ to: r.target, rel: r });
+    adjacency.get(r.target).push({ to: r.source, rel: r });
+  });
+
+  const visited = new Set([startId]);
+  const queue = [{ id: startId, path: [startId], edges: [] }];
+  while (queue.length) {
+    const { id, path, edges } = queue.shift();
+    const neighbors = adjacency.get(id) || [];
+    for (const { to, rel } of neighbors) {
+      if (visited.has(to)) continue;
+      const newPath = [...path, to];
+      const newEdges = [...edges, rel];
+      if (to === endId) return { path: newPath, edges: newEdges };
+      visited.add(to);
+      queue.push({ id: to, path: newPath, edges: newEdges });
+    }
+  }
+  return null;
+}
+
 // Data integrity check (dev aid, runs on load, logs to console only)
 (function validateDataset() {
   const ids = new Set(characters.map(c => c.id));
@@ -850,7 +877,8 @@ const state = {
   selectedId: null,
   houseFilter: new Set(Object.keys(HOUSE_COLORS)),
   typeFilter: new Set(["family", "marriage", "allegiance", "conflict", "bond"]),
-  highlightIds: new Set()
+  highlightIds: new Set(),
+  pathEdgeIds: new Set()
 };
 
 function getVisibleCharacters() {
@@ -982,11 +1010,14 @@ function applyHighlight() {
   const svg = d3.select("#graph-view svg");
   if (svg.empty()) return;
   const hasHighlight = state.highlightIds.size > 0;
+  const pathEdgeIds = state.pathEdgeIds || new Set();
   svg.selectAll("circle").attr("opacity", d =>
     !hasHighlight ? (d.status === "dead" ? 0.4 : 1) : (state.highlightIds.has(d.id) ? 1 : 0.12)
   );
   svg.selectAll("line").attr("opacity", d => {
     const sId = d.source.id || d.source, tId = d.target.id || d.target;
+    const key1 = `${sId}|${tId}`, key2 = `${tId}|${sId}`;
+    if (pathEdgeIds.has(key1) || pathEdgeIds.has(key2)) return 1;
     return !hasHighlight ? 0.6 : (state.highlightIds.has(sId) && state.highlightIds.has(tId) ? 0.9 : 0.05);
   });
 }
@@ -1007,6 +1038,14 @@ function renderFilterPanel() {
   panel.innerHTML = `
     <h3>Houses</h3>${houseItems}
     <h3>Relation Types</h3>${typeItems}
+    <h3>Shortest Path</h3>
+    <input id="path-input-a" list="path-char-list" placeholder="From..." style="width:100%;margin-bottom:6px;">
+    <input id="path-input-b" list="path-char-list" placeholder="To..." style="width:100%;margin-bottom:6px;">
+    <datalist id="path-char-list">
+      ${characters.map(c => `<option value="${c.name}">`).join("")}
+    </datalist>
+    <button id="path-find-btn" style="width:100%;">Find Path</button>
+    <div id="path-result" style="margin-top:8px;font-size:0.85rem;"></div>
   `;
 
   panel.querySelectorAll("[data-house]").forEach(cb => {
@@ -1022,6 +1061,34 @@ function renderFilterPanel() {
       cb.checked ? state.typeFilter.add(t) : state.typeFilter.delete(t);
       redrawActiveView();
     });
+  });
+
+  document.getElementById("path-find-btn").addEventListener("click", () => {
+    const nameA = document.getElementById("path-input-a").value.trim().toLowerCase();
+    const nameB = document.getElementById("path-input-b").value.trim().toLowerCase();
+    const a = characters.find(c => c.name.toLowerCase() === nameA);
+    const b = characters.find(c => c.name.toLowerCase() === nameB);
+    const resultEl = document.getElementById("path-result");
+    if (!a || !b) { resultEl.textContent = "Pick two valid characters from the list."; return; }
+
+    const result = findShortestPath(a.id, b.id);
+    if (!result) {
+      resultEl.textContent = "No connection found.";
+      state.pathEdgeIds = new Set();
+      state.highlightIds = new Set();
+      applyHighlight();
+      return;
+    }
+
+    resultEl.innerHTML = result.path.map((id, i) => {
+      const c = characters.find(ch => ch.id === id);
+      if (i === 0) return `<strong>${c.name}</strong>`;
+      return ` → ${result.edges[i-1].label} → <strong>${c.name}</strong>`;
+    }).join("");
+
+    state.highlightIds = new Set(result.path);
+    state.pathEdgeIds = new Set(result.edges.map(e => `${e.source}|${e.target}`));
+    applyHighlight();
   });
 }
 
