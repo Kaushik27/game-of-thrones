@@ -64,12 +64,20 @@
   #search-results.open { display: block; }
   #search-results div { padding: 6px 10px; cursor: pointer; font-size: 0.9rem; }
   #search-results div:hover { background: var(--panel-border); }
+  #view-toggle { display: flex; gap: 0; }
+  .view-btn { background: var(--bg); border: 1px solid var(--panel-border); color: var(--text-dim); padding: 6px 14px; cursor: pointer; }
+  .view-btn.active { background: var(--panel-border); color: var(--text); }
+  .view-btn:first-child { border-radius: 4px 0 0 4px; }
+  .view-btn:last-child { border-radius: 0 4px 4px 0; }
 </style>
 </head>
 <body>
   <div id="top-bar">
     <h1 id="app-title">Game of Thrones — Relations Explorer</h1>
-    <div id="view-toggle"></div>
+    <div id="view-toggle">
+      <button id="btn-graph-view" class="view-btn active">Graph</button>
+      <button id="btn-tree-view" class="view-btn">House Tree</button>
+    </div>
     <div id="search-container">
       <input id="search-input" type="text" placeholder="Search characters..." autocomplete="off">
       <div id="search-results"></div>
@@ -1021,6 +1029,16 @@ function redrawActiveView() {
   if (state.view === "graph") renderGraph();
   else if (typeof renderTree === "function") renderTree();
 }
+
+function switchView(view) {
+  state.view = view;
+  document.getElementById("graph-view").style.display = view === "graph" ? "block" : "none";
+  document.getElementById("tree-view").style.display = view === "tree" ? "block" : "none";
+  document.getElementById("btn-graph-view").classList.toggle("active", view === "graph");
+  document.getElementById("btn-tree-view").classList.toggle("active", view === "tree");
+  redrawActiveView();
+}
+
 renderFilterPanel();
 
 state.selectedHouse = "Stark";
@@ -1138,6 +1156,9 @@ function initSearch() {
 initSearch();
   </script>
   <script>
+    document.getElementById("btn-graph-view").addEventListener("click", () => switchView("graph"));
+    document.getElementById("btn-tree-view").addEventListener("click", () => switchView("tree"));
+
     if (typeof d3 !== 'undefined') { renderGraph(); }
   </script>
 </body>
