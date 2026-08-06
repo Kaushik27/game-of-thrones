@@ -487,7 +487,7 @@ const relations = [
   { source: "gregor-clegane", target: "septa-unella", type: "conflict", subtype: "killed", label: "force-fed as punishment" },
   { source: "gregor-clegane", target: "qyburn", type: "conflict", subtype: "killed", label: "killed his creator" },
   { source: "meryn-trant", target: "sansa-stark", type: "conflict", subtype: "enemy", label: "beat on Joffrey's orders" },
-  { source: "meryn-trant", target: "arya-stark", type: "conflict", subtype: "killed", label: "killed by" },
+  { source: "arya-stark", target: "meryn-trant", type: "conflict", subtype: "killed", label: "killed" },
   { source: "bronn", target: "tyrion-lannister", type: "allegiance", subtype: "sworn", label: "hired sellsword" },
   { source: "bronn", target: "jaime-lannister", type: "bond", subtype: "friend", label: "comrades in arms" },
   { source: "podrick-payne", target: "tyrion-lannister", type: "allegiance", subtype: "sworn", label: "squire to" },
@@ -504,9 +504,9 @@ const relations = [
   { source: "osney-kettleblack", target: "cersei-lannister", type: "allegiance", subtype: "sworn", label: "sworn to" },
   { source: "falyse-stokeworth", target: "cersei-lannister", type: "allegiance", subtype: "sworn", label: "used by" },
   { source: "tickler", target: "gregor-clegane", type: "allegiance", subtype: "sworn", label: "sworn to" },
-  { source: "tickler", target: "arya-stark", type: "conflict", subtype: "killed", label: "killed by" },
+  { source: "arya-stark", target: "tickler", type: "conflict", subtype: "killed", label: "killed" },
   { source: "polliver", target: "gregor-clegane", type: "allegiance", subtype: "sworn", label: "sworn to" },
-  { source: "polliver", target: "arya-stark", type: "conflict", subtype: "killed", label: "killed with his own sword" },
+  { source: "arya-stark", target: "polliver", type: "conflict", subtype: "killed", label: "killed with his own sword" },
   { source: "addam-marbrand", target: "tywin-lannister", type: "allegiance", subtype: "bannerman", label: "sworn bannerman" },
 
   // Baratheon family and court
@@ -619,7 +619,7 @@ const relations = [
   // Tully / Arryn / Vale
   { source: "yohn-royce", target: "robin-arryn", type: "allegiance", subtype: "bannerman", label: "sworn bannerman" },
   { source: "vardis-egen", target: "robin-arryn", type: "allegiance", subtype: "sworn", label: "captain of the guard" },
-  { source: "vardis-egen", target: "bronn", type: "conflict", subtype: "killed", label: "killed in trial by combat" },
+  { source: "bronn", target: "vardis-egen", type: "conflict", subtype: "killed", label: "killed in trial by combat" },
   { source: "mord", target: "lysa-arryn", type: "allegiance", subtype: "sworn", label: "sworn jailer" },
   { source: "robar-royce", target: "yohn-royce", type: "family", subtype: "child", label: "son of" },
   { source: "robar-royce", target: "robin-arryn", type: "bond", subtype: "protector", label: "died defending" },
@@ -644,9 +644,9 @@ const relations = [
   // Petyr Baelish / Varys web
   { source: "petyr-baelish", target: "catelyn-stark", type: "bond", subtype: "friend", label: "childhood friend" },
   { source: "petyr-baelish", target: "sansa-stark", type: "bond", subtype: "mentor", label: "manipulative mentor" },
-  { source: "petyr-baelish", target: "sansa-stark", type: "conflict", subtype: "killed", label: "executed by" },
+  { source: "sansa-stark", target: "petyr-baelish", type: "conflict", subtype: "killed", label: "executed" },
   { source: "petyr-baelish", target: "ned-stark", type: "conflict", subtype: "enemy", label: "betrayed" },
-  { source: "petyr-baelish", target: "arya-stark", type: "conflict", subtype: "killed", label: "condemned by" },
+  { source: "arya-stark", target: "petyr-baelish", type: "conflict", subtype: "killed", label: "condemned and executed" },
   { source: "petyr-baelish", target: "dontos-hollard", type: "allegiance", subtype: "sworn", label: "used to extract Sansa" },
   { source: "dontos-hollard", target: "sansa-stark", type: "bond", subtype: "protector", label: "helped her escape" },
   { source: "dontos-hollard", target: "petyr-baelish", type: "conflict", subtype: "killed", label: "killed by" },
@@ -707,14 +707,14 @@ const relations = [
   { source: "samwell-tarly", target: "gilly", type: "marriage", subtype: "betrothed", label: "lovers" },
   { source: "craster", target: "gilly", type: "family", subtype: "parent", label: "father of" },
   { source: "karl-tanner", target: "craster", type: "conflict", subtype: "killed", label: "killed in the mutiny" },
-  { source: "karl-tanner", target: "jon-snow", type: "conflict", subtype: "killed", label: "killed by" },
+  { source: "jon-snow", target: "karl-tanner", type: "conflict", subtype: "killed", label: "killed" },
   { source: "eddison-tollett", target: "jon-snow", type: "bond", subtype: "friend", label: "loyal steward and friend" },
   { source: "grenn", target: "jon-snow", type: "bond", subtype: "friend", label: "Night's Watch brother" },
   { source: "pyp", target: "jon-snow", type: "bond", subtype: "friend", label: "Night's Watch brother" },
   { source: "grenn", target: "pyp", type: "bond", subtype: "friend", label: "Night's Watch brothers" },
   { source: "alliser-thorne", target: "jon-snow", type: "conflict", subtype: "enemy", label: "led the mutiny that killed" },
   { source: "jon-snow", target: "alliser-thorne", type: "conflict", subtype: "killed", label: "executed for mutiny" },
-  { source: "bowen-marsh", target: "jon-snow", type: "conflict", subtype: "killed", label: "stabbed in the mutiny" },
+  { source: "jon-snow", target: "bowen-marsh", type: "conflict", subtype: "killed", label: "killed retaking Castle Black" },
   { source: "othell-yarwyck", target: "alliser-thorne", type: "allegiance", subtype: "sworn", label: "joined the mutiny" },
   { source: "janos-slynt", target: "jon-snow", type: "conflict", subtype: "enemy", label: "defied his orders" },
   { source: "jon-snow", target: "janos-slynt", type: "conflict", subtype: "killed", label: "executed for insubordination" },
@@ -734,7 +734,7 @@ const relations = [
   { source: "jon-snow", target: "mance-rayder", type: "bond", subtype: "friend", label: "granted a swift death out of respect" },
   { source: "stannis-baratheon", target: "mance-rayder", type: "conflict", subtype: "killed", label: "sentenced to burn" },
   { source: "ygritte", target: "jon-snow", type: "marriage", subtype: "betrothed", label: "lovers" },
-  { source: "ygritte", target: "jon-snow", type: "conflict", subtype: "killed", label: "shot him with arrows in raid" },
+  { source: "jon-snow", target: "ygritte", type: "conflict", subtype: "killed", label: "held as she died from an arrow" },
   { source: "jon-snow", target: "ygritte", type: "bond", subtype: "protector", label: "held her as she died" },
   { source: "orell", target: "ygritte", type: "conflict", subtype: "enemy", label: "rival for her affection" },
   { source: "jon-snow", target: "orell", type: "conflict", subtype: "killed", label: "killed" },
@@ -772,7 +772,7 @@ const relations = [
   { source: "hizdahr-zo-loraq", target: "daenerys-targaryen", type: "marriage", subtype: "betrothed", label: "political husband" },
   { source: "yezzan", target: "tyrion-lannister", type: "conflict", subtype: "enemy", label: "bought as a slave" },
   { source: "yezzan", target: "jorah-mormont", type: "conflict", subtype: "enemy", label: "bought as a slave" },
-  { source: "mero", target: "daario-naharis", type: "conflict", subtype: "killed", label: "killed by" },
+  { source: "daario-naharis", target: "mero", type: "conflict", subtype: "killed", label: "killed" },
   { source: "daario-naharis", target: "grey-worm", type: "bond", subtype: "friend", label: "fellow commanders under Daenerys" },
   { source: "quaithe", target: "daenerys-targaryen", type: "bond", subtype: "mentor", label: "gave cryptic guidance" },
   { source: "belwas", target: "daenerys-targaryen", type: "allegiance", subtype: "sworn", label: "sworn guard" },
@@ -958,6 +958,8 @@ function renderGraph() {
       .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
     node.attr("cx", d => d.x).attr("cy", d => d.y);
   });
+
+  applyHighlight();
 }
 
 function relationsFor(id) {
@@ -978,6 +980,7 @@ function selectCharacter(id) {
 
   if (!id) {
     state.highlightIds = new Set();
+    state.pathEdgeIds = new Set();
     panel.classList.remove("open");
     applyHighlight();
     return;
@@ -986,6 +989,7 @@ function selectCharacter(id) {
   const character = characters.find(c => c.id === id);
   const rels = relationsFor(id);
   state.highlightIds = new Set([id, ...rels.map(r => r.other.id)]);
+  state.pathEdgeIds = new Set();
   applyHighlight();
 
   panel.innerHTML = `
@@ -1007,19 +1011,42 @@ function selectCharacter(id) {
 }
 
 function applyHighlight() {
-  const svg = d3.select("#graph-view svg");
-  if (svg.empty()) return;
   const hasHighlight = state.highlightIds.size > 0;
   const pathEdgeIds = state.pathEdgeIds || new Set();
-  svg.selectAll("circle").attr("opacity", d =>
-    !hasHighlight ? (d.status === "dead" ? 0.4 : 1) : (state.highlightIds.has(d.id) ? 1 : 0.12)
-  );
-  svg.selectAll("line").attr("opacity", d => {
-    const sId = d.source.id || d.source, tId = d.target.id || d.target;
-    const key1 = `${sId}|${tId}`, key2 = `${tId}|${sId}`;
-    if (pathEdgeIds.has(key1) || pathEdgeIds.has(key2)) return 1;
-    return !hasHighlight ? 0.6 : (state.highlightIds.has(sId) && state.highlightIds.has(tId) ? 0.9 : 0.05);
-  });
+
+  // Force-directed graph view
+  const graphSvg = d3.select("#graph-view svg");
+  if (!graphSvg.empty()) {
+    graphSvg.selectAll("circle").attr("opacity", d =>
+      !hasHighlight ? (d.status === "dead" ? 0.4 : 1) : (state.highlightIds.has(d.id) ? 1 : 0.12)
+    );
+    graphSvg.selectAll("line").attr("opacity", d => {
+      const sId = d.source.id || d.source, tId = d.target.id || d.target;
+      const key1 = `${sId}|${tId}`, key2 = `${tId}|${sId}`;
+      if (pathEdgeIds.has(key1) || pathEdgeIds.has(key2)) return 1;
+      return !hasHighlight ? 0.6 : (state.highlightIds.has(sId) && state.highlightIds.has(tId) ? 0.9 : 0.05);
+    });
+  }
+
+  // House tree view
+  const treeSvg = d3.select("#tree-view svg");
+  if (!treeSvg.empty()) {
+    treeSvg.selectAll(".tree-node circle").attr("opacity", d =>
+      !hasHighlight ? (d.data.status === "dead" ? 0.4 : 1) : (state.highlightIds.has(d.data.id) ? 1 : 0.12)
+    );
+    treeSvg.selectAll(".tree-link").attr("opacity", d => {
+      const sId = d.source.data.id, tId = d.target.data.id;
+      const key1 = `${sId}|${tId}`, key2 = `${tId}|${sId}`;
+      if (pathEdgeIds.has(key1) || pathEdgeIds.has(key2)) return 1;
+      return !hasHighlight ? 1 : (state.highlightIds.has(sId) && state.highlightIds.has(tId) ? 1 : 0.1);
+    });
+    treeSvg.selectAll(".cross-link").attr("opacity", d => {
+      const sId = d.source.id || d.source, tId = d.target.id || d.target;
+      const key1 = `${sId}|${tId}`, key2 = `${tId}|${sId}`;
+      if (pathEdgeIds.has(key1) || pathEdgeIds.has(key2)) return 1;
+      return !hasHighlight ? 0.7 : (state.highlightIds.has(sId) && state.highlightIds.has(tId) ? 0.9 : 0.05);
+    });
+  }
 }
 
 function renderFilterPanel() {
@@ -1113,7 +1140,10 @@ state.selectedHouse = "Stark";
 function buildFamilyHierarchy(houseName) {
   const houseChars = getVisibleCharacters().filter(c => c.house === houseName);
   const houseIds = new Set(houseChars.map(c => c.id));
-  const parentEdges = getVisibleRelations().filter(r => r.type === "family" && r.subtype === "parent" && houseIds.has(r.source) && houseIds.has(r.target));
+  const parentSubtypeEdges = getVisibleRelations().filter(r => r.type === "family" && r.subtype === "parent" && houseIds.has(r.source) && houseIds.has(r.target));
+  const childSubtypeEdges = getVisibleRelations().filter(r => r.type === "family" && r.subtype === "child" && houseIds.has(r.source) && houseIds.has(r.target))
+    .map(r => ({ source: r.target, target: r.source }));
+  const parentEdges = [...parentSubtypeEdges, ...childSubtypeEdges];
   const childIds = new Set(parentEdges.map(e => e.target));
   const roots = houseChars.filter(c => !childIds.has(c.id));
 
@@ -1191,6 +1221,8 @@ function renderTree() {
       if (!s || !t) return "";
       return `M${s.y},${s.x} Q${(s.y+t.y)/2},${(s.x+t.x)/2 - 30} ${t.y},${t.x}`;
     });
+
+  applyHighlight();
 }
 
 function initSearch() {
