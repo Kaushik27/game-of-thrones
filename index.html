@@ -979,6 +979,46 @@ function applyHighlight() {
   });
 }
 
+function renderFilterPanel() {
+  const panel = document.getElementById("filter-panel");
+  const houseItems = Object.keys(HOUSE_COLORS).map(h => `
+    <label style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+      <input type="checkbox" data-house="${h}" checked>
+      <span style="color:${HOUSE_COLORS[h]}">${h}</span>
+    </label>`).join("");
+  const typeItems = Object.keys(RELATION_STYLE).map(t => `
+    <label style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+      <input type="checkbox" data-type="${t}" checked>
+      <span style="color:${RELATION_STYLE[t].color}">${t}</span>
+    </label>`).join("");
+
+  panel.innerHTML = `
+    <h3>Houses</h3>${houseItems}
+    <h3>Relation Types</h3>${typeItems}
+  `;
+
+  panel.querySelectorAll("[data-house]").forEach(cb => {
+    cb.addEventListener("change", () => {
+      const h = cb.getAttribute("data-house");
+      cb.checked ? state.houseFilter.add(h) : state.houseFilter.delete(h);
+      redrawActiveView();
+    });
+  });
+  panel.querySelectorAll("[data-type]").forEach(cb => {
+    cb.addEventListener("change", () => {
+      const t = cb.getAttribute("data-type");
+      cb.checked ? state.typeFilter.add(t) : state.typeFilter.delete(t);
+      redrawActiveView();
+    });
+  });
+}
+
+function redrawActiveView() {
+  if (state.view === "graph") renderGraph();
+  else if (typeof renderTree === "function") renderTree();
+}
+renderFilterPanel();
+
 function initSearch() {
   const input = document.getElementById("search-input");
   const results = document.getElementById("search-results");
