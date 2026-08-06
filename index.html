@@ -46,14 +46,14 @@
     display: none; padding: 40px; text-align: center; color: var(--text-dim);
   }
   #main-layout { display: flex; height: calc(100vh - 57px); }
-  #filter-panel { width: 220px; background: var(--panel-bg); border-right: 1px solid var(--panel-border); overflow-y: auto; padding: 12px; }
-  #canvas-area { flex: 1; position: relative; }
+  #filter-panel { width: 220px; flex-shrink: 0; background: var(--panel-bg); border-right: 1px solid var(--panel-border); overflow-y: auto; padding: 12px; }
+  #canvas-area { flex: 1; min-width: 0; overflow: hidden; position: relative; }
   #graph-view, #tree-view { width: 100%; height: 100%; }
   #tree-house-selector { padding: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
   #tree-house-selector button { background: var(--panel-bg); border: 1px solid; color: var(--text); padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
   #tree-house-selector button.active { background: var(--panel-border); }
   #tree-svg-host { width: 100%; height: calc(100% - 50px); overflow: auto; }
-  #detail-panel { width: 300px; background: var(--panel-bg); border-left: 1px solid var(--panel-border); overflow-y: auto; padding: 12px; display: none; }
+  #detail-panel { width: 300px; flex-shrink: 0; background: var(--panel-bg); border-left: 1px solid var(--panel-border); overflow-y: auto; padding: 12px; display: none; }
   #detail-panel.open { display: block; }
   #relation-list { list-style: none; padding: 0; }
   #relation-list li { padding: 6px 0; border-bottom: 1px solid var(--panel-border); font-size: 0.9rem; }
@@ -103,7 +103,7 @@ const HOUSE_COLORS = {
   "Lannister": "#b8862e",
   "Targaryen": "#8f1d21",
   "Baratheon": "#d4af37",
-  "Greyjoy": "#d4af37",
+  "Greyjoy": "#2a7f7f",
   "Tyrell": "#4c7a3f",
   "Martell": "#d16a2e",
   "Tully": "#3f6ea5",
