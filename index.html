@@ -54,13 +54,22 @@
   #relation-list { list-style: none; padding: 0; }
   #relation-list li { padding: 6px 0; border-bottom: 1px solid var(--panel-border); font-size: 0.9rem; }
   #relation-list li:hover { color: var(--house-baratheon); }
+  #search-container { position: relative; margin-left: auto; }
+  #search-input { background: var(--bg); border: 1px solid var(--panel-border); color: var(--text); padding: 6px 10px; border-radius: 4px; width: 220px; }
+  #search-results { position: absolute; top: 100%; left: 0; right: 0; background: var(--panel-bg); border: 1px solid var(--panel-border); max-height: 260px; overflow-y: auto; z-index: 10; display: none; }
+  #search-results.open { display: block; }
+  #search-results div { padding: 6px 10px; cursor: pointer; font-size: 0.9rem; }
+  #search-results div:hover { background: var(--panel-border); }
 </style>
 </head>
 <body>
   <div id="top-bar">
     <h1 id="app-title">Game of Thrones — Relations Explorer</h1>
     <div id="view-toggle"></div>
-    <div id="search-container"></div>
+    <div id="search-container">
+      <input id="search-input" type="text" placeholder="Search characters..." autocomplete="off">
+      <div id="search-results"></div>
+    </div>
   </div>
   <div id="d3-missing-warning">Requires internet on first load to fetch D3.js. Please connect and reload.</div>
   <div id="main-layout">
@@ -969,6 +978,35 @@ function applyHighlight() {
     return !hasHighlight ? 0.6 : (state.highlightIds.has(sId) && state.highlightIds.has(tId) ? 0.9 : 0.05);
   });
 }
+
+function initSearch() {
+  const input = document.getElementById("search-input");
+  const results = document.getElementById("search-results");
+
+  input.addEventListener("input", () => {
+    const q = input.value.trim().toLowerCase();
+    if (!q) { results.classList.remove("open"); results.innerHTML = ""; return; }
+    const matches = characters.filter(c => c.name.toLowerCase().includes(q)).slice(0, 10);
+    results.innerHTML = matches.length
+      ? matches.map(c => `<div data-id="${c.id}">${c.name} <span style="color:var(--text-dim)">(${c.house})</span></div>`).join("")
+      : `<div style="color:var(--text-dim)">No characters found</div>`;
+    results.classList.add("open");
+    results.querySelectorAll("[data-id]").forEach(el => {
+      el.addEventListener("click", () => {
+        selectCharacter(el.getAttribute("data-id"));
+        results.classList.remove("open");
+        input.value = "";
+      });
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!document.getElementById("search-container").contains(e.target)) {
+      results.classList.remove("open");
+    }
+  });
+}
+initSearch();
   </script>
   <script>
     if (typeof d3 !== 'undefined') { renderGraph(); }
