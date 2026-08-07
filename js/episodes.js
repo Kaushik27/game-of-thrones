@@ -41,7 +41,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "Robert asks Ned to become Hand while Daenerys enters a political marriage and Bran's discovery of the Lannister twins ends in a devastating fall.",
     themes: ["Family", "Power", "Betrayal"],
-    characterIds: ["ned-stark", "bran-stark", "jaime-lannister", "jon-snow", "daenerys-targaryen"]
+    characterIds: ["ned-stark", "bran-stark", "jaime-lannister", "jon-snow", "daenerys-targaryen"],
+    eventIds: ["ev-s1-hand", "ev-s1-drogo-wed", "ev-s1-bran-fall"]
   },
   {
     id: "s01e02",
@@ -119,7 +120,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "Robert's death opens a succession struggle, Littlefinger betrays Ned, and Drogo vows to carry Daenerys's cause across the Narrow Sea.",
     themes: ["Power", "Betrayal", "War"],
-    characterIds: ["ned-stark", "cersei-lannister", "joffrey-baratheon", "petyr-baelish", "daenerys-targaryen"]
+    characterIds: ["ned-stark", "cersei-lannister", "joffrey-baratheon", "petyr-baelish", "daenerys-targaryen"],
+    eventIds: ["ev-s1-robert-death"]
   },
   {
     id: "s01e08",
@@ -145,7 +147,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "Robb captures Jaime through a costly feint, Daenerys turns to blood magic, and Joffrey breaks his promise by executing Ned.",
     themes: ["War", "Betrayal", "Death"],
-    characterIds: ["ned-stark", "robb-stark", "catelyn-stark", "joffrey-baratheon", "daenerys-targaryen"]
+    characterIds: ["ned-stark", "robb-stark", "catelyn-stark", "joffrey-baratheon", "daenerys-targaryen"],
+    eventIds: ["ev-s1-ned-death"]
   },
   {
     id: "s01e10",
@@ -158,7 +161,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "The North crowns Robb, Arya and Jon begin new journeys, Tyrion is named Hand, and Daenerys emerges from Drogo's pyre with three dragons.",
     themes: ["Leadership", "Identity", "Prophecy"],
-    characterIds: ["robb-stark", "arya-stark", "jon-snow", "tyrion-lannister", "daenerys-targaryen"]
+    characterIds: ["robb-stark", "arya-stark", "jon-snow", "tyrion-lannister", "daenerys-targaryen"],
+    eventIds: ["ev-s1-drogo-death"]
   },
   {
     id: "s02e01",
@@ -223,7 +227,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "Renly's murder reshapes the war, Brienne swears herself to Catelyn, Arya names her first victim, and Theon turns his ambition toward Winterfell.",
     themes: ["Death", "Loyalty", "Revenge"],
-    characterIds: ["renly-baratheon", "catelyn-stark", "brienne-of-tarth", "arya-stark", "theon-greyjoy"]
+    characterIds: ["renly-baratheon", "catelyn-stark", "brienne-of-tarth", "arya-stark", "theon-greyjoy"],
+    eventIds: ["ev-s2-renly-death"]
   },
   {
     id: "s02e06",
@@ -275,7 +280,8 @@ const EPISODES = Object.freeze([
     writers: ["George R. R. Martin"],
     summary: "Tyrion's wildfire plan breaks Stannis's fleet, but the battle for King's Landing turns only when Tywin and the Tyrells arrive.",
     themes: ["War", "Leadership", "Survival"],
-    characterIds: ["tyrion-lannister", "stannis-baratheon", "davos-seaworth", "cersei-lannister", "joffrey-baratheon"]
+    characterIds: ["tyrion-lannister", "stannis-baratheon", "davos-seaworth", "cersei-lannister", "joffrey-baratheon"],
+    eventIds: ["ev-s2-blackwater"]
   },
   {
     id: "s02e10",
@@ -288,7 +294,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "Daenerys reclaims her dragons, Jon kills Qhorin to enter the wildlings' trust, Theon loses Winterfell, and the White Walker army advances.",
     themes: ["Death", "Identity", "Survival"],
-    characterIds: ["daenerys-targaryen", "jon-snow", "qhorin-halfhand", "theon-greyjoy", "arya-stark"]
+    characterIds: ["daenerys-targaryen", "jon-snow", "qhorin-halfhand", "theon-greyjoy", "arya-stark"],
+    eventIds: ["ev-s2-robb-talisa"]
   },
   {
     id: "s03e01",
@@ -340,7 +347,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "Daenerys turns her purchase of the Unsullied into Astapor's liberation as mutiny destroys the Night's Watch refuge and Jaime struggles with his mutilation.",
     themes: ["Freedom", "Leadership", "Betrayal"],
-    characterIds: ["daenerys-targaryen", "grey-worm", "jaime-lannister", "jeor-mormont", "arya-stark"]
+    characterIds: ["daenerys-targaryen", "grey-worm", "jaime-lannister", "jeor-mormont", "arya-stark"],
+    eventIds: ["ev-s3-unsullied"]
   },
   {
     id: "s03e05",
@@ -353,7 +361,8 @@ const EPISODES = Object.freeze([
     writers: ["Bryan Cogman"],
     summary: "Jaime reveals why he killed the Mad King, Jon and Ygritte become lovers, Robb executes Karstark, and Beric grants the Hound trial by combat.",
     themes: ["Duty", "Love", "Justice"],
-    characterIds: ["jaime-lannister", "brienne-of-tarth", "jon-snow", "ygritte", "robb-stark"]
+    characterIds: ["jaime-lannister", "brienne-of-tarth", "jon-snow", "ygritte", "robb-stark"],
+    eventIds: ["ev-s3-jon-ygritte"]
   },
   {
     id: "s03e06",
@@ -405,7 +414,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "Walder Frey's hospitality becomes a massacre that ends Robb's rebellion, while Jon escapes the wildlings and Daenerys takes Yunkai.",
     themes: ["Betrayal", "Death", "War"],
-    characterIds: ["robb-stark", "catelyn-stark", "arya-stark", "jon-snow", "daenerys-targaryen"]
+    characterIds: ["robb-stark", "catelyn-stark", "arya-stark", "jon-snow", "daenerys-targaryen"],
+    eventIds: ["ev-s3-redwedding"]
   },
   {
     id: "s03e10",
@@ -444,7 +454,8 @@ const EPISODES = Object.freeze([
     writers: ["George R. R. Martin"],
     summary: "Joffrey dies at his wedding feast, leaving Tyrion accused, Sansa spirited away, and the capital's alliances suddenly uncertain.",
     themes: ["Death", "Power", "Betrayal"],
-    characterIds: ["joffrey-baratheon", "tyrion-lannister", "sansa-stark", "cersei-lannister", "margaery-tyrell"]
+    characterIds: ["joffrey-baratheon", "tyrion-lannister", "sansa-stark", "cersei-lannister", "margaery-tyrell"],
+    eventIds: ["ev-s4-purplewedding"]
   },
   {
     id: "s04e03",
@@ -522,7 +533,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "Oberyn fights for vengeance against the Mountain but loses both the duel and Tyrion's hope of acquittal.",
     themes: ["Revenge", "Justice", "Death"],
-    characterIds: ["oberyn-martell", "gregor-clegane", "tyrion-lannister", "sansa-stark", "petyr-baelish"]
+    characterIds: ["oberyn-martell", "gregor-clegane", "tyrion-lannister", "sansa-stark", "petyr-baelish"],
+    eventIds: ["ev-s4-mountain-viper"]
   },
   {
     id: "s04e09",
@@ -535,7 +547,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "Jon and the Night's Watch defend Castle Black through the night, paying for survival with the lives of friends and foes alike.",
     themes: ["War", "Duty", "Death"],
-    characterIds: ["jon-snow", "ygritte", "samwell-tarly", "tormund-giantsbane", "alliser-thorne"]
+    characterIds: ["jon-snow", "ygritte", "samwell-tarly", "tormund-giantsbane", "alliser-thorne"],
+    eventIds: ["ev-s4-wall-attack"]
   },
   {
     id: "s04e10",
@@ -548,7 +561,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "Tyrion kills Shae and Tywin before fleeing, Arya abandons the Hound for Braavos, Bran reaches the raven, and Daenerys restrains her dragons.",
     themes: ["Family", "Death", "Freedom"],
-    characterIds: ["tyrion-lannister", "tywin-lannister", "arya-stark", "sandor-clegane", "bran-stark"]
+    characterIds: ["tyrion-lannister", "tywin-lannister", "arya-stark", "sandor-clegane", "bran-stark"],
+    eventIds: ["ev-s4-tywin-death"]
   },
   {
     id: "s05e01",
@@ -652,7 +666,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "Jon rescues wildlings at Hardhome until the Night King raises the fallen, while Tyrion persuades Daenerys to accept his counsel.",
     themes: ["Survival", "Death", "Leadership"],
-    characterIds: ["jon-snow", "tormund-giantsbane", "the-night-king", "tyrion-lannister", "daenerys-targaryen"]
+    characterIds: ["jon-snow", "tormund-giantsbane", "the-night-king", "tyrion-lannister", "daenerys-targaryen"],
+    eventIds: ["ev-s5-hardhome"]
   },
   {
     id: "s05e09",
@@ -665,7 +680,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "Stannis sacrifices Shireen to escape winter, Daenerys survives the fighting pits on Drogon, and Arya abandons her mission for vengeance.",
     themes: ["Faith", "Death", "Revenge"],
-    characterIds: ["stannis-baratheon", "shireen-baratheon", "daenerys-targaryen", "jon-snow", "arya-stark"]
+    characterIds: ["stannis-baratheon", "shireen-baratheon", "daenerys-targaryen", "jon-snow", "arya-stark"],
+    eventIds: ["ev-s5-shireen"]
   },
   {
     id: "s05e10",
@@ -678,7 +694,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "Cersei endures public humiliation, Stannis's campaign collapses, Daenerys meets a Dothraki horde, Sansa escapes Winterfell, and mutineers stab Jon.",
     themes: ["Justice", "Betrayal", "Survival"],
-    characterIds: ["cersei-lannister", "stannis-baratheon", "daenerys-targaryen", "sansa-stark", "jon-snow"]
+    characterIds: ["cersei-lannister", "stannis-baratheon", "daenerys-targaryen", "sansa-stark", "jon-snow"],
+    eventIds: ["ev-s5-sept-of-baelor", "ev-s5-jon-mutiny"]
   },
   {
     id: "s06e01",
@@ -704,7 +721,8 @@ const EPISODES = Object.freeze([
     writers: ["Dave Hill"],
     summary: "Melisandre restores Jon to life, Ramsay seizes Bolton power, Bran witnesses young Winterfell, and Euron returns to overthrow Balon.",
     themes: ["Faith", "Power", "Death"],
-    characterIds: ["jon-snow", "melisandre", "ramsay-bolton", "bran-stark", "balon-greyjoy"]
+    characterIds: ["jon-snow", "melisandre", "ramsay-bolton", "bran-stark", "balon-greyjoy"],
+    eventIds: ["ev-s6-jon-resurrection"]
   },
   {
     id: "s06e03",
@@ -795,7 +813,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "Daenerys crushes the slavers' assault and allies with Yara, while Jon and Sansa defeat Ramsay in the battle for Winterfell.",
     themes: ["War", "Leadership", "Revenge"],
-    characterIds: ["jon-snow", "sansa-stark", "ramsay-bolton", "daenerys-targaryen", "theon-greyjoy"]
+    characterIds: ["jon-snow", "sansa-stark", "ramsay-bolton", "daenerys-targaryen", "theon-greyjoy"],
+    eventIds: ["ev-s6-bastards"]
   },
   {
     id: "s06e10",
@@ -808,7 +827,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "Cersei destroys the Sept and takes the crown, Jon becomes King in the North, Bran learns Jon's parentage, and Daenerys sails west.",
     themes: ["Power", "Death", "Prophecy"],
-    characterIds: ["cersei-lannister", "jon-snow", "daenerys-targaryen", "bran-stark", "arya-stark"]
+    characterIds: ["cersei-lannister", "jon-snow", "daenerys-targaryen", "bran-stark", "arya-stark"],
+    eventIds: ["ev-s6-tower-of-joy", "ev-s6-sept-explosion", "ev-s6-kitn"]
   },
   {
     id: "s07e01",
@@ -860,7 +880,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "Arya returns to Winterfell, Jon shows Daenerys evidence of the dead, and Drogon leads a fiery assault on Jaime's army.",
     themes: ["Family", "War", "Power"],
-    characterIds: ["arya-stark", "sansa-stark", "daenerys-targaryen", "jaime-lannister", "bronn"]
+    characterIds: ["arya-stark", "sansa-stark", "daenerys-targaryen", "jaime-lannister", "bronn"],
+    eventIds: ["ev-s7-loot-castamere"]
   },
   {
     id: "s07e05",
@@ -899,7 +920,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "The living present their proof to Cersei, the Stark siblings condemn Littlefinger, Jon's parentage is confirmed, and the undead breach the Wall.",
     themes: ["Betrayal", "Identity", "War"],
-    characterIds: ["jon-snow", "daenerys-targaryen", "cersei-lannister", "jaime-lannister", "bran-stark"]
+    characterIds: ["jon-snow", "daenerys-targaryen", "cersei-lannister", "jaime-lannister", "bran-stark"],
+    eventIds: ["ev-s7-dragonpit", "ev-s7-wall-falls", "ev-s7-jon-dany"]
   },
   {
     id: "s08e01",
@@ -938,7 +960,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "Winterfell survives the longest night through terrible sacrifice when Arya reaches the godswood and destroys the Night King.",
     themes: ["War", "Death", "Survival"],
-    characterIds: ["arya-stark", "the-night-king", "bran-stark", "theon-greyjoy", "daenerys-targaryen"]
+    characterIds: ["arya-stark", "the-night-king", "bran-stark", "theon-greyjoy", "daenerys-targaryen"],
+    eventIds: ["ev-s8-winterfell"]
   },
   {
     id: "s08e04",
@@ -964,7 +987,8 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "King's Landing surrenders, but Daenerys burns the city while Jaime and Cersei die together and Arya escapes the devastation.",
     themes: ["War", "Power", "Death"],
-    characterIds: ["daenerys-targaryen", "jon-snow", "tyrion-lannister", "jaime-lannister", "arya-stark"]
+    characterIds: ["daenerys-targaryen", "jon-snow", "tyrion-lannister", "jaime-lannister", "arya-stark"],
+    eventIds: ["ev-s8-kingslanding", "ev-s8-cersei-jaime-death"]
   },
   {
     id: "s08e06",
@@ -977,13 +1001,15 @@ const EPISODES = Object.freeze([
     writers: ["David Benioff", "D. B. Weiss"],
     summary: "Jon kills Daenerys to end her conquest, Bran is chosen king, the North becomes independent, and the surviving Starks choose separate futures.",
     themes: ["Power", "Justice", "Freedom"],
-    characterIds: ["jon-snow", "daenerys-targaryen", "tyrion-lannister", "bran-stark", "sansa-stark"]
+    characterIds: ["jon-snow", "daenerys-targaryen", "tyrion-lannister", "bran-stark", "sansa-stark"],
+    eventIds: ["ev-s8-dany-death", "ev-s8-bran-king"]
   }
 ].map((record) => Object.freeze({
   ...record,
   writers: Object.freeze(record.writers),
   themes: Object.freeze(record.themes),
-  characterIds: Object.freeze(record.characterIds)
+  characterIds: Object.freeze(record.characterIds),
+  eventIds: Object.freeze(record.eventIds || [])
 })));
 
 if (typeof window !== "undefined") {
