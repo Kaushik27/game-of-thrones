@@ -1,0 +1,72 @@
+/* ==========================================================================
+   Living Realm route framing
+   ========================================================================== */
+
+.living-map-page { padding-top: clamp(38px, 5vw, 64px); }
+
+.living-map-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.75fr);
+  gap: 28px 64px;
+  align-items: end;
+  margin-bottom: clamp(24px, 3vw, 38px);
+  padding-bottom: 22px;
+  border-bottom: 1px solid rgba(203, 168, 92, 0.3);
+}
+
+.living-map-hero__eyebrow {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.living-map-hero h1 {
+  margin: 0;
+  color: var(--text);
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: clamp(2.7rem, 5vw, 5.15rem);
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  line-height: 0.98;
+  text-transform: uppercase;
+}
+
+.living-map-hero p:not(.living-map-hero__eyebrow) {
+  max-width: 62ch;
+  margin: 14px 0 0;
+  color: var(--text-dim);
+  line-height: 1.75;
+}
+
+.living-map-hero__facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  border-top: 1px solid rgba(203, 168, 92, 0.22);
+  border-left: 1px solid rgba(203, 168, 92, 0.22);
+}
+
+.living-map-hero__facts div {
+  padding: 16px 12px;
+  border-right: 1px solid rgba(203, 168, 92, 0.22);
+  border-bottom: 1px solid rgba(203, 168, 92, 0.22);
+}
+
+.living-map-hero__facts dt { color: var(--accent-bright); font: 500 1.6rem 'Cinzel', Georgia, serif; }
+.living-map-hero__facts dd { margin: 3px 0 0; color: var(--text-faint); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+#living-realm-root { margin-bottom: clamp(72px, 9vw, 120px); }
+
+@media (max-width: 820px) {
+  .living-map-hero { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 520px) {
+  .living-map-page { padding-top: 46px; }
+  .living-map-hero { gap: 20px; }
+  .living-map-hero__facts div { padding: 12px 8px; }
+}
