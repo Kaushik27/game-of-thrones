@@ -201,6 +201,10 @@
       title.textContent = scene.title;
       body.textContent = scene.body;
       counter.textContent = String(currentScene + 1).padStart(2, "0");
+      focus.dataset.change = String(Date.now());
+      global.setTimeout(() => {
+        if (focus.dataset.change) focus.removeAttribute("data-change");
+      }, 1100);
       focusImage.src = scene.focus.image;
       focusImage.alt = scene.focus.name;
       focusName.textContent = scene.focus.name;

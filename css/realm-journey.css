@@ -26,7 +26,9 @@ body.realm-journey-route #site-footer {
 }
 
 .realm-journey-host {
+  position: relative;
   min-height: 100svh;
+  margin-top: 0;
   background: #030608;
 }
 
@@ -61,6 +63,15 @@ body.realm-journey-route #site-footer {
   color: #eee9df;
 }
 
+/* The journey is the visual continuation of the handoff, never a new black
+   page. Keep its first frame flush to the viewport and let the authored
+   landscape carry the transition under the copy. */
+.cinematic-realm__journey-host .realm-journey {
+  margin-top: 0;
+  border-top: 1px solid rgba(151, 186, 207, 0.16);
+  box-shadow: inset 0 120px 120px rgba(3, 6, 8, 0.18);
+}
+
 .realm-journey__scene,
 .realm-journey__fallback,
 .realm-journey__fallback-landscape,
@@ -89,6 +100,16 @@ body.realm-journey-route #site-footer {
   filter: saturate(0.72) contrast(1.08) brightness(0.72);
   transform: scale(1.035);
   transition: opacity 700ms ease, filter 700ms ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.realm-journey__fallback-landscape[data-change] {
+  animation: realm-journey-landscape-dissolve 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes realm-journey-landscape-dissolve {
+  0% { opacity: 0.08; filter: blur(7px) saturate(0.45) brightness(0.46); transform: scale(1.055); }
+  42% { opacity: 1; }
+  100% { opacity: 1; filter: saturate(0.72) contrast(1.08) brightness(0.72); transform: scale(1.035); }
 }
 
 .realm-journey[data-season="1"] .realm-journey__fallback-landscape,
