@@ -262,6 +262,7 @@
       const bounds = trigger && trigger.getBoundingClientRect ? trigger.getBoundingClientRect() : null;
       portalHandle.enter({
         origin: bounds ? { x: bounds.left + bounds.width * 0.5, y: bounds.top + bounds.height * 0.5 } : undefined,
+        onCovered: () => travel("auto"),
         onDone: () => {
           // Browser focus/scroll settling can finish after the veil animation;
           // repeat the landing briefly so the destination wins deterministically.
