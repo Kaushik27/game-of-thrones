@@ -41,9 +41,23 @@
     let covered = false;
     let destroyed = false;
     let startedAt = 0;
+    let safetyTimer = 0;
     let origin = { x: global.innerWidth * 0.5, y: global.innerHeight * 0.5 };
     let onCovered = null;
     let onDone = null;
+
+    function finish() {
+      if (!running) return;
+      running = false;
+      if (frame) global.cancelAnimationFrame(frame);
+      if (safetyTimer) global.clearTimeout(safetyTimer);
+      safetyTimer = 0;
+      overlay.hidden = true;
+      const done = onDone;
+      onCovered = null;
+      onDone = null;
+      if (typeof done === "function") done();
+    }
 
     function resize() {
       const dpr = Math.min(global.devicePixelRatio || 1, 2);
@@ -124,9 +138,7 @@
       }
       draw(now / 1000, progress);
       if (progress >= 1) {
-        running = false;
-        overlay.hidden = true;
-        if (typeof onDone === "function") onDone();
+        finish();
         return;
       }
       frame = global.requestAnimationFrame(tick);
@@ -145,6 +157,9 @@
       overlay.hidden = false;
       resize();
       startedAt = performance.now();
+      // A throttled/background tab can pause requestAnimationFrame midway
+      // through the veil. Never leave the user behind an opaque loading screen.
+      safetyTimer = global.setTimeout(finish, reducedMotion ? 1200 : 2600);
       frame = global.requestAnimationFrame(tick);
       return true;
     }
@@ -157,6 +172,7 @@
         destroyed = true;
         running = false;
         if (frame) global.cancelAnimationFrame(frame);
+        if (safetyTimer) global.clearTimeout(safetyTimer);
         global.removeEventListener("resize", resize);
         overlay.remove();
         mountedRoots.delete(root);

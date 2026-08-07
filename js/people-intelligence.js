@@ -393,10 +393,17 @@
 
     root.classList.add("people-intelligence");
     root.setAttribute("data-people-intelligence", "");
+    const heroCastIds = ["jon-snow", "daenerys-targaryen", "arya-stark", "tyrion-lannister", "cersei-lannister", "jaime-lannister"];
+    const heroCast = heroCastIds
+      .map(characterId => data.charactersById.get(characterId))
+      .filter(Boolean)
+      .map(character => `<button class="pi-hero-cast__person ${houseClass(character.house)}" type="button" data-pi-character="${escape(character.id)}" aria-label="Open intelligence for ${escape(character.name)}"><span class="pi-hero-cast__portrait">${portraitMarkup(character, "hero-cast")}</span><span class="pi-hero-cast__name">${escape(character.name)}</span></button>`)
+      .join("");
     root.innerHTML = `
       <section class="pi-shell" aria-labelledby="${id}-title">
         <header class="pi-hero">
           <div class="pi-hero__veil" aria-hidden="true"></div>
+          <div class="pi-hero-cast" aria-label="Featured people from the realm">${heroCast}</div>
           <div class="pi-hero__content">
             <p class="pi-eyebrow">The living record</p>
             <h1 id="${id}-title">People of Westeros</h1>

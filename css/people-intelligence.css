@@ -107,6 +107,47 @@ body.pi-overlay-open { overflow: hidden; }
   transform: translateY(-50%);
 }
 
+.pi-hero-cast {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: clamp(30px, 7vw, 112px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(92px, 128px));
+  gap: 20px 16px;
+  width: min(45vw, 430px);
+  transform: translateY(-42%);
+}
+
+.pi-hero-cast__person {
+  display: grid;
+  gap: 9px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--pi-parchment);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 220ms ease, color 220ms ease;
+}
+
+.pi-hero-cast__person:hover,
+.pi-hero-cast__person:focus-visible { color: var(--pi-gold-bright); transform: translateY(-5px); }
+.pi-hero-cast__person:focus-visible { outline: 1px solid var(--pi-gold); outline-offset: 5px; }
+
+.pi-hero-cast__portrait {
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--pi-house) 70%, transparent);
+  background: #080b0d;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.42);
+}
+
+.pi-hero-cast__portrait .pi-portrait { width: 100%; height: 100%; border: 0; }
+.pi-hero-cast__name { overflow: hidden; color: #d7d1c4; font-family: 'Cinzel', Georgia, serif; font-size: 0.68rem; letter-spacing: 0.08em; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+
 .pi-hero__content {
   z-index: 1;
   align-self: center;
@@ -1082,6 +1123,11 @@ body.pi-overlay-open { overflow: hidden; }
   .pi-hero__stats { width: 100%; }
   .pi-hero__stats div { min-width: 0; flex: 1; padding: 0 13px; }
   .pi-hero__stats dd { font-size: 0.625rem; }
+
+  .pi-hero-cast { position: relative; top: auto; right: auto; width: 100%; margin-top: 34px; grid-template-columns: repeat(4, minmax(62px, 1fr)); gap: 9px; transform: none; }
+  .pi-hero-cast__person:nth-child(n + 5) { display: none; }
+  .pi-hero-cast__portrait { aspect-ratio: 1; }
+  .pi-hero-cast__name { font-size: 0.5rem; }
 
   .pi-command-bar { padding: 0; }
   .pi-mode-tabs { overflow-x: auto; }
