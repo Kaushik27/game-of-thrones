@@ -105,6 +105,8 @@
 .character-film__frame { z-index: -1; inset: 18px; border: 1px solid rgba(212, 179, 106, 0.18); }
 .character-film__frame::after { position: absolute; inset: 12px; border: 1px solid rgba(255, 255, 255, 0.07); content: ""; }
 .character-film__transition { z-index: 18; background: #05080a; opacity: 0; transform: translateX(-102%); }
+.character-film__sound { position: absolute; z-index: 20; top: 25px; right: clamp(44px, 13vw, 210px); min-height: 31px; padding: 6px 10px; border: 1px solid rgba(212, 179, 106, 0.32); background: rgba(3, 6, 8, 0.42); color: #b6b2a7; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; cursor: pointer; }
+.character-film__sound:hover, .character-film__sound[aria-pressed="true"] { border-color: #d4b36a; color: #f0d58d; }
 .character-film__stage[data-cut] .character-film__transition { animation: character-film-cut 720ms cubic-bezier(0.76, 0, 0.24, 1) both; }
 @keyframes character-film-cut {
   0% { opacity: 0.8; transform: translateX(-102%); }

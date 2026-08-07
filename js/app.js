@@ -470,6 +470,7 @@ function viewCharacter(app, params) {
           <div class="character-film__veil" aria-hidden="true"></div>
           <div class="character-film__frame" aria-hidden="true"></div>
           <div class="character-film__transition" data-film-transition aria-hidden="true"></div>
+          <button class="character-film__sound" type="button" data-cinematic-sound aria-pressed="false">Sound off</button>
           <div class="character-film__scene character-film__scene--title" data-film-scene="title">
             <p class="character-film__eyebrow">A living portrait <span aria-hidden="true">·</span> ${escapeHTML(c.house)}</p>
             <p class="character-film__chapter">Chapter 01 <span aria-hidden="true">/</span> The first impression</p>
@@ -572,6 +573,7 @@ function viewCharacter(app, params) {
   const filmFx = window.CharacterFilmFX && typeof window.CharacterFilmFX.mount === "function"
     ? window.CharacterFilmFX.mount(filmStage, { reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches })
     : null;
+  const filmSound = window.CinematicSound ? window.CinematicSound.mount(filmStage) : null;
   const profileHeader = app.querySelector("#profile-header");
   let filmFrame = 0;
   let filmDestroyed = false;
@@ -620,7 +622,7 @@ function viewCharacter(app, params) {
   if (film) {
     const chromeObserver = new IntersectionObserver(entries => {
       const entry = entries[0];
-      if (!document.body.contains(film)) { chromeObserver.disconnect(); filmDestroyed = true; filmFx?.destroy(); return; }
+      if (!document.body.contains(film)) { chromeObserver.disconnect(); filmDestroyed = true; filmFx?.destroy(); filmSound?.destroy(); return; }
       document.body.classList.toggle("character-cinematic-route--archive", !entry.isIntersecting || entry.boundingClientRect.top < 0);
     }, { threshold: 0.08 });
     chromeObserver.observe(film);
