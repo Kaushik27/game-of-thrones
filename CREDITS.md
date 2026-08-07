@@ -4,8 +4,9 @@ This is an unofficial, non-commercial fan reference site for HBO's *Game of Thro
 
 ## Cinematic realm artwork and interface assets
 
-The three season backdrops in `assets/ui/` were generated specifically for this fan project. They
-are original atmospheric illustrations, not HBO production stills or frames from the series.
+The four realm backdrops in `assets/ui/` were generated specifically for this fan project, including
+the dedicated Border / Wall visual. They are original atmospheric illustrations, not HBO production
+stills or frames from the series.
 Season summaries and episode links are curated in `js/realm-chapters.js`; each featured episode
 links to its official HBO page.
 

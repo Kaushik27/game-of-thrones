@@ -1360,6 +1360,7 @@
       if (destroyed) return;
       const season = validSeason(value);
       currentSeason = season;
+      try { global.sessionStorage.setItem("got-last-season", String(season)); } catch (error) { /* optional */ }
       const model = currentModel();
       currentChapterIndex = defaultChapterIndex(model);
       selectedMarkerId = null;

@@ -868,6 +868,7 @@
       }
       if (destroyed) return;
       currentSeason = number;
+      try { window.sessionStorage.setItem("got-last-season", String(number)); } catch (error) { /* optional */ }
       updateSharedControls();
       if (currentMode === "atlas" && mapHandle && typeof mapHandle.setSeason === "function") mapHandle.setSeason(number);
       else renderView();

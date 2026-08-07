@@ -170,9 +170,11 @@ function replaceHashQuery(path, updates) {
 function viewHome(app, params, query) {
   setTitle("Explore");
   const requestedSeason = Number(query.get("season"));
+  let rememberedSeason = 6;
+  try { rememberedSeason = Number(window.sessionStorage.getItem("got-last-season")) || 6; } catch (error) { /* optional */ }
   const initialSeason = Number.isInteger(requestedSeason) && requestedSeason >= 1 && requestedSeason <= 8
     ? requestedSeason
-    : 6;
+    : (Number.isInteger(rememberedSeason) && rememberedSeason >= 1 && rememberedSeason <= 8 ? rememberedSeason : 6);
 
   app.innerHTML = `<div id="cinematic-realm-root" class="cinematic-realm"></div>`;
   const root = document.getElementById("cinematic-realm-root");
@@ -1274,9 +1276,11 @@ function viewMap(app, params, query) {
   setTitle("World");
   app.innerHTML = `<div id="world-atlas-root" class="encyclopedia-feature-host"></div>`;
   const root = document.getElementById("world-atlas-root");
+  let rememberedSeason = 1;
+  try { rememberedSeason = Number(window.sessionStorage.getItem("got-last-season")) || 1; } catch (error) { /* optional */ }
   try {
     const handle = window.WorldAtlas.mount(root, {
-      initialSeason: Number(query.get("season")) || 1,
+      initialSeason: Number(query.get("season")) || (Number.isInteger(rememberedSeason) && rememberedSeason >= 1 && rememberedSeason <= 8 ? rememberedSeason : 1),
       initialMode: query.get("mode") || "atlas",
       onNavigate: navigateFeatureTarget
     });
@@ -1732,7 +1736,7 @@ function viewQuotes(app, params, query) {
   })());
   const quoteHref = quote => {
     const episode = episodeForQuote(quote);
-    return episode ? `#/episode/${encodeURIComponent(episode.id)}?quote=${encodeURIComponent(quote.id)}` : `#/timeline?season=${quote.season}&mode=consequences&quote=${encodeURIComponent(quote.id)}`;
+    return episode ? `#/episode/${encodeURIComponent(episode.id)}` : `#/quotes?quote=${encodeURIComponent(quote.id)}`;
   };
   const toggleSavedQuote = quote => {
     if (savedQuoteIds.has(quote.id)) savedQuoteIds.delete(quote.id);
