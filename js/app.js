@@ -119,18 +119,8 @@ function viewHome(app, params, query) {
     ? requestedSeason
     : 6;
 
-  app.innerHTML = `
-    <div id="realm-journey-root" class="realm-journey-host">
-      <div class="realm-journey-loading" role="status">
-        <img src="assets/icons/compass.svg" alt="">
-        <span>Opening the realm…</span>
-      </div>
-    </div>
-  `;
-
-  const root = document.getElementById("realm-journey-root");
-  let journeyHandle = null;
-  let destroyed = false;
+  app.innerHTML = `<div id="cinematic-realm-root" class="cinematic-realm"></div>`;
+  const root = document.getElementById("cinematic-realm-root");
 
   const navigate = target => {
     const destination = String(target || "");
@@ -142,38 +132,18 @@ function viewHome(app, params, query) {
     window.open(destination, "_blank", "noopener,noreferrer");
   };
 
-  const mountJourney = () => {
-    if (destroyed || journeyHandle || !window.RealmJourney) return;
-    root.replaceChildren();
-    try {
-      journeyHandle = window.RealmJourney.mount(root, { initialSeason, onNavigate: navigate });
-    } catch (error) {
-      console.error("The realm journey could not be mounted.", error);
-      root.innerHTML = `
-        <div class="realm-journey-loading realm-journey-loading--error" role="alert">
-          <span>The road is blocked for now.</span>
-          <a href="#/timeline">Open the season archive</a>
-        </div>`;
-    }
-  };
-
-  if (window.RealmJourney) {
-    mountJourney();
-  } else {
-    root.innerHTML = `
-      <div class="realm-journey-loading realm-journey-loading--error" role="alert">
-        <span>The road is blocked for now.</span>
-        <a href="#/timeline">Open the season archive</a>
-      </div>`;
+  if (!window.CinematicRealm) {
+    root.innerHTML = `<div class="realm-journey-loading realm-journey-loading--error" role="alert"><span>The road is blocked for now.</span><a href="#/timeline">Open the season archive</a></div>`;
+    return;
   }
 
-  registerActiveView({
-    destroy() {
-      destroyed = true;
-      if (journeyHandle) journeyHandle.destroy();
-      document.body.classList.remove("realm-journey-route");
-    }
-  });
+  try {
+    const cinematicHandle = window.CinematicRealm.mount(root, { initialSeason, onNavigate: navigate });
+    registerActiveView(cinematicHandle);
+  } catch (error) {
+    console.error("The cinematic realm could not be mounted.", error);
+    root.innerHTML = `<div class="realm-journey-loading realm-journey-loading--error" role="alert"><span>The road is blocked for now.</span><a href="#/timeline">Open the season archive</a></div>`;
+  }
 }
 
 // ==========================================================================
