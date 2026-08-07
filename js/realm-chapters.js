@@ -166,11 +166,10 @@
     {
       season: 6,
       kicker: "Season 6 · The War for the North",
-      title: "The North Remembers",
+      title: "The North\nRemembers",
       summary: "Jon Snow rallies the free folk and marches on Winterfell to take back his home from Ramsay Bolton.",
       copy: [
-        "In the North, loyalty is tested and bastards may become kings.",
-        "Every route on the field narrows toward Winterfell."
+        "In the North, loyalty is tested and bastards may become kings."
       ],
       playLabel: "Play this chapter",
       sourceUrl: "https://www.hbo.com/game-of-thrones/season-6/9-battle-of-the-bastards",
@@ -178,18 +177,19 @@
       accent: "#94bed9",
       camera: { position: [0, 7.2, 11.6], target: [0, -0.4, 0] },
       terrain: { seed: 66, snow: 0.76, fortress: 1 },
+      route: [[-5.4, 4.7], [-3.1, 3.2], [-1.2, 2.1], [1.1, 1.1], [3.6, -0.6]],
       defaultChapter: "bastards",
       chapters: [
         { id: "hardhome-memory", title: "Hardhome", icon: ICONS.winter, markerIds: ["jon", "tormund"] },
-        { id: "bastards", title: "Battle of the Bastards", icon: ICONS.battle, markerIds: ["jon", "sansa", "ramsay", "winterfell", "battle"] },
+        { id: "bastards", title: "Battle of the Bastards", icon: ICONS.battle, defaultMarker: "jon", markerIds: ["jon", "sansa", "ramsay", "winterfell", "battle"] },
         { id: "winter-comes", title: "Winter Comes", icon: ICONS.winter, markerIds: ["sansa", "winterfell"] }
       ],
       markers: [
-        { id: "sansa", type: "character", label: "Sansa Stark", characterId: "sansa-stark", x: 38, y: 23, world: [-3, 1, -2], detail: "The Stark heir who understands Ramsay and secures the decisive alliance.", navigate: "#/character/sansa-stark" },
-        { id: "ramsay", type: "character", label: "Ramsay Bolton", characterId: "ramsay-bolton", x: 69, y: 18, world: [3.2, 1.4, -2.7], detail: "The Bolton lord defending his hold on Winterfell.", navigate: "#/character/ramsay-bolton" },
-        { id: "jon", type: "character", label: "Jon Snow", characterId: "jon-snow", x: 50, y: 47, world: [0, 1, 0], detail: "The commander at the center of the fight for the North.", navigate: "#/character/jon-snow" },
+        { id: "sansa", type: "character", label: "Sansa Stark", characterId: "sansa-stark", x: 38, y: 19, world: [-3, 1, -2], detail: "The Stark heir who understands Ramsay and secures the decisive alliance.", navigate: "#/character/sansa-stark" },
+        { id: "ramsay", type: "character", label: "Ramsay Bolton", characterId: "ramsay-bolton", x: 69, y: 14, world: [3.2, 1.4, -2.7], detail: "The Bolton lord defending his hold on Winterfell.", navigate: "#/character/ramsay-bolton" },
+        { id: "jon", type: "character", label: "Jon Snow", characterId: "jon-snow", x: 50, y: 33, world: [0, 1, 0], detail: "The commander at the center of the fight for the North.", navigate: "#/character/jon-snow" },
         { id: "tormund", type: "character", label: "Tormund Giantsbane", characterId: "tormund-giantsbane", x: 29, y: 52, world: [-4.4, 0.5, 0.8], detail: "The free folk's field commander and Jon's ally.", navigate: "#/character/tormund-giantsbane" },
-        { id: "winterfell", type: "place", label: "Winterfell", icon: ICONS.castle, x: 78, y: 40, world: [4.8, 0.4, -0.5], detail: "The ancestral Stark seat and prize of the campaign." },
+        { id: "winterfell", type: "place", label: "Winterfell", icon: ICONS.castle, x: 78, y: 28, world: [4.8, 0.4, -0.5], detail: "The ancestral Stark seat and prize of the campaign." },
         { id: "battle", type: "battle", label: "Battle of the Bastards", battleId: "battle-of-the-bastards", icon: ICONS.battle, x: 72, y: 70, world: [3.6, 0, 4.2], detail: "A collision of Stark loyalists, free folk, Bolton forces, and the Knights of the Vale.", navigate: "#/battles" }
       ]
     },
