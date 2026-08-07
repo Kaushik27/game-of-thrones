@@ -74,6 +74,7 @@ const peopleSource = read("js/people-intelligence.js");
 const ravenWallSource = read("js/raven-wall.js");
 const atmosphereSource = read("js/global-atmosphere.js");
 const navSource = read("src/react-nav-entry.jsx");
+const archiveShellSource = read("css/archive-shell.css");
 
 const contracts = [
   [appSource.includes('initialEventId: query.get("event") || ""'), "app must pass event deep links to StoryAtlas"],
@@ -101,6 +102,7 @@ const contracts = [
   [atmosphereSource.includes("global.GotAtmosphere") && atmosphereSource.includes("AudioContext"), "Atmosphere must remain opt-in and locally synthesized"],
   [appSource.includes("got:route-change") && appSource.includes("route-enter"), "route changes must publish a shared cinematic transition state"],
   [navSource.includes("data-atmosphere-control") && navSource.includes("GotAtmosphere"), "React shell must own the persistent atmosphere control"],
+  [archiveShellSource.includes("body.archive-route") && archiveShellSource.includes("--archive-gold"), "archive routes must share a visual shell token system"],
   [appSource.includes("window.RavenWall.mount") && appSource.includes("atlasRequested"), "Timeline must route plain navigation to the Memory Wall and preserve the Episode Atlas"]
 ];
 contracts.forEach(([condition, message]) => assert.ok(condition, message));
@@ -130,6 +132,7 @@ assert.ok(scripts.indexOf("js/quotes.js") < scripts.indexOf("js/quote-curation.j
 assert.ok(scripts.indexOf("js/fan-moments.js") < scripts.indexOf("js/app.js"), "fan moments must load before the router");
 assert.ok(scripts.indexOf("js/raven-wall.js") < scripts.indexOf("js/app.js"), "Memory Wall must load before the router");
 assert.ok(scripts.indexOf("js/global-atmosphere.js") < scripts.indexOf("js/app.js"), "atmosphere must load before route rendering");
+assert.ok(indexSource.includes("css/archive-shell.css?v=archive-shell-2"), "shared archive shell must load in the static entrypoint");
 assert.ok(scripts.indexOf("js/quote-curation.js") < scripts.indexOf("js/app.js"), "quote curation must load before the router");
 assert.ok(scripts.indexOf("js/lore-data.js") < scripts.indexOf("js/lore-library.js"), "lore data must load before LoreLibrary");
 assert.ok(scripts.indexOf("js/story-atlas.js") < scripts.indexOf("js/app.js"), "feature modules must load before the router");

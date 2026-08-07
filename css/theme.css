@@ -111,6 +111,8 @@ body {
   position: fixed;
   z-index: 2;
   inset: 0;
+  overflow: hidden;
+  contain: paint;
   pointer-events: none;
   opacity: .34;
   background: radial-gradient(circle at 18% 18%, rgba(120,174,204,.055), transparent 32%), radial-gradient(circle at 84% 72%, rgba(212,175,55,.035), transparent 34%);
@@ -124,7 +126,7 @@ body {
   content: "";
   opacity: .12;
 }
-#site-atmosphere span { position: absolute; inset: -20%; background: radial-gradient(ellipse at 50% 10%, rgba(255,255,255,.10), transparent 44%); animation: atmosphere-drift 18s ease-in-out infinite alternate; }
+#site-atmosphere span { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 10%, rgba(255,255,255,.10), transparent 44%); animation: atmosphere-drift 18s ease-in-out infinite alternate; }
 html[data-atmosphere-on] #site-atmosphere { opacity: .48; }
 @keyframes atmosphere-drift { from { transform: translate3d(-1%, -1%, 0) scale(1); } to { transform: translate3d(1%, 1%, 0) scale(1.04); } }
 

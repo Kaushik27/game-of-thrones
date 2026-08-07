@@ -1,0 +1,136 @@
+/* Shared archive language. Route modules keep their own identity, but they
+   now enter through the same visual frame: one horizon line, one type scale,
+   one readable control treatment, and one atmospheric surface. */
+:root {
+  --archive-gold: #d4b36a;
+  --archive-cream: #f1eadc;
+  --archive-muted: #b0aca2;
+  --archive-line: rgba(212, 179, 106, .25);
+  --archive-surface: rgba(7, 10, 11, .78);
+}
+
+body.archive-route {
+  background: #050809;
+}
+
+body.archive-route #site-nav {
+  border-bottom-color: rgba(212, 179, 106, .26);
+  background: rgba(4, 7, 8, .94);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, .24);
+}
+
+body.archive-route #app {
+  position: relative;
+  isolation: isolate;
+  background: #050809;
+}
+
+body.archive-route #app::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    radial-gradient(circle at 8% 12%, rgba(87, 124, 142, .08), transparent 28rem),
+    radial-gradient(circle at 92% 62%, rgba(177, 107, 47, .06), transparent 32rem);
+  content: "";
+  pointer-events: none;
+}
+
+body.archive-route .people-intelligence,
+body.archive-route .world-atlas,
+body.archive-route .story-atlas,
+body.archive-route .lore-library,
+body.archive-route .voices-film,
+body.archive-route .raven-wall-host {
+  border-top: 1px solid var(--archive-line);
+}
+
+body.archive-route .pi-hero h1,
+body.archive-route .wa-hero h1,
+body.archive-route .story-atlas__hero h1,
+body.archive-route .lore-library__hero h1,
+body.archive-route .voices-film h1,
+body.archive-route .voices-hero__title,
+body.archive-route .raven-wall h1 {
+  color: var(--archive-cream);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -.045em;
+  text-transform: none;
+}
+
+body.archive-route .pi-eyebrow,
+body.archive-route .wa-eyebrow,
+body.archive-route .story-atlas__eyebrow,
+body.archive-route .lore-library__eyebrow,
+body.archive-route .voices-film__eyebrow,
+body.archive-route .raven-wall__eyebrow {
+  color: var(--archive-gold);
+  font-size: .64rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+body.archive-route .pi-hero::before {
+  inset: 0;
+  border: 0;
+  border-top: 1px solid rgba(212, 179, 106, .14);
+  border-bottom: 1px solid rgba(212, 179, 106, .22);
+}
+
+body.archive-route .pi-hero,
+body.archive-route .wa-hero,
+body.archive-route .story-atlas__hero,
+body.archive-route .lore-library__hero,
+body.archive-route .voices-film__inner,
+body.archive-route .raven-wall {
+  scroll-margin-top: 74px;
+}
+
+body.archive-route .voices-film,
+body.archive-route .voices-film__inner {
+  min-height: calc(100svh - 58px);
+}
+
+body.archive-route .raven-wall {
+  padding-top: clamp(42px, 5vw, 68px);
+}
+
+body.archive-route .voices-archive,
+body.archive-route .voices-hero {
+  overflow: clip;
+}
+
+body.archive-route .voices-button,
+body.archive-route .voices-sound-toggle,
+body.archive-route .world-journey-film__sound,
+body.archive-route .world-journey-film__play,
+body.archive-route .raven-wall__filters button,
+body.archive-route .raven-wall__share,
+body.archive-route .raven-wall__remember {
+  border-radius: 0;
+  border-color: rgba(212, 179, 106, .36);
+  background: rgba(5, 8, 9, .62);
+}
+
+body.archive-route .voices-button:hover,
+body.archive-route .voices-sound-toggle:hover,
+body.archive-route .world-journey-film__sound:hover,
+body.archive-route .world-journey-film__play:hover,
+body.archive-route .raven-wall__filters button:hover,
+body.archive-route .raven-wall__filters button[aria-pressed="true"],
+body.archive-route .raven-wall__share:hover,
+body.archive-route .raven-wall__remember:hover {
+  border-color: var(--archive-gold);
+  background: rgba(212, 179, 106, .1);
+}
+
+@media (max-width: 720px) {
+  body.archive-route .raven-wall { padding-top: 30px; }
+  body.archive-route .voices-film__inner { min-height: calc(100svh - 52px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.archive-route #app::before { display: none; }
+}
