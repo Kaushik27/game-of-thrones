@@ -47,6 +47,11 @@ function router() {
   const app = document.getElementById("app");
   const { path, query } = parseHash();
   destroyActiveView();
+  document.body.dataset.route = path;
+  window.dispatchEvent(new CustomEvent("got:route-change", { detail: { path, query: query.toString() } }));
+  app.classList.remove("route-enter");
+  void app.offsetWidth;
+  app.classList.add("route-enter");
   document.body.classList.toggle("realm-journey-route", path === "/");
   document.body.classList.toggle("character-cinematic-route", /^\/character\//.test(path));
   document.body.classList.toggle("voices-route", path === "/quotes");
@@ -1336,7 +1341,11 @@ function viewTimeline(app, params, query) {
     app.innerHTML = `<div id="raven-wall-root" class="encyclopedia-feature-host"></div>`;
     const root = document.getElementById("raven-wall-root");
     try {
-      registerActiveView(window.RavenWall.mount(root, { onNavigate: navigateFeatureTarget }));
+      const memoryId = query.get("memory") || "";
+      const initialIndex = memoryId && Array.isArray(window.FAN_MOMENTS)
+        ? Math.max(0, window.FAN_MOMENTS.findIndex(moment => moment.id === memoryId))
+        : 0;
+      registerActiveView(window.RavenWall.mount(root, { initialIndex, onNavigate: navigateFeatureTarget }));
       return;
     } catch (error) {
       console.error("The Raven Wall could not be mounted.", error);
@@ -1714,7 +1723,7 @@ function viewQuotes(app, params, query) {
 
       <section class="voices-memory-rail" aria-labelledby="voices-memory-title">
         <div class="voices-memory-rail__intro"><span class="voices-kicker">The memory behind the line</span><h2 id="voices-memory-title">A quote is never only a quote.</h2><p>Open the scene, the consequence, and the feeling that made a sentence survive the credits.</p></div>
-        <div class="voices-memory-rail__cards">${fanMoments.slice(0, 4).map(moment => `<a class="voices-memory-card" href="#/quotes?quote=${escapeHTML(moment.quoteId)}" style="--voices-memory-image:url('../${escapeHTML(moment.image)}')"><span class="voices-memory-card__image" aria-hidden="true"></span><span class="voices-memory-card__veil" aria-hidden="true"></span><span class="voices-memory-card__kicker">${escapeHTML(moment.kicker)}</span><strong>${escapeHTML(moment.title)}</strong><small>${escapeHTML(moment.location)}</small><span class="voices-memory-card__link">Enter the moment <span aria-hidden="true">↗</span></span></a>`).join("")}</div>
+        <div class="voices-memory-rail__cards">${fanMoments.slice(0, 4).map(moment => `<a class="voices-memory-card" href="#/quotes?quote=${escapeHTML(moment.quoteId)}" style="--voices-memory-image:url('${escapeHTML(moment.image)}')"><span class="voices-memory-card__image" aria-hidden="true"></span><span class="voices-memory-card__veil" aria-hidden="true"></span><span class="voices-memory-card__kicker">${escapeHTML(moment.kicker)}</span><strong>${escapeHTML(moment.title)}</strong><small>${escapeHTML(moment.location)}</small><span class="voices-memory-card__link">Enter the moment <span aria-hidden="true">↗</span></span></a>`).join("")}</div>
       </section>
 
       <section class="voices-spotlight" aria-label="Quote spotlight">

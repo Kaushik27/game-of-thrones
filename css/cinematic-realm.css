@@ -164,6 +164,7 @@ html.cinematic-portal-jump body { scroll-behavior: auto !important; }
 
 body.realm-journey-route #site-nav { position: fixed; z-index: 80; background: transparent; pointer-events: none; }
 body.realm-journey-route:not(.realm-journey-route--started) #site-nav { opacity: 0; transform: translateY(-12px); transition: opacity 420ms ease, transform 420ms ease; }
+body.realm-journey-route .react-nav-shell .nav-atmosphere { display: none; }
 body.realm-journey-route:not(.realm-journey-route--started) #site-nav .nav-links,
 body.realm-journey-route:not(.realm-journey-route--started) #site-nav .nav-search,
 body.realm-journey-route:not(.realm-journey-route--started) #site-nav .nav-toggle { visibility: hidden; }

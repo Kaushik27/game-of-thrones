@@ -95,6 +95,7 @@ label, .label-text { font-size: 0.875rem; font-weight: 500; }
 
 @media (prefers-reduced-motion: reduce) {
   html, body, * { scroll-behavior: auto !important; animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  #site-atmosphere span { animation: none; }
 }
 
 body {
@@ -103,6 +104,32 @@ body {
     radial-gradient(ellipse at bottom, rgba(143,29,33,0.05), transparent 60%);
   background-attachment: fixed;
 }
+
+/* Shared atmosphere: subtle enough for reading, present enough to make route
+   changes feel like a camera moving through one world. */
+#site-atmosphere {
+  position: fixed;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+  opacity: .34;
+  background: radial-gradient(circle at 18% 18%, rgba(120,174,204,.055), transparent 32%), radial-gradient(circle at 84% 72%, rgba(212,175,55,.035), transparent 34%);
+  mix-blend-mode: screen;
+}
+#site-atmosphere::after {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,.14) .55px, transparent .7px);
+  background-size: 5px 5px;
+  content: "";
+  opacity: .12;
+}
+#site-atmosphere span { position: absolute; inset: -20%; background: radial-gradient(ellipse at 50% 10%, rgba(255,255,255,.10), transparent 44%); animation: atmosphere-drift 18s ease-in-out infinite alternate; }
+html[data-atmosphere-on] #site-atmosphere { opacity: .48; }
+@keyframes atmosphere-drift { from { transform: translate3d(-1%, -1%, 0) scale(1); } to { transform: translate3d(1%, 1%, 0) scale(1.04); } }
+
+#app.route-enter { animation: route-enter 720ms var(--ease-out) both; }
+@keyframes route-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
 h1, h2, h3, h4, .display {
   font-family: 'Cinzel', Georgia, 'Times New Roman', serif;

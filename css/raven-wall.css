@@ -1,12 +1,15 @@
 /* Fan-owned Memory Wall — pinned fragments, not a promotional content page. */
 body.raven-wall-route { background: #090a09 url('../assets/ui/war-table-stone.jpg') center / cover fixed; }
-body.raven-wall-route #site-nav { display: none; }
+body.raven-wall-route #site-nav { display: contents; }
 body.raven-wall-route #site-footer { background: rgba(5,6,6,.94); }
 .raven-wall-host { min-height: 100svh; color: #e7dfcf; }
-.raven-wall { --rw-gold: #d1a957; --rw-cream: #eee5d2; --rw-muted: #a9a397; position: relative; min-height: calc(100svh - 70px); overflow: hidden; padding: 34px clamp(18px, 5vw, 76px) 56px; background: #0b0d0d url('../assets/ui/war-table-stone.jpg') center / cover; isolation: isolate; }
-.raven-wall::before { position: absolute; inset: 0; z-index: -1; background: rgba(5,7,7,.74); content: ""; pointer-events: none; }
-.raven-wall__texture { position: absolute; inset: 0; z-index: -1; background: url('../assets/ui/war-table-stone.jpg') center / cover; opacity: .16; mix-blend-mode: screen; pointer-events: none; }
-.raven-wall__masthead { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; max-width: 1420px; margin: 0 auto; }
+.raven-wall { --rw-gold: #d1a957; --rw-cream: #eee5d2; --rw-muted: #a9a397; position: relative; min-height: calc(100svh - 70px); overflow: hidden; padding: 34px clamp(18px, 5vw, 76px) 56px; background: #0b0d0d; isolation: isolate; }
+.raven-wall::before { position: absolute; inset: 0; z-index: -2; background: linear-gradient(90deg, rgba(4,7,8,.78), rgba(4,7,8,.38) 48%, rgba(4,7,8,.66)), linear-gradient(180deg, rgba(3,6,7,.24), rgba(3,6,7,.78)); content: ""; pointer-events: none; }
+.raven-wall__scene-backdrop { position: absolute; z-index: -1; inset: 0; background-position: center; background-size: cover; filter: saturate(.92) contrast(1.08) brightness(.82); opacity: .72; transform: scale(1.04); transition: background-image 900ms ease, opacity 900ms ease, transform 1.4s var(--ease-out, cubic-bezier(.16,1,.3,1)); }
+.raven-wall__scene-backdrop::after { position: absolute; inset: 0; background: radial-gradient(ellipse at 58% 44%, transparent 0 24%, rgba(4,7,8,.46) 72%), linear-gradient(90deg, rgba(5,8,9,.66), transparent 54%, rgba(5,8,9,.48)); content: ""; }
+.raven-wall__masthead, .raven-wall__intro, .raven-wall__filters, .raven-wall__board, .raven-wall__annotation, .raven-wall__footer { position: relative; z-index: 1; }
+.raven-wall__texture { position: absolute; inset: 0; z-index: 0; background: url('../assets/ui/war-table-stone.jpg') center / cover; opacity: .12; mix-blend-mode: screen; pointer-events: none; }
+.raven-wall__masthead { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; max-width: 1420px; margin: 22px auto 0; }
 .raven-wall__brand { margin: 0; color: var(--rw-gold); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.15rem; letter-spacing: .1em; text-transform: uppercase; }
 .raven-wall__masthead span, .raven-wall__date { color: #b0aa9c; font-size: .58rem; letter-spacing: .18em; text-transform: uppercase; }
 .raven-wall__masthead span { display: block; margin-top: 5px; }
@@ -17,7 +20,7 @@ body.raven-wall-route #site-footer { background: rgba(5,6,6,.94); }
 .raven-wall__raven { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid var(--rw-gold); border-radius: 50%; background: rgba(12,13,12,.72); cursor: pointer; }
 .raven-wall__raven img { width: 17px; height: 17px; filter: sepia(1) saturate(1.7) brightness(1.3); }
 .raven-wall__raven:hover { background: rgba(209,169,87,.15); }
-.raven-wall__intro { max-width: 620px; margin: clamp(62px, 10vh, 122px) auto 0; text-align: center; }
+.raven-wall__intro { position: relative; z-index: 1; max-width: 620px; margin: clamp(40px, 7vh, 84px) auto 0; text-align: center; }
 .raven-wall__eyebrow { margin: 0; color: var(--rw-gold); font-size: .63rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
 .raven-wall h1 { margin: 16px 0 0; color: var(--rw-cream); font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(3.2rem, 7vw, 7.2rem); font-weight: 500; line-height: .86; letter-spacing: -.045em; }
 .raven-wall h1 em { color: #caa86c; font-style: italic; }
@@ -27,7 +30,7 @@ body.raven-wall-route #site-footer { background: rgba(5,6,6,.94); }
 .raven-wall__filters button { min-height: 30px; padding: 6px 12px; border: 1px solid rgba(209,169,87,.28); background: rgba(8,10,10,.5); color: #9f9b92; font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; cursor: pointer; }
 .raven-wall__filters button:hover, .raven-wall__filters button[aria-pressed="true"] { border-color: var(--rw-gold); color: var(--rw-cream); background: rgba(209,169,87,.1); }
 .raven-wall__board { display: grid; grid-template-columns: minmax(190px, 1fr) minmax(390px, 560px) minmax(190px, 1fr); align-items: center; gap: clamp(18px, 4vw, 56px); max-width: 1280px; min-height: 510px; margin: 0 auto; }
-.raven-wall__note { position: relative; padding: clamp(28px, 4vw, 52px) clamp(24px, 4vw, 54px); overflow: hidden; border: 1px solid rgba(209,169,87,.48); background: #111413 url('../assets/ui/war-table-stone.jpg') center / cover; box-shadow: 0 24px 70px rgba(0,0,0,.52); transform: rotate(-1deg); }
+.raven-wall__note { position: relative; padding: clamp(28px, 4vw, 52px) clamp(24px, 4vw, 54px); overflow: hidden; border: 1px solid rgba(209,169,87,.58); background: linear-gradient(135deg, rgba(9,13,13,.88), rgba(11,14,14,.7)), var(--rw-image, url('../assets/ui/war-table-stone.jpg')) center / cover; box-shadow: 0 24px 70px rgba(0,0,0,.52), 0 0 0 1px rgba(255,255,255,.03) inset; transform: rotate(-1deg); }
 .raven-wall__note::before { position: absolute; inset: 0; background: rgba(8,10,10,.8); content: ""; pointer-events: none; }
 .raven-wall__note > * { position: relative; z-index: 1; }
 .raven-wall__note-kicker { margin: 0; color: var(--rw-gold); font-size: .61rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
@@ -51,9 +54,15 @@ body.raven-wall-route #site-footer { background: rgba(5,6,6,.94); }
 .raven-wall__scrap strong { margin-top: 7px; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.5rem; font-weight: 500; line-height: .95; }
 .raven-wall__scrap small { margin-top: 8px; color: #c0bbb0; font-size: .61rem; line-height: 1.3; }
 .raven-wall__scrap:hover { border-color: var(--rw-gold); transform: rotate(0) translateY(-4px); }
-.raven-wall__annotation { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; max-width: 780px; margin: 16px auto 0; padding: 20px 0; border-top: 1px solid rgba(209,169,87,.24); border-bottom: 1px solid rgba(209,169,87,.24); }
+.raven-wall__annotation { display: grid; grid-template-columns: 1fr 1fr 1.15fr; gap: 28px; max-width: 1020px; margin: 16px auto 0; padding: 20px 0; border-top: 1px solid rgba(209,169,87,.24); border-bottom: 1px solid rgba(209,169,87,.24); }
 .raven-wall__annotation-label { color: var(--rw-gold); font-size: .58rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
 .raven-wall__annotation p { margin: 8px 0 0; color: #c3bcb0; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.08rem; line-height: 1.15; }
+.raven-wall__personal-note { display: grid; gap: 8px; }
+.raven-wall__personal-note textarea { width: 100%; min-height: 58px; resize: vertical; padding: 9px 10px; border: 1px solid rgba(209,169,87,.28); background: rgba(3,6,6,.45); color: #e5ddcd; font: 1rem/1.2 'Cormorant Garamond', Georgia, serif; }
+.raven-wall__personal-note textarea::placeholder { color: #8f918c; }
+.raven-wall__personal-note textarea:focus-visible { outline: 2px solid #e3c276; outline-offset: 2px; border-color: #e3c276; }
+.raven-wall__share { min-height: 38px; padding: 9px 13px; border: 1px solid rgba(209,169,87,.54); background: rgba(4,7,7,.5); color: #cfc3aa; font-size: .62rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; cursor: pointer; }
+.raven-wall__share:hover { border-color: #e3c276; color: #f0e7d6; }
 .raven-wall__footer { display: flex; align-items: center; justify-content: space-between; max-width: 1280px; margin: 28px auto 0; color: #8f8a80; font-size: .64rem; letter-spacing: .11em; text-transform: uppercase; }
 .raven-wall__footer div { display: flex; gap: 20px; }
 .raven-wall__footer a { color: var(--rw-gold); }
@@ -61,6 +70,7 @@ body.raven-wall-route #site-footer { background: rgba(5,6,6,.94); }
 
 @media (max-width: 820px) {
   .raven-wall { padding-inline: 16px; }
+  .raven-wall__filters { justify-content: flex-start; }
   .raven-wall__date { display: none; }
   .raven-wall__nav { order: 3; width: 100%; justify-content: space-between; margin: 18px 0 0; overflow-x: auto; }
   .raven-wall__masthead { flex-wrap: wrap; }

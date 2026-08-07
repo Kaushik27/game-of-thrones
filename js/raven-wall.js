@@ -34,10 +34,10 @@
 
     root.className = "raven-wall-host";
     root.innerHTML = `<main class="raven-wall" aria-labelledby="raven-wall-title">
+      <div class="raven-wall__scene-backdrop" aria-hidden="true"></div>
       <div class="raven-wall__texture" aria-hidden="true"></div>
       <header class="raven-wall__masthead">
         <div><p class="raven-wall__brand">The Raven Wall</p><span>A fan archive · not an official guide</span></div>
-        <nav class="raven-wall__nav" aria-label="Memory Wall navigation"><a href="#/timeline" aria-current="page">Wall</a><a href="#/quotes">Voices</a><a href="#/characters">People</a><a href="#/map">World</a><a href="#/lore">Lore</a></nav>
         <p class="raven-wall__date">A wall of scenes we carried home</p>
         <button class="raven-wall__raven" type="button" data-rw-surprise aria-label="Let the raven choose a memory"><img src="assets/icons/compass.svg" alt=""></button>
       </header>
@@ -55,7 +55,7 @@
           <h2 data-rw-title></h2>
           <p class="raven-wall__location" data-rw-location></p>
           <blockquote><span aria-hidden="true">“</span><p data-rw-line></p><cite data-rw-speaker></cite></blockquote>
-          <div class="raven-wall__actions"><button class="raven-wall__remember" type="button" data-rw-remember></button><a class="raven-wall__scene" data-rw-scene href="#/quotes">Explore the scene <span aria-hidden="true">↗</span></a></div>
+          <div class="raven-wall__actions"><button class="raven-wall__remember" type="button" data-rw-remember></button><a class="raven-wall__scene" data-rw-scene href="#/quotes">Enter the scene <span aria-hidden="true">↗</span></a><button class="raven-wall__share" type="button" data-rw-share>Share fragment</button></div>
           <p class="raven-wall__status" data-rw-status role="status" aria-live="polite"></p>
         </article>
         <div class="raven-wall__scraps raven-wall__scraps--right" data-rw-scraps-right></div>
@@ -63,12 +63,15 @@
       <section class="raven-wall__annotation" aria-label="Fan annotation">
         <div><span class="raven-wall__annotation-label">Why it stayed</span><p data-rw-note-copy></p></div>
         <div><span class="raven-wall__annotation-label">What changed</span><p data-rw-consequence></p></div>
+        <label class="raven-wall__personal-note"><span class="raven-wall__annotation-label">What stayed with you</span><textarea data-rw-personal-note rows="2" maxlength="280" placeholder="Leave a private note for your next visit"></textarea></label>
       </section>
       <footer class="raven-wall__footer"><span data-rw-count></span><div><a href="#/quotes">Read every voice</a><a href="#/timeline?atlas=1">Open the episode atlas</a></div></footer>
     </main>`;
 
     const note = root.querySelector("[data-rw-note]");
     const filters = root.querySelector("[data-rw-filters]");
+    const backdrop = root.querySelector("[data-rw-backdrop]") || root.querySelector(".raven-wall__scene-backdrop");
+    const personalNote = root.querySelector("[data-rw-personal-note]");
     const tags = ["all", ...new Set(moments.flatMap(moment => moment.tags).slice(0, 6))];
     filters.innerHTML = tags.map(tag => `<button type="button" data-rw-tag="${escape(tag)}" aria-pressed="${String(tag === activeTag)}">${escape(tag === "all" ? "All fragments" : tag.replace(/-/g, " "))}</button>`).join("");
 
@@ -81,6 +84,7 @@
       const rememberedNow = remembered.has(moment.id);
       root.dataset.moment = moment.id;
       root.style.setProperty("--rw-image", `url('${moment.image}')`);
+      if (backdrop) backdrop.style.backgroundImage = `url("${moment.image}")`;
       root.querySelector("[data-rw-kicker]").textContent = moment.kicker;
       root.querySelector("[data-rw-title]").textContent = moment.title;
       root.querySelector("[data-rw-location]").textContent = `${moment.location} · ${moment.episodeId.toUpperCase()}`;
@@ -93,6 +97,9 @@
       root.querySelector("[data-rw-remember]").setAttribute("aria-pressed", String(rememberedNow));
       root.querySelector("[data-rw-scene]").href = `#/quotes?quote=${encodeURIComponent(moment.quoteId)}`;
       root.querySelector("[data-rw-status]").textContent = announce || "";
+      if (personalNote) {
+        try { personalNote.value = JSON.parse(global.localStorage.getItem("got-fan-memory-notes") || "{}")[moment.id] || ""; } catch (error) { personalNote.value = ""; }
+      }
       filters.querySelectorAll("[data-rw-tag]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.rwTag === activeTag)));
       const left = list[(currentIndex - 1 + list.length) % list.length];
       const right = list[(currentIndex + 1) % list.length];
@@ -101,7 +108,7 @@
     }
 
     function scrapMarkup(moment, direction) {
-      return `<button class="raven-wall__scrap raven-wall__scrap--${direction}" type="button" data-rw-open="${escape(moment.id)}" style="--scrap-image:url('../${escape(moment.image)}')"><span>${escape(moment.kicker)}</span><strong>${escape(moment.title)}</strong><small>${escape(moment.location)}</small></button>`;
+      return `<button class="raven-wall__scrap raven-wall__scrap--${direction}" type="button" data-rw-open="${escape(moment.id)}" style="--scrap-image:url('${escape(moment.image)}')"><span>${escape(moment.kicker)}</span><strong>${escape(moment.title)}</strong><small>${escape(moment.location)}</small></button>`;
     }
 
     function move(delta) {
@@ -122,7 +129,24 @@
         if (remembered.has(moment.id)) remembered.delete(moment.id); else remembered.add(moment.id);
         try { global.localStorage.setItem("got-fan-memories", JSON.stringify([...remembered])); } catch (error) { /* optional */ }
         render(remembered.has(moment.id) ? "Kept. The wall remembers with you." : "Removed from your wall.");
+        return;
       }
+      if (event.target.closest("[data-rw-share]")) {
+        const moment = selectedMoment();
+        const shareText = `“${moment.line}” — ${moment.title}, ${moment.location}`;
+        const shareUrl = `${global.location.origin}${global.location.pathname}#/timeline?memory=${encodeURIComponent(moment.id)}`;
+        render("Fragment ready to share.");
+        if (global.navigator && global.navigator.share) global.navigator.share({ title: moment.title, text: shareText, url: shareUrl }).catch(() => {});
+        else if (global.navigator && global.navigator.clipboard) global.navigator.clipboard.writeText(`${shareText}\n${shareUrl}`).then(() => render("Fragment link copied."), () => render("Fragment ready to share."));
+      }
+    });
+    personalNote && personalNote.addEventListener("input", () => {
+      const moment = selectedMoment();
+      try {
+        const notes = JSON.parse(global.localStorage.getItem("got-fan-memory-notes") || "{}");
+        notes[moment.id] = personalNote.value.slice(0, 280);
+        global.localStorage.setItem("got-fan-memory-notes", JSON.stringify(notes));
+      } catch (error) { /* private enhancement; wall remains usable */ }
     });
     root.addEventListener("keydown", event => {
       if (event.key === "ArrowLeft") { event.preventDefault(); move(-1); }
