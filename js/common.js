@@ -6,35 +6,31 @@
 // ==========================================================================
 
 const NAV_LINKS = [
-  { href: "index.html", label: "Home" },
-  { href: "characters.html", label: "Characters" },
-  { href: "houses.html", label: "Houses" },
-  { href: "map.html", label: "Map" },
-  { href: "timeline.html", label: "Timeline" },
-  { href: "battles.html", label: "Battles" },
-  { href: "quiz.html", label: "Quiz" },
-  { href: "quotes.html", label: "Quotes" }
+  { href: "#/", label: "Home" },
+  { href: "#/characters", label: "Characters" },
+  { href: "#/houses", label: "Houses" },
+  { href: "#/map", label: "Map" },
+  { href: "#/timeline", label: "Timeline" },
+  { href: "#/battles", label: "Battles" },
+  { href: "#/quiz", label: "Quiz" },
+  { href: "#/quotes", label: "Quotes" }
 ];
-
-function currentPageFile() {
-  const path = window.location.pathname.split("/").pop();
-  return path || "index.html";
-}
 
 function renderNav() {
   const mount = document.getElementById("site-nav");
   if (!mount) return;
-  const current = currentPageFile();
+  const hash = window.location.hash || "#/";
   mount.innerHTML = `
-    <div class="brand">🐺 GAME OF <span>THRONES</span></div>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">☰</button>
+    <a class="brand" href="#/">${sigilSVG("direwolf", { size: 22, className: "brand-sigil" })} GAME OF <span>THRONES</span></a>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
     <nav class="nav-links" id="nav-links">
-      ${NAV_LINKS.map(l => `<a href="${l.href}" class="${l.href === current ? 'active' : ''}">${l.label}</a>`).join("")}
+      ${NAV_LINKS.map(l => `<a href="${l.href}" class="${hash === l.href || (l.href !== "#/" && hash.startsWith(l.href)) ? 'active' : ''}">${l.label}</a>`).join("")}
     </nav>
   `;
   const toggle = document.getElementById("nav-toggle");
   const links = document.getElementById("nav-links");
   toggle.addEventListener("click", () => links.classList.toggle("open"));
+  links.querySelectorAll("a").forEach(a => a.addEventListener("click", () => links.classList.remove("open")));
 }
 
 function renderFooter() {
@@ -44,10 +40,26 @@ function renderFooter() {
     <br><a href="https://github.com/Kaushik27/game-of-thrones" target="_blank" rel="noopener">View source on GitHub</a>`;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderNav();
-  renderFooter();
-});
+// ---------- Scroll reveal ----------
+let revealObserver = null;
+function observeReveals(root) {
+  root = root || document;
+  if (!("IntersectionObserver" in window)) {
+    root.querySelectorAll(".reveal").forEach(el => el.classList.add("in-view"));
+    return;
+  }
+  if (!revealObserver) {
+    revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+  }
+  root.querySelectorAll(".reveal:not(.in-view)").forEach(el => revealObserver.observe(el));
+}
 
 // ---------- Character / house helpers ----------
 function getCharacter(id) {
@@ -70,9 +82,17 @@ function avatarHTML(character, size) {
   size = size || 56;
   const color = character.sigilColor || getHouseColor(character.house);
   const isDead = character.status === "dead";
-  return `<div class="avatar${isDead ? ' dead' : ''}" style="width:${size}px;height:${size}px;font-size:${size * 0.36}px;background:radial-gradient(circle at 30% 30%, ${color}, ${color}cc);">
-    ${initialsFor(character.name)}${isDead ? '<span class="skull">💀</span>' : ''}
+  const sigilId = houseSigilId(character.house);
+  const showSigil = size >= 36 && sigilId !== "none";
+  return `<div class="avatar${isDead ? ' dead' : ''}" style="width:${size}px;height:${size}px;font-size:${size * 0.36}px;background:linear-gradient(150deg, ${color}, ${color}99 55%, ${color}33); border-color:${color}55;">
+    ${initialsFor(character.name)}
+    ${showSigil ? sigilSVG(sigilId, { size: Math.max(12, Math.round(size * 0.3)), className: "avatar-sigil" }) : ""}
+    ${isDead ? '<span class="skull">&#128128;</span>' : ''}
   </div>`;
+}
+
+function cardAccentStyle(color) {
+  return `--card-accent:${color}; --card-accent-shadow:${color}33;`;
 }
 
 function charactersByHouse(house) {

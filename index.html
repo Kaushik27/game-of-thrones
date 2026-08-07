@@ -6,12 +6,14 @@
 <title>Game of Thrones — Westeros Reference</title>
 <meta name="description" content="An interactive reference site for Game of Thrones: character hub, house pages, an interactive map, timeline, battles, quiz and quote wall.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://d3js.org/d3.v7.min.js"></script>
 <link rel="stylesheet" href="css/theme.css">
 <style>
+  /* ---------- Home ---------- */
   .feature-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); margin-top: 20px; }
-  .feature-card { padding: 22px; }
-  .feature-card .icon { font-size: 1.8rem; }
+  .feature-card .icon { color: var(--card-accent, var(--accent)); }
   .feature-card h3 { margin: 10px 0 6px; }
   .feature-card p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.5; margin: 0; }
   .stat-row { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
@@ -20,95 +22,70 @@
   .stat .label { color: var(--text-dim); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
   .house-strip { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 24px; }
   .house-strip a {
+    display: inline-flex; align-items: center; gap: 6px;
     padding: 8px 16px; border-radius: 999px; border: 1px solid var(--panel-border);
     font-family: 'Cinzel', serif; font-size: 0.82rem; color: var(--text); text-decoration: none;
+    transition: border-color 0.15s, transform 0.15s;
   }
-  .house-strip a:hover { text-decoration: none; }
+  .house-strip a:hover { text-decoration: none; transform: translateY(-2px); }
+
+  /* ---------- Characters directory / relations graph ---------- */
+  #controls { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin: 20px 0; }
+  #search-input { width: 260px; }
+  .char-card .meta { min-width: 0; }
+  .char-card .name { font-family: 'Cinzel', serif; font-size: 0.95rem; margin: 0 0 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .char-card .sub { font-size: 0.78rem; color: var(--text-dim); }
+  #result-count { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 10px; }
+  #graph-detail li:hover { color: var(--accent); }
+
+  /* ---------- Houses ---------- */
+  .house-card { text-align: center; padding: 26px 18px; }
+  .house-sigil { width: 64px; height: 64px; margin: 0 auto 12px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid; }
+  .house-card h3 { margin: 0 0 4px; }
+  .house-card .words { font-style: italic; color: var(--text-dim); font-size: 0.85rem; margin: 4px 0; }
+  .house-card .seat { font-size: 0.8rem; color: var(--text-faint); }
+  .house-card .count { margin-top: 10px; font-size: 0.78rem; color: var(--text-dim); }
+
+  /* ---------- Timeline ---------- */
+  .season-btn {
+    padding: 10px 18px; border-radius: 6px; border: 1px solid var(--panel-border); background: var(--panel-bg);
+    color: var(--text-dim); cursor: pointer; font-family: 'Cinzel', serif; transition: background 0.15s, color 0.15s;
+  }
+  .season-btn.active { background: var(--accent); color: #14140f; border-color: var(--accent); font-weight: 700; }
+  .tl-event { position: relative; }
+  .tl-event::before {
+    content: ""; position: absolute; left: -33px; top: 4px; width: 14px; height: 14px; border-radius: 50%;
+    background: var(--accent); border: 2px solid var(--bg);
+  }
+
+  /* ---------- Quiz ---------- */
+  .mode-card .icon { display: flex; justify-content: center; color: var(--accent); }
+  .mode-card h3 { margin: 8px 0 4px; }
+  .mode-card.active { border-color: var(--accent); background: var(--panel-bg-alt); }
+  @media (max-width: 480px) { #answer-grid { grid-template-columns: 1fr !important; } }
+
+  /* ---------- Quote wall ---------- */
+  .quote-card::before {
+    content: "\201C"; position: absolute; top: -18px; left: 10px; font-family: 'Cinzel', serif;
+    font-size: 5rem; color: rgba(212,175,55,0.12); line-height: 1;
+  }
+
+  /* ---------- Map ---------- */
+  @media (max-width: 860px) { #map-layout { flex-direction: column; } #map-side { width: 100% !important; } }
 </style>
 </head>
 <body>
   <div id="site-nav"></div>
-
-  <div class="hero">
-    <h1 class="display">Game of Thrones</h1>
-    <p>A complete interactive reference for the Seven Kingdoms — every character, every house, the war for the Iron Throne, and everything that happened along the way.</p>
-    <div class="stat-row" id="stat-row"></div>
-  </div>
-
-  <div class="page-wrap">
-    <div class="section">
-      <div class="section-title">Explore Westeros</div>
-      <div class="feature-grid">
-        <a class="card feature-card" href="characters.html">
-          <div class="icon">🗡️</div>
-          <h3 class="display">Characters</h3>
-          <p>Browse every character with search and house/status filters — portraits, bios, relations, and personal timelines.</p>
-        </a>
-        <a class="card feature-card" href="houses.html">
-          <div class="icon">🏰</div>
-          <h3 class="display">Houses</h3>
-          <p>Sigils, words, seats, full family trees, and the rise and fall of each great house across the show.</p>
-        </a>
-        <a class="card feature-card" href="map.html">
-          <div class="icon">🗺️</div>
-          <h3 class="display">Map of Westeros</h3>
-          <p>An interactive map of the Seven Kingdoms — click a region to see who ruled it and what happened there.</p>
-        </a>
-        <a class="card feature-card" href="timeline.html">
-          <div class="icon">📜</div>
-          <h3 class="display">Timeline</h3>
-          <p>Scrub through all eight seasons — battles, deaths, weddings, and the political shifts that moved the story.</p>
-        </a>
-        <a class="card feature-card" href="battles.html">
-          <div class="icon">⚔️</div>
-          <h3 class="display">Battles &amp; Events</h3>
-          <p>Combatants, outcomes, and casualties for the Red Wedding, the Battle of the Bastards, and more.</p>
-        </a>
-        <a class="card feature-card" href="quiz.html">
-          <div class="icon">❓</div>
-          <h3 class="display">Quiz</h3>
-          <p>Test your knowledge — who said it, match the sigil, or trace a family tree. Keep score, play again.</p>
-        </a>
-        <a class="card feature-card" href="quotes.html">
-          <div class="icon">💬</div>
-          <h3 class="display">Quote Wall</h3>
-          <p>Searchable, shareable-styled cards of the show's most memorable lines.</p>
-        </a>
-        <a class="card feature-card" href="characters.html#graph">
-          <div class="icon">🕸️</div>
-          <h3 class="display">Relations Graph</h3>
-          <p>The original force-directed relationship graph — now available on every character's profile page.</p>
-        </a>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-title">The Great Houses</div>
-      <div class="house-strip" id="house-strip"></div>
-    </div>
-  </div>
-
+  <main id="app"></main>
   <div id="site-footer"></div>
 
   <script src="js/data.js"></script>
   <script src="js/events.js"></script>
   <script src="js/quotes.js"></script>
   <script src="js/battles.js"></script>
+  <script src="js/map-data.js"></script>
+  <script src="js/sigils.js"></script>
   <script src="js/common.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const majorHouses = Object.keys(HOUSE_COLORS).filter(h => h !== "Unaffiliated");
-      document.getElementById("stat-row").innerHTML = `
-        <div class="stat"><div class="num">${characters.length}+</div><div class="label">Characters</div></div>
-        <div class="stat"><div class="num">${majorHouses.length}</div><div class="label">Houses</div></div>
-        <div class="stat"><div class="num">${relations.length}+</div><div class="label">Relations</div></div>
-        <div class="stat"><div class="num">${battles.length}</div><div class="label">Major Battles</div></div>
-        <div class="stat"><div class="num">8</div><div class="label">Seasons</div></div>
-      `;
-      document.getElementById("house-strip").innerHTML = majorHouses.map(h =>
-        `<a href="house.html?id=${encodeURIComponent(h)}" style="border-color:${HOUSE_COLORS[h]}55;color:${HOUSE_COLORS[h]}">${h}</a>`
-      ).join("");
-    });
-  </script>
+  <script src="js/app.js"></script>
 </body>
 </html>
