@@ -13,7 +13,7 @@
       title: "Before crowns, there was a border.",
       body: "A line of ice. A world asleep. A story waiting for someone to cross it.",
       label: "The border",
-      focus: { name: "Jon Snow", role: "The first watch", image: "assets/characters/jon-snow-visual.png", characterId: "jon-snow" },
+      focus: { name: "The Wall", role: "The threshold of the known world", image: "assets/ui/border-journey-bg.png", characterId: "jon-snow" },
       quote: { text: "The night is dark and full of terrors.", speaker: "Melisandre", quoteId: "q21" },
       moments: [
         { eyebrow: "The Wall", title: "A border before a crown", text: "Begin at the place where the story first looks back at us.", href: "#/map?season=1" },
@@ -96,6 +96,7 @@
       <section class="cinematic-prologue" id="cinematic-prologue" aria-labelledby="cinematic-prologue-title">
         <div class="cinematic-prologue__stage" data-cinematic-stage data-scene="border">
           <div class="cinematic-prologue__layers" aria-hidden="true">
+            <img class="cinematic-prologue__layer cinematic-prologue__layer--border" src="assets/ui/border-journey-bg.png" alt="">
             <img class="cinematic-prologue__layer cinematic-prologue__layer--north" src="assets/ui/north-journey-bg.jpg" alt="">
             <img class="cinematic-prologue__layer cinematic-prologue__layer--fire" src="assets/ui/essos-journey-bg.jpg" alt="">
             <img class="cinematic-prologue__layer cinematic-prologue__layer--realm" src="assets/ui/capital-journey-bg.jpg" alt="">
@@ -115,8 +116,8 @@
             </div>
             <button class="cinematic-prologue__skip" type="button" data-cinematic-skip>Enter the living realm</button>
           </div>
-          <aside class="cinematic-prologue__focus" data-cinematic-focus aria-label="Featured character">
-            <div class="cinematic-prologue__focus-image-wrap"><img data-cinematic-focus-image class="cinematic-prologue__focus-image" src="assets/characters/jon-snow-visual.png" alt=""></div>
+          <aside class="cinematic-prologue__focus" data-cinematic-focus aria-label="Featured story image">
+            <div class="cinematic-prologue__focus-image-wrap"><img data-cinematic-focus-image class="cinematic-prologue__focus-image" src="assets/ui/border-journey-bg.png" alt=""></div>
             <div class="cinematic-prologue__focus-copy"><span data-cinematic-focus-role></span><strong data-cinematic-focus-name></strong><a data-cinematic-focus-link href="#/character/jon-snow">Open dossier <span aria-hidden="true">↗</span></a></div>
           </aside>
           <div class="cinematic-prologue__moments" aria-label="Story moments" data-cinematic-moments></div>

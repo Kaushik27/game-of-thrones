@@ -12,10 +12,13 @@ html.cinematic-portal-jump body { scroll-behavior: auto !important; }
 .cinematic-prologue__stage { position: sticky; top: 0; height: 100svh; overflow: hidden; isolation: isolate; background: #030608; }
 .cinematic-prologue__layers, .cinematic-prologue__layer, .cinematic-prologue__veil, .cinematic-prologue__grain { position: absolute; inset: 0; }
 .cinematic-prologue__layer { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: saturate(0.92) contrast(1.08) brightness(0.78); opacity: 0; transform: translate3d(calc(var(--pointer-x, 0) * -16px - var(--cinematic-progress, 0) * 22px), calc(var(--pointer-y, 0) * -12px), 0) scale(1.08); transition: opacity 900ms ease, transform 1.6s cubic-bezier(0.16, 1, 0.3, 1), filter 900ms ease; }
+.cinematic-prologue__layer--border { opacity: 0; filter: saturate(0.72) contrast(1.12) brightness(0.72); transform: translate3d(calc(var(--pointer-x, 0) * -16px - var(--cinematic-progress, 0) * 24px), calc(var(--pointer-y, 0) * -12px), 0) scale(1.06); }
 .cinematic-prologue__layer--north { opacity: var(--ice-opacity, 1); }
 .cinematic-prologue__layer--fire { opacity: var(--fire-opacity, 0); filter: saturate(1.22) contrast(1.08) brightness(0.82); transform: translate3d(calc(var(--pointer-x, 0) * -20px - var(--cinematic-progress, 0) * 32px), calc(var(--pointer-y, 0) * -14px), 0) scale(1.12); }
 .cinematic-prologue__layer--realm { opacity: var(--realm-opacity, 0); filter: saturate(1.05) contrast(1.1) brightness(0.72); transform: translate3d(calc(var(--pointer-x, 0) * -24px - var(--cinematic-progress, 0) * 40px), calc(var(--pointer-y, 0) * -16px), 0) scale(1.15); }
 .cinematic-prologue__stage[data-scene="ice"] .cinematic-prologue__layer--north { filter: saturate(0.94) contrast(1.14) brightness(0.74); }
+.cinematic-prologue__stage[data-scene="border"] .cinematic-prologue__layer--border { opacity: 1; }
+.cinematic-prologue__stage[data-scene="border"] .cinematic-prologue__layer--north { opacity: 0; }
 .cinematic-prologue__stage[data-scene="border"] { background: #071018; }
 .cinematic-prologue__stage[data-scene="border"] .cinematic-prologue__layer--north { filter: saturate(0.72) contrast(1.16) brightness(0.62); opacity: 0.58; }
 .cinematic-prologue__stage[data-scene="border"] .cinematic-prologue__veil { background: linear-gradient(90deg, rgba(1, 5, 8, 0.72) 0%, rgba(1, 5, 8, 0.24) 58%, rgba(1, 5, 8, 0.18) 100%); }
