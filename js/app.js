@@ -956,7 +956,7 @@ function viewQuiz(app) {
         </div>
       </div>
       <div id="quiz-area" style="max-width:640px;margin:0 auto;">
-        <div id="quiz-hud" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;font-family:'Cinzel',serif;">
+        <div id="quiz-hud" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;font-weight:600;">
           <span id="question-counter">Question 1 / 10</span>
           <span class="score">Score: <span id="score-display">0</span></span>
         </div>
