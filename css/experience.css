@@ -1,0 +1,244 @@
+/* ==========================================================================
+   The War Table — cinematic shell shared by every route
+   ========================================================================== */
+
+:root {
+  --bg-deep: #030506;
+  --bg-base: #080a0b;
+  --bg-elevated: #101314;
+  --bg-elevated-2: #171a1b;
+  --panel-bg: rgba(12, 15, 16, 0.94);
+  --panel-bg-alt: rgba(20, 23, 24, 0.96);
+  --panel-border: rgba(198, 157, 79, 0.24);
+  --hairline: rgba(224, 203, 159, 0.12);
+  --text: #eee9df;
+  --text-dim: #aaa69d;
+  --text-faint: #74736f;
+  --accent: #cba85c;
+  --accent-bright: #edca77;
+  --ember: #b94831;
+  --ice: #a8c3c8;
+  --radius: 2px;
+  --radius-sm: 2px;
+  --shadow: 0 22px 70px rgba(0, 0, 0, 0.58);
+}
+
+html { color-scheme: dark; }
+
+body {
+  background-color: var(--bg-deep);
+  background-image: url("../assets/ui/war-table-stone.jpg");
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+  letter-spacing: 0.005em;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: rgba(2, 4, 5, 0.76);
+  pointer-events: none;
+}
+
+#app { min-height: calc(100vh - 74px); }
+
+.page-wrap {
+  width: min(100%, 1360px);
+  padding-inline: clamp(16px, 3vw, 42px);
+}
+
+#site-nav {
+  min-height: 74px;
+  padding: 0 clamp(18px, 2.4vw, 36px);
+  gap: clamp(12px, 2vw, 28px);
+  flex-wrap: nowrap;
+  background: rgba(3, 5, 6, 0.94);
+  border-color: rgba(203, 168, 92, 0.28);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+#site-nav .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-right: auto;
+  color: var(--text);
+  font-size: clamp(0.92rem, 1.5vw, 1.34rem);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+#site-nav .brand-sigil { color: var(--accent); }
+#site-nav .brand-title { white-space: nowrap; }
+#site-nav .brand-title small { font-size: 0.58em; font-weight: 400; }
+#site-nav .brand-title strong { color: var(--accent-bright); font-weight: 600; }
+
+#site-nav .nav-links {
+  display: flex;
+  flex: 0 1 auto;
+  align-items: stretch;
+  justify-content: flex-end;
+  gap: clamp(2px, 0.45vw, 9px);
+  align-self: stretch;
+}
+
+#site-nav .nav-links a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 clamp(6px, 0.72vw, 11px);
+  border-radius: 0;
+  color: #bbb8b0;
+  font-size: clamp(0.66rem, 0.75vw, 0.78rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+#site-nav .nav-links a:hover {
+  background: transparent;
+  color: var(--text);
+  text-decoration: none;
+}
+
+#site-nav .nav-links a.active {
+  background: transparent;
+  color: var(--accent-bright);
+}
+
+#site-nav .nav-links a.active::after {
+  content: "";
+  position: absolute;
+  right: 8px;
+  bottom: -1px;
+  left: 8px;
+  height: 1px;
+  background: var(--accent-bright);
+}
+
+#site-nav .nav-search,
+#site-nav .nav-toggle {
+  min-height: 38px;
+  padding: 7px 10px;
+  border-color: rgba(203, 168, 92, 0.35);
+  background: rgba(203, 168, 92, 0.06);
+  color: var(--text-dim);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+#site-nav .nav-search {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+#site-nav .nav-search kbd {
+  min-width: 21px;
+  padding: 1px 5px;
+  border: 1px solid rgba(238, 233, 223, 0.25);
+  color: var(--text);
+  font: inherit;
+}
+
+#site-nav .nav-toggle { display: none; }
+
+.hero:not(.war-table__header) {
+  padding-top: clamp(64px, 8vw, 104px);
+}
+
+.hero:not(.war-table__header) h1 {
+  font-size: clamp(2.35rem, 5.5vw, 4.6rem);
+  font-weight: 500;
+  letter-spacing: 0.035em;
+}
+
+.section-title {
+  color: var(--accent-bright);
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.card {
+  border-left-width: 1px;
+  background: rgba(12, 15, 16, 0.9);
+  box-shadow: 0 14px 42px rgba(0, 0, 0, 0.28);
+}
+
+.card:hover,
+a.card:hover,
+.card.clickable:hover {
+  border-color: var(--card-accent, var(--accent));
+  box-shadow: 0 18px 52px rgba(0, 0, 0, 0.48);
+}
+
+button,
+.btn,
+input[type="text"],
+input[type="search"],
+select,
+textarea {
+  border-color: rgba(203, 168, 92, 0.28);
+  background: rgba(7, 9, 10, 0.94);
+}
+
+button.primary,
+.btn.primary,
+.cta-pill {
+  border-radius: 2px;
+  background: var(--accent);
+  color: #0a0b0b !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+#site-footer {
+  margin-top: 0;
+  border-color: rgba(203, 168, 92, 0.22);
+  background: rgba(3, 5, 6, 0.95);
+}
+
+@media (max-width: 1120px) {
+  #site-nav .nav-toggle { display: inline-flex; }
+  #site-nav .nav-search span { display: none; }
+  #site-nav .nav-links {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    display: none;
+    width: 100%;
+    padding: 12px 18px 18px;
+    border-bottom: 1px solid rgba(203, 168, 92, 0.28);
+    background: rgba(3, 5, 6, 0.98);
+  }
+  #site-nav .nav-links.open { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  #site-nav .nav-links a { min-height: 44px; justify-content: center; }
+}
+
+@media (max-width: 620px) {
+  body { background-attachment: scroll; }
+  #site-nav { min-height: 64px; gap: 8px; padding-inline: 12px; }
+  #site-nav .brand { gap: 7px; }
+  #site-nav .brand-sigil { width: 24px; height: 24px; }
+  #site-nav .brand-title { font-size: 0.82rem; }
+  #site-nav .nav-search,
+  #site-nav .nav-toggle { min-width: 42px; padding-inline: 8px; }
+  #site-nav .nav-search kbd { border: 0; padding: 0; }
+  #site-nav .nav-toggle-label { font-size: 0; }
+  #site-nav .nav-toggle-label::after { content: "Menu"; font-size: 0.68rem; }
+  #site-nav .nav-links.open { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #site-nav .nav-links a { padding-block: 6px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body { background-attachment: scroll; }
+}

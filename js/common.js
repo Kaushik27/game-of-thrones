@@ -20,17 +20,34 @@ function renderNav() {
   const mount = document.getElementById("site-nav");
   if (!mount) return;
   const hash = window.location.hash || "#/";
+  const activePath = hash.split("?")[0];
   mount.innerHTML = `
-    <a class="brand" href="#/">${sigilSVG("direwolf", { size: 22, className: "brand-sigil" })} GAME OF <span>THRONES</span></a>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
-    <nav class="nav-links" id="nav-links">
-      ${NAV_LINKS.map(l => `<a href="${l.href}" class="${hash === l.href || (l.href !== "#/" && hash.startsWith(l.href)) ? 'active' : ''}">${l.label}</a>`).join("")}
+    <a class="brand" href="#/" aria-label="Game of Thrones home">
+      ${sigilSVG("direwolf", { size: 28, className: "brand-sigil" })}
+      <span class="brand-title">GAME <small>OF</small> <strong>THRONES</strong></span>
+    </a>
+    <nav class="nav-links" id="nav-links" aria-label="Primary navigation">
+      ${NAV_LINKS.map(l => `<a href="${l.href}" class="${activePath === l.href || (l.href !== "#/" && activePath.startsWith(l.href)) ? 'active' : ''}"${activePath === l.href ? ' aria-current="page"' : ''}>${l.label}</a>`).join("")}
     </nav>
+    <button type="button" class="nav-search" data-raven-search-trigger aria-label="Search the realm">
+      <span>Search</span><kbd>/</kbd>
+    </button>
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-controls="nav-links" aria-expanded="false">
+      <span class="nav-toggle-label">Menu</span>
+    </button>
   `;
   const toggle = document.getElementById("nav-toggle");
   const links = document.getElementById("nav-links");
-  toggle.addEventListener("click", () => links.classList.toggle("open"));
-  links.querySelectorAll("a").forEach(a => a.addEventListener("click", () => links.classList.remove("open")));
+  toggle.addEventListener("click", () => {
+    const open = links.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
+  });
+  links.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+    links.classList.remove("open");
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "Open navigation");
+  }));
 }
 
 function renderFooter() {

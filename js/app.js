@@ -21,6 +21,19 @@ const APP_ROUTES = [
   { pattern: /^\/credits$/, view: viewCredits }
 ];
 
+let activeViewHandle = null;
+
+function registerActiveView(handle) {
+  if (!handle || typeof handle.destroy !== "function") return;
+  activeViewHandle = handle;
+}
+
+function destroyActiveView() {
+  if (!activeViewHandle) return;
+  activeViewHandle.destroy();
+  activeViewHandle = null;
+}
+
 function parseHash() {
   let hash = window.location.hash || "#/";
   hash = hash.slice(1); // drop '#'
@@ -31,6 +44,7 @@ function parseHash() {
 function router() {
   const app = document.getElementById("app");
   const { path, query } = parseHash();
+  destroyActiveView();
   for (const route of APP_ROUTES) {
     const m = path.match(route.pattern);
     if (m) {
@@ -50,6 +64,9 @@ window.addEventListener("hashchange", router);
 document.addEventListener("DOMContentLoaded", () => {
   renderFooter();
   router();
+  if (window.RavenSearch) {
+    window.RavenSearch.init({ triggerSelector: "[data-raven-search-trigger]" });
+  }
 });
 
 // ---------- shared small helpers ----------
