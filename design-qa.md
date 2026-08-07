@@ -92,6 +92,7 @@ The focused reference/People comparison keeps both screens at 1265 × 712 and co
 - Browser verification: `#/character/jon-snow` rendered the title scene, `Voice` selected the quote scene with `I know nothing, Jon Snow.`, `Turning point` selected `Jon Snow and Ygritte` with the exact event destination, and `Dossier` selected the archive scene. The open-dossier action landed on `#profile-header` and restored the full navigation chrome after the film. No broken cinematic images were found.
 - Pointer parallax is disabled under reduced motion; the mobile breakpoint changes the chapter rail to a horizontal control row and keeps the scene composition within the viewport.
 - Published verification: GitHub Pages serves `character-profile.css?v=living-encyclopedia-8` and `app.js?v=living-encyclopedia-6`; the live title scene and `Voice` chapter both render with zero browser warnings/errors.
+- Atmosphere verification: the film mounts a local canvas particle layer and a dark scene-cut wipe; selecting `Voice` set the quote scene and the transition state, then cleared it after the 720 ms wipe without affecting the content layer. The canvas is removed on route teardown and skipped under reduced motion.
 - Focused captures: `/tmp/got-jon-film-title.png` and `/tmp/got-jon-film-quote.png`.
 
 final result: passed
