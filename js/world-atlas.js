@@ -23,6 +23,20 @@
     { id: "daenerys-targaryen", label: "Daenerys Targaryen", portrait: "assets/actors/daenerys-targaryen.jpg" },
     { id: "jaime-lannister", label: "Jaime Lannister", portrait: "assets/actors/jaime-lannister.jpg" }
   ]);
+  const HOUSE_TEXT_COLORS = Object.freeze({
+    Stark: "#c8ced6",
+    Lannister: "#d3a24c",
+    Targaryen: "#df817c",
+    Baratheon: "#d4af37",
+    Greyjoy: "#69b8b5",
+    Tyrell: "#83b878",
+    Martell: "#e38c57",
+    Tully: "#7fa8d1",
+    Arryn: "#79b2d9",
+    "Night's Watch": "#a2a2aa",
+    "Free Folk": "#91a8c0",
+    Unaffiliated: "#9b9ba4"
+  });
 
   let nextInstanceId = 0;
 
@@ -51,6 +65,10 @@
   function safeColor(value) {
     const color = String(value || "").trim();
     return /^#[0-9a-f]{3,8}$/i.test(color) ? color : "#cba85c";
+  }
+
+  function houseTextColor(house) {
+    return HOUSE_TEXT_COLORS[house] || "#aaa69d";
   }
 
   function clampPercent(value) {
@@ -197,7 +215,7 @@
         precision: location.precision,
         x: location.x,
         y: location.y,
-        navigate: "#/battles",
+        navigate: `#/battles?battle=${encodeURIComponent(record.id)}`,
         sourceRank: 2
       });
     });
@@ -220,7 +238,7 @@
         precision: location.precision,
         x: location.x,
         y: location.y,
-        navigate: "#/timeline",
+        navigate: `#/timeline?season=${season}&mode=consequences&event=${encodeURIComponent(record.id)}`,
         sourceRank: 3
       });
     });
@@ -527,9 +545,12 @@
           <ol class="wa-route-ledger" aria-label="Complete journey record">
             ${allSteps.map((step, index) => `<li>
               <button type="button" data-wa-step="${escapeMarkup(step.id)}" class="wa-route-ledger__button${step.season > currentSeason ? " is-future" : ""}"
+                aria-label="${step.season > currentSeason ? `Later stop; selecting moves the season lens to Season ${step.season}. ` : ""}${escapeMarkup(step.title)}, Season ${step.season}, ${escapeMarkup(step.location)}"
                 aria-pressed="${String(selectedStep && selectedStep.id === step.id)}">
-                <span class="wa-route-ledger__index">${String(index + 1).padStart(2, "0")}</span>
-                <span><strong>${escapeMarkup(step.title)}</strong><small>S${step.season} · ${escapeMarkup(step.location)} · ${escapeMarkup(step.sourceLabel)}</small></span>
+                <span class="wa-route-ledger__index" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
+                <span><strong>${escapeMarkup(step.title)}</strong><small>S${step.season} · ${escapeMarkup(step.location)} · ${escapeMarkup(step.sourceLabel)}</small>
+                  ${step.season > currentSeason ? `<span class="wa-route-ledger__future">Later season · Opens S${step.season}</span>` : ""}
+                </span>
               </button>
             </li>`).join("")}
           </ol>
@@ -601,7 +622,7 @@
           </div>
 
           <div class="wa-house-activity" aria-label="Houses present in Season ${currentSeason} records">
-            ${activity.map(item => `<div style="--wa-house-color:${safeColor(runtime.houseColors[item.house])}">
+            ${activity.map(item => `<div style="--wa-house-color:${safeColor(runtime.houseColors[item.house])};--wa-house-text:${houseTextColor(item.house)}">
               <span>${escapeMarkup(item.house)}</span><strong>${item.count}</strong>
             </div>`).join("")}
           </div>
@@ -613,8 +634,8 @@
                 const count = records.eventRecords.length + records.battleRecords.length;
                 return `<button type="button" class="wa-territory-card${activeHouses.has(item.house) ? " is-active" : ""}"
                   data-wa-region="${escapeMarkup(item.id)}" aria-pressed="${String(item.id === region.id)}"
-                  style="--wa-house-color:${safeColor(runtime.houseColors[item.house])}">
-                  <span class="wa-territory-card__index">${String(index + 1).padStart(2, "0")}</span>
+                  style="--wa-house-color:${safeColor(runtime.houseColors[item.house])};--wa-house-text:${houseTextColor(item.house)}">
+                  <span class="wa-territory-card__index" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
                   <strong>${escapeMarkup(item.name)}</strong>
                   <small>${escapeMarkup(item.house)} · ${escapeMarkup(item.seat)}</small>
                   <em>${count ? `${count} seasonal ${count === 1 ? "record" : "records"}` : "No seasonal record"}</em>
@@ -722,7 +743,7 @@
                 const id = selectedLoreType === "region" ? item.id : normalizeWords(item.name);
                 const meta = selectedLoreType === "region" ? `${item.house} · ${item.seat}` : (item.kind || "mapped place");
                 return `<button type="button" data-wa-lore-id="${escapeMarkup(id)}" aria-pressed="${String(id === selectedLoreId)}">
-                  <span>${String(index + 1).padStart(2, "0")}</span>
+                  <span aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
                   <span><strong>${escapeMarkup(item.name)}</strong><small>${escapeMarkup(meta)}</small></span>
                 </button>`;
               }).join("")}

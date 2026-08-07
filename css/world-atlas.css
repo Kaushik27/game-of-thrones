@@ -7,7 +7,7 @@
   --wa-accent-bright: #efd18c;
   --wa-ink: #eee9df;
   --wa-dim: #aaa69d;
-  --wa-faint: #74736f;
+  --wa-faint: #898780;
   --wa-line: rgba(203, 168, 92, 0.22);
   --wa-panel: rgba(8, 11, 12, 0.94);
   --wa-panel-strong: rgba(13, 16, 17, 0.98);
@@ -605,7 +605,7 @@
 }
 
 .wa-detail-ledger div { padding: 13px; border-right: 1px solid var(--wa-line); border-bottom: 1px solid var(--wa-line); }
-.wa-detail-ledger dt { color: #77756f; font-size: 0.56rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.wa-detail-ledger dt { color: var(--wa-faint); font-size: 0.56rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
 .wa-detail-ledger dd { margin: 6px 0 0; color: #d0cabd; font-size: 0.76rem; line-height: 1.45; }
 .wa-detail-actions { display: flex; flex-wrap: wrap; gap: 12px 22px; }
 
@@ -638,10 +638,37 @@
 
 .wa-route-ledger__button:hover,
 .wa-route-ledger__button[aria-pressed="true"] { background: rgba(203, 168, 92, 0.1); }
-.wa-route-ledger__button.is-future { opacity: 0.55; }
 .wa-route-ledger__index { color: var(--wa-accent); font: 400 0.65rem "Cinzel", Georgia, serif; }
 .wa-route-ledger__button strong { display: block; font: 500 0.82rem/1.35 "Cinzel", Georgia, serif; }
-.wa-route-ledger__button small { display: block; margin-top: 7px; color: #76746f; font-size: 0.62rem; line-height: 1.45; }
+.wa-route-ledger__button small { display: block; margin-top: 7px; color: var(--wa-faint); font-size: 0.62rem; line-height: 1.45; }
+
+.wa-route-ledger__button.is-future {
+  background: rgba(5, 8, 9, 0.94);
+  color: #d2cec5;
+  box-shadow: inset 2px 0 0 rgba(203, 168, 92, 0.28);
+}
+
+.wa-route-ledger__button.is-future:hover,
+.wa-route-ledger__button.is-future:focus-visible {
+  background: rgba(203, 168, 92, 0.09);
+  box-shadow: inset 2px 0 0 rgba(239, 209, 140, 0.7);
+}
+
+.wa-route-ledger__button.is-future small { color: #aaa69d; }
+.wa-route-ledger__button.is-future .wa-route-ledger__index { color: #d1b574; }
+
+.wa-route-ledger__future {
+  display: inline-flex;
+  margin-top: 10px;
+  padding: 3px 6px;
+  border: 1px solid rgba(203, 168, 92, 0.38);
+  color: #d8c38f;
+  font-size: 0.54rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
 
 /* Power */
 .wa-power-lead {
@@ -667,7 +694,7 @@
 
 .wa-power-pulse div { padding: 24px clamp(14px, 2vw, 30px); border-right: 1px solid var(--wa-line); border-bottom: 1px solid var(--wa-line); }
 .wa-power-pulse strong { display: block; color: var(--wa-accent-bright); font: 400 clamp(1.75rem, 3vw, 3rem) "Cinzel", Georgia, serif; }
-.wa-power-pulse span { color: #77756f; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+.wa-power-pulse span { color: var(--wa-faint); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
 
 .wa-house-activity {
   display: flex;
@@ -690,7 +717,7 @@
   text-transform: uppercase;
 }
 
-.wa-house-activity strong { color: var(--wa-house-color); font: 600 0.72rem "Cinzel", Georgia, serif; }
+.wa-house-activity strong { color: var(--wa-house-text, var(--wa-faint)); font: 600 0.72rem "Cinzel", Georgia, serif; }
 
 .wa-power-layout {
   display: grid;
@@ -737,8 +764,8 @@
 .wa-territory-card.is-active::before { opacity: 1; }
 .wa-territory-card__index { position: absolute; top: 15px; right: 16px; color: #5f5e5a; font: 400 0.58rem "Cinzel", Georgia, serif; }
 .wa-territory-card strong { color: inherit; font: 500 clamp(1rem, 1.6vw, 1.35rem) "Cinzel", Georgia, serif; }
-.wa-territory-card small { margin-top: 8px; color: #77756f; font-size: 0.65rem; }
-.wa-territory-card em { margin-top: 18px; color: var(--wa-house-color); font-size: 0.6rem; font-style: normal; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
+.wa-territory-card small { margin-top: 8px; color: var(--wa-faint); font-size: 0.65rem; }
+.wa-territory-card em { margin-top: 18px; color: var(--wa-house-text, var(--wa-faint)); font-size: 0.6rem; font-style: normal; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
 
 .wa-power-detail {
   position: sticky;
@@ -810,7 +837,7 @@
   text-transform: uppercase;
 }
 
-.wa-lore-switch button span { color: #696863; font: 400 0.64rem "Cinzel", Georgia, serif; }
+.wa-lore-switch button span { color: var(--wa-faint); font: 400 0.64rem "Cinzel", Georgia, serif; }
 .wa-lore-switch button:hover,
 .wa-lore-switch button[aria-pressed="true"] { background: rgba(203, 168, 92, 0.11); color: var(--wa-accent-bright); }
 
@@ -847,7 +874,7 @@
 
 .wa-lore-rail button > span:first-child { color: #66655f; font: 400 0.6rem "Cinzel", Georgia, serif; }
 .wa-lore-rail strong { display: block; color: inherit; font: 500 0.78rem "Cinzel", Georgia, serif; }
-.wa-lore-rail small { display: block; margin-top: 5px; color: #6f6e68; font-size: 0.61rem; line-height: 1.4; }
+.wa-lore-rail small { display: block; margin-top: 5px; color: var(--wa-faint); font-size: 0.61rem; line-height: 1.4; }
 .wa-lore-rail button:hover,
 .wa-lore-rail button[aria-pressed="true"] { background: rgba(203, 168, 92, 0.09); color: var(--wa-accent-bright); }
 
