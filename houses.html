@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Houses — Game of Thrones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/theme.css">
+<style>
+  .house-card { text-align: center; padding: 26px 18px; }
+  .house-sigil { width: 64px; height: 64px; margin: 0 auto 12px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; border: 2px solid; }
+  .house-card h3 { margin: 0 0 4px; }
+  .house-card .words { font-style: italic; color: var(--text-dim); font-size: 0.85rem; margin: 4px 0; }
+  .house-card .seat { font-size: 0.8rem; color: var(--text-faint); }
+  .house-card .count { margin-top: 10px; font-size: 0.78rem; color: var(--text-dim); }
+</style>
+</head>
+<body>
+  <div id="site-nav"></div>
+  <div class="page-wrap">
+    <div class="hero" style="padding-top:36px;padding-bottom:10px;">
+      <h1 class="display">The Great Houses</h1>
+      <p>Sigils, words, seats, and family trees for every house of Westeros — plus the Night's Watch and the Free Folk beyond the Wall.</p>
+    </div>
+    <div class="grid grid-narrow" id="house-grid"></div>
+  </div>
+  <div id="site-footer"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/quotes.js"></script>
+  <script src="js/battles.js"></script>
+  <script src="js/common.js"></script>
+  <script>
+    const SIGIL_EMOJI = {
+      "direwolf": "🐺", "lion": "🦁", "dragon": "🐉", "stag": "🦌", "kraken": "🐙",
+      "rose": "🌹", "sun-spear": "☀️", "trout": "🐟", "falcon-moon": "🦅",
+      "crossed-swords": "⚔️", "none": "❄️"
+    };
+    document.addEventListener("DOMContentLoaded", () => {
+      const houses = Object.keys(HOUSE_COLORS);
+      document.getElementById("house-grid").innerHTML = houses.map(h => {
+        const info = HOUSE_INFO[h];
+        const color = HOUSE_COLORS[h];
+        const count = charactersByHouse(h).length;
+        return `
+        <a class="card house-card" href="house.html?id=${encodeURIComponent(h)}" style="border-color:${color}33;">
+          <div class="house-sigil" style="border-color:${color};background:${color}22;">${SIGIL_EMOJI[info.sigil] || "🏰"}</div>
+          <h3 class="display" style="color:${color}">${h}</h3>
+          <div class="words">"${info.words}"</div>
+          <div class="seat">${info.seat}</div>
+          <div class="count">${count} character${count === 1 ? '' : 's'}</div>
+        </a>`;
+      }).join("");
+    });
+  </script>
+</body>
+</html>
