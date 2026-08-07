@@ -32,6 +32,17 @@ body.pi-overlay-open { overflow: hidden; }
 
 .people-intelligence button { color: inherit; }
 
+.pi-spotlight-card__memory { max-width: 28ch; margin: 14px 0 0; color: #e6dfcd; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.08rem; line-height: 1.05; }
+.pi-spotlight-card__memory span { display: block; margin-bottom: 5px; color: var(--pi-gold-bright); font-family: inherit; font-size: .56rem; font-weight: 700; letter-spacing: .15em; line-height: 1.2; text-transform: uppercase; }
+.pi-memory-card { position: relative; display: grid; grid-template-columns: minmax(120px, .75fr) minmax(0, 1.5fr); min-height: 180px; margin: 24px 0 26px; overflow: hidden; border: 1px solid rgba(203,168,92,.34); background: #0a0e10; isolation: isolate; }
+.pi-memory-card__image { min-height: 180px; background: var(--pi-memory-image) center / cover; filter: saturate(.72) contrast(1.06); }
+.pi-memory-card__copy { position: relative; padding: 20px 20px 18px; background: linear-gradient(90deg, rgba(7,10,11,.96), rgba(7,10,11,.78)); }
+.pi-memory-card__copy h4 { margin: 5px 0 0; color: var(--pi-parchment); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.8rem; line-height: .96; }
+.pi-memory-card__copy blockquote { margin: 9px 0 0; color: #e4d5b8; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.12rem; font-style: italic; line-height: 1.05; }
+.pi-memory-card__copy p:not(.pi-card-kicker) { margin: 10px 0 0; color: var(--pi-faint); font-size: .78rem; line-height: 1.35; }
+.pi-memory-card__copy small { display: block; margin-top: 10px; color: #b5b4aa; font-size: .68rem; line-height: 1.32; }
+.pi-memory-card__copy a { display: inline-flex; margin-top: 12px; color: var(--pi-gold-bright); font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+
 .people-intelligence .pi-house--stark { --pi-house: var(--house-stark, #c8ced6); --pi-house-text: #c8ced6; }
 .people-intelligence .pi-house--lannister { --pi-house: var(--house-lannister, #b8862e); --pi-house-text: #d1a64f; }
 .people-intelligence .pi-house--targaryen { --pi-house: var(--house-targaryen, #8f1d21); --pi-house-text: #d87579; }

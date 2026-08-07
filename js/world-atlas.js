@@ -38,11 +38,11 @@
     Unaffiliated: "#9b9ba4"
   });
   const WORLD_STOPS = Object.freeze([
-    { id: "winterfell", label: "Winterfell", region: "The North", image: "assets/ui/north-journey-bg.jpg", quote: "The things we do for love.", story: "The road begins under a grey sky, where family is still a kind of power.", detail: "The Starks leave home and the realm starts to tilt.", href: "#/timeline?season=1&mode=consequences" },
-    { id: "the-wall", label: "The Wall", region: "The edge of the world", image: "assets/ui/north-journey-bg.jpg", quote: "The night is dark and full of terrors.", story: "North becomes a direction, then a duty, then a warning.", detail: "The last watch keeps its promise while the living look away.", href: "#/map?season=1" },
-    { id: "kings-landing", label: "King's Landing", region: "The capital", image: "assets/ui/capital-journey-bg.jpg", quote: "When you play the game of thrones, you win or you die.", story: "Every corridor has a witness. Every crown has a price.", detail: "Power changes hands long before the throne moves.", href: "#/timeline?season=2&mode=power" },
-    { id: "meereen", label: "Meereen", region: "Across the Narrow Sea", image: "assets/ui/essos-journey-bg.jpg", quote: "I am not going to stop the wheel. I'm going to break the wheel.", story: "A queen crosses the world and discovers that liberation has an afterlife.", detail: "The city becomes a test of what conquest is meant to leave behind.", href: "#/character/daenerys-targaryen" },
-    { id: "beyond-the-wall", label: "Beyond the Wall", region: "The long night", image: "assets/ui/north-journey-bg.jpg", quote: "There is only one war that matters, the war between the living and the dead.", story: "The map falls away. The story becomes survival.", detail: "At the end of the road, the realm remembers what it was built to protect.", href: "#/timeline?season=8&mode=consequences" }
+    { id: "winterfell", label: "Winterfell", region: "The North", image: "assets/ui/north-journey-bg.jpg", momentId: "ice-before-execution", quote: "The things we do for love.", story: "The road begins under a grey sky, where family is still a kind of power.", detail: "The Starks leave home and the realm starts to tilt.", href: "#/timeline?season=1&mode=consequences" },
+    { id: "the-wall", label: "The Wall", region: "The edge of the world", image: "assets/ui/north-journey-bg.jpg", momentId: "army-of-the-dead", quote: "The night is dark and full of terrors.", story: "North becomes a direction, then a duty, then a warning.", detail: "The last watch keeps its promise while the living look away.", href: "#/map?season=1" },
+    { id: "kings-landing", label: "King's Landing", region: "The capital", image: "assets/ui/capital-journey-bg.jpg", momentId: "tyrion-trial", quote: "When you play the game of thrones, you win or you die.", story: "Every corridor has a witness. Every crown has a price.", detail: "Power changes hands long before the throne moves.", href: "#/timeline?season=2&mode=power" },
+    { id: "meereen", label: "Meereen", region: "Across the Narrow Sea", image: "assets/ui/essos-journey-bg.jpg", momentId: "fire-and-ash", quote: "I am not going to stop the wheel. I'm going to break the wheel.", story: "A queen crosses the world and discovers that liberation has an afterlife.", detail: "The city becomes a test of what conquest is meant to leave behind.", href: "#/character/daenerys-targaryen" },
+    { id: "beyond-the-wall", label: "Beyond the Wall", region: "The long night", image: "assets/ui/north-journey-bg.jpg", momentId: "hold-the-door", quote: "There is only one war that matters, the war between the living and the dead.", story: "The map falls away. The story becomes survival.", detail: "At the end of the road, the realm remembers what it was built to protect.", href: "#/timeline?season=8&mode=consequences" }
   ]);
 
   let nextInstanceId = 0;
@@ -364,10 +364,10 @@
     wrapper.innerHTML = `
       <header class="wa-hero">
         <div class="wa-hero__content">
-          <p class="wa-eyebrow">The known world · An evidence-led atlas</p>
+          <p class="wa-eyebrow">The roads fans remember</p>
           <p class="wa-hero__season">Season ${currentSeason} of 8</p>
-          <h1 id="${instanceId}-title">Worlds<br>in motion</h1>
-          <p class="wa-hero__intro">Cross the realm through place, passage, power, and memory. Every view stays connected to this archive's map, chapter, character, event, and battle records.</p>
+          <h1 id="${instanceId}-title">The road<br>changes you.</h1>
+          <p class="wa-hero__intro">The road from Winterfell to the Wall takes one season. The distance from honor to survival takes less. Follow the places where the realm stopped being a map and became a memory.</p>
         </div>
         <dl class="wa-hero__facts" aria-label="World archive coverage">
           <div><dt>${runtime.regions.length}</dt><dd>charted regions</dd></div>
@@ -438,9 +438,10 @@
     function renderJourneyStop(index, announceStop) {
       journeyStopIndex = Math.max(0, Math.min(WORLD_STOPS.length - 1, Number(index) || 0));
       const stop = WORLD_STOPS[journeyStopIndex];
+      const memory = Array.isArray(window.FAN_MOMENTS) ? window.FAN_MOMENTS.find(moment => moment.id === stop.momentId) : null;
       journeyStage.dataset.stop = stop.id;
       journeyBackdrop.style.backgroundImage = `url("${stop.image}")`;
-      journeyStory.innerHTML = `<p class="world-journey-film__chapter">Stop 0${journeyStopIndex + 1} · ${escapeMarkup(stop.region)}</p><h3>${escapeMarkup(stop.label)}</h3><blockquote>“${escapeMarkup(stop.quote)}”</blockquote><p>${escapeMarkup(stop.story)}</p><small>${escapeMarkup(stop.detail)}</small><a class="wa-link world-journey-film__link" href="${escapeMarkup(stop.href)}" data-wa-nav="${escapeMarkup(stop.href)}">Follow this moment <span aria-hidden="true">↗</span></a>`;
+      journeyStory.innerHTML = `<p class="world-journey-film__chapter">Stop 0${journeyStopIndex + 1} · ${escapeMarkup(stop.region)}</p><h3>${escapeMarkup(stop.label)}</h3><blockquote>“${escapeMarkup(memory ? memory.line : stop.quote)}”</blockquote><p>${escapeMarkup(memory ? memory.fanNote : stop.story)}</p><small>${escapeMarkup(memory ? `${memory.title} · ${memory.consequence}` : stop.detail)}</small><a class="wa-link world-journey-film__link" href="${escapeMarkup(memory ? `#/quotes?quote=${memory.quoteId}` : stop.href)}" data-wa-nav="${escapeMarkup(memory ? `#/quotes?quote=${memory.quoteId}` : stop.href)}">Follow this moment <span aria-hidden="true">↗</span></a>`;
       wrapper.querySelectorAll("[data-world-stop]").forEach((button, buttonIndex) => button.setAttribute("aria-current", String(buttonIndex === journeyStopIndex)));
       if (announceStop) announce(`${stop.label} journey stop selected.`);
     }

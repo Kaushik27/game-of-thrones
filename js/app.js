@@ -517,6 +517,7 @@ function viewCharacter(app, params, query) {
       ? "assets/ui/essos-journey-bg.jpg"
       : "assets/ui/capital-journey-bg.jpg";
   const cinematicQuote = cq[0] || { text: "The story remembers.", speaker: c.name };
+  const fanMoment = (Array.isArray(window.FAN_MOMENTS) ? window.FAN_MOMENTS : []).find(moment => moment.characterId === c.id) || null;
   const requestedChapter = query && ["title", "quote", "turn", "archive"].includes(query.get("chapter")) ? query.get("chapter") : "";
   rememberLastRoute("character", c.id);
   recordEngagement("character_open", { characterId: c.id });
@@ -538,6 +539,7 @@ function viewCharacter(app, params, query) {
           </div>
           <div class="character-film__scene character-film__scene--quote" data-film-scene="quote" aria-hidden="true">
             <p class="character-film__chapter">Chapter 02 <span aria-hidden="true">/</span> A line that remains</p>
+            ${fanMoment ? `<p class="character-film__memory-kicker">${escapeHTML(fanMoment.title)} · ${escapeHTML(fanMoment.location)}</p>` : ""}
             <blockquote>
               <span class="character-film__quote-mark" aria-hidden="true">“</span>
               <p>${escapeHTML(cinematicQuote.text)}</p>
@@ -546,6 +548,7 @@ function viewCharacter(app, params, query) {
           </div>
           <div class="character-film__scene character-film__scene--turn" data-film-scene="turn" aria-hidden="true">
             <p class="character-film__chapter">Chapter 03 <span aria-hidden="true">/</span> The turning point</p>
+            ${fanMoment ? `<p class="character-film__memory-note">${escapeHTML(fanMoment.fanNote)}</p>` : ""}
             <p class="character-film__season">Season ${escapeHTML((evs[0] && evs[0].season) || "—")}</p>
             <h2>${escapeHTML((evs[0] && evs[0].title) || "The story shifts")}</h2>
             <p>${escapeHTML((evs[0] && evs[0].summary) || c.bio)}</p>
@@ -1668,6 +1671,8 @@ function viewQuotes(app, params, query) {
     q7: "A queen names the machine she intends to break.",
     q10: "At the edge of death, courage becomes a choice made aloud."
   };
+  const fanMoments = Array.isArray(window.FAN_MOMENTS) ? window.FAN_MOMENTS : [];
+  const fanMomentForQuote = quoteId => fanMoments.find(moment => moment.quoteId === quoteId) || null;
 
   app.innerHTML = `
     <section class="voices-film" id="voices-film" aria-labelledby="voices-film-title">
@@ -1738,6 +1743,7 @@ function viewQuotes(app, params, query) {
   })());
   const quoteHref = quote => {
     const episode = episodeForQuote(quote);
+    const memory = fanMomentForQuote(quote.id);
     return episode ? `#/episode/${encodeURIComponent(episode.id)}` : `#/quotes?quote=${encodeURIComponent(quote.id)}`;
   };
   const toggleSavedQuote = quote => {
@@ -1754,7 +1760,7 @@ function viewQuotes(app, params, query) {
     const themes = collectionByQuote.get(quote.id) || [];
     const episode = episodeForQuote(quote);
     const saved = savedQuoteIds.has(quote.id);
-    filmQuote.innerHTML = `<span class="voices-film__mark" aria-hidden="true">“</span><blockquote>${escapeHTML(quote.text)}</blockquote><div class="voices-film__speaker"><div class="voices-film__portrait">${avatarHTML(c, 58)}</div><div><strong>${escapeHTML(c ? c.name : "Unknown voice")}</strong><span>${escapeHTML(c ? c.house : "The realm")} · Season ${quote.season}</span></div></div><p class="voices-film__context">${escapeHTML(interludeContext[quote.id] || "A line remembered long after the scene has ended.")}</p><p class="voices-film__episode">${episode ? `Episode context · ${escapeHTML(episode.id.toUpperCase())} · ${escapeHTML(episode.title)}` : `Season ${quote.season} · Featured voice`} ${themes.length ? `· ${escapeHTML(themes[0])}` : ""}</p><div class="voices-film__actions"><a class="voices-button voices-button--solid" href="${escapeHTML(quoteHref(quote))}">Explore this moment <span aria-hidden="true">↗</span></a><button type="button" class="voices-button voices-button--ghost" data-save-film-quote="${escapeHTML(quote.id)}" aria-pressed="${String(saved)}">${saved ? "Saved line" : "Remember this line"}</button></div>`;
+    filmQuote.innerHTML = `<span class="voices-film__mark" aria-hidden="true">“</span><blockquote>${escapeHTML(quote.text)}</blockquote><div class="voices-film__speaker"><div class="voices-film__portrait">${avatarHTML(c, 58)}</div><div><strong>${escapeHTML(c ? c.name : "Unknown voice")}</strong><span>${escapeHTML(c ? c.house : "The realm")} · Season ${quote.season}</span></div></div><p class="voices-film__context">${escapeHTML(memory ? memory.fanNote : (interludeContext[quote.id] || "A line remembered long after the scene has ended."))}</p><p class="voices-film__episode">${episode ? `Episode context · ${escapeHTML(episode.id.toUpperCase())} · ${escapeHTML(episode.title)}` : `Season ${quote.season} · Featured voice`} ${memory ? `· ${escapeHTML(memory.location)}` : (themes.length ? `· ${escapeHTML(themes[0])}` : "")}</p><div class="voices-film__actions"><a class="voices-button voices-button--solid" href="${escapeHTML(quoteHref(quote))}">Explore this moment <span aria-hidden="true">↗</span></a><button type="button" class="voices-button voices-button--ghost" data-save-film-quote="${escapeHTML(quote.id)}" aria-pressed="${String(saved)}">${saved ? "Saved line" : "Remember this line"}</button></div>`;
     filmRoot.dataset.quoteId = quote.id;
     filmDots.innerHTML = interludeIds.map((id, index) => `<button type="button" role="tab" class="voices-film__dot" data-voices-index="${index}" aria-label="Quote ${index + 1}" aria-selected="${String(index === filmIndex)}"><span aria-hidden="true">0${index + 1}</span></button>`).join("");
   }
@@ -1823,11 +1829,12 @@ function viewQuotes(app, params, query) {
       const c = getCharacter(qt.characterId);
       const selected = qt.id === requestedQuoteId;
       const themes = collectionByQuote.get(qt.id) || [];
+      const memory = fanMomentForQuote(qt.id);
       return `
         <article class="voices-card${selected ? " is-selected" : ""}" data-quote-id="${escapeHTML(qt.id)}"${selected ? ` tabindex="-1"` : ""} style="${cardAccentStyle(c.sigilColor)}">
           <div class="voices-card__top"><span class="voices-card__index">${String(qt.id).replace("q", "#")}</span><span class="voices-card__season">Season ${qt.season}</span></div>
           <blockquote class="voices-card__quote">“${escapeHTML(qt.text)}”</blockquote>
-          <div class="voices-card__tags">${(featuredIds.has(qt.id) ? ["Featured", ...themes] : themes).slice(0, 2).map(theme => `<span>${escapeHTML(theme)}</span>`).join("")}</div>
+          <div class="voices-card__tags">${(featuredIds.has(qt.id) ? ["Featured", ...themes] : themes).slice(0, 2).map(theme => `<span>${escapeHTML(theme)}</span>`).join("")}${memory ? `<span class="voices-card__memory-tag">${escapeHTML(memory.title)}</span>` : ""}</div>
           <div class="voices-card__footer"><a class="voices-card__speaker" href="#/character/${c.id}">${avatarHTML(c, 38)}<span><strong>${escapeHTML(c.name)}</strong><small>${escapeHTML(c.house)}</small></span></a><div class="voices-card__actions"><button type="button" class="voices-copy" data-copy-quote="${escapeHTML(qt.id)}" aria-label="Copy quote by ${escapeHTML(c.name)}">Copy line</button><button type="button" class="voices-copy" data-save-card-quote="${escapeHTML(qt.id)}" aria-pressed="${String(savedQuoteIds.has(qt.id))}">${savedQuoteIds.has(qt.id) ? "Saved" : "Keep"}</button></div></div>
         </article>`;
     }).join("") || `<div class="voices-empty"><strong>The archive is quiet.</strong><span>No lines match these filters. Clear one and try again.</span></div>`;

@@ -32,6 +32,7 @@ body.voices-route::before {
 .voices-film__speaker strong { font-family: 'Cinzel', Georgia, serif; font-size: 1.05rem; }
 .voices-film__speaker span, .voices-film__episode { color: var(--voices-muted); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; }
 .voices-film__context { max-width: 560px; margin: 25px 0 0; color: #c2bfb5; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.35rem; line-height: 1.2; }
+.voices-film__context { color: #d3c8b4; }
 .voices-film__episode { margin: 17px 0 0; }
 .voices-film__quote .voices-button { margin-top: 26px; }
 .voices-film__actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
@@ -163,6 +164,7 @@ body.voices-route::before {
 .voices-card__quote { position: relative; z-index: 1; flex: 1; margin: 29px 0 14px; color: var(--voices-ink); font-family: 'Cinzel', Georgia, serif; font-size: clamp(1.03rem, 1.35vw, 1.25rem); line-height: 1.45; }
 .voices-card__tags { position: relative; z-index: 1; min-height: 25px; margin: 0 0 17px; }
 .voices-card__tags span { padding: 3px 6px; border-color: color-mix(in srgb, var(--card-accent, var(--voices-gold)) 44%, transparent); color: var(--voices-muted); font-size: 0.57rem; }
+.voices-card__tags .voices-card__memory-tag { border-color: rgba(212, 179, 106, .58); color: var(--voices-gold); }
 .voices-card__footer { padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
 .voices-card__actions { display: inline-flex; align-items: center; gap: 10px; }
 .voices-card__speaker { display: inline-flex; min-width: 0; align-items: center; gap: 9px; color: var(--voices-ink); text-decoration: none; }

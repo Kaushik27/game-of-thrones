@@ -127,6 +127,8 @@
 .character-film__eyebrow { display: flex; align-items: center; gap: 10px; }
 .character-film__chapter { color: #a5a39b; font-size: 0.59rem; letter-spacing: 0.17em; }
 .character-film__chapter span { color: #d4b36a; padding: 0 7px; }
+.character-film__memory-kicker { margin: 16px 0 -3px; color: #e2c77d; font-size: .64rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.character-film__memory-note { max-width: 43ch; margin: 18px 0 -7px; color: #dfd7c5; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.05rem, 1.7vw, 1.32rem); font-style: italic; line-height: 1.26; }
 .character-film h1 { max-width: 7ch; margin: 17px 0 0; color: #f1e8d7; font-family: "Cinzel", Georgia, serif; font-size: clamp(4rem, 10vw, 10rem); font-weight: 400; letter-spacing: -0.06em; line-height: 0.9; text-transform: uppercase; }
 .character-film__tagline { margin: 26px 0 0; color: #d8c184; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.45rem, 2.7vw, 2.35rem); font-style: italic; line-height: 1; }
 .character-film__scene blockquote { position: relative; max-width: 660px; margin: 27px auto 0; padding: 0 28px; }

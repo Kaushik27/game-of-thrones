@@ -92,20 +92,15 @@
   }
 
   function createShell(root) {
-    const fanQuotes = ["q5", "q13", "q10"]
-      .map(id => datasetQuotes().find(item => item.id === id))
-      .filter(Boolean);
+    const fanMoments = Array.isArray(global.FAN_MOMENTS) ? global.FAN_MOMENTS : [];
+    const fanQuotes = datasetQuotes();
     const quoteSpeaker = quote => {
       try {
         const character = typeof getCharacter === "function" ? getCharacter(quote.characterId) : null;
         return character ? character.name : quote.characterId;
       } catch (error) { return quote.characterId; }
     };
-    const fanNotes = {
-      q5: "The line that turns a throne into a dare.",
-      q13: "A sentence every fan eventually hears differently.",
-      q10: "The smallest answer to the biggest fear."
-    };
+    const momentQuote = moment => fanQuotes.find(quote => quote.id === moment.quoteId);
     root.innerHTML = `
       <section class="cinematic-prologue" id="cinematic-prologue" aria-labelledby="cinematic-prologue-title">
         <div class="cinematic-prologue__stage" data-cinematic-stage data-scene="border">
@@ -154,13 +149,17 @@
       </section>
       <section class="cinematic-fan-shelf" aria-labelledby="cinematic-fan-shelf-title">
         <div class="cinematic-fan-shelf__intro">
-          <p class="cinematic-handoff__eyebrow">A fan's shelf</p>
-          <h2 id="cinematic-fan-shelf-title">Words we still quote at the table.</h2>
-          <p>Not a press kit. Not a plot summary. These are the lines that became shorthand between people who watched the same episode and never quite recovered.</p>
+          <p class="cinematic-handoff__eyebrow">A fan's memory reel</p>
+          <h2 id="cinematic-fan-shelf-title">The scenes we never quite left.</h2>
+          <p>Not a press kit. Not a plot summary. These are the doors, blades, fires, and last words that made the story personal.</p>
           <a href="#/quotes" class="cinematic-fan-shelf__link">Open the full Voices archive</a>
         </div>
         <div class="cinematic-fan-shelf__quotes">
-          ${fanQuotes.map(quote => `<a class="cinematic-fan-shelf__quote" href="#/quotes?quote=${escapeText(quote.id)}"><span class="cinematic-fan-shelf__mark" aria-hidden="true">“</span><blockquote>${escapeText(quote.text)}</blockquote><span class="cinematic-fan-shelf__speaker">${escapeText(quoteSpeaker(quote))} · Season ${quote.season}</span><small>${escapeText(fanNotes[quote.id] || "A line that refuses to leave the realm.")}</small></a>`).join("")}
+          ${fanMoments.slice(0, 6).map((moment, index) => {
+            const quote = momentQuote(moment);
+            const speaker = quote ? quoteSpeaker(quote) : "The realm";
+            return `<a class="cinematic-fan-shelf__quote cinematic-fan-shelf__quote--${index + 1}" href="#/quotes?quote=${escapeText(moment.quoteId)}" style="--memory-image:url('${escapeText(moment.image)}')"><span class="cinematic-fan-shelf__image" aria-hidden="true"></span><span class="cinematic-fan-shelf__overlay" aria-hidden="true"></span><span class="cinematic-fan-shelf__kicker">${escapeText(moment.kicker)}</span><strong>${escapeText(moment.title)}</strong><blockquote>${escapeText(moment.line)}</blockquote><span class="cinematic-fan-shelf__speaker">${escapeText(speaker)} · ${escapeText(moment.location)}</span><small>${escapeText(moment.fanNote)}</small><span class="cinematic-fan-shelf__open">Remember this scene <span aria-hidden="true">↗</span></span></a>`;
+          }).join("")}
         </div>
       </section>
       <div id="realm-journey-root" class="realm-journey-host cinematic-realm__journey-host">

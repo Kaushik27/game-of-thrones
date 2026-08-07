@@ -378,6 +378,11 @@
       return `#/character/${encodeURIComponent(character.id)}`;
     }
 
+    function fanMomentFor(characterId) {
+      const moments = Array.isArray(global.FAN_MOMENTS) ? global.FAN_MOMENTS : [];
+      return moments.find(moment => moment.characterId === characterId) || null;
+    }
+
     function modeButtonMarkup(mode, label, description) {
       const selected = state.mode === mode;
       return `<button class="pi-mode-tab${selected ? " is-active" : ""}" type="button" role="tab" id="${id}-tab-${mode}" aria-selected="${selected}" aria-controls="${id}-panel" tabindex="${selected ? "0" : "-1"}" data-pi-mode="${mode}">
@@ -405,9 +410,9 @@
           <div class="pi-hero__veil" aria-hidden="true"></div>
           <div class="pi-hero-cast" aria-label="Featured people from the realm">${heroCast}</div>
           <div class="pi-hero__content">
-            <p class="pi-eyebrow">The living record</p>
-            <h1 id="${id}-title">People of Westeros</h1>
-            <p class="pi-hero__lede">Follow bloodlines, loyalties, rivalries, and the people who changed the fate of the realm.</p>
+            <p class="pi-eyebrow">The people we never stopped arguing about</p>
+            <h1 id="${id}-title">Lives in the fire.</h1>
+            <p class="pi-hero__lede">Open the scene you return to, the choice that changed them, and the people they loved, betrayed, lost, or became.</p>
             <dl class="pi-hero__stats" aria-label="Archive coverage">
               <div><dt>${data.characters.length}</dt><dd>People</dd></div>
               <div><dt>${data.relations.length}</dt><dd>Documented ties</dd></div>
@@ -494,6 +499,7 @@
 
     function spotlightCardMarkup(character, index) {
       const featured = index === 0 ? " pi-spotlight-card--lead" : "";
+      const memory = fanMomentFor(character.id);
       return `<article class="pi-spotlight-card ${houseClass(character.house)}${featured}">
         <button class="pi-spotlight-card__portrait" type="button" data-pi-character="${escape(character.id)}" aria-label="Open intelligence for ${escape(character.name)}">
           ${portraitMarkup(character, index === 0 ? "hero" : "feature")}
@@ -503,6 +509,7 @@
           <p class="pi-card-kicker">${escape(character.house)}</p>
           <h2>${escape(character.name)}</h2>
           <p class="pi-spotlight-card__actor">${character.actor && !/^actor unknown$/i.test(character.actor) ? `Played by ${escape(character.actor)}` : "Cast credit not recorded"}</p>
+          ${memory ? `<p class="pi-spotlight-card__memory"><span>The scene fans return to</span>${escape(memory.title)}</p>` : ""}
           <dl class="pi-fact-row">
             <div><dt>Season</dt><dd>${escape(seasonFact(character))}</dd></div>
             <div><dt>Fate</dt><dd>${escape(statusLabel(character))}</dd></div>
@@ -696,6 +703,7 @@
     function dossierMarkup(character, includeClose) {
       const entries = relationEntries(character.id).slice(0, 8);
       const seasons = documentedSeasons(character);
+      const memory = fanMomentFor(character.id);
       return `${includeClose ? `<button class="pi-layer-close" type="button" data-pi-close-detail aria-label="Close character intelligence">Close</button>` : ""}
         <p class="pi-card-kicker">${escape(character.house)} intelligence</p>
         <div class="pi-dossier__identity">
@@ -703,6 +711,7 @@
           <div><h3>${escape(character.name)}</h3><p>${character.actor && !/^actor unknown$/i.test(character.actor) ? `Played by ${escape(character.actor)}` : "Cast credit not recorded"}</p></div>
         </div>
         <p class="pi-dossier__bio">${escape(character.bio || "No biography is recorded yet.")}</p>
+        ${memory ? `<section class="pi-memory-card" style="--pi-memory-image:url('${escape(memory.image)}')"><div class="pi-memory-card__image" aria-hidden="true"></div><div class="pi-memory-card__copy"><p class="pi-card-kicker">The scene fans return to</p><h4>${escape(memory.title)}</h4><blockquote>“${escape(memory.line)}”</blockquote><p>${escape(memory.fanNote)}</p><small>${escape(memory.location)} · ${escape(memory.consequence)}</small><a href="#/quotes?quote=${encodeURIComponent(memory.quoteId)}">Follow the line <span aria-hidden="true">↗</span></a></div></section>` : ""}
         <dl class="pi-dossier__facts">
           <div><dt>End state</dt><dd>${escape(statusLabel(character))}</dd></div>
           <div><dt>Documented seasons</dt><dd>${seasons.length ? seasons.join(", ") : "Not indexed"}</dd></div>

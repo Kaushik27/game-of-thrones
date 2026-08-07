@@ -110,6 +110,22 @@ html.cinematic-portal-jump body { scroll-behavior: auto !important; }
 .cinematic-fan-shelf__quote blockquote { flex: 1; margin: 20px 0; color: #f1eadb; font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(1.25rem, 2vw, 1.75rem); font-style: italic; line-height: 1.05; }
 .cinematic-fan-shelf__speaker { color: #d4b36a; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
 .cinematic-fan-shelf__quote small { margin-top: 8px; color: #a4aaa7; font-size: 0.73rem; line-height: 1.35; }
+.cinematic-fan-shelf__quotes { grid-template-columns: repeat(6, minmax(0, 1fr)); grid-auto-rows: 190px; gap: 14px; }
+.cinematic-fan-shelf__quote { position: relative; min-height: 0; justify-content: flex-end; overflow: hidden; padding: 22px; border-color: rgba(220, 185, 105, 0.28); background: #0b1012; isolation: isolate; }
+.cinematic-fan-shelf__quote--1 { grid-column: span 3; grid-row: span 2; }
+.cinematic-fan-shelf__quote--2 { grid-column: span 3; }
+.cinematic-fan-shelf__quote--3, .cinematic-fan-shelf__quote--4, .cinematic-fan-shelf__quote--5, .cinematic-fan-shelf__quote--6 { grid-column: span 1; }
+.cinematic-fan-shelf__image, .cinematic-fan-shelf__overlay { position: absolute; inset: 0; z-index: -2; }
+.cinematic-fan-shelf__image { background: var(--memory-image) center / cover; filter: saturate(.78) contrast(1.08); transform: scale(1.04); transition: transform 700ms cubic-bezier(.16,1,.3,1), filter 300ms ease; }
+.cinematic-fan-shelf__overlay { z-index: -1; background: linear-gradient(180deg, rgba(4,7,8,.05) 12%, rgba(4,7,8,.34) 38%, rgba(4,7,8,.96) 100%); }
+.cinematic-fan-shelf__quote:hover .cinematic-fan-shelf__image { filter: saturate(1) contrast(1.08); transform: scale(1.1); }
+.cinematic-fan-shelf__quote .cinematic-fan-shelf__mark { display: none; }
+.cinematic-fan-shelf__quote .cinematic-fan-shelf__kicker { color: #e1bc6d; font-size: .58rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+.cinematic-fan-shelf__quote strong { display: block; margin: 6px 0 0; color: #f5eddf; font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(1.28rem, 2vw, 2.1rem); line-height: .95; }
+.cinematic-fan-shelf__quote blockquote { flex: none; margin: 10px 0 0; color: #eadfc9; font-size: clamp(1rem, 1.35vw, 1.28rem); line-height: 1.05; }
+.cinematic-fan-shelf__quote .cinematic-fan-shelf__speaker { display: block; margin-top: 10px; color: #b6b8b1; font-size: .58rem; line-height: 1.35; letter-spacing: .08em; }
+.cinematic-fan-shelf__quote small { display: block; max-width: 34ch; margin-top: 9px; color: #c2c3ba; font-size: .7rem; line-height: 1.3; }
+.cinematic-fan-shelf__open { display: block; margin-top: 13px; color: #dfbd70; font-size: .58rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 .cinematic-realm__journey-host { position: relative; z-index: 1; min-height: 100svh; margin-top: 0; background: #05090c; }
 
 @media (max-width: 760px) {
@@ -141,8 +157,9 @@ html.cinematic-portal-jump body { scroll-behavior: auto !important; }
   .cinematic-handoff__link { margin-top: 28px; }
   .cinematic-fan-shelf { display: block; padding: 70px 20px 82px; }
   .cinematic-fan-shelf__intro h2 { max-width: 12ch; }
-  .cinematic-fan-shelf__quotes { grid-template-columns: 1fr; margin-top: 34px; }
-  .cinematic-fan-shelf__quote { min-height: 220px; }
+  .cinematic-fan-shelf__quotes { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 230px; margin-top: 34px; }
+  .cinematic-fan-shelf__quote--1, .cinematic-fan-shelf__quote--2 { grid-column: span 2; grid-row: span 1; }
+  .cinematic-fan-shelf__quote--3, .cinematic-fan-shelf__quote--4, .cinematic-fan-shelf__quote--5, .cinematic-fan-shelf__quote--6 { grid-column: span 1; }
 }
 
 body.realm-journey-route #site-nav { position: fixed; z-index: 80; background: transparent; pointer-events: none; }
