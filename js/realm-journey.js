@@ -7,6 +7,13 @@
   "use strict";
 
   const mountedRoots = new WeakMap();
+  const IN_WORLD_CHARACTER_ART = Object.freeze({
+    "jon-snow": "assets/characters/jon-snow-visual.png",
+    "daenerys-targaryen": "assets/characters/daenerys-visual.png",
+    "tyrion-lannister": "assets/characters/tyrion-visual.png",
+    "arya-stark": "assets/characters/arya-visual.png",
+    "jaime-lannister": "assets/characters/jaime-visual.png"
+  });
   const seasonNumbers = [1, 2, 3, 4, 5, 6, 7, 8];
   const iconPaths = Object.freeze({
     character: "assets/icons/person.svg",
@@ -219,15 +226,10 @@
   }
 
   function photoPathFor(runtime, characterId) {
-    if (!runtime.actorPhotoFor || !characterId) return "";
-    try {
-      const value = runtime.actorPhotoFor(characterId);
-      if (typeof value === "string") return safeAssetPath(value, "");
-      if (value && typeof value.file === "string") return safeAssetPath(value.file, "");
-    } catch (error) {
-      return "";
-    }
-    return "";
+    // The cinematic map uses in-world visual studies, never cast photography.
+    // Keep the actor-photo dependency available for legacy consumers, but do
+    // not let it leak into this film surface.
+    return safeAssetPath(IN_WORLD_CHARACTER_ART[characterId] || "", "");
   }
 
   function normalizedScreenPosition(source, index) {
