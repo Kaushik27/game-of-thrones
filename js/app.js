@@ -1593,8 +1593,27 @@ function viewQuotes(app, params, query) {
     if (!collectionByQuote.has(id)) collectionByQuote.set(id, []);
     collectionByQuote.get(id).push(collection.label);
   }));
+  const interludeIds = (Array.isArray(window.FEATURED_QUOTE_IDS) ? window.FEATURED_QUOTE_IDS : ["q5", "q13", "q2", "q7", "q10"]).slice(0, 5);
+  const interludeContext = {
+    q5: "The crown turns every private fear into a public game.",
+    q13: "A lesson in how the room changes when everyone believes a lie.",
+    q2: "Duty is not inherited. It is paid for, one sentence at a time.",
+    q7: "A queen names the machine she intends to break.",
+    q10: "At the edge of death, courage becomes a choice made aloud."
+  };
 
   app.innerHTML = `
+    <section class="voices-film" id="voices-film" aria-labelledby="voices-film-title">
+      <div class="voices-film__backdrop" aria-hidden="true"></div>
+      <div class="voices-film__grain" aria-hidden="true"></div>
+      <div class="voices-film__inner">
+        <div class="voices-film__masthead"><span class="voices-kicker">A cinematic interlude</span><button class="voices-sound-toggle" type="button" data-cinematic-sound aria-pressed="false">Sound off</button></div>
+        <p class="voices-film__eyebrow">Words That Moved the Realm</p>
+        <h1 id="voices-film-title">The lines that outlived the kings.</h1>
+        <div class="voices-film__quote" data-voices-film-quote></div>
+        <div class="voices-film__controls"><button type="button" class="voices-button voices-button--ghost" data-voices-prev aria-label="Previous quote">← Previous</button><div class="voices-film__dots" role="tablist" aria-label="Featured quote interludes"></div><button type="button" class="voices-button voices-button--ghost" data-voices-next aria-label="Next quote">Next →</button></div>
+      </div>
+    </section>
     <div class="voices-archive" id="voices-archive">
       <div class="voices-hero">
         <div class="voices-hero__eyebrow"><span class="voices-hero__rule"></span>Words carry farther than ravens</div>
@@ -1640,6 +1659,31 @@ function viewQuotes(app, params, query) {
   const quoteGrid = root.querySelector("#voices-grid");
   const count = root.querySelector("#voices-count");
   const status = root.querySelector("#voices-status");
+  const filmRoot = document.getElementById("voices-film");
+  const filmQuote = filmRoot.querySelector("[data-voices-film-quote]");
+  const filmDots = filmRoot.querySelector(".voices-film__dots");
+  const soundHandle = window.CinematicSound ? window.CinematicSound.mount(filmRoot) : null;
+  let filmIndex = 0;
+
+  function renderQuoteFilm() {
+    const quote = interludeIds.map(id => quotes.find(item => item.id === id)).find(Boolean) && quotes.find(item => item.id === interludeIds[filmIndex % interludeIds.length]);
+    if (!quote) return;
+    const c = getCharacter(quote.characterId);
+    const themes = collectionByQuote.get(quote.id) || [];
+    const episode = (typeof EPISODES !== "undefined" && Array.isArray(EPISODES))
+      ? EPISODES.find(item => item.season === quote.season && item.characterIds && item.characterIds.includes(quote.characterId))
+      : null;
+    filmQuote.innerHTML = `<span class="voices-film__mark" aria-hidden="true">“</span><blockquote>${escapeHTML(quote.text)}</blockquote><div class="voices-film__speaker"><div class="voices-film__portrait">${avatarHTML(c, 58)}</div><div><strong>${escapeHTML(c ? c.name : "Unknown voice")}</strong><span>${escapeHTML(c ? c.house : "The realm")} · Season ${quote.season}</span></div></div><p class="voices-film__context">${escapeHTML(interludeContext[quote.id] || "A line remembered long after the scene has ended.")}</p><p class="voices-film__episode">${episode ? `Episode context · ${escapeHTML(episode.title)}` : `Season ${quote.season} · Featured voice`} ${themes.length ? `· ${escapeHTML(themes[0])}` : ""}</p><a class="voices-button voices-button--solid" href="#/timeline?season=${quote.season}&mode=consequences">Explore this moment <span aria-hidden="true">↗</span></a>`;
+    filmRoot.dataset.quoteId = quote.id;
+    filmDots.innerHTML = interludeIds.map((id, index) => `<button type="button" role="tab" class="voices-film__dot" data-voices-index="${index}" aria-label="Quote ${index + 1}" aria-selected="${String(index === filmIndex)}"><span aria-hidden="true">0${index + 1}</span></button>`).join("");
+  }
+  renderQuoteFilm();
+  filmRoot.addEventListener("click", event => {
+    const dot = event.target.closest("[data-voices-index]");
+    if (dot) { filmIndex = Number(dot.dataset.voicesIndex) || 0; renderQuoteFilm(); return; }
+    if (event.target.closest("[data-voices-prev]")) { filmIndex = (filmIndex - 1 + interludeIds.length) % interludeIds.length; renderQuoteFilm(); return; }
+    if (event.target.closest("[data-voices-next]")) { filmIndex = (filmIndex + 1) % interludeIds.length; renderQuoteFilm(); }
+  });
 
   function quoteMatchesCollection(qt) {
     if (activeCollection === "featured") return featuredIds.has(qt.id);
