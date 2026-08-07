@@ -282,7 +282,7 @@ function viewCharacters(app, params, query) {
       <h3 class="display" style="color:${c.sigilColor}">${c.name}</h3>
       <div class="sub text-dim">${c.house} · ${c.status}</div>
       <p>${c.bio}</p>
-      <a href="#/character/${c.id}">View full profile →</a>
+      <a class="cta-pill" style="margin-top:10px;" href="#/character/${c.id}">View full profile <span class="arrow">&#8594;</span></a>
       <ul style="list-style:none;padding:0;margin:8px 0 0;">${rels.map(r => `<li data-jump="${r.other.id}" style="padding:5px 0;border-bottom:1px solid var(--panel-border);cursor:pointer;">${TYPE_ICON[r.rel.type]} ${r.rel.label} — <strong>${r.other.name}</strong></li>`).join("")}</ul>
     `;
     panel.querySelectorAll("[data-jump]").forEach(el => el.addEventListener("click", () => showGraphDetail(el.dataset.jump)));
@@ -439,7 +439,7 @@ function viewCharacter(app, params) {
     const hint = document.getElementById("mini-graph-hint");
     if (hint) hint.innerHTML = `Showing <strong style="color:${center.sigilColor}">${escapeHTML(center.name)}</strong> and their direct connections. Click a node to re-center the graph on them — double-click (or the link below) to open their full profile.`;
     const profileLink = document.getElementById("mini-graph-profile-link");
-    if (profileLink) profileLink.innerHTML = center.id === c.id ? "" : `<a href="#/character/${center.id}">View ${escapeHTML(center.name)}'s full profile →</a>`;
+    if (profileLink) profileLink.innerHTML = center.id === c.id ? "" : `<a class="cta-pill" href="#/character/${center.id}">View ${escapeHTML(center.name)}'s profile <span class="arrow">&#8594;</span></a>`;
 
     const host = document.getElementById("mini-graph-host");
     host.innerHTML = "";
@@ -808,7 +808,7 @@ function viewMap(app) {
       <h2 class="display" style="color:${rcolor};display:flex;align-items:center;gap:10px;">${sigilSVG(houseSigilId(region.house), { size: 24 })} ${region.name}</h2>
       <div class="sub text-dim" style="margin-bottom:10px;">Seat: ${region.seat} · House ${region.house}</div>
       <p class="text-dim" style="font-size:0.88rem;">${region.blurb}</p>
-      <a href="#/house/${encodeURIComponent(region.house)}">View House ${region.house} →</a>
+      <a class="cta-pill" style="margin:8px 0;" href="#/house/${encodeURIComponent(region.house)}">View House ${region.house} <span class="arrow">&#8594;</span></a>
       <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;max-height:260px;overflow-y:auto;">
         ${members.map(c => `
           <a style="display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text);" href="#/character/${c.id}">
