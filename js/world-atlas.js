@@ -369,11 +369,14 @@
           <h1 id="${instanceId}-title">The road<br>changes you.</h1>
           <p class="wa-hero__intro">The road from Winterfell to the Wall takes one season. The distance from honor to survival takes less. Follow the places where the realm stopped being a map and became a memory.</p>
         </div>
-        <dl class="wa-hero__facts" aria-label="World archive coverage">
-          <div><dt>${runtime.regions.length}</dt><dd>charted regions</dd></div>
-          <div><dt>${runtime.settlements.length}</dt><dd>mapped places</dd></div>
-          <div><dt>${runtime.battles.length}</dt><dd>conflict records</dd></div>
-        </dl>
+        <div class="wa-hero__aside">
+          <p class="wa-hero__aside-note">A living atlas of the places where people made irreversible choices.</p>
+          <dl class="wa-hero__facts" aria-label="World archive inventory">
+            <div><dt>${runtime.regions.length}</dt><dd>charted regions</dd></div>
+            <div><dt>${runtime.settlements.length}</dt><dd>mapped places</dd></div>
+            <div><dt>${runtime.battles.length}</dt><dd>conflict records</dd></div>
+          </dl>
+        </div>
       </header>
 
       <section class="world-journey-film" data-world-journey aria-labelledby="${instanceId}-journey-title">
@@ -440,13 +443,13 @@
       const stop = WORLD_STOPS[journeyStopIndex];
       const memory = Array.isArray(window.FAN_MOMENTS) ? window.FAN_MOMENTS.find(moment => moment.id === stop.momentId) : null;
       journeyStage.dataset.stop = stop.id;
-      journeyBackdrop.style.backgroundImage = `url("${stop.image}")`;
+      journeyBackdrop.style.backgroundImage = `url("${memory && memory.image ? memory.image : stop.image}")`;
       journeyStory.innerHTML = `<p class="world-journey-film__chapter">Stop 0${journeyStopIndex + 1} · ${escapeMarkup(stop.region)}</p><h3>${escapeMarkup(stop.label)}</h3><blockquote>“${escapeMarkup(memory ? memory.line : stop.quote)}”</blockquote><p>${escapeMarkup(memory ? memory.fanNote : stop.story)}</p><small>${escapeMarkup(memory ? `${memory.title} · ${memory.consequence}` : stop.detail)}</small><a class="wa-link world-journey-film__link" href="${escapeMarkup(memory ? `#/quotes?quote=${memory.quoteId}` : stop.href)}" data-wa-nav="${escapeMarkup(memory ? `#/quotes?quote=${memory.quoteId}` : stop.href)}">Follow this moment <span aria-hidden="true">↗</span></a>`;
       wrapper.querySelectorAll("[data-world-stop]").forEach((button, buttonIndex) => button.setAttribute("aria-current", String(buttonIndex === journeyStopIndex)));
       if (announceStop) announce(`${stop.label} journey stop selected.`);
     }
 
-    if (typeof Image === "function") WORLD_STOPS.forEach(stop => { const image = new Image(); image.decoding = "async"; image.src = stop.image; });
+    if (typeof Image === "function") WORLD_STOPS.forEach(stop => { const image = new Image(); image.decoding = "async"; const memory = Array.isArray(window.FAN_MOMENTS) ? window.FAN_MOMENTS.find(moment => moment.id === stop.momentId) : null; image.src = memory && memory.image ? memory.image : stop.image; });
     function stopJourneyPlayback() {
       if (journeyTimer) window.clearInterval(journeyTimer);
       journeyTimer = 0;

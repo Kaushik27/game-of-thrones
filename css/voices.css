@@ -96,6 +96,19 @@ body.voices-route::before {
 .voices-hero__dek { max-width: 650px; margin: 0; color: var(--voices-muted); font-size: clamp(1rem, 1.6vw, 1.22rem); line-height: 1.65; }
 .voices-hero__stats { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 28px; color: var(--voices-faint); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }
 .voices-hero__stats strong { margin-right: 5px; color: var(--voices-ink); font-family: 'Cinzel', Georgia, serif; font-size: 1.2rem; letter-spacing: 0; }
+.voices-memory-rail { display: grid; grid-template-columns: minmax(220px, .62fr) minmax(0, 1.38fr); gap: clamp(28px, 6vw, 86px); margin: 0 auto; padding: 0 clamp(18px, 6vw, 92px) clamp(64px, 8vw, 112px); }
+.voices-memory-rail__intro h2 { max-width: 10ch; margin: 7px 0 0; color: var(--voices-ink); font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(2rem, 4vw, 4.2rem); line-height: .94; }
+.voices-memory-rail__intro p { max-width: 34ch; margin: 18px 0 0; color: var(--voices-muted); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.2rem; line-height: 1.25; }
+.voices-memory-rail__cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 11px; }
+.voices-memory-card { position: relative; display: flex; min-height: 250px; flex-direction: column; justify-content: flex-end; overflow: hidden; padding: 18px; border: 1px solid rgba(212,179,106,.27); color: var(--voices-ink); text-decoration: none; isolation: isolate; }
+.voices-memory-card__image, .voices-memory-card__veil { position: absolute; inset: 0; z-index: -2; }
+.voices-memory-card__image { background: var(--voices-memory-image) center / cover; filter: saturate(.76) contrast(1.08); transform: scale(1.04); transition: transform 650ms cubic-bezier(.16,1,.3,1), filter 250ms ease; }
+.voices-memory-card__veil { z-index: -1; background: linear-gradient(180deg, rgba(5,7,8,.02) 10%, rgba(5,7,8,.92) 83%); }
+.voices-memory-card:hover .voices-memory-card__image { filter: saturate(1) contrast(1.08); transform: scale(1.1); }
+.voices-memory-card__kicker { color: var(--voices-gold); font-size: .56rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.voices-memory-card strong { margin-top: 6px; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.65rem; line-height: .95; }
+.voices-memory-card small { margin-top: 9px; color: #c4c4bb; font-size: .66rem; line-height: 1.3; }
+.voices-memory-card__link { margin-top: 14px; color: var(--voices-gold); font-size: .58rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 
 .voices-spotlight {
   position: relative;
@@ -188,6 +201,9 @@ body.voices-route::before {
   .voices-sidebar__label--filters { margin-top: 24px; }
   .voices-field { margin-top: 12px; }
   .voices-sidebar__note { grid-column: 1 / -1; margin-top: 18px; }
+  .voices-memory-rail { display: block; padding-bottom: 56px; }
+  .voices-memory-rail__cards { display: flex; margin-top: 24px; overflow-x: auto; padding-bottom: 9px; scroll-snap-type: x mandatory; }
+  .voices-memory-card { flex: 0 0 min(72vw, 270px); min-height: 230px; scroll-snap-align: start; }
 }
 
 @media (max-width: 640px) {
