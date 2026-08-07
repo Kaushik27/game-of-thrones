@@ -176,6 +176,11 @@
   font-size: clamp(1.08rem, 1.5vw, 1.38rem);
   line-height: 1.58;
 }
+.wa-hero__pulse { max-width: 430px; margin-top: 20px; padding-left: 22px; border-left: 1px solid rgba(203,168,92,.38); }
+.wa-hero__pulse span { display: block; color: var(--wa-accent-bright); font-size: .58rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+.wa-hero__pulse blockquote { margin: 8px 0; color: #efe4ce; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.35rem; font-style: italic; line-height: 1.05; }
+.wa-hero__pulse a { color: var(--wa-accent-bright); font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.wa-hero__pulse a:hover { color: #fff1c7; }
 
 .wa-hero__facts {
   position: relative;

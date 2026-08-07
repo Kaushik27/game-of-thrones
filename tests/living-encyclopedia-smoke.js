@@ -72,6 +72,8 @@ const worldSource = read("js/world-atlas.js");
 const loreSource = read("js/lore-library.js");
 const peopleSource = read("js/people-intelligence.js");
 const ravenWallSource = read("js/raven-wall.js");
+const atmosphereSource = read("js/global-atmosphere.js");
+const navSource = read("src/react-nav-entry.jsx");
 
 const contracts = [
   [appSource.includes('initialEventId: query.get("event") || ""'), "app must pass event deep links to StoryAtlas"],
@@ -95,6 +97,10 @@ const contracts = [
   [loreSource.includes("drawer.contains(document.activeElement)"), "Lore must not close when a higher modal owns focus"],
   [peopleSource.includes('detailLayer.toggleAttribute("inert", detailCoveredByComparison)'), "People must inert a dossier beneath comparison"],
   [ravenWallSource.includes("global.RavenWall") && ravenWallSource.includes("data-rw-remember"), "Memory Wall must expose a remembered fan-fragment interaction"],
+  [ravenWallSource.includes("data-rw-share") && ravenWallSource.includes("data-rw-personal-note"), "Memory Wall must expose shareable fragments and private fan notes"],
+  [atmosphereSource.includes("global.GotAtmosphere") && atmosphereSource.includes("AudioContext"), "Atmosphere must remain opt-in and locally synthesized"],
+  [appSource.includes("got:route-change") && appSource.includes("route-enter"), "route changes must publish a shared cinematic transition state"],
+  [navSource.includes("data-atmosphere-control") && navSource.includes("GotAtmosphere"), "React shell must own the persistent atmosphere control"],
   [appSource.includes("window.RavenWall.mount") && appSource.includes("atlasRequested"), "Timeline must route plain navigation to the Memory Wall and preserve the Episode Atlas"]
 ];
 contracts.forEach(([condition, message]) => assert.ok(condition, message));
@@ -123,6 +129,7 @@ assert.ok(scripts.indexOf("js/cinematic-realm.js") < scripts.indexOf("js/app.js"
 assert.ok(scripts.indexOf("js/quotes.js") < scripts.indexOf("js/quote-curation.js"), "quotes must load before quote curation");
 assert.ok(scripts.indexOf("js/fan-moments.js") < scripts.indexOf("js/app.js"), "fan moments must load before the router");
 assert.ok(scripts.indexOf("js/raven-wall.js") < scripts.indexOf("js/app.js"), "Memory Wall must load before the router");
+assert.ok(scripts.indexOf("js/global-atmosphere.js") < scripts.indexOf("js/app.js"), "atmosphere must load before route rendering");
 assert.ok(scripts.indexOf("js/quote-curation.js") < scripts.indexOf("js/app.js"), "quote curation must load before the router");
 assert.ok(scripts.indexOf("js/lore-data.js") < scripts.indexOf("js/lore-library.js"), "lore data must load before LoreLibrary");
 assert.ok(scripts.indexOf("js/story-atlas.js") < scripts.indexOf("js/app.js"), "feature modules must load before the router");

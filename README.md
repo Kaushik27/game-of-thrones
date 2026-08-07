@@ -1,6 +1,6 @@
 # Game of Thrones — The Living Encyclopedia
 
-A cinematic, interactive reference site for HBO's *Game of Thrones* (TV canon). Explore an eight-season 3D journey, investigate 196 people and 437 documented ties, browse all 73 episodes, follow character journeys across a layered world atlas, and open 24 connected lore dossiers. Built as a single-page app with vanilla JavaScript, Three.js, and D3.js. No build step, framework, or npm runtime.
+A cinematic, interactive reference site for HBO's *Game of Thrones* (TV canon). Explore an eight-season 3D journey, investigate 196 people and 437 documented ties, browse all 73 episodes, follow character journeys across a layered world atlas, and open 24 connected lore dossiers. Built as a static single-page app with vanilla JavaScript, an incremental React shell, Three.js, and D3.js.
 
 **[Live demo →](https://kaushik27.github.io/game-of-thrones/)**
 
@@ -56,10 +56,17 @@ Everything is driven by a shared, hand-curated dataset with no external API:
 
 ## Running locally
 
-No build step, no dependencies to install.
+The current static route modules still run without a build. The React navigation island is bundled locally for the no-server deployment:
 
 ```bash
 python3 -m http.server 8000
+```
+
+To rebuild the React island after editing `src/`:
+
+```bash
+npm install
+npm run build:react-nav
 ```
 
 Hash routing needs an HTTP server (not `file://`) for the initial-load JS to behave consistently across browsers — open `http://localhost:8000/`.
@@ -72,10 +79,10 @@ node tests/living-encyclopedia-smoke.js
 
 ## Tech stack
 
-- Vanilla JS + vendored [Three.js](https://threejs.org/) for the progressive 3D journey
+- Vanilla JS + incremental React components + vendored [Three.js](https://threejs.org/) for the progressive 3D journey
 - [D3.js v7](https://d3js.org/) for force simulation, tree layout, and zoom/drag behaviors
-- A hand-rolled hash router (`js/app.js`) — no framework, no npm, no bundler
-- Plain CSS — a responsive cinematic interface, Cinzel display type, accessible focus states, reduced-motion support, and no framework
+- A hand-rolled hash router (`js/app.js`) with React progressively taking ownership of shared UI
+- Plain CSS — a responsive cinematic interface, Cinzel display type, accessible focus states, reduced-motion support, and React-owned navigation motion
 
 ## Deployment
 
@@ -84,3 +91,31 @@ Pushes to `master` auto-deploy to GitHub Pages via [`.github/workflows/deploy.ym
 ## Design docs
 
 Implementation plan and design spec for the original relations-explorer core live under [`docs/superpowers/`](docs/superpowers/).
+# React migration
+
+The archive is being migrated incrementally to React so the existing static
+GitHub Pages experience remains available while stateful interactions move to
+component-owned code. The first React island owns the route-aware navigation:
+
+```bash
+npm install
+npm run build:react-nav
+```
+
+The generated `js/react-nav.bundle.js` is intentionally checked in for the
+current no-build deployment. Legacy route modules remain available during the
+migration; each high-interaction surface can move behind the same React shell
+without requiring a backend or changing the content datasets.
+
+## Cinematic interaction layer
+
+- A route transition, shared atmosphere layer, and reduced-motion path keep the
+  archive feeling like one continuous experience instead of disconnected pages.
+- Memory Wall cards can open a scene, surprise the visitor, copy a shareable
+  fragment, and save a private 280-character fan note in the browser.
+- People and World surface a meaningful fan-memory quote in their hero instead
+  of presenting only counts and filters. Quotes link directly to their source
+  moment and remain usable without audio or network services.
+- The optional atmosphere control is muted by default and synthesizes a quiet
+  local ambience only after an explicit user gesture; no audio is fetched or
+  persisted.

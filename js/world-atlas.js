@@ -368,6 +368,7 @@
           <p class="wa-hero__season">Season ${currentSeason} of 8</p>
           <h1 id="${instanceId}-title">The road<br>changes you.</h1>
           <p class="wa-hero__intro">The road from Winterfell to the Wall takes one season. The distance from honor to survival takes less. Follow the places where the realm stopped being a map and became a memory.</p>
+          <div class="wa-hero__pulse"><span>First memory on the road</span><blockquote>“${escapeMarkup(WORLD_STOPS[0].quote)}”</blockquote><a href="#/quotes?quote=${encodeURIComponent((Array.isArray(window.FAN_MOMENTS) ? window.FAN_MOMENTS.find(moment => moment.id === WORLD_STOPS[0].momentId) : null)?.quoteId || "q2")}">Enter Winterfell <span aria-hidden="true">↗</span></a></div>
         </div>
         <div class="wa-hero__aside">
           <p class="wa-hero__aside-note">A living atlas of the places where people made irreversible choices.</p>

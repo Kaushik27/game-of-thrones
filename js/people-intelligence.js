@@ -404,6 +404,7 @@
       .filter(Boolean)
       .map(character => `<button class="pi-hero-cast__person ${houseClass(character.house)}" type="button" data-pi-character="${escape(character.id)}" aria-label="Open intelligence for ${escape(character.name)}"><span class="pi-hero-cast__portrait">${portraitMarkup(character, "hero-cast")}</span><span class="pi-hero-cast__name">${escape(character.name)}</span></button>`)
       .join("");
+    const heroMemory = fanMomentFor("arya-stark");
     root.innerHTML = `
       <section class="pi-shell" aria-labelledby="${id}-title">
         <header class="pi-hero">
@@ -413,6 +414,7 @@
             <p class="pi-eyebrow">The people we never stopped arguing about</p>
             <h1 id="${id}-title">Lives in the fire.</h1>
             <p class="pi-hero__lede">Open the scene you return to, the choice that changed them, and the people they loved, betrayed, lost, or became.</p>
+            ${heroMemory ? `<div class="pi-hero__pulse"><span>One line to carry</span><blockquote>“${escape(heroMemory.line)}”</blockquote><a href="#/quotes?quote=${encodeURIComponent(heroMemory.quoteId)}">Enter Arya's memory <span aria-hidden="true">↗</span></a></div>` : ""}
             <dl class="pi-hero__stats" aria-label="Archive coverage">
               <div><dt>${data.characters.length}</dt><dd>People</dd></div>
               <div><dt>${data.relations.length}</dt><dd>Documented ties</dd></div>
@@ -711,7 +713,7 @@
           <div><h3>${escape(character.name)}</h3><p>${character.actor && !/^actor unknown$/i.test(character.actor) ? `Played by ${escape(character.actor)}` : "Cast credit not recorded"}</p></div>
         </div>
         <p class="pi-dossier__bio">${escape(character.bio || "No biography is recorded yet.")}</p>
-        ${memory ? `<section class="pi-memory-card" style="--pi-memory-image:url('../${escape(memory.image)}')"><div class="pi-memory-card__image" aria-hidden="true"></div><div class="pi-memory-card__copy"><p class="pi-card-kicker">The scene fans return to</p><h4>${escape(memory.title)}</h4><blockquote>“${escape(memory.line)}”</blockquote><p>${escape(memory.fanNote)}</p><small>${escape(memory.location)} · ${escape(memory.consequence)}</small><a href="#/quotes?quote=${encodeURIComponent(memory.quoteId)}">Follow the line <span aria-hidden="true">↗</span></a></div></section>` : ""}
+        ${memory ? `<section class="pi-memory-card" style="--pi-memory-image:url('${escape(memory.image)}')"><div class="pi-memory-card__image" aria-hidden="true"></div><div class="pi-memory-card__copy"><p class="pi-card-kicker">The scene fans return to</p><h4>${escape(memory.title)}</h4><blockquote>“${escape(memory.line)}”</blockquote><p>${escape(memory.fanNote)}</p><small>${escape(memory.location)} · ${escape(memory.consequence)}</small><a href="#/quotes?quote=${encodeURIComponent(memory.quoteId)}">Follow the line <span aria-hidden="true">↗</span></a></div></section>` : ""}
         <dl class="pi-dossier__facts">
           <div><dt>End state</dt><dd>${escape(statusLabel(character))}</dd></div>
           <div><dt>Documented seasons</dt><dd>${seasons.length ? seasons.join(", ") : "Not indexed"}</dd></div>

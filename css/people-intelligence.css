@@ -198,6 +198,11 @@ body.pi-overlay-open { overflow: hidden; }
   font-style: italic;
   line-height: 1.55;
 }
+.pi-hero__pulse { max-width: 430px; margin-top: 20px; padding: 12px 0 0 16px; border-left: 1px solid rgba(203,168,92,.58); }
+.pi-hero__pulse span { display: block; color: var(--pi-gold, #cba85c); font-size: .58rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+.pi-hero__pulse blockquote { margin: 7px 0 8px; color: #efe6d6; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.3rem; font-style: italic; line-height: 1.05; }
+.pi-hero__pulse a { color: #d9c28b; font-size: .62rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.pi-hero__pulse a:hover { color: #fff0c5; }
 
 .pi-hero__stats {
   display: flex;
