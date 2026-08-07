@@ -115,7 +115,7 @@ function avatarHTML(character, size) {
   return `<div class="avatar${isDead ? ' dead' : ''}" style="width:${size}px;height:${size}px;font-size:${size * 0.36}px;background:linear-gradient(150deg, ${color}, ${color}99 55%, ${color}33); border-color:${color}55;">
     ${initialsFor(character.name)}
     ${showSigil ? sigilSVG(sigilId, { size: Math.max(12, Math.round(size * 0.3)), className: "avatar-sigil" }) : ""}
-    ${isDead ? '<span class="skull">&#128128;</span>' : ''}
+    ${isDead ? `<span class="skull">${glyphSVG('skull', { size: Math.max(10, Math.round(size * 0.26)) })}</span>` : ''}
   </div>`;
 }
 
@@ -137,7 +137,7 @@ function relationsFor(id) {
     .filter(x => x.other);
 }
 
-const TYPE_ICON = { family: "🩸", marriage: "💍", allegiance: "🛡", conflict: "⚔", bond: "🤝" };
+const TYPE_ICON = new Proxy({}, { get: (_, type) => glyphSVG(RELATION_GLYPH[type] || "clasped-hands", { size: 13 }) });
 const RELATION_STYLE = {
   family:     { color: "#d4af37", dash: null },
   marriage:   { color: "#d97ba0", dash: "6,3" },

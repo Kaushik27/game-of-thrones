@@ -93,3 +93,25 @@ function houseSigilId(house) {
   const info = (typeof HOUSE_INFO !== "undefined" && HOUSE_INFO[house]) || null;
   return info ? info.sigil : "none";
 }
+
+// ---------- Small structural glyphs (relation-type marks, status marks) ----
+// Same stroke-based, single-color language as the house sigils above — used
+// in place of emoji so meaning never depends on the local platform's emoji
+// font (and stays flat, uniform-weight, on-theme).
+const GLYPH_PATHS = {
+  "blood-drop": `<path d="M50 16 C50 16 26 46 26 62 A24 24 0 0 0 74 62 C74 46 50 16 50 16 Z" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"/>`,
+  rings: `<circle cx="38" cy="54" r="16" fill="none" stroke="currentColor" stroke-width="3.2"/><circle cx="62" cy="54" r="16" fill="none" stroke="currentColor" stroke-width="3.2"/>`,
+  shield: `<path d="M50 16 L78 26 L78 50 C78 68 66 80 50 86 C34 80 22 68 22 50 L22 26 Z" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"/>`,
+  "crossed-swords-sm": SIGIL_PATHS["crossed-swords"],
+  "clasped-hands": `<path d="M18 46 L40 46 L52 38 L60 44 L48 54 L36 54" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><path d="M82 46 L60 46" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="18" cy="46" r="4" fill="currentColor"/><circle cx="82" cy="46" r="4" fill="currentColor"/>`,
+  skull: `<path d="M50 18 C32 18 20 32 20 48 C20 58 25 65 30 70 L30 80 L70 80 L70 70 C75 65 80 58 80 48 C80 32 68 18 50 18 Z" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"/><circle cx="38" cy="48" r="5" fill="currentColor"/><circle cx="62" cy="48" r="5" fill="currentColor"/><path d="M42 66 L58 66 M46 72 L54 72" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>`
+};
+const RELATION_GLYPH = { family: "blood-drop", marriage: "rings", allegiance: "shield", conflict: "crossed-swords-sm", bond: "clasped-hands" };
+
+function glyphSVG(glyphId, opts) {
+  opts = opts || {};
+  const size = opts.size || 16;
+  const cls = opts.className || "";
+  const inner = GLYPH_PATHS[glyphId] || "";
+  return `<svg class="sigil-icon glyph-icon ${cls}" width="${size}" height="${size}" viewBox="0 0 100 100" aria-hidden="true">${inner}</svg>`;
+}
