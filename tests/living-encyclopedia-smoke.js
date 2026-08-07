@@ -10,7 +10,7 @@ const read = relativePath => fs.readFileSync(path.join(root, relativePath), "utf
 
 const context = { window: {} };
 vm.createContext(context);
-["js/data.js", "js/events.js", "js/episodes.js", "js/battles.js", "js/quotes.js", "js/quote-curation.js", "js/lore-data.js"]
+["js/data.js", "js/events.js", "js/episodes.js", "js/battles.js", "js/quotes.js", "js/quote-curation.js", "js/fan-moments.js", "js/lore-data.js"]
   .forEach(relativePath => vm.runInContext(read(relativePath), context, { filename: relativePath }));
 
 const value = name => vm.runInContext(name, context);
@@ -22,6 +22,7 @@ const quotes = value("quotes");
 const featuredQuoteIds = value("window.FEATURED_QUOTE_IDS");
 const quoteCollections = value("window.QUOTE_COLLECTIONS");
 const loreEntries = value("LORE_ENTRIES");
+const fanMoments = value("window.FAN_MOMENTS");
 
 assert.equal(characters.length, 196, "character catalogue changed unexpectedly");
 assert.equal(episodes.length, 73, "episode catalogue must contain all 73 episodes");
@@ -32,6 +33,16 @@ assert.deepEqual(
 );
 assert.equal(loreEntries.length, 24, "lore library must retain all 24 dossiers");
 assert.equal(new Set(loreEntries.map(entry => entry.category)).size, 6, "lore library must retain six categories");
+assert.equal(fanMoments.length, 7, "fan memory reel must retain its seven editorial anchors");
+fanMoments.forEach(moment => {
+  assert.ok(moment.id && moment.title && moment.image, "fan moments need stable identity, title, and imagery");
+  assert.ok(characterIdsPlaceholder(moment.characterId), `${moment.id} must reference a known character`);
+  assert.ok(fs.existsSync(path.join(root, moment.image)), `${moment.id} image must exist locally`);
+});
+
+function characterIdsPlaceholder(characterId) {
+  return characters.some(character => character.id === characterId);
+}
 
 const eventsById = new Map(events.map(event => [event.id, event]));
 const eventLinks = episodes.flatMap(episode => episode.eventIds.map(eventId => ({ eventId, episode })));
@@ -107,6 +118,7 @@ assert.ok(scripts.indexOf("js/realm-journey.js") < scripts.indexOf("js/cinematic
 assert.ok(scripts.indexOf("js/cinematic-portal.js") < scripts.indexOf("js/cinematic-realm.js"), "Cinematic portal must load before Explore");
 assert.ok(scripts.indexOf("js/cinematic-realm.js") < scripts.indexOf("js/app.js"), "cinematic Explore must load before the router");
 assert.ok(scripts.indexOf("js/quotes.js") < scripts.indexOf("js/quote-curation.js"), "quotes must load before quote curation");
+assert.ok(scripts.indexOf("js/fan-moments.js") < scripts.indexOf("js/app.js"), "fan moments must load before the router");
 assert.ok(scripts.indexOf("js/quote-curation.js") < scripts.indexOf("js/app.js"), "quote curation must load before the router");
 assert.ok(scripts.indexOf("js/lore-data.js") < scripts.indexOf("js/lore-library.js"), "lore data must load before LoreLibrary");
 assert.ok(scripts.indexOf("js/story-atlas.js") < scripts.indexOf("js/app.js"), "feature modules must load before the router");
