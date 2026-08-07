@@ -2,6 +2,18 @@
 
 This is an unofficial, non-commercial fan reference site for HBO's *Game of Thrones*.
 
+## Cinematic realm artwork and interface assets
+
+The three season backdrops in `assets/ui/` were generated specifically for this fan project. They
+are original atmospheric illustrations, not HBO production stills or frames from the series.
+Season summaries and episode links are curated in `js/realm-chapters.js`; each featured episode
+links to its official HBO page.
+
+The 3D layer uses [Three.js 0.180.0](https://threejs.org/) under the MIT License; the vendored
+license is preserved at `vendor/THREE-LICENSE.txt`. Interface icons are from
+[Bootstrap Icons 1.13.1](https://icons.getbootstrap.com/) under the MIT License; that license is
+preserved at `assets/icons/BOOTSTRAP-ICONS-LICENSE.txt`.
+
 ## Actor photographs
 
 The site uses **134 photographs of the real actors**: 133 sourced from

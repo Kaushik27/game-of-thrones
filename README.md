@@ -1,11 +1,12 @@
-# Game of Thrones — Westeros Reference
+# Game of Thrones — Journey Through Westeros
 
-A cinematic, interactive reference site for HBO's *Game of Thrones* (TV canon) — a living War Table, season-aware Westeros map, 196-character archive, Great Houses, timeline, battles, quizzes, and quote wall. Built as a single-page app with vanilla JavaScript and D3.js. No build step, framework, or npm runtime.
+A cinematic, interactive reference site for HBO's *Game of Thrones* (TV canon) — led by an eight-season 3D journey with animated routes, actor markers, chapter controls, and progressive WebGL enhancement. The experience also includes a living map, 196-character archive, Great Houses, timeline, battles, quizzes, and quote wall. Built as a single-page app with vanilla JavaScript, Three.js, and D3.js. No build step, framework, or npm runtime.
 
 **[Live demo →](https://kaushik27.github.io/game-of-thrones/)**
 
 ![CSS](https://img.shields.io/badge/CSS-1572B6?logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+![Three.js](https://img.shields.io/badge/Three.js-000000?logo=three.js&logoColor=white)
 ![D3.js](https://img.shields.io/badge/D3.js-F9A03C?logo=d3.js&logoColor=white)
 
 ## Routes
@@ -14,7 +15,7 @@ Everything lives under one shell ([`index.html`](index.html)) with a hash-based 
 
 | Route | Description |
 |---|---|
-| [`#/`](https://kaushik27.github.io/game-of-thrones/#/) | Interactive **War Table** with real actor portraits, a relationship constellation, battle dispatches, and a Season 1–8 power rail |
+| [`#/`](https://kaushik27.github.io/game-of-thrones/#/) | Cinematic **Realm Journey** with eight seasons, 24 story chapters, 3D terrain and routes, actor/place/battle markers, keyboard controls, and an image fallback for devices without WebGL |
 | [`#/characters`](https://kaushik27.github.io/game-of-thrones/#/characters) | Searchable/filterable character directory, plus the full force-directed **Relations Graph** (pan/zoom/drag, house + relation-type filters, click-to-highlight) |
 | [`#/character/:id`](https://kaushik27.github.io/game-of-thrones/#/character/jon-snow) | Per-character profile — gradient house-color avatar, bio, house, status, actor, full relations list, a scoped relations graph, and a personal timeline of major events |
 | [`#/houses`](https://kaushik27.github.io/game-of-thrones/#/houses) | Directory of the Great Houses (and the Night's Watch / Free Folk) with an original SVG sigil mark, words, and seat |
@@ -37,6 +38,8 @@ Everything is driven by a shared, hand-curated dataset with no external API:
 - **`js/sigils.js`** — original line-art SVG sigil marks per house (direwolf, lion, dragon, stag, kraken, rose, sun-spear, trout, falcon-moon, crossed-swords)
 - **`js/common.js`** — shared helpers: nav rendering, avatar generation, relation lookups, BFS shortest-path, scroll-reveal, escaping utilities
 - **`js/app.js`** — the hash router and every route's render function
+- **`js/realm-chapters.js`** — eight curated season journeys with 24 chapters, source URLs, camera direction, routes, and marker placement
+- **`js/realm-journey.js`** — progressive Three.js scene, season/chapter controls, actor markers, keyboard behavior, reduced-motion support, and fallback lifecycle
 - **`js/war-table.js`** — season-driven relationship constellation and battle dispatches
 - **`js/living-realm-map.js`** — accessible seasonal map controller and source-grounded hotspots
 - **`js/raven-search.js`** — keyboard-first search across characters, houses, events, battles, and quotes
@@ -54,9 +57,10 @@ Hash routing needs an HTTP server (not `file://`) for the initial-load JS to beh
 
 ## Tech stack
 
-- Vanilla JS + [D3.js v7](https://d3js.org/) (force simulation, tree layout, zoom/drag behaviors) loaded once in the shell
+- Vanilla JS + vendored [Three.js](https://threejs.org/) for the progressive 3D journey
+- [D3.js v7](https://d3js.org/) for force simulation, tree layout, and zoom/drag behaviors
 - A hand-rolled hash router (`js/app.js`) — no framework, no npm, no bundler
-- Plain CSS — a responsive blackened-stone War Table system, Cinzel display type, accessible focus states, reduced-motion support, and no framework
+- Plain CSS — a responsive cinematic interface, Cinzel display type, accessible focus states, reduced-motion support, and no framework
 
 ## Deployment
 
