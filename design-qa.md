@@ -89,6 +89,7 @@ The focused reference/People comparison keeps both screens at 1265 × 712 and co
 
 - The character route now opens with a full-viewport authored beat before the dossier: local realm artwork, a verified portrait through the existing avatar helper, character-specific tagline, actor credit, and the first recorded quote.
 - The new `Continue to dossier` control scrolls to the existing profile header, announces the handoff through a live status region, and leaves every overview, graph, timeline, relation, and quote link unchanged.
+- The entrance uses a short staggered title/quote/CTA reveal and restrained portrait arrival; the same content is immediately visible when reduced motion is requested.
 - Browser verification: `#/character/jon-snow` rendered at the desktop audit viewport with no broken cinematic images; the rendered portrait resolved to the existing Jon Snow actor asset, the quote resolved to `I know nothing, Jon Snow.`, and the handoff landed on `#profile-header` with `Dossier opened` announced. Pointer parallax is disabled under reduced motion and the mobile breakpoint stacks the portrait/quote without adding document overflow.
 - Focused capture: `/tmp/got-jon-cinematic-final.png`.
 
