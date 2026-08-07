@@ -96,6 +96,36 @@
 
 .wa-hero__content { position: relative; z-index: 1; max-width: 760px; }
 
+.world-journey-film { position: relative; height: 430svh; background: #050809; }
+.world-journey-film__stage { position: sticky; top: 0; height: 100svh; min-height: 620px; overflow: hidden; isolation: isolate; background: #050809; }
+.world-journey-film__backdrop, .world-journey-film__veil, .world-journey-film__grain { position: absolute; inset: 0; pointer-events: none; }
+.world-journey-film__backdrop { z-index: -3; background-position: center; background-size: cover; filter: saturate(0.52) contrast(1.12) brightness(0.44); transform: scale(1.06); transition: background-image 900ms ease, filter 900ms ease, transform 1.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.world-journey-film__backdrop::after { position: absolute; inset: 0; background: radial-gradient(circle at 74% 42%, rgba(203,168,92,0.17), transparent 26%), linear-gradient(90deg, rgba(2,5,7,0.96), rgba(2,5,7,0.38) 56%, rgba(2,5,7,0.82)); content: ""; }
+.world-journey-film__veil { z-index: -2; box-shadow: inset 0 -220px 170px rgba(2,5,7,0.88), inset 0 0 160px rgba(0,0,0,0.42); }
+.world-journey-film__grain { z-index: 2; opacity: 0.12; background-image: radial-gradient(rgba(255,255,255,0.16) 0.6px, transparent 0.7px); background-size: 5px 5px; mix-blend-mode: screen; }
+.world-journey-film__copy { position: absolute; z-index: 3; top: 50%; left: clamp(22px, 8vw, 128px); width: min(650px, 62vw); transform: translateY(-50%); }
+.world-journey-film__copy h2 { margin: 11px 0 0; color: #f0eadf; font-size: clamp(3rem, 8vw, 8rem); line-height: 0.9; letter-spacing: -0.06em; }
+.world-journey-film__story { margin-top: clamp(34px, 6vw, 72px); padding-left: 22px; border-left: 1px solid var(--wa-accent); }
+.world-journey-film__chapter { margin: 0 0 12px; color: var(--wa-accent-bright); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
+.world-journey-film__story h3 { margin: 0; color: #f5edda; font-family: 'Cinzel', Georgia, serif; font-size: clamp(1.4rem, 2.8vw, 2.6rem); }
+.world-journey-film__story blockquote { max-width: 640px; margin: 15px 0 0; color: #eadcc0; font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(1.6rem, 3.8vw, 3.5rem); font-style: italic; line-height: 1; }
+.world-journey-film__story p:not(.world-journey-film__chapter) { max-width: 52ch; margin: 18px 0 0; color: #c0bdb4; font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(1.05rem, 1.8vw, 1.45rem); line-height: 1.25; }
+.world-journey-film__story small { display: block; max-width: 50ch; margin-top: 13px; color: var(--wa-muted, #aaa69d); font-size: 0.76rem; line-height: 1.45; }
+.world-journey-film__link { display: inline-flex; margin-top: 22px; color: var(--wa-accent-bright) !important; font-size: 0.67rem; letter-spacing: 0.14em; text-transform: uppercase; }
+.world-journey-film__stops { position: absolute; z-index: 4; top: 50%; right: clamp(18px, 5vw, 78px); display: grid; gap: 5px; width: min(240px, 24vw); transform: translateY(-50%); }
+.world-journey-film__stop { display: grid; grid-template-columns: 29px 1fr; gap: 7px; align-items: center; padding: 10px 0 10px 11px; border: 0; border-left: 1px solid rgba(255,255,255,0.18); background: transparent; color: #898b87; text-align: left; cursor: pointer; }
+.world-journey-film__stop span { color: #656e6d; font-size: 0.6rem; }
+.world-journey-film__stop strong { font-family: 'Cinzel', Georgia, serif; font-size: 0.86rem; font-weight: 500; }
+.world-journey-film__stop small { grid-column: 2; color: #757a78; font-size: 0.64rem; }
+.world-journey-film__stop:hover, .world-journey-film__stop[aria-current="true"] { border-left-color: var(--wa-accent); background: rgba(203,168,92,0.08); color: var(--wa-ink); }
+.world-journey-film__stop[aria-current="true"] span { color: var(--wa-accent); }
+.world-journey-film__progress { position: absolute; z-index: 5; right: 0; bottom: 0; left: 0; height: 2px; background: rgba(255,255,255,0.13); }
+.world-journey-film__progress span { display: block; width: 100%; height: 100%; background: var(--wa-accent); transform: scaleX(0); transform-origin: left center; }
+.world-journey-film__cue { position: absolute; z-index: 4; bottom: 24px; left: 50%; margin: 0; color: #a5a39b; font-size: 0.63rem; letter-spacing: 0.16em; text-transform: uppercase; transform: translateX(-50%); }
+.world-journey-film__cue span { margin-left: 7px; color: var(--wa-accent); font-size: 1rem; }
+.world-journey-film__sound { position: absolute; z-index: 5; top: 24px; right: clamp(18px, 5vw, 78px); min-height: 31px; padding: 6px 10px; border: 1px solid rgba(203,168,92,0.32); background: rgba(3,6,8,0.45); color: #b6b2a7; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; cursor: pointer; }
+.world-journey-film__sound:hover, .world-journey-film__sound[aria-pressed="true"] { border-color: var(--wa-accent); color: var(--wa-accent-bright); }
+
 .wa-eyebrow {
   margin: 0 0 18px;
   color: var(--wa-accent-bright);
@@ -972,6 +1002,19 @@
 }
 
 @media (max-width: 760px) {
+  .world-journey-film { height: 360svh; }
+  .world-journey-film__copy { top: 43%; left: 20px; width: calc(100% - 40px); }
+  .world-journey-film__copy h2 { font-size: clamp(3rem, 15vw, 5.6rem); }
+  .world-journey-film__story { margin-top: 30px; padding-left: 15px; }
+  .world-journey-film__story blockquote { font-size: clamp(1.75rem, 9vw, 3.2rem); }
+  .world-journey-film__stops { top: auto; right: 18px; bottom: 58px; left: 18px; display: flex; width: auto; overflow-x: auto; transform: none; scrollbar-width: none; }
+  .world-journey-film__stops::-webkit-scrollbar { display: none; }
+  .world-journey-film__stop { flex: 0 0 132px; grid-template-columns: 22px 1fr; min-height: 57px; padding: 7px 8px; }
+  .world-journey-film__stop strong { font-size: 0.7rem; }
+  .world-journey-film__stop small { font-size: 0.56rem; }
+  .world-journey-film__cue { display: none; }
+  .world-journey-film__sound { top: 18px; right: 18px; }
+}
   .wa-command-bar { top: 64px; }
   .wa-mode-switch { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .wa-mode-button { min-height: 56px; border-bottom: 1px solid rgba(203, 168, 92, 0.15); }

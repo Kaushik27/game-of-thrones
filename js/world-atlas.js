@@ -37,6 +37,13 @@
     "Free Folk": "#91a8c0",
     Unaffiliated: "#9b9ba4"
   });
+  const WORLD_STOPS = Object.freeze([
+    { id: "winterfell", label: "Winterfell", region: "The North", image: "assets/ui/north-journey-bg.jpg", quote: "The things we do for love.", story: "The road begins under a grey sky, where family is still a kind of power.", detail: "The Starks leave home and the realm starts to tilt.", href: "#/timeline?season=1&mode=consequences" },
+    { id: "the-wall", label: "The Wall", region: "The edge of the world", image: "assets/ui/north-journey-bg.jpg", quote: "The night is dark and full of terrors.", story: "North becomes a direction, then a duty, then a warning.", detail: "The last watch keeps its promise while the living look away.", href: "#/map?season=1" },
+    { id: "kings-landing", label: "King's Landing", region: "The capital", image: "assets/ui/capital-journey-bg.jpg", quote: "When you play the game of thrones, you win or you die.", story: "Every corridor has a witness. Every crown has a price.", detail: "Power changes hands long before the throne moves.", href: "#/timeline?season=2&mode=power" },
+    { id: "meereen", label: "Meereen", region: "Across the Narrow Sea", image: "assets/ui/essos-journey-bg.jpg", quote: "I am not going to stop the wheel. I'm going to break the wheel.", story: "A queen crosses the world and discovers that liberation has an afterlife.", detail: "The city becomes a test of what conquest is meant to leave behind.", href: "#/character/daenerys-targaryen" },
+    { id: "beyond-the-wall", label: "Beyond the Wall", region: "The long night", image: "assets/ui/north-journey-bg.jpg", quote: "There is only one war that matters, the war between the living and the dead.", story: "The map falls away. The story becomes survival.", detail: "At the end of the road, the realm remembers what it was built to protect.", href: "#/timeline?season=8&mode=consequences" }
+  ]);
 
   let nextInstanceId = 0;
 
@@ -369,6 +376,25 @@
         </dl>
       </header>
 
+      <section class="world-journey-film" data-world-journey aria-labelledby="${instanceId}-journey-title">
+        <div class="world-journey-film__stage" data-world-journey-stage data-stop="winterfell">
+          <div class="world-journey-film__backdrop" data-world-journey-backdrop aria-hidden="true"></div>
+          <div class="world-journey-film__veil" aria-hidden="true"></div>
+          <div class="world-journey-film__grain" aria-hidden="true"></div>
+          <button class="world-journey-film__sound" type="button" data-cinematic-sound aria-pressed="false">Sound off</button>
+          <div class="world-journey-film__copy">
+            <p class="wa-eyebrow">A camera journey through the realm</p>
+            <h2 id="${instanceId}-journey-title">Follow the road,<br>not the border.</h2>
+            <div class="world-journey-film__story" data-world-journey-story></div>
+          </div>
+          <nav class="world-journey-film__stops" aria-label="World journey stops">
+            ${WORLD_STOPS.map((stop, index) => `<button type="button" class="world-journey-film__stop" data-world-stop="${stop.id}" aria-current="${index === 0 ? "true" : "false"}"><span>0${index + 1}</span><strong>${escapeMarkup(stop.label)}</strong><small>${escapeMarkup(stop.region)}</small></button>`).join("")}
+          </nav>
+          <div class="world-journey-film__progress" aria-hidden="true"><span data-world-journey-progress></span></div>
+          <p class="world-journey-film__cue" aria-hidden="true">Scroll to travel <span>↓</span></p>
+        </div>
+      </section>
+
       <div class="wa-command-bar">
         <div class="wa-command-bar__inner">
           <div class="wa-mode-switch" role="tablist" aria-label="World views">
@@ -397,6 +423,47 @@
     const viewHost = wrapper.querySelector(".wa-view");
     const announcer = wrapper.querySelector(".wa-sr-only[aria-live]");
     const heroSeason = wrapper.querySelector(".wa-hero__season");
+    const journeyFilm = wrapper.querySelector("[data-world-journey]");
+    const journeyStage = wrapper.querySelector("[data-world-journey-stage]");
+    const journeyStory = wrapper.querySelector("[data-world-journey-story]");
+    const journeyBackdrop = wrapper.querySelector("[data-world-journey-backdrop]");
+    const journeyProgress = wrapper.querySelector("[data-world-journey-progress]");
+    const journeySound = window.CinematicSound ? window.CinematicSound.mount(journeyFilm) : null;
+    let journeyFrame = 0;
+    let journeyStopIndex = 0;
+
+    function renderJourneyStop(index, announceStop) {
+      journeyStopIndex = Math.max(0, Math.min(WORLD_STOPS.length - 1, Number(index) || 0));
+      const stop = WORLD_STOPS[journeyStopIndex];
+      journeyStage.dataset.stop = stop.id;
+      journeyBackdrop.style.backgroundImage = `url("${stop.image}")`;
+      journeyStory.innerHTML = `<p class="world-journey-film__chapter">Stop 0${journeyStopIndex + 1} · ${escapeMarkup(stop.region)}</p><h3>${escapeMarkup(stop.label)}</h3><blockquote>“${escapeMarkup(stop.quote)}”</blockquote><p>${escapeMarkup(stop.story)}</p><small>${escapeMarkup(stop.detail)}</small><a class="wa-link world-journey-film__link" href="${escapeMarkup(stop.href)}" data-wa-nav="${escapeMarkup(stop.href)}">Follow this moment <span aria-hidden="true">↗</span></a>`;
+      wrapper.querySelectorAll("[data-world-stop]").forEach((button, buttonIndex) => button.setAttribute("aria-current", String(buttonIndex === journeyStopIndex)));
+      if (announceStop) announce(`${stop.label} journey stop selected.`);
+    }
+
+    function updateJourneyFilm() {
+      journeyFrame = 0;
+      if (destroyed || !journeyFilm) return;
+      const rect = journeyFilm.getBoundingClientRect();
+      const runway = Math.max(1, journeyFilm.offsetHeight - window.innerHeight);
+      const value = Math.max(0, Math.min(1, -rect.top / runway));
+      const nextIndex = Math.min(WORLD_STOPS.length - 1, Math.floor(value * WORLD_STOPS.length));
+      if (nextIndex !== journeyStopIndex) renderJourneyStop(nextIndex, false);
+      journeyProgress.style.transform = `scaleX(${value.toFixed(4)})`;
+    }
+    function scheduleJourneyFilm() { if (!journeyFrame) journeyFrame = window.requestAnimationFrame(updateJourneyFilm); }
+    function jumpToJourneyStop(id) {
+      const index = Math.max(0, WORLD_STOPS.findIndex(stop => stop.id === id));
+      const rect = journeyFilm.getBoundingClientRect();
+      const runway = Math.max(1, journeyFilm.offsetHeight - window.innerHeight);
+      window.scrollTo({ top: window.scrollY + rect.top + runway * ((index + 0.04) / WORLD_STOPS.length), behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    }
+    wrapper.querySelectorAll("[data-world-stop]").forEach(button => button.addEventListener("click", () => jumpToJourneyStop(button.dataset.worldStop), { signal }));
+    window.addEventListener("scroll", scheduleJourneyFilm, { passive: true, signal });
+    window.addEventListener("resize", scheduleJourneyFilm, { passive: true, signal });
+    renderJourneyStop(0, false);
+    scheduleJourneyFilm();
 
     function announce(message) {
       announcer.textContent = "";
@@ -893,6 +960,8 @@
       destroy() {
         if (destroyed) return;
         destroyed = true;
+        if (journeyFrame) window.cancelAnimationFrame(journeyFrame);
+        if (journeySound) journeySound.destroy();
         destroyMap();
         abortController.abort();
         if (wrapper.parentNode === rootElement) wrapper.remove();
