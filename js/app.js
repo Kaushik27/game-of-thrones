@@ -50,6 +50,7 @@ function router() {
   document.body.classList.toggle("realm-journey-route", path === "/");
   document.body.classList.toggle("character-cinematic-route", /^\/character\//.test(path));
   document.body.classList.toggle("voices-route", path === "/quotes");
+  document.body.classList.toggle("raven-wall-route", path === "/timeline" && !window.location.hash.includes("atlas=1") && !window.location.hash.includes("season=") && !window.location.hash.includes("mode=") && !window.location.hash.includes("event=") && !window.location.hash.includes("episode="));
   document.body.classList.remove("character-cinematic-route--archive");
   for (const route of APP_ROUTES) {
     const m = path.match(route.pattern);
@@ -1329,12 +1330,24 @@ function viewMapLegacy(app) {
 // TIMELINE
 // ==========================================================================
 function viewTimeline(app, params, query) {
+  const atlasRequested = Boolean(params[0] || query.get("atlas") === "1" || query.get("season") || query.get("mode") || query.get("event") || query.get("episode"));
+  if (!atlasRequested && window.RavenWall) {
+    setTitle("Memory Wall");
+    app.innerHTML = `<div id="raven-wall-root" class="encyclopedia-feature-host"></div>`;
+    const root = document.getElementById("raven-wall-root");
+    try {
+      registerActiveView(window.RavenWall.mount(root, { onNavigate: navigateFeatureTarget }));
+      return;
+    } catch (error) {
+      console.error("The Raven Wall could not be mounted.", error);
+    }
+  }
   if (!window.StoryAtlas) {
     viewTimelineLegacy(app, params, query);
     return;
   }
 
-  setTitle("Stories");
+  setTitle("Episode Atlas");
   app.innerHTML = `<div id="story-atlas-root" class="encyclopedia-feature-host"></div>`;
   const root = document.getElementById("story-atlas-root");
   try {

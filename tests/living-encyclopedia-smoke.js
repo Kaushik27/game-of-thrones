@@ -71,6 +71,7 @@ const storySource = read("js/story-atlas.js");
 const worldSource = read("js/world-atlas.js");
 const loreSource = read("js/lore-library.js");
 const peopleSource = read("js/people-intelligence.js");
+const ravenWallSource = read("js/raven-wall.js");
 
 const contracts = [
   [appSource.includes('initialEventId: query.get("event") || ""'), "app must pass event deep links to StoryAtlas"],
@@ -92,7 +93,9 @@ const contracts = [
   [worldSource.includes('&event=${encodeURIComponent(record.id)}'), "World event stops must target exact records"],
   [loreSource.includes("settings.onEntryChange") && loreSource.includes("settings.onCategoryChange"), "Lore must publish drawer and category changes"],
   [loreSource.includes("drawer.contains(document.activeElement)"), "Lore must not close when a higher modal owns focus"],
-  [peopleSource.includes('detailLayer.toggleAttribute("inert", detailCoveredByComparison)'), "People must inert a dossier beneath comparison"]
+  [peopleSource.includes('detailLayer.toggleAttribute("inert", detailCoveredByComparison)'), "People must inert a dossier beneath comparison"],
+  [ravenWallSource.includes("global.RavenWall") && ravenWallSource.includes("data-rw-remember"), "Memory Wall must expose a remembered fan-fragment interaction"],
+  [appSource.includes("window.RavenWall.mount") && appSource.includes("atlasRequested"), "Timeline must route plain navigation to the Memory Wall and preserve the Episode Atlas"]
 ];
 contracts.forEach(([condition, message]) => assert.ok(condition, message));
 
@@ -119,6 +122,7 @@ assert.ok(scripts.indexOf("js/cinematic-portal.js") < scripts.indexOf("js/cinema
 assert.ok(scripts.indexOf("js/cinematic-realm.js") < scripts.indexOf("js/app.js"), "cinematic Explore must load before the router");
 assert.ok(scripts.indexOf("js/quotes.js") < scripts.indexOf("js/quote-curation.js"), "quotes must load before quote curation");
 assert.ok(scripts.indexOf("js/fan-moments.js") < scripts.indexOf("js/app.js"), "fan moments must load before the router");
+assert.ok(scripts.indexOf("js/raven-wall.js") < scripts.indexOf("js/app.js"), "Memory Wall must load before the router");
 assert.ok(scripts.indexOf("js/quote-curation.js") < scripts.indexOf("js/app.js"), "quote curation must load before the router");
 assert.ok(scripts.indexOf("js/lore-data.js") < scripts.indexOf("js/lore-library.js"), "lore data must load before LoreLibrary");
 assert.ok(scripts.indexOf("js/story-atlas.js") < scripts.indexOf("js/app.js"), "feature modules must load before the router");
