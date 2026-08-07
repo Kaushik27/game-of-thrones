@@ -49,6 +49,7 @@ function router() {
   destroyActiveView();
   document.body.classList.toggle("realm-journey-route", path === "/");
   document.body.classList.toggle("character-cinematic-route", /^\/character\//.test(path));
+  document.body.classList.toggle("voices-route", path === "/quotes");
   document.body.classList.remove("character-cinematic-route--archive");
   for (const route of APP_ROUTES) {
     const m = path.match(route.pattern);
