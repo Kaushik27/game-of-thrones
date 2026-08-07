@@ -149,7 +149,7 @@ body.realm-journey-route #site-footer {
 }
 
 .realm-journey__title {
-  max-width: 10.5ch;
+  max-width: 100%;
   margin: 0;
   color: #f0e6d1;
   font-family: "Cinzel", Georgia, serif;
