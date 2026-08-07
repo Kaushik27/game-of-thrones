@@ -692,6 +692,18 @@ body.lore-library-drawer-open { overflow: hidden; }
   .lore-library__hero-copy > p:last-child { font-size: 1.05rem; }
 }
 
+@media (min-width: 721px) and (max-height: 800px) {
+  .lore-library__hero {
+    min-height: 520px;
+    gap: 24px;
+    padding-top: 68px;
+    padding-bottom: 38px;
+  }
+
+  .lore-library__hero-orbit { top: 28px; }
+  .lore-library__hero h1 { font-size: clamp(3.2rem, 8vw, 6.2rem); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lore-feature-card,
   .lore-card,

@@ -1109,6 +1109,18 @@ body.story-atlas-route #site-footer {
   .story-atlas__source-copy ul { grid-template-columns: 1fr; }
 }
 
+@media (min-width: 861px) and (max-height: 800px) {
+  .story-atlas__hero {
+    min-height: 520px;
+    gap: 54px;
+    padding-top: 66px;
+    padding-bottom: 42px;
+  }
+
+  .story-atlas__hero h1 { font-size: clamp(3.2rem, 6.4vw, 6.4rem); }
+  .story-atlas__hero-copy > p:last-child { margin-top: 22px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .story-atlas *,
   .story-atlas *::before,

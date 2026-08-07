@@ -1181,6 +1181,13 @@ body.pi-overlay-open { overflow: hidden; }
   .pi-archive-card__open { grid-template-columns: 100px minmax(0, 1fr); }
 }
 
+@media (min-width: 861px) and (max-height: 800px) {
+  .pi-hero { min-height: 520px; }
+  .pi-hero__content { padding-top: 44px; padding-bottom: 36px; }
+  .pi-hero__lede { margin-top: 22px; }
+  .pi-hero__stats { margin-top: 24px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .people-intelligence *,
   .people-intelligence *::before,
