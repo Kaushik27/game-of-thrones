@@ -19,6 +19,8 @@ html.cinematic-portal-jump body { scroll-behavior: auto !important; }
 .cinematic-prologue__stage[data-scene="border"] { background: #010304; }
 .cinematic-prologue__stage[data-scene="border"] .cinematic-prologue__layer--north { filter: saturate(0.2) contrast(1.2) brightness(0.2); opacity: 0.34; }
 .cinematic-prologue__stage[data-scene="border"] .cinematic-prologue__veil { background: rgba(0, 2, 4, 0.78); }
+.cinematic-prologue__stage[data-scene="border"] .cinematic-prologue__copy { width: min(700px, 56vw); }
+.cinematic-prologue__stage[data-scene="border"] .cinematic-prologue__title { max-width: 12ch; font-size: clamp(2.8rem, 5.4vw, 6rem); line-height: 0.93; }
 .cinematic-prologue__stage[data-scene="fire"] .cinematic-prologue__layer--fire { filter: saturate(1.04) contrast(1.08) brightness(0.64); }
 .cinematic-prologue__stage[data-scene="realm"] .cinematic-prologue__layer--realm,
 .cinematic-prologue__stage[data-scene="arrival"] .cinematic-prologue__layer--realm { filter: saturate(0.92) contrast(1.08) brightness(0.6); }
@@ -83,6 +85,8 @@ html.cinematic-portal-jump body { scroll-behavior: auto !important; }
 @media (max-width: 760px) {
   .cinematic-prologue { height: 360svh; }
   .cinematic-prologue__copy { top: 105px; left: 20px; width: min(330px, calc(100vw - 40px)); }
+  .cinematic-prologue__stage[data-scene="border"] .cinematic-prologue__copy { width: min(340px, calc(100vw - 40px)); }
+  .cinematic-prologue__stage[data-scene="border"] .cinematic-prologue__title { font-size: clamp(2.65rem, 11vw, 4.3rem); }
   .cinematic-prologue__title { font-size: clamp(2.8rem, 14vw, 4.5rem); }
   .cinematic-prologue__body { margin-top: 17px; font-size: 1.15rem; }
   .cinematic-prologue__quote { margin-top: 18px; padding-left: 17px; }
