@@ -1,0 +1,16 @@
+{
+  "name": "game-of-thrones-fan-archive",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build:react-nav": "esbuild src/react-nav-entry.jsx --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\" --format=iife --outfile=js/react-nav.bundle.js",
+    "check": "node --check js/react-nav.bundle.js && node tests/living-encyclopedia-smoke.js"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}

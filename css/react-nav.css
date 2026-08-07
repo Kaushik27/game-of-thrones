@@ -1,0 +1,106 @@
+/* React-owned navigation island. The existing theme supplies the tokens; this
+   layer adds stateful motion without changing the legacy page contracts. */
+#site-nav.react-nav-mounted,
+#site-nav:has(.react-nav-shell) {
+  display: contents;
+}
+
+.react-nav-shell {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 58px;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, rgba(7, 10, 13, .96), rgba(16, 15, 14, .88), rgba(7, 10, 13, .96));
+  border-bottom: 1px solid rgba(212, 175, 55, .22);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, .2);
+  backdrop-filter: blur(14px) saturate(1.1);
+  animation: react-nav-arrive 500ms var(--ease-out, cubic-bezier(.16, 1, .3, 1)) both;
+}
+
+.react-nav-shell .brand { position: relative; }
+.react-nav-shell .brand::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -7px;
+  width: 22px;
+  height: 1px;
+  background: var(--accent, #d4af37);
+  transform-origin: left;
+  transition: transform 260ms var(--ease-out, ease-out), width 260ms var(--ease-out, ease-out);
+}
+.react-nav-shell .brand:hover::after { width: 100%; transform: scaleX(.55); }
+
+.react-nav-shell .nav-links { display: flex; gap: 2px; flex: 1; flex-wrap: wrap; }
+.react-nav-shell .nav-links a { position: relative; }
+.react-nav-shell .nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 3px;
+  height: 1px;
+  background: var(--accent, #d4af37);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 220ms var(--ease-out, ease-out);
+}
+.react-nav-shell .nav-links a:hover::after,
+.react-nav-shell .nav-links a.active::after { transform: scaleX(1); }
+
+.react-nav-shell .nav-search { margin-left: auto; }
+.react-nav-shell .nav-atmosphere {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid rgba(212,175,55,.25);
+  background: rgba(7,10,12,.32);
+  color: #999c98;
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.react-nav-shell .nav-atmosphere:hover,
+.react-nav-shell .nav-atmosphere.is-on { border-color: rgba(212,175,55,.72); color: #e8d5a5; }
+.nav-atmosphere__dot { width: 6px; height: 6px; border: 1px solid currentColor; border-radius: 50%; }
+.nav-atmosphere.is-on .nav-atmosphere__dot { background: #d4af37; box-shadow: 0 0 12px #d4af37; }
+.react-nav-shell .react-nav-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes react-nav-arrive {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 860px) {
+  .react-nav-shell { flex-wrap: wrap; }
+  .react-nav-shell .nav-links { order: 4; display: none; width: 100%; }
+  .react-nav-shell .nav-links.open { display: flex; flex-direction: column; }
+  .react-nav-shell .nav-links.open a { padding: 11px 12px; }
+  .react-nav-shell .nav-toggle { display: inline-block; margin-left: 0; }
+  .react-nav-shell .nav-search { margin-left: auto; }
+  .react-nav-shell .nav-atmosphere span:last-child { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .react-nav-shell { animation: none; }
+  .react-nav-shell .brand::after,
+  .react-nav-shell .nav-links a::after { transition: none; }
+}
