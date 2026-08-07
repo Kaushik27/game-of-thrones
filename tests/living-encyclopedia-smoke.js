@@ -10,7 +10,7 @@ const read = relativePath => fs.readFileSync(path.join(root, relativePath), "utf
 
 const context = { window: {} };
 vm.createContext(context);
-["js/data.js", "js/events.js", "js/episodes.js", "js/battles.js", "js/quotes.js", "js/lore-data.js"]
+["js/data.js", "js/events.js", "js/episodes.js", "js/battles.js", "js/quotes.js", "js/quote-curation.js", "js/lore-data.js"]
   .forEach(relativePath => vm.runInContext(read(relativePath), context, { filename: relativePath }));
 
 const value = name => vm.runInContext(name, context);
@@ -19,6 +19,8 @@ const events = value("events");
 const episodes = value("EPISODES");
 const battles = value("battles");
 const quotes = value("quotes");
+const featuredQuoteIds = value("window.FEATURED_QUOTE_IDS");
+const quoteCollections = value("window.QUOTE_COLLECTIONS");
 const loreEntries = value("LORE_ENTRIES");
 
 assert.equal(characters.length, 196, "character catalogue changed unexpectedly");
@@ -75,11 +77,24 @@ contracts.forEach(([condition, message]) => assert.ok(condition, message));
 
 assert.equal(new Set(battles.map(battle => battle.id)).size, battles.length, "exact battle destinations require unique IDs");
 assert.equal(new Set(quotes.map(quote => quote.id)).size, quotes.length, "exact quote destinations require unique IDs");
+const quoteIds = new Set(quotes.map(quote => quote.id));
+assert.ok(featuredQuoteIds.length >= 8, "the Voices archive must keep a meaningful featured set");
+assert.ok(Object.isFrozen(featuredQuoteIds), "featured quote IDs must remain immutable");
+featuredQuoteIds.forEach(quoteId => assert.ok(quoteIds.has(quoteId), `featured quote ${quoteId} must exist in quotes.js`));
+assert.ok(quoteCollections.length >= 4, "the Voices archive must keep multiple editorial collections");
+assert.ok(Object.isFrozen(quoteCollections), "quote collections must remain immutable");
+quoteCollections.forEach(collection => {
+  assert.ok(collection.id && collection.label, "quote collections need stable IDs and labels");
+  assert.ok(Object.isFrozen(collection.quoteIds), `${collection.id} quote IDs must remain immutable`);
+  collection.quoteIds.forEach(quoteId => assert.ok(quoteIds.has(quoteId), `${collection.id} references unknown quote ${quoteId}`));
+});
 
 const indexSource = read("index.html");
 const scripts = [...indexSource.matchAll(/<script[^>]+src="([^"]+)"/g)]
   .map(match => match[1].split("?")[0]);
 assert.ok(scripts.indexOf("js/episodes.js") < scripts.indexOf("js/story-atlas.js"), "episodes must load before StoryAtlas");
+assert.ok(scripts.indexOf("js/quotes.js") < scripts.indexOf("js/quote-curation.js"), "quotes must load before quote curation");
+assert.ok(scripts.indexOf("js/quote-curation.js") < scripts.indexOf("js/app.js"), "quote curation must load before the router");
 assert.ok(scripts.indexOf("js/lore-data.js") < scripts.indexOf("js/lore-library.js"), "lore data must load before LoreLibrary");
 assert.ok(scripts.indexOf("js/story-atlas.js") < scripts.indexOf("js/app.js"), "feature modules must load before the router");
 
