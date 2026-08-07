@@ -165,10 +165,6 @@
       "no match"
     ],
     [
-      "janos-slynt",
-      "no match"
-    ],
-    [
       "yoren",
       "no match"
     ],
@@ -640,6 +636,15 @@
       "license": "CC BY-SA 3.0",
       "source": "https://commons.wikimedia.org/wiki/File:Nikolaj_Coster-Waldau-68363.jpg",
       "tier": "wikipedia-lead"
+    },
+    "janos-slynt": {
+      "actor": "Dominic Carter",
+      "commonsTitle": "File:Dominic Carter by David Shankbone.jpg",
+      "credit": "David Shankbone",
+      "file": "assets/actors/janos-slynt.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Dominic_Carter_by_David_Shankbone.jpg",
+      "tier": "curated-commons"
     },
     "jaqen-hghar": {
       "actor": "Tom Wlaschiha",

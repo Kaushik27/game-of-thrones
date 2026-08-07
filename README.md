@@ -40,7 +40,7 @@ Everything is driven by a shared, hand-curated dataset with no external API:
 - **`js/war-table.js`** — season-driven relationship constellation and battle dispatches
 - **`js/living-realm-map.js`** — accessible seasonal map controller and source-grounded hotspots
 - **`js/raven-search.js`** — keyboard-first search across characters, houses, events, battles, and quotes
-- **`js/actor-photos.js`** — 133 verified, locally hosted actor portraits with source and license records in [`CREDITS.md`](CREDITS.md)
+- **`js/actor-photos.js`** — 134 verified, locally hosted actor portraits with source and license records in [`CREDITS.md`](CREDITS.md)
 
 ## Running locally
 

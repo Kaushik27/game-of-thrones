@@ -4,7 +4,7 @@ This is an unofficial, non-commercial fan reference site for HBO's *Game of Thro
 
 ## Actor photographs
 
-The site uses **133 photographs of the real actors**: 132 sourced from
+The site uses **134 photographs of the real actors**: 133 sourced from
 [Wikimedia Commons](https://commons.wikimedia.org/) and one frame published by the rights holder on
 YouTube under CC BY. No publicity stills, IMDb images, or arbitrary web-search images are used.
 
@@ -17,7 +17,7 @@ License breakdown:
 - CC BY 3.0 — 16 photos
 - CC BY 4.0 — 3 photos
 - CC BY-SA 2.0 — 35 photos
-- CC BY-SA 3.0 — 27 photos
+- CC BY-SA 3.0 — 28 photos
 - CC BY-SA 4.0 — 33 photos
 - CC0 — 4 photos
 - Public domain — 3 photos
@@ -85,6 +85,7 @@ drawn with the site's own generative SVG portrait art instead.
 | Izembaro | Richard E. Grant | Greg2600 | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Richard_E._Grant_2018_(edited).jpg) |
 | Jaime Lannister | Nikolaj Coster-Waldau | Harald Krichel | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Nikolaj_Coster-Waldau-68363.jpg) |
 | Jaqen H'ghar | Tom Wlaschiha | Miguel Discart | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Tom_Wlaschiha_Holland_2023.jpg) |
+| Janos Slynt | Dominic Carter | David Shankbone | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Dominic_Carter_by_David_Shankbone.jpg) |
 | Jeor Mormont | James Cosmo | James English | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:James_Cosmo_2023.png) |
 | Joffrey Baratheon | Jack Gleeson | Miguel Discart &amp; Kiri Karma (Photos Vrac) | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:2023-04-29_18-12-54_ILCE-7C_DSC15799_Kiri_DxO.jpg) |
 | Jojen Reed | Thomas Brodie-Sangster | Gage Skidmore | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Thomas_Brodie-Sangster_by_Gage_Skidmore_2.jpg) |

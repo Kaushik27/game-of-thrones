@@ -111,6 +111,7 @@ CURATED_COMMONS_FILES = {
     "Luke Roberts": "File:Luke Roberts at ComicCon 2026.jpg",
     "Richard E. Grant": "File:Richard E. Grant 2018 (edited).jpg",
     "Tony Way": "File:Tony Way Speaking at ACME Comic Con Spring 2022.jpg",
+    "Dominic Carter": "File:Dominic Carter by David Shankbone.jpg",
 }
 
 # Extra license evidence for a newly uploaded Commons frame whose source-video
