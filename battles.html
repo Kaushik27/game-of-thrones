@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Battles &amp; Events — Game of Thrones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/theme.css">
+<style>
+  .battle-card { padding: 22px; }
+  .battle-card h3 { margin: 0 0 4px; }
+  .battle-card .meta { color: var(--text-dim); font-size: 0.82rem; margin-bottom: 12px; }
+  .combatant-row { margin: 10px 0; }
+  .combatant-row .side-label { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 4px; }
+  .combatant-row .chars { display: flex; gap: 6px; flex-wrap: wrap; }
+  .battle-field { margin-top: 10px; font-size: 0.88rem; }
+  .battle-field strong { color: var(--text); display: block; margin-bottom: 2px; font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.5px; }
+  .battle-field p { margin: 0; color: var(--text-dim); }
+  .char-pill {
+    display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px 3px 3px; border-radius: 999px;
+    background: var(--bg); border: 1px solid var(--panel-border); font-size: 0.76rem; text-decoration: none; color: var(--text);
+  }
+  .char-pill:hover { border-color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+  <div id="site-nav"></div>
+  <div class="page-wrap">
+    <div class="hero" style="padding-top:36px;padding-bottom:10px;">
+      <h1 class="display">Battles &amp; Major Events</h1>
+      <p>The turning points of the war for the Iron Throne — and the war for the dawn.</p>
+    </div>
+    <div class="grid grid-wide" id="battle-grid"></div>
+  </div>
+  <div id="site-footer"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/quotes.js"></script>
+  <script src="js/battles.js"></script>
+  <script src="js/common.js"></script>
+  <script>
+    function pill(id) {
+      const c = getCharacter(id);
+      if (!c) return "";
+      return `<a class="char-pill" href="character.html?id=${c.id}">${avatarHTML(c, 20)}${escapeHTML(c.name)}</a>`;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("battle-grid").innerHTML = battles.map(b => `
+        <div class="card battle-card">
+          <h3 class="display">${escapeHTML(b.name)}</h3>
+          <div class="meta">${escapeHTML(b.season)} · ${escapeHTML(b.location)}</div>
+          ${b.combatants.map(c => `
+            <div class="combatant-row">
+              <div class="side-label">${escapeHTML(c.side)}</div>
+              <div class="chars">${c.characters.map(pill).join("")}</div>
+            </div>
+          `).join("")}
+          <div class="battle-field">
+            <strong>Outcome</strong>
+            <p>${escapeHTML(b.outcome)}</p>
+          </div>
+          <div class="battle-field" style="margin-top:8px;">
+            <strong>Casualties</strong>
+            <p>${escapeHTML(b.casualties)}</p>
+          </div>
+          <div class="battle-field" style="margin-top:8px;">
+            <strong>Linked Characters</strong>
+            <div class="chars" style="margin-top:4px;">${b.linkedCharacters.map(pill).join("")}</div>
+          </div>
+        </div>
+      `).join("");
+    });
+  </script>
+</body>
+</html>
