@@ -41,11 +41,27 @@ function renderFooter() {
 }
 
 // ---------- Scroll reveal ----------
+// Elements already inside the viewport at the moment they're mounted (e.g.
+// the first screenful of cards on initial page load) must appear immediately
+// rather than waiting on IntersectionObserver's first async callback, which
+// can be delayed by web-font swaps / layout settling and otherwise leaves
+// on-screen content stuck at opacity:0. So: synchronously check each new
+// element's position against the viewport up front and reveal it right away;
+// only elements that are genuinely off-screen get handed to the observer for
+// a reveal-on-scroll-into-view later.
 let revealObserver = null;
+function isInViewport(el) {
+  const rect = el.getBoundingClientRect();
+  const vh = window.innerHeight || document.documentElement.clientHeight;
+  const vw = window.innerWidth || document.documentElement.clientWidth;
+  if (rect.width === 0 && rect.height === 0) return false;
+  return rect.top < vh && rect.bottom > 0 && rect.left < vw && rect.right > 0;
+}
 function observeReveals(root) {
   root = root || document;
+  const els = Array.from(root.querySelectorAll(".reveal:not(.in-view)"));
   if (!("IntersectionObserver" in window)) {
-    root.querySelectorAll(".reveal").forEach(el => el.classList.add("in-view"));
+    els.forEach(el => el.classList.add("in-view"));
     return;
   }
   if (!revealObserver) {
@@ -58,7 +74,19 @@ function observeReveals(root) {
       });
     }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
   }
-  root.querySelectorAll(".reveal:not(.in-view)").forEach(el => revealObserver.observe(el));
+  let staggerIndex = 0;
+  els.forEach(el => {
+    if (isInViewport(el)) {
+      // Already visible on load — reveal on the next frame (with a small
+      // per-item stagger) instead of leaving it to the observer.
+      const delay = staggerIndex++ * 40;
+      el.style.transitionDelay = delay ? `${delay}ms` : "";
+      requestAnimationFrame(() => el.classList.add("in-view"));
+    } else {
+      el.style.transitionDelay = "";
+      revealObserver.observe(el);
+    }
+  });
 }
 
 // ---------- Character / house helpers ----------
