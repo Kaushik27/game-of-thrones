@@ -15,7 +15,7 @@ Everything lives under one shell ([`index.html`](index.html)) with a hash-based 
 
 | Route | Description |
 |---|---|
-| [`#/`](https://kaushik27.github.io/game-of-thrones/#/) | Scroll-driven **Cinematic Explore** prologue (ice → fire → realm → arrival) with real portraits, canon quotes, story-moment links, and a canvas portal handoff into the eight-season **Realm Journey** with 24 story chapters, 3D terrain and routes, actor/place/battle markers, keyboard controls, and an image fallback for devices without WebGL |
+| [`#/`](https://kaushik27.github.io/game-of-thrones/#/) | Scroll-driven **Cinematic Explore** prologue (ice → fire → realm → arrival) with original in-world visual studies, canon quotes, story-moment links, and a canvas portal handoff into the eight-season **Realm Journey** with 24 story chapters, 3D terrain and routes, character/place/battle markers, keyboard controls, and an image fallback for devices without WebGL |
 | [`#/characters`](https://kaushik27.github.io/game-of-thrones/#/characters) | Cinematic **People Intelligence** with curated spotlights, season-aware records, a searchable archive, relationship constellation, dossiers, and two-person connection comparisons |
 | [`#/character/:id`](https://kaushik27.github.io/game-of-thrones/#/character/jon-snow) | Per-character profile — gradient house-color avatar, bio, house, status, actor, full relations list, a scoped relations graph, and a personal timeline of major events |
 | [`#/houses`](https://kaushik27.github.io/game-of-thrones/#/houses) | Directory of the Great Houses (and the Night's Watch / Free Folk) with an original SVG sigil mark, words, and seat |
@@ -44,7 +44,7 @@ Everything is driven by a shared, hand-curated dataset with no external API:
 - **`js/app.js`** — the hash router and every route's render function
 - **`js/realm-chapters.js`** — eight curated season journeys with 24 chapters, source URLs, camera direction, routes, and marker placement
 - **`js/realm-journey.js`** — progressive Three.js scene, season/chapter controls, actor markers, keyboard behavior, reduced-motion support, and fallback lifecycle
-- **`js/cinematic-realm.js`** / **`js/cinematic-portal.js`** / **`css/cinematic-realm.css`** — scroll-driven Explore opening, real story moments and quotes, chapter jump controls, canvas portal handoff, responsive atmosphere, and reduced-motion styling
+- **`js/cinematic-realm.js`** / **`js/cinematic-portal.js`** / **`css/cinematic-realm.css`** — scroll-driven Explore opening, original in-world visual studies, real story moments and quotes, chapter jump controls, canvas portal handoff, responsive atmosphere, and reduced-motion styling
 - **`js/people-intelligence.js`** — spotlight, constellation, archive, dossier, and comparison experience for the People route
 - **`js/story-atlas.js`** — complete episode explorer with season, theme, consequence, search, and direct-link state
 - **`js/world-atlas.js`** — atlas, journey, power, and regional-lore views built on the existing grounded map records
