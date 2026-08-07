@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quote Wall — Game of Thrones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/theme.css">
+<style>
+  #controls { display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0; }
+  #search-input { width: 260px; }
+  .quote-card {
+    padding: 26px 22px 18px;
+    background: linear-gradient(160deg, var(--panel-bg), var(--panel-bg-alt));
+    position: relative; overflow: hidden;
+  }
+  .quote-card::before {
+    content: "“"; position: absolute; top: -18px; left: 10px; font-family: 'Cinzel', serif;
+    font-size: 5rem; color: rgba(212,175,55,0.12); line-height: 1;
+  }
+  .quote-card blockquote {
+    margin: 0 0 16px; font-family: 'Cinzel', serif; font-size: 1.05rem; line-height: 1.5; position: relative; z-index: 1;
+  }
+  .quote-card .attribution { display: flex; align-items: center; gap: 10px; }
+  .quote-card .attribution .name { font-size: 0.88rem; }
+  .quote-card .attribution .house { font-size: 0.75rem; color: var(--text-dim); }
+  .quote-card .season-badge { position: absolute; top: 12px; right: 14px; font-size: 0.7rem; color: var(--text-faint); }
+</style>
+</head>
+<body>
+  <div id="site-nav"></div>
+  <div class="page-wrap">
+    <div class="hero" style="padding-top:36px;padding-bottom:10px;">
+      <h1 class="display">Quote Wall</h1>
+      <p>The lines Westeros never forgot. Search by character or browse the whole wall.</p>
+    </div>
+
+    <div id="controls">
+      <input type="text" id="search-input" placeholder="Search quotes or characters...">
+      <select id="house-filter"><option value="">All Houses</option></select>
+    </div>
+    <div id="quote-count" class="text-dim" style="margin-bottom:14px;font-size:0.85rem;"></div>
+    <div class="grid grid-wide" id="quote-grid"></div>
+  </div>
+  <div id="site-footer"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/quotes.js"></script>
+  <script src="js/battles.js"></script>
+  <script src="js/common.js"></script>
+  <script>
+    let activeQuery = "", activeHouse = "";
+
+    function render() {
+      const q = activeQuery.toLowerCase();
+      const filtered = quotes.filter(qt => {
+        const c = getCharacter(qt.characterId);
+        if (!c) return false;
+        if (activeHouse && c.house !== activeHouse) return false;
+        if (q && !qt.text.toLowerCase().includes(q) && !c.name.toLowerCase().includes(q)) return false;
+        return true;
+      });
+      document.getElementById("quote-count").textContent = `${filtered.length} quote${filtered.length === 1 ? '' : 's'}`;
+      document.getElementById("quote-grid").innerHTML = filtered.map(qt => {
+        const c = getCharacter(qt.characterId);
+        return `
+        <div class="card quote-card">
+          <div class="season-badge">S${qt.season}</div>
+          <blockquote>"${escapeHTML(qt.text)}"</blockquote>
+          <a class="attribution" href="character.html?id=${c.id}">
+            ${avatarHTML(c, 34)}
+            <div>
+              <div class="name" style="color:${c.sigilColor}">${escapeHTML(c.name)}</div>
+              <div class="house">${escapeHTML(c.house)}</div>
+            </div>
+          </a>
+        </div>`;
+      }).join("") || `<div class="empty-state">No quotes match your search.</div>`;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const houseSel = document.getElementById("house-filter");
+      Object.keys(HOUSE_COLORS).forEach(h => {
+        const opt = document.createElement("option");
+        opt.value = h; opt.textContent = h;
+        houseSel.appendChild(opt);
+      });
+      document.getElementById("search-input").addEventListener("input", e => { activeQuery = e.target.value; render(); });
+      houseSel.addEventListener("change", e => { activeHouse = e.target.value; render(); });
+      render();
+    });
+  </script>
+</body>
+</html>
