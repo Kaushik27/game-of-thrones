@@ -736,90 +736,258 @@ function renderFamilyTree(houseName, color) {
 // ==========================================================================
 function viewMap(app) {
   setTitle("Map of Westeros");
+
+  const VB = (typeof MAP_VIEWBOX === "string") ? MAP_VIEWBOX : "-90 -60 880 1090";
+
+  // ---- Parchment palette --------------------------------------------------
+  // The map is deliberately a light object inside a dark site. Rather than
+  // pretend that isn't a contrast, it is framed like a physical artefact: an
+  // inked border, a gold hairline inset, and a vignette that darkens the
+  // parchment towards its own edges so it settles into the page instead of
+  // glaring out of it. See #map-frame in the stylesheet.
+  const PAPER = "#e9dcbd", PAPER_DEEP = "#dccca6";
+  const SEA = "#cbbd98", SEA_INK = "#a08a5f";
+  const INK = "#4a3a24", INK_SOFT = "#6d5836";
+
   app.innerHTML = `
     <div class="page-wrap">
       <div class="hero illustrated ambient-glow" style="padding-top:90px;padding-bottom:16px;">
         <div class="hero-scene">${mapSceneSVG()}</div>
         <h1 class="display">Map of Westeros</h1>
-        <p>A stylized map of the Seven Kingdoms. Hover a region to see its ruling house, click to see its characters and history.</p>
+        <p>Drag to pan, scroll or pinch to zoom. Hover a region to see its ruling house, click to open its characters and history.</p>
       </div>
-      <div id="map-layout" style="display:flex;gap:20px;margin-top:16px;flex-wrap:wrap;">
-        <div id="map-host" style="flex:1 1 480px;min-width:300px;background:radial-gradient(ellipse at 50% 20%, #0f1e1c, #060a09 75%);border:1px solid var(--panel-border);border-radius:var(--radius);overflow:hidden;">
-          <svg id="map-svg" viewBox="0 0 700 950" style="width:100%;height:auto;display:block;"></svg>
+      <div id="map-layout">
+        <div id="map-host">
+          <div id="map-frame">
+            <svg id="map-svg" viewBox="${VB}" role="img" aria-label="Map of the Seven Kingdoms of Westeros"></svg>
+            <div id="map-controls">
+              <button type="button" data-z="in" title="Zoom in" aria-label="Zoom in">+</button>
+              <button type="button" data-z="out" title="Zoom out" aria-label="Zoom out">&minus;</button>
+              <button type="button" data-z="reset" title="Reset view" aria-label="Reset view">&#8634;</button>
+            </div>
+            <div id="map-hint">Scroll to zoom &middot; drag to pan</div>
+          </div>
         </div>
-        <div id="map-side" style="width:320px;flex-shrink:0;">
-          <div id="region-detail" style="background:var(--panel-bg);border:1px solid var(--panel-border);border-radius:var(--radius);padding:18px;min-height:200px;">
+        <div id="map-side">
+          <div id="region-detail">
             <div class="empty-state">Click a region on the map to explore it.</div>
           </div>
         </div>
       </div>
     </div>
-    <div id="map-tooltip" style="position:fixed;pointer-events:none;background:var(--panel-bg-alt);border:1px solid var(--panel-border);padding:8px 12px;border-radius:6px;font-size:0.82rem;display:none;z-index:50;max-width:220px;"></div>
+    <div id="map-tooltip"></div>
   `;
 
-  const ns = "http://www.w3.org/2000/svg";
-  function svgEl(tag, attrs) {
-    const el = document.createElementNS(ns, tag);
-    Object.entries(attrs || {}).forEach(([k, v]) => el.setAttribute(k, v));
-    return el;
-  }
-
   const svg = document.getElementById("map-svg");
-  svg.appendChild(svgEl("path", { d: MAP_LANDMASS_OUTLINE, fill: "#06110f", opacity: "0.5" }));
 
-  MAP_REGIONS.forEach(region => {
-    const rcolor = getHouseColor(region.house);
-    const poly = svgEl("path", { d: region.path, fill: rcolor, class: "region-poly" });
-    poly.style.stroke = "#060a09"; poly.style.strokeWidth = "2.5"; poly.style.cursor = "pointer"; poly.style.opacity = "0.82"; poly.style.transition = "opacity .18s, filter .18s";
-    poly.dataset.id = region.id;
-    svg.appendChild(poly);
+  // ---- Terrain / settlement glyphs ---------------------------------------
+  // Original line-art in the same spare, inked idiom as the site's sigils —
+  // no emoji, no clip-art. Each is drawn around its own origin so it can be
+  // dropped at a coordinate and scaled.
+  const GLYPHS = `
+    <g id="g-mountain" stroke="${INK}" stroke-width="0.7" stroke-linejoin="round" fill="none" vector-effect="non-scaling-stroke">
+      <path d="M-7,4 L-2.2,-5.4 L1,-0.6 L3,-3.4 L7,4 Z" fill="${PAPER_DEEP}"/>
+      <path d="M-2.2,-5.4 L-0.4,4" stroke-width="0.5" opacity="0.65"/>
+      <path d="M-4.6,-0.7 L-2.2,-2.2 L-0.2,-0.9" stroke-width="0.45" opacity="0.8"/>
+    </g>
+    <g id="g-forest" stroke="${INK}" stroke-width="0.6" stroke-linejoin="round" fill="none" vector-effect="non-scaling-stroke">
+      <path d="M0,4.6 L0,1.6"/>
+      <path d="M-3.4,2 L0,-4.8 L3.4,2 Z" fill="${PAPER_DEEP}"/>
+      <path d="M-2.4,-0.4 L0,-2.6 L2.4,-0.4" stroke-width="0.45" opacity="0.75"/>
+    </g>
+    <g id="g-swamp" stroke="${INK_SOFT}" stroke-width="0.65" fill="none" stroke-linecap="round" vector-effect="non-scaling-stroke">
+      <path d="M-5,2 q2.4,-1.8 4.8,0 q2.4,1.8 4.8,0"/>
+      <path d="M-3.4,4 q2.4,-1.8 4.8,0"/>
+      <path d="M-1.6,1.2 L-1.6,-3.4 M0.8,1.2 L0.8,-4.4 M3,1.2 L3,-2.8"/>
+    </g>
+    <g id="g-dune" stroke="${INK_SOFT}" stroke-width="0.6" fill="none" stroke-linecap="round" vector-effect="non-scaling-stroke">
+      <path d="M-6,2.4 q3,-4.4 6,-1 q2.2,2.5 5,-0.6"/>
+      <path d="M-3.6,4.4 q2.6,-2.6 5.4,-0.4"/>
+    </g>
+    <g id="g-keep" stroke="${INK}" stroke-width="0.7" stroke-linejoin="round" fill="${PAPER}" vector-effect="non-scaling-stroke">
+      <path d="M-2.6,3.2 L-2.6,-2 L-1.2,-2 L-1.2,-3.4 L0.2,-3.4 L0.2,-2 L2.6,-2 L2.6,3.2 Z"/>
+    </g>
+    <g id="g-castle" stroke="${INK}" stroke-width="0.75" stroke-linejoin="round" fill="${PAPER}" vector-effect="non-scaling-stroke">
+      <path d="M-4.6,3.6 L-4.6,-1.6 L-3.4,-1.6 L-3.4,-3 L-2.2,-3 L-2.2,-1.6 L-0.6,-1.6 L-0.6,-3 L0.6,-3 L0.6,-1.6 L2.2,-1.6 L2.2,-3 L3.4,-3 L3.4,-1.6 L4.6,-1.6 L4.6,3.6 Z"/>
+      <path d="M-1.1,3.6 L-1.1,0.8 L1.1,0.8 L1.1,3.6" stroke-width="0.5" fill="none"/>
+    </g>
+    <g id="g-city" stroke="${INK}" stroke-width="0.7" stroke-linejoin="round" fill="${PAPER}" vector-effect="non-scaling-stroke">
+      <path d="M-6,4 L-6,-1 L-4.2,-1 L-4.2,-2.6 L-2.6,-2.6 L-2.6,-1 L-1,-1 L-1,4 Z"/>
+      <path d="M-0.4,4 L-0.4,-3.6 L1.2,-5.4 L2.8,-3.6 L2.8,4 Z"/>
+      <path d="M3.2,4 L3.2,-0.4 L6,-0.4 L6,4 Z"/>
+    </g>`;
 
-    const label = svgEl("text", { x: region.seatXY[0], y: region.seatXY[1] - 12 });
-    label.setAttribute("font-family", "Cinzel, serif");
-    label.setAttribute("font-size", "12");
-    label.setAttribute("fill", "#f2efe6");
-    label.setAttribute("text-anchor", "middle");
-    label.style.pointerEvents = "none";
-    label.textContent = region.name;
-    svg.appendChild(label);
+  // ---- Defs ---------------------------------------------------------------
+  // feTurbulence supplies the paper grain and the slight tremble on the ink
+  // coastline, which is what stops the generated vectors from looking
+  // machine-plotted.
+  const defs = `
+    <defs>
+      <filter id="paper-grain" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" seed="11" result="n"/>
+        <feColorMatrix in="n" type="saturate" values="0"/>
+        <feComponentTransfer><feFuncA type="linear" slope="0.5"/></feComponentTransfer>
+      </filter>
+      <filter id="paper-blotch" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="3" seed="4" result="n"/>
+        <feColorMatrix in="n" type="saturate" values="0"/>
+        <feComponentTransfer><feFuncA type="linear" slope="0.42"/></feComponentTransfer>
+      </filter>
+      <filter id="ink-wobble" x="-4%" y="-4%" width="108%" height="108%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="5" result="t"/>
+        <feDisplacementMap in="SourceGraphic" in2="t" scale="2.4" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <pattern id="sea-hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(34)">
+        <line x1="0" y1="0" x2="0" y2="9" stroke="${SEA_INK}" stroke-width="0.6" opacity="0.30"/>
+      </pattern>
+      <pattern id="sea-hatch-fine" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(-52)">
+        <line x1="0" y1="0" x2="0" y2="4" stroke="${SEA_INK}" stroke-width="0.35" opacity="0.16"/>
+      </pattern>
+      <radialGradient id="map-vignette" cx="50%" cy="47%" r="72%">
+        <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+        <stop offset="82%" stop-color="#1a1206" stop-opacity="0.30"/>
+        <stop offset="100%" stop-color="#0b0703" stop-opacity="0.72"/>
+      </radialGradient>
+      <clipPath id="land-clip"><path d="${MAP_LANDMASS_OUTLINE}"/></clipPath>
+      ${GLYPHS}
+    </defs>`;
 
-    const iconGroup = svgEl("g", { transform: `translate(${region.seatXY[0] - 9},${region.seatXY[1] - 2})` });
-    iconGroup.style.pointerEvents = "none";
-    iconGroup.style.color = "#f2efe6";
-    iconGroup.innerHTML = `<svg width="18" height="18" viewBox="0 0 100 100">
-      <path d="M20 90 L20 45 L10 45 L30 20 L50 45 L40 45 L40 60 L60 60 L60 45 L50 45 L70 20 L90 45 L80 45 L80 90 Z" fill="currentColor" opacity="0.9"/>
-    </svg>`;
-    svg.appendChild(iconGroup);
+  // ---- Layers -------------------------------------------------------------
+  const [vx, vy, vw, vh] = VB.split(/\s+/).map(Number);
 
-    poly.addEventListener("mouseenter", (e) => showTooltip(e, region));
-    poly.addEventListener("mousemove", (e) => moveTooltip(e));
-    poly.addEventListener("mouseleave", hideTooltip);
-    poly.addEventListener("mouseenter", () => poly.style.opacity = "1");
-    poly.addEventListener("mouseleave", () => { if (!poly.classList.contains("selected")) poly.style.opacity = "0.82"; });
-    poly.addEventListener("click", () => selectRegion(region.id));
+  const seaLayer = `
+    <rect x="${vx}" y="${vy}" width="${vw}" height="${vh}" fill="${SEA}"/>
+    <rect x="${vx}" y="${vy}" width="${vw}" height="${vh}" fill="url(#sea-hatch)"/>
+    <rect x="${vx}" y="${vy}" width="${vw}" height="${vh}" fill="url(#sea-hatch-fine)"/>`;
+
+  // Concentric offset strokes just outside the coast read as the drawn
+  // "shore lines" of an engraved map.
+  const shoreLines = [5, 10, 16].map((w, i) =>
+    `<path d="${MAP_LANDMASS_OUTLINE}" fill="none" stroke="${SEA_INK}" stroke-width="${w * 2}"
+       opacity="${0.13 - i * 0.035}" filter="url(#ink-wobble)"/>`).join("");
+
+  const regionPaths = MAP_REGIONS.map(r => {
+    const c = getHouseColor(r.house);
+    return `<path class="region-poly" data-id="${r.id}" d="${r.path}"
+      fill="${c}" fill-opacity="0.26" stroke="${INK_SOFT}" stroke-width="0.7"
+      stroke-dasharray="3.5 2.5" vector-effect="non-scaling-stroke"/>`;
+  }).join("");
+
+  const terrainLayer = `<g id="map-terrain" clip-path="url(#land-clip)">` +
+    MAP_TERRAIN.map(g =>
+      `<use href="#g-${g.t}" transform="translate(${g.x} ${g.y}) scale(${g.s})"/>`).join("") +
+    `</g>`;
+
+  // The Wall is built, not natural, so it gets a ruled crenellated band
+  // rather than the hand-wobbled terrain treatment.
+  const wallLayer = `
+    <g id="map-wall">
+      <line x1="52" y1="195" x2="654" y2="195" stroke="#dceaf1" stroke-width="8.5" opacity="0.95"/>
+      <line x1="52" y1="195" x2="654" y2="195" stroke="#7ea7bd" stroke-width="8.5"
+            stroke-dasharray="2.2 6" opacity="0.55"/>
+      <line x1="52" y1="190.8" x2="654" y2="190.8" stroke="${INK}" stroke-width="0.8" vector-effect="non-scaling-stroke"/>
+      <line x1="52" y1="199.2" x2="654" y2="199.2" stroke="${INK}" stroke-width="0.8" vector-effect="non-scaling-stroke"/>
+    </g>`;
+
+  const settlementLayer = `<g id="map-settlements">` + MAP_SETTLEMENTS.map(s => `
+    <g class="settlement" data-kind="${s.kind}">
+      <use href="#g-${s.kind}" transform="translate(${s.x} ${s.y}) scale(${s.kind === 'city' ? 1 : 1.1})"/>
+      <text class="settlement-label" x="${s.x + (s.kind === 'city' ? 8 : 6)}" y="${s.y + 3.4}">${escapeHTML(s.name)}</text>
+    </g>`).join("") + `</g>`;
+
+  const regionLabelLayer = `<g id="map-region-labels">` + MAP_REGIONS.map(r => {
+    const [lx, ly] = r.labelXY || r.seatXY;
+    return `<text class="region-label" data-base="${r.labelSize || 13}" x="${lx}" y="${ly}"
+      font-size="${r.labelSize || 13}">${escapeHTML(r.name.toUpperCase())}</text>`;
+  }).join("") + `</g>`;
+
+  const seaLabelLayer = `<g id="map-sea-labels">` + MAP_SEA_LABELS.map(s =>
+    `<text class="sea-label" x="${s.x}" y="${s.y}" font-size="${s.size}"
+       transform="rotate(${s.rot} ${s.x} ${s.y})">${escapeHTML(s.name)}</text>`).join("") + `</g>`;
+
+  svg.innerHTML = `
+    ${defs}
+    <g id="map-zoom">
+      ${seaLayer}
+      ${shoreLines}
+      <path d="${MAP_LANDMASS_OUTLINE}" fill="#000" opacity="0.16" transform="translate(4 6)"/>
+      <path d="${MAP_ISLETS}" fill="${PAPER}" stroke="${INK}" stroke-width="0.8" vector-effect="non-scaling-stroke"/>
+      <path d="${MAP_LANDMASS_OUTLINE}" fill="${PAPER}"/>
+      <g id="map-regions">${regionPaths}</g>
+      ${terrainLayer}
+      ${wallLayer}
+      <path d="${MAP_LANDMASS_OUTLINE}" fill="none" stroke="${INK}" stroke-width="1.6"
+            filter="url(#ink-wobble)" vector-effect="non-scaling-stroke" pointer-events="none"/>
+      ${settlementLayer}
+      ${seaLabelLayer}
+      ${regionLabelLayer}
+      <rect x="${vx}" y="${vy}" width="${vw}" height="${vh}" filter="url(#paper-blotch)"
+            style="mix-blend-mode:multiply" opacity="0.30" pointer-events="none"/>
+      <rect x="${vx}" y="${vy}" width="${vw}" height="${vh}" filter="url(#paper-grain)"
+            style="mix-blend-mode:multiply" opacity="0.16" pointer-events="none"/>
+    </g>
+    <rect x="${vx}" y="${vy}" width="${vw}" height="${vh}" fill="url(#map-vignette)" pointer-events="none"/>
+  `;
+
+  // ---- Zoom & pan ---------------------------------------------------------
+  // Labels are counter-scaled as you zoom in so they stay a readable size on
+  // screen instead of ballooning, and settlement names only appear once
+  // there is room for them — the standard cartographic decluttering trick.
+  const zoomG = d3.select("#map-zoom");
+  const svgSel = d3.select(svg);
+  const zoom = d3.zoom()
+    .scaleExtent([1, 9])
+    .translateExtent([[vx, vy], [vx + vw, vy + vh]])
+    .on("zoom", (event) => {
+      const k = event.transform.k;
+      zoomG.attr("transform", event.transform);
+      svg.classList.toggle("zoomed-in", k >= 1.7);
+      document.querySelectorAll("#map-region-labels .region-label").forEach(t => {
+        const base = Number(t.dataset.base) || 13;
+        t.setAttribute("font-size", (base / Math.pow(k, 0.72)).toFixed(2));
+        t.style.opacity = k > 4.2 ? "0.25" : "";
+      });
+      document.querySelectorAll(".settlement-label").forEach(t => {
+        t.setAttribute("font-size", (6.4 / Math.pow(k, 0.85)).toFixed(2));
+      });
+      document.querySelectorAll(".sea-label").forEach(t => {
+        t.style.opacity = k > 3 ? "0" : "";
+      });
+    });
+  svgSel.call(zoom);
+
+  document.getElementById("map-controls").addEventListener("click", (e) => {
+    const btn = e.target.closest("button");
+    if (!btn) return;
+    if (btn.dataset.z === "reset") svgSel.transition().duration(420).call(zoom.transform, d3.zoomIdentity);
+    else svgSel.transition().duration(260).call(zoom.scaleBy, btn.dataset.z === "in" ? 1.6 : 1 / 1.6);
   });
 
+  // ---- Interaction (unchanged behaviour: hover tooltip, click to open) ----
+  const tip = document.getElementById("map-tooltip");
   function showTooltip(e, region) {
-    const tip = document.getElementById("map-tooltip");
-    tip.innerHTML = `<strong style="color:${getHouseColor(region.house)}">${region.name}</strong><br>Seat: ${region.seat}<br>Controlled by House ${region.house}`;
+    tip.innerHTML = `<strong style="color:${getHouseColor(region.house)}">${escapeHTML(region.name)}</strong><br>Seat: ${escapeHTML(region.seat)}<br>Controlled by House ${escapeHTML(region.house)}`;
     tip.style.display = "block";
     moveTooltip(e);
   }
   function moveTooltip(e) {
-    const tip = document.getElementById("map-tooltip");
-    tip.style.left = (e.clientX + 16) + "px";
+    const pad = 16;
+    const w = tip.offsetWidth || 200;
+    tip.style.left = Math.min(e.clientX + pad, window.innerWidth - w - 10) + "px";
     tip.style.top = (e.clientY + 12) + "px";
   }
-  function hideTooltip() { document.getElementById("map-tooltip").style.display = "none"; }
+  function hideTooltip() { tip.style.display = "none"; }
+
+  svg.querySelectorAll(".region-poly").forEach(poly => {
+    const region = MAP_REGIONS.find(r => r.id === poly.dataset.id);
+    poly.addEventListener("mouseenter", (e) => { poly.classList.add("hovered"); showTooltip(e, region); });
+    poly.addEventListener("mousemove", moveTooltip);
+    poly.addEventListener("mouseleave", () => { poly.classList.remove("hovered"); hideTooltip(); });
+    poly.addEventListener("click", () => selectRegion(region.id));
+  });
 
   function selectRegion(id) {
-    document.querySelectorAll(".region-poly").forEach(p => {
-      const sel = p.dataset.id === id;
-      p.classList.toggle("selected", sel);
-      p.style.opacity = sel ? "1" : "0.82";
-      p.style.stroke = sel ? "var(--accent)" : "#060a09";
-      p.style.strokeWidth = sel ? "3" : "2.5";
-    });
+    svg.querySelectorAll(".region-poly").forEach(p => p.classList.toggle("selected", p.dataset.id === id));
     const region = MAP_REGIONS.find(r => r.id === id);
     if (!region) return;
     const rcolor = getHouseColor(region.house);
@@ -827,10 +995,10 @@ function viewMap(app) {
     const evs = eventsForHouse(region.house).slice(0, 6);
 
     document.getElementById("region-detail").innerHTML = `
-      <h2 class="display" style="color:${rcolor};display:flex;align-items:center;gap:10px;">${sigilSVG(houseSigilId(region.house), { size: 24 })} ${region.name}</h2>
-      <div class="sub text-dim" style="margin-bottom:10px;">Seat: ${region.seat} · House ${region.house}</div>
-      <p class="text-dim" style="font-size:0.88rem;">${region.blurb}</p>
-      <a class="cta-pill" style="margin:8px 0;" href="#/house/${encodeURIComponent(region.house)}">View House ${region.house} <span class="arrow">&#8594;</span></a>
+      <h2 class="display" style="color:${rcolor};display:flex;align-items:center;gap:10px;">${sigilSVG(houseSigilId(region.house), { size: 24 })} ${escapeHTML(region.name)}</h2>
+      <div class="sub text-dim" style="margin-bottom:10px;">Seat: ${escapeHTML(region.seat)} · House ${escapeHTML(region.house)}</div>
+      <p class="text-dim" style="font-size:0.88rem;">${escapeHTML(region.blurb)}</p>
+      <a class="cta-pill" style="margin:8px 0;" href="#/house/${encodeURIComponent(region.house)}">View House ${escapeHTML(region.house)} <span class="arrow">&#8594;</span></a>
       <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;max-height:260px;overflow-y:auto;">
         ${members.map(c => `
           <a style="display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text);" href="#/character/${c.id}">
@@ -849,7 +1017,6 @@ function viewMap(app) {
     `;
   }
 }
-
 // ==========================================================================
 // TIMELINE
 // ==========================================================================
