@@ -53,6 +53,7 @@ function router() {
   for (const route of APP_ROUTES) {
     const m = path.match(route.pattern);
     if (m) {
+      recordEngagement("route_view", { path, query: query.toString() });
       window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
       route.view(app, m.slice(1), query);
       renderNav();
@@ -76,6 +77,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ---------- shared small helpers ----------
 function setTitle(t) { document.title = t + " — Game of Thrones"; }
+
+function recordEngagement(eventName, detail = {}) {
+  const payload = { eventName: String(eventName || "unknown"), detail, at: new Date().toISOString() };
+  try {
+    const key = "got-engagement-events";
+    const current = JSON.parse(window.localStorage.getItem(key) || "[]");
+    current.push(payload);
+    window.localStorage.setItem(key, JSON.stringify(current.slice(-80)));
+  } catch (error) {
+    // Storage is an enhancement; route behavior must remain available in
+    // private browsing and embedded previews.
+  }
+  window.dispatchEvent(new CustomEvent("got:engagement", { detail: payload }));
+}
+
+function rememberLastRoute(key, value) {
+  try { window.sessionStorage.setItem(`got-last-${key}`, String(value || "")); } catch (error) { /* optional */ }
+}
+
+function episodeForQuote(quote) {
+  if (!quote || typeof EPISODES === "undefined" || !Array.isArray(EPISODES)) return null;
+  return EPISODES.find(episode => Array.isArray(episode.quoteIds) && episode.quoteIds.includes(quote.id))
+    || EPISODES.find(episode => Array.isArray(episode.quotes) && episode.quotes.includes(quote.id))
+    || EPISODES.find(episode => episode.season === quote.season && Array.isArray(episode.characterIds) && episode.characterIds.includes(quote.characterId))
+    || null;
+}
 
 // The Explore prologue uses original in-world visual studies. Dossiers and
 // quote archives intentionally keep the verified character portraits so the
@@ -460,7 +487,7 @@ function viewCharactersLegacy(app, params, query) {
 // ==========================================================================
 // CHARACTER PROFILE
 // ==========================================================================
-function viewCharacter(app, params) {
+function viewCharacter(app, params, query) {
   const id = params[0];
   const c = getCharacter(id);
   if (!c) {
@@ -487,6 +514,9 @@ function viewCharacter(app, params) {
       ? "assets/ui/essos-journey-bg.jpg"
       : "assets/ui/capital-journey-bg.jpg";
   const cinematicQuote = cq[0] || { text: "The story remembers.", speaker: c.name };
+  const requestedChapter = query && ["title", "quote", "turn", "archive"].includes(query.get("chapter")) ? query.get("chapter") : "";
+  rememberLastRoute("character", c.id);
+  recordEngagement("character_open", { characterId: c.id });
 
   app.innerHTML = `
     <div class="character-profile" style="--character-accent:${c.sigilColor};">
@@ -633,11 +663,14 @@ function viewCharacter(app, params) {
     const rect = film.getBoundingClientRect();
     const runway = Math.max(1, film.offsetHeight - window.innerHeight);
     window.scrollTo({ top: window.scrollY + rect.top + runway * (index / filmOrder.length + 0.012), behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    window.history.replaceState(null, "", `#/character/${encodeURIComponent(c.id)}?chapter=${encodeURIComponent(filmOrder[index])}`);
+    recordEngagement("character_chapter", { characterId: c.id, chapter: filmOrder[index] });
   };
   filmJumps.forEach(button => button.addEventListener("click", () => jumpToFilmScene(button.dataset.filmJump)));
   window.addEventListener("scroll", scheduleFilm, { passive: true });
   window.addEventListener("resize", scheduleFilm, { passive: true });
   scheduleFilm();
+  if (requestedChapter) window.setTimeout(() => jumpToFilmScene(requestedChapter), 80);
   if (cinematicEnter && profileHeader) {
     cinematicEnter.addEventListener("click", () => {
       jumpToFilmScene("archive");
@@ -1244,6 +1277,7 @@ function viewMap(app, params, query) {
   try {
     const handle = window.WorldAtlas.mount(root, {
       initialSeason: Number(query.get("season")) || 1,
+      initialMode: query.get("mode") || "atlas",
       onNavigate: navigateFeatureTarget
     });
     registerActiveView(handle);
@@ -1612,7 +1646,7 @@ function viewQuotes(app, params, query) {
   setTitle("Voices of the Realm");
   let activeQuery = "", activeHouse = "", activeSeason = "";
   let activeCollection = query.get("quote") ? "all" : "featured";
-  let spotlightIndex = 0;
+  let spotlightIndex = new Date().getDate();
   const requestedQuoteId = query.get("quote") || "";
   const featuredIds = new Set(Array.isArray(window.FEATURED_QUOTE_IDS) ? window.FEATURED_QUOTE_IDS : []);
   const collections = Array.isArray(window.QUOTE_COLLECTIONS) ? window.QUOTE_COLLECTIONS : [];
@@ -1693,15 +1727,28 @@ function viewQuotes(app, params, query) {
   const soundHandle = window.CinematicSound ? window.CinematicSound.mount(filmRoot) : null;
   let filmIndex = 0;
 
+  const savedQuoteIds = new Set((() => {
+    try { return JSON.parse(window.localStorage.getItem("got-saved-quotes") || "[]"); } catch (error) { return []; }
+  })());
+  const quoteHref = quote => {
+    const episode = episodeForQuote(quote);
+    return episode ? `#/episode/${encodeURIComponent(episode.id)}?quote=${encodeURIComponent(quote.id)}` : `#/timeline?season=${quote.season}&mode=consequences&quote=${encodeURIComponent(quote.id)}`;
+  };
+  const toggleSavedQuote = quote => {
+    if (savedQuoteIds.has(quote.id)) savedQuoteIds.delete(quote.id);
+    else savedQuoteIds.add(quote.id);
+    try { window.localStorage.setItem("got-saved-quotes", JSON.stringify([...savedQuoteIds])); } catch (error) { /* optional */ }
+    recordEngagement("quote_saved", { quoteId: quote.id, saved: savedQuoteIds.has(quote.id) });
+  };
+
   function renderQuoteFilm() {
     const quote = interludeIds.map(id => quotes.find(item => item.id === id)).find(Boolean) && quotes.find(item => item.id === interludeIds[filmIndex % interludeIds.length]);
     if (!quote) return;
     const c = getCharacter(quote.characterId);
     const themes = collectionByQuote.get(quote.id) || [];
-    const episode = (typeof EPISODES !== "undefined" && Array.isArray(EPISODES))
-      ? EPISODES.find(item => item.season === quote.season && item.characterIds && item.characterIds.includes(quote.characterId))
-      : null;
-    filmQuote.innerHTML = `<span class="voices-film__mark" aria-hidden="true">“</span><blockquote>${escapeHTML(quote.text)}</blockquote><div class="voices-film__speaker"><div class="voices-film__portrait">${avatarHTML(c, 58)}</div><div><strong>${escapeHTML(c ? c.name : "Unknown voice")}</strong><span>${escapeHTML(c ? c.house : "The realm")} · Season ${quote.season}</span></div></div><p class="voices-film__context">${escapeHTML(interludeContext[quote.id] || "A line remembered long after the scene has ended.")}</p><p class="voices-film__episode">${episode ? `Episode context · ${escapeHTML(episode.title)}` : `Season ${quote.season} · Featured voice`} ${themes.length ? `· ${escapeHTML(themes[0])}` : ""}</p><a class="voices-button voices-button--solid" href="#/timeline?season=${quote.season}&mode=consequences">Explore this moment <span aria-hidden="true">↗</span></a>`;
+    const episode = episodeForQuote(quote);
+    const saved = savedQuoteIds.has(quote.id);
+    filmQuote.innerHTML = `<span class="voices-film__mark" aria-hidden="true">“</span><blockquote>${escapeHTML(quote.text)}</blockquote><div class="voices-film__speaker"><div class="voices-film__portrait">${avatarHTML(c, 58)}</div><div><strong>${escapeHTML(c ? c.name : "Unknown voice")}</strong><span>${escapeHTML(c ? c.house : "The realm")} · Season ${quote.season}</span></div></div><p class="voices-film__context">${escapeHTML(interludeContext[quote.id] || "A line remembered long after the scene has ended.")}</p><p class="voices-film__episode">${episode ? `Episode context · ${escapeHTML(episode.id.toUpperCase())} · ${escapeHTML(episode.title)}` : `Season ${quote.season} · Featured voice`} ${themes.length ? `· ${escapeHTML(themes[0])}` : ""}</p><div class="voices-film__actions"><a class="voices-button voices-button--solid" href="${escapeHTML(quoteHref(quote))}">Explore this moment <span aria-hidden="true">↗</span></a><button type="button" class="voices-button voices-button--ghost" data-save-film-quote="${escapeHTML(quote.id)}" aria-pressed="${String(saved)}">${saved ? "Saved line" : "Remember this line"}</button></div>`;
     filmRoot.dataset.quoteId = quote.id;
     filmDots.innerHTML = interludeIds.map((id, index) => `<button type="button" role="tab" class="voices-film__dot" data-voices-index="${index}" aria-label="Quote ${index + 1}" aria-selected="${String(index === filmIndex)}"><span aria-hidden="true">0${index + 1}</span></button>`).join("");
   }
@@ -1709,6 +1756,12 @@ function viewQuotes(app, params, query) {
   filmRoot.addEventListener("click", event => {
     const dot = event.target.closest("[data-voices-index]");
     if (dot) { filmIndex = Number(dot.dataset.voicesIndex) || 0; renderQuoteFilm(); return; }
+    const saveButton = event.target.closest("[data-save-film-quote]");
+    if (saveButton) {
+      const quote = quotes.find(item => item.id === saveButton.dataset.saveFilmQuote);
+      if (quote) { toggleSavedQuote(quote); renderQuoteFilm(); }
+      return;
+    }
     if (event.target.closest("[data-voices-prev]")) { filmIndex = (filmIndex - 1 + interludeIds.length) % interludeIds.length; renderQuoteFilm(); return; }
     if (event.target.closest("[data-voices-next]")) { filmIndex = (filmIndex + 1) % interludeIds.length; renderQuoteFilm(); }
   });
@@ -1769,7 +1822,7 @@ function viewQuotes(app, params, query) {
           <div class="voices-card__top"><span class="voices-card__index">${String(qt.id).replace("q", "#")}</span><span class="voices-card__season">Season ${qt.season}</span></div>
           <blockquote class="voices-card__quote">“${escapeHTML(qt.text)}”</blockquote>
           <div class="voices-card__tags">${(featuredIds.has(qt.id) ? ["Featured", ...themes] : themes).slice(0, 2).map(theme => `<span>${escapeHTML(theme)}</span>`).join("")}</div>
-          <div class="voices-card__footer"><a class="voices-card__speaker" href="#/character/${c.id}">${avatarHTML(c, 38)}<span><strong>${escapeHTML(c.name)}</strong><small>${escapeHTML(c.house)}</small></span></a><button type="button" class="voices-copy" data-copy-quote="${escapeHTML(qt.id)}" aria-label="Copy quote by ${escapeHTML(c.name)}">Copy line</button></div>
+          <div class="voices-card__footer"><a class="voices-card__speaker" href="#/character/${c.id}">${avatarHTML(c, 38)}<span><strong>${escapeHTML(c.name)}</strong><small>${escapeHTML(c.house)}</small></span></a><div class="voices-card__actions"><button type="button" class="voices-copy" data-copy-quote="${escapeHTML(qt.id)}" aria-label="Copy quote by ${escapeHTML(c.name)}">Copy line</button><button type="button" class="voices-copy" data-save-card-quote="${escapeHTML(qt.id)}" aria-pressed="${String(savedQuoteIds.has(qt.id))}">${savedQuoteIds.has(qt.id) ? "Saved" : "Keep"}</button></div></div>
         </article>`;
     }).join("") || `<div class="voices-empty"><strong>The archive is quiet.</strong><span>No lines match these filters. Clear one and try again.</span></div>`;
     observeReveals(quoteGrid);
@@ -1804,6 +1857,12 @@ function viewQuotes(app, params, query) {
     status.textContent = "A new voice has entered the spotlight.";
   });
   root.querySelector("#voices-grid").addEventListener("click", async e => {
+    const saveButton = e.target.closest("[data-save-card-quote]");
+    if (saveButton) {
+      const quote = quotes.find(item => item.id === saveButton.dataset.saveCardQuote);
+      if (quote) { toggleSavedQuote(quote); render(); }
+      return;
+    }
     const button = e.target.closest("[data-copy-quote]");
     if (!button) return;
     const quote = quotes.find(item => item.id === button.dataset.copyQuote);

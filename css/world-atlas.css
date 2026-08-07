@@ -125,6 +125,8 @@
 .world-journey-film__cue span { margin-left: 7px; color: var(--wa-accent); font-size: 1rem; }
 .world-journey-film__sound { position: absolute; z-index: 5; top: 24px; right: clamp(18px, 5vw, 78px); min-height: 31px; padding: 6px 10px; border: 1px solid rgba(203,168,92,0.32); background: rgba(3,6,8,0.45); color: #b6b2a7; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; cursor: pointer; }
 .world-journey-film__sound:hover, .world-journey-film__sound[aria-pressed="true"] { border-color: var(--wa-accent); color: var(--wa-accent-bright); }
+.world-journey-film__play { position: absolute; z-index: 5; top: 24px; right: clamp(150px, 14vw, 220px); min-height: 31px; padding: 6px 10px; border: 1px solid rgba(203,168,92,0.32); background: rgba(3,6,8,0.45); color: #b6b2a7; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; cursor: pointer; }
+.world-journey-film__play:hover, .world-journey-film__play[aria-pressed="true"] { border-color: var(--wa-accent); color: var(--wa-accent-bright); }
 
 .wa-eyebrow {
   margin: 0 0 18px;
@@ -1014,6 +1016,7 @@
   .world-journey-film__stop small { font-size: 0.56rem; }
   .world-journey-film__cue { display: none; }
   .world-journey-film__sound { top: 18px; right: 18px; }
+  .world-journey-film__play { top: 18px; right: 112px; }
 }
   .wa-command-bar { top: 64px; }
   .wa-mode-switch { grid-template-columns: repeat(2, minmax(0, 1fr)); }

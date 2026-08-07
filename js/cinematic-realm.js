@@ -184,6 +184,15 @@
     const journeyRoot = root.querySelector("#realm-journey-root");
     journeyRoot.setAttribute("tabindex", "-1");
 
+    // Warm the next frame before the scroll-driven cut. This keeps the
+    // transition feeling intentional on slower connections without adding a
+    // blocking loader to the opening.
+    if (typeof Image === "function") scenes.forEach(scene => {
+      const image = new Image();
+      image.decoding = "async";
+      image.src = scene.focus.image;
+    });
+
     if (global.CinematicPortal) {
       portalHandle = global.CinematicPortal.mount(root, { reducedMotion });
     }
@@ -211,6 +220,7 @@
       focusName.textContent = scene.focus.name;
       focusRole.textContent = scene.focus.role;
       focusLink.href = `#/character/${scene.focus.characterId}`;
+      if (global.dispatchEvent) global.dispatchEvent(new CustomEvent("got:engagement", { detail: { eventName: "realm_scene", detail: { scene: scene.id } } }));
       const matchingQuote = datasetQuotes().find(item => item.id === scene.quote.quoteId) || scene.quote;
       quoteText.textContent = matchingQuote.text;
       quoteSpeaker.textContent = `— ${scene.quote.speaker}`;

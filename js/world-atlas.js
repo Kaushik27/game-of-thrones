@@ -382,6 +382,7 @@
           <div class="world-journey-film__veil" aria-hidden="true"></div>
           <div class="world-journey-film__grain" aria-hidden="true"></div>
           <button class="world-journey-film__sound" type="button" data-cinematic-sound aria-pressed="false">Sound off</button>
+          <button class="world-journey-film__play" type="button" data-world-journey-play aria-pressed="false">Play the road</button>
           <div class="world-journey-film__copy">
             <p class="wa-eyebrow">A camera journey through the realm</p>
             <h2 id="${instanceId}-journey-title">Follow the road,<br>not the border.</h2>
@@ -428,9 +429,11 @@
     const journeyStory = wrapper.querySelector("[data-world-journey-story]");
     const journeyBackdrop = wrapper.querySelector("[data-world-journey-backdrop]");
     const journeyProgress = wrapper.querySelector("[data-world-journey-progress]");
+    const journeyPlay = wrapper.querySelector("[data-world-journey-play]");
     const journeySound = window.CinematicSound ? window.CinematicSound.mount(journeyFilm) : null;
     let journeyFrame = 0;
     let journeyStopIndex = 0;
+    let journeyTimer = 0;
 
     function renderJourneyStop(index, announceStop) {
       journeyStopIndex = Math.max(0, Math.min(WORLD_STOPS.length - 1, Number(index) || 0));
@@ -440,6 +443,24 @@
       journeyStory.innerHTML = `<p class="world-journey-film__chapter">Stop 0${journeyStopIndex + 1} · ${escapeMarkup(stop.region)}</p><h3>${escapeMarkup(stop.label)}</h3><blockquote>“${escapeMarkup(stop.quote)}”</blockquote><p>${escapeMarkup(stop.story)}</p><small>${escapeMarkup(stop.detail)}</small><a class="wa-link world-journey-film__link" href="${escapeMarkup(stop.href)}" data-wa-nav="${escapeMarkup(stop.href)}">Follow this moment <span aria-hidden="true">↗</span></a>`;
       wrapper.querySelectorAll("[data-world-stop]").forEach((button, buttonIndex) => button.setAttribute("aria-current", String(buttonIndex === journeyStopIndex)));
       if (announceStop) announce(`${stop.label} journey stop selected.`);
+    }
+
+    if (typeof Image === "function") WORLD_STOPS.forEach(stop => { const image = new Image(); image.decoding = "async"; image.src = stop.image; });
+    function stopJourneyPlayback() {
+      if (journeyTimer) window.clearInterval(journeyTimer);
+      journeyTimer = 0;
+      if (journeyPlay) { journeyPlay.setAttribute("aria-pressed", "false"); journeyPlay.textContent = "Play the road"; }
+    }
+    function startJourneyPlayback() {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { announce("Autoplay is unavailable with reduced motion enabled. Choose a stop to travel there."); return; }
+      stopJourneyPlayback();
+      journeyPlay?.setAttribute("aria-pressed", "true");
+      if (journeyPlay) journeyPlay.textContent = "Pause the road";
+      journeyTimer = window.setInterval(() => {
+        const next = journeyStopIndex >= WORLD_STOPS.length - 1 ? 0 : journeyStopIndex + 1;
+        renderJourneyStop(next, true);
+        jumpToJourneyStop(WORLD_STOPS[next].id);
+      }, 5200);
     }
 
     function updateJourneyFilm() {
@@ -460,6 +481,7 @@
       window.scrollTo({ top: window.scrollY + rect.top + runway * ((index + 0.04) / WORLD_STOPS.length), behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     }
     wrapper.querySelectorAll("[data-world-stop]").forEach(button => button.addEventListener("click", () => jumpToJourneyStop(button.dataset.worldStop), { signal }));
+    journeyPlay?.addEventListener("click", () => journeyTimer ? stopJourneyPlayback() : startJourneyPlayback(), { signal });
     window.addEventListener("scroll", scheduleJourneyFilm, { passive: true, signal });
     window.addEventListener("resize", scheduleJourneyFilm, { passive: true, signal });
     renderJourneyStop(0, false);
@@ -961,6 +983,7 @@
         if (destroyed) return;
         destroyed = true;
         if (journeyFrame) window.cancelAnimationFrame(journeyFrame);
+        stopJourneyPlayback();
         if (journeySound) journeySound.destroy();
         destroyMap();
         abortController.abort();
