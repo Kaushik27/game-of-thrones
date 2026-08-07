@@ -67,6 +67,17 @@
   .char-card .meta { min-width: 0; }
   .char-card .name { font-family: 'Cinzel', serif; font-size: 0.95rem; margin: 0 0 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .char-card .sub { font-size: 0.78rem; color: var(--text-dim); }
+  /* The most-connected characters (by relation count) render as larger,
+     side-by-side "featured" cards spanning 2 grid columns — a data-driven
+     variety signal so the directory isn't a uniform wall of identical
+     tiles. */
+  #char-grid { grid-auto-flow: dense; }
+  .char-card.featured {
+    grid-column: span 2;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .char-card.featured .name { font-size: 1.15rem; white-space: normal; }
+  @media (max-width: 640px) { .char-card.featured { grid-column: span 1; } }
   #result-count { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 10px; }
   #graph-detail li:hover { color: var(--accent); }
 

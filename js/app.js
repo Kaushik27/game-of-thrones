@@ -175,6 +175,18 @@ function viewCharacters(app, params, query) {
 
   let activeHouse = "", activeStatus = "", activeQuery = "";
 
+  // Relation count per character drives a "featured" larger-card treatment
+  // for the most connected characters — a meaningful, data-driven signal
+  // (not arbitrary) so the directory isn't a wall of identically-sized
+  // tiles. Computed once since the underlying relation data is static.
+  const relationCount = new Map();
+  characters.forEach(c => relationCount.set(c.id, 0));
+  relations.forEach(r => {
+    if (relationCount.has(r.source)) relationCount.set(r.source, relationCount.get(r.source) + 1);
+    if (relationCount.has(r.target)) relationCount.set(r.target, relationCount.get(r.target) + 1);
+  });
+  const featuredThreshold = [...relationCount.values()].sort((a, b) => b - a)[Math.min(9, relationCount.size - 1)];
+
   function renderGrid() {
     const q = activeQuery.toLowerCase();
     const filtered = characters.filter(c =>
@@ -183,15 +195,18 @@ function viewCharacters(app, params, query) {
       (!activeStatus || c.status === activeStatus)
     );
     document.getElementById("result-count").textContent = `${filtered.length} character${filtered.length === 1 ? '' : 's'}`;
-    document.getElementById("char-grid").innerHTML = filtered.map(c => `
-      <a class="card char-card reveal" href="#/character/${encodeURIComponent(c.id)}" style="${cardAccentStyle(c.sigilColor)}">
-        ${avatarHTML(c, 48)}
+    document.getElementById("char-grid").innerHTML = filtered.map(c => {
+      const featured = relationCount.get(c.id) >= featuredThreshold && relationCount.get(c.id) > 0;
+      return `
+      <a class="card char-card reveal${featured ? ' featured' : ''}" href="#/character/${encodeURIComponent(c.id)}" style="${cardAccentStyle(c.sigilColor)}">
+        ${avatarHTML(c, featured ? 72 : 48)}
         <div class="meta">
           <p class="name" style="color:${c.sigilColor}">${escapeHTML(c.name)}</p>
-          <div class="sub">${escapeHTML(c.house)} · <span class="badge ${c.status}">${c.status}</span></div>
+          <div class="sub">${escapeHTML(c.house)} · <span class="badge ${c.status}">${c.status}</span>${featured ? ` · <span class="text-dim">${relationCount.get(c.id)} relations</span>` : ''}</div>
         </div>
       </a>
-    `).join("") || `<div class="empty-state">No characters found.</div>`;
+    `;
+    }).join("") || `<div class="empty-state">No characters found.</div>`;
     observeReveals(document.getElementById("char-grid"));
   }
 
