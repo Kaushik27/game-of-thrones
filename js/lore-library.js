@@ -502,19 +502,28 @@
       if (typeof settings.onEntryChange === "function") settings.onEntryChange(null);
     }
 
+    function notifyCategoryChange(previousCategory) {
+      if (previousCategory === state.category || typeof settings.onCategoryChange !== "function") return;
+      settings.onCategoryChange(state.category);
+    }
+
     function resetLibrary() {
+      const previousCategory = state.category;
       state.category = "all";
       state.query = "";
       searchInput.value = "";
       renderArchive();
+      notifyCategoryChange(previousCategory);
       searchInput.focus();
     }
 
     root.addEventListener("click", (event) => {
       const categoryButton = event.target.closest("[data-lore-category]");
       if (categoryButton && root.contains(categoryButton)) {
+        const previousCategory = state.category;
         state.category = categoryButton.dataset.loreCategory;
         renderArchive();
+        notifyCategoryChange(previousCategory);
         return;
       }
 
@@ -587,6 +596,9 @@
 
     document.addEventListener("keydown", (event) => {
       if (!state.activeEntryId) return;
+      // A global modal such as Raven Search may open above this drawer. Only
+      // the overlay that currently owns focus should consume Escape or Tab.
+      if (!drawer.contains(document.activeElement)) return;
       if (event.key === "Escape") {
         event.preventDefault();
         closeDrawer(true, false);
@@ -613,7 +625,10 @@
     renderArchive();
 
     if (settings.initialEntryId && entryById.has(settings.initialEntryId)) {
-      global.requestAnimationFrame(() => openEntry(settings.initialEntryId, root));
+      // A deep link has no clicked card to return to. Use the persistent search
+      // control instead of the non-focusable mount root so closing the dossier
+      // returns keyboard users to a meaningful route control.
+      global.requestAnimationFrame(() => openEntry(settings.initialEntryId, searchInput));
     }
 
     function destroy() {

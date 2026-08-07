@@ -427,7 +427,7 @@
           </div>
         </div>
 
-        <main class="pi-content" id="${id}-panel" role="tabpanel" aria-labelledby="${id}-tab-${state.mode}" tabindex="0"></main>
+        <div class="pi-content" id="${id}-panel" role="tabpanel" aria-labelledby="${id}-tab-${state.mode}" tabindex="0"></div>
         <div class="pi-compare-layer" data-pi-compare-layer></div>
         <div class="pi-detail-layer" data-pi-detail-layer></div>
         <p class="pi-announcer" data-pi-announcer aria-live="polite" aria-atomic="true"></p>
@@ -800,6 +800,10 @@
     }
 
     function updateCompareLayer() {
+      const detailCoveredByComparison = state.compareOpen && state.detailOpen;
+      detailLayer.toggleAttribute("inert", detailCoveredByComparison);
+      if (detailCoveredByComparison) detailLayer.setAttribute("aria-hidden", "true");
+      else detailLayer.removeAttribute("aria-hidden");
       compareLayer.classList.toggle("is-open", state.compareOpen);
       compareLayer.classList.toggle("has-selection", state.compareIds.length > 0 && !state.compareOpen);
       compareLayer.innerHTML = state.compareOpen ? comparisonMarkup() : comparisonTrayMarkup();
@@ -846,9 +850,9 @@
       announce(normalized ? `Showing documented Season ${normalized} records.` : "Showing records from all seasons.");
     }
 
-    function openCharacter(characterId, trigger) {
+    function openCharacter(characterId, trigger, preserveReturnFocus) {
       if (!data.charactersById.has(characterId)) return;
-      lastFocus = trigger || document.activeElement;
+      if (!preserveReturnFocus) lastFocus = trigger || document.activeElement;
       state.selectedId = characterId;
       state.detailOpen = true;
       updateDetailLayer();
@@ -926,6 +930,11 @@
       const neighbor = event.target.closest("[data-pi-neighbor]");
       if (neighbor && root.contains(neighbor)) {
         const characterId = neighbor.dataset.piNeighbor;
+        if (detailLayer.contains(neighbor)) {
+          openCharacter(characterId, neighbor, true);
+          announce(`Character intelligence updated to ${data.charactersById.get(characterId).name}.`);
+          return;
+        }
         state.selectedId = characterId;
         if (state.mode === "constellation") {
           renderConstellation();
@@ -952,6 +961,16 @@
         state.compareIds = state.compareIds.filter(characterId => characterId !== removeId);
         state.compareOpen = false;
         updateCompareLayer();
+        let comparisonReturnTarget = null;
+        if (state.detailOpen) {
+          const survivingId = state.compareIds[0];
+          comparisonReturnTarget = [...detailLayer.querySelectorAll("[data-pi-compare]")]
+            .find(button => button.dataset.piCompare === survivingId && !button.disabled) ||
+            detailLayer.querySelector(".pi-dossier--layer [data-pi-close-detail]");
+        } else {
+          comparisonReturnTarget = compareLayer.querySelector("[data-pi-clear-compare]");
+        }
+        if (comparisonReturnTarget) comparisonReturnTarget.focus({ preventScroll: true });
         announce("Person removed from comparison.");
         return;
       }
