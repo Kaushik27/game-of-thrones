@@ -143,6 +143,13 @@ function avatarHTML(character, size) {
   const sigilId = houseSigilId(character.house);
   const showSigilBadge = size >= 36 && sigilId !== "none";
   const photo = (typeof actorPhotoFor === "function") ? actorPhotoFor(character.id) : null;
+  const hasRecordedActor = Boolean(character.actor && !/^actor unknown$/i.test(character.actor));
+  const actorName = hasRecordedActor ? character.actor : "";
+  const portraitLabel = photo
+    ? `${photo.actor}, who played ${character.name}`
+    : hasRecordedActor
+      ? `Illustrated portrait for ${character.name}; a verified open-license photo of ${actorName} is not currently available`
+      : `Illustrated portrait for ${character.name}; no actor is recorded for this character`;
   let art;
   if (photo) {
     art = `<img class="avatar-photo" src="${photo.file}" loading="lazy" decoding="async"
@@ -153,7 +160,7 @@ function avatarHTML(character, size) {
   } else {
     art = initialsFor(character.name);
   }
-  return `<div class="avatar${isDead ? ' dead' : ''}${photo ? ' has-photo' : ''}" style="width:${size}px;height:${size}px;border-color:${color}55;overflow:hidden;">
+  return `<div class="avatar${isDead ? ' dead' : ''}${photo ? ' has-photo' : ''}" data-portrait-kind="${photo ? 'photo' : 'illustration'}"${photo ? '' : ` role="img" aria-label="${escapeHTML(portraitLabel)}" title="${escapeHTML(portraitLabel)}"`} style="width:${size}px;height:${size}px;border-color:${color}55;overflow:hidden;">
     ${art}
     ${showSigilBadge ? sigilSVG(sigilId, { size: Math.max(12, Math.round(size * 0.3)), className: "avatar-sigil" }) : ""}
     ${isDead ? `<span class="skull">${glyphSVG('skull', { size: Math.max(10, Math.round(size * 0.26)) })}</span>` : ''}

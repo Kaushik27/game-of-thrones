@@ -152,8 +152,14 @@ function viewCharacters(app, params, query) {
             <option value="alive">Alive</option>
             <option value="dead">Dead</option>
           </select>
+          <select id="portrait-filter" aria-label="Filter by portrait type">
+            <option value="">All Portraits</option>
+            <option value="photo">Actor Photos</option>
+            <option value="illustration">Illustrated Portraits</option>
+          </select>
         </div>
         <div id="result-count"></div>
+        <div id="portrait-coverage" class="portrait-coverage" aria-live="polite"></div>
         <div id="char-grid" class="grid"></div>
       </div>
       <div class="tab-panel" id="tab-graph">
@@ -167,7 +173,8 @@ function viewCharacters(app, params, query) {
   `;
   if (typeof d3 === "undefined") document.getElementById("d3-missing-warning").style.display = "block";
 
-  let activeHouse = "", activeStatus = "", activeQuery = "";
+  let activeHouse = "", activeStatus = "", activeQuery = "", activePortrait = "";
+  const hasActorPhoto = c => typeof actorPhotoFor === "function" && Boolean(actorPhotoFor(c.id));
 
   // Relation count per character drives a "featured" larger-card treatment
   // for the most connected characters — a meaningful, data-driven signal
@@ -186,17 +193,28 @@ function viewCharacters(app, params, query) {
     const filtered = characters.filter(c =>
       (!q || c.name.toLowerCase().includes(q)) &&
       (!activeHouse || c.house === activeHouse) &&
-      (!activeStatus || c.status === activeStatus)
+      (!activeStatus || c.status === activeStatus) &&
+      (!activePortrait || (activePortrait === "photo" ? hasActorPhoto(c) : !hasActorPhoto(c)))
     );
     document.getElementById("result-count").textContent = `${filtered.length} character${filtered.length === 1 ? '' : 's'}`;
+    const filteredPhotos = filtered.filter(hasActorPhoto).length;
+    document.getElementById("portrait-coverage").innerHTML = `
+      <span><strong>${filteredPhotos}</strong> actor photos</span>
+      <span><strong>${filtered.length - filteredPhotos}</strong> illustrated portraits</span>
+      <span class="text-dim">Open-license photos only; illustrations fill the remaining cast.</span>
+    `;
     document.getElementById("char-grid").innerHTML = filtered.map(c => {
       const featured = relationCount.get(c.id) >= featuredThreshold && relationCount.get(c.id) > 0;
+      const hasPhoto = hasActorPhoto(c);
+      const actor = c.actor && !/^actor unknown$/i.test(c.actor) ? `Played by ${escapeHTML(c.actor)}` : "Cast not recorded";
       return `
       <a class="card char-card reveal${featured ? ' featured' : ''}" href="#/character/${encodeURIComponent(c.id)}" style="${cardAccentStyle(c.sigilColor)}">
         ${avatarHTML(c, featured ? 72 : 48)}
         <div class="meta">
           <p class="name" style="color:${c.sigilColor}">${escapeHTML(c.name)}</p>
           <div class="sub">${escapeHTML(c.house)} · <span class="badge ${c.status}">${c.status}</span>${featured ? ` · <span class="text-dim">${relationCount.get(c.id)} relations</span>` : ''}</div>
+          <div class="actor-line">${actor}</div>
+          <span class="portrait-kind ${hasPhoto ? 'portrait-kind--photo' : 'portrait-kind--illustration'}">${hasPhoto ? 'Actor photo' : 'Illustrated portrait'}</span>
         </div>
       </a>
     `;
@@ -214,6 +232,7 @@ function viewCharacters(app, params, query) {
     document.getElementById("search-input").addEventListener("input", e => { activeQuery = e.target.value; renderGrid(); });
     houseSel.addEventListener("change", e => { activeHouse = e.target.value; renderGrid(); });
     document.getElementById("status-filter").addEventListener("change", e => { activeStatus = e.target.value; renderGrid(); });
+    document.getElementById("portrait-filter").addEventListener("change", e => { activePortrait = e.target.value; renderGrid(); });
   }
 
   app.querySelectorAll(".tab-btn").forEach(btn => {
@@ -1405,6 +1424,12 @@ function viewCredits(app) {
         .filter(e => e.character)
         .sort((a, b) => a.character.name.localeCompare(b.character.name))
     : [];
+  const fallbackEntries = characters
+    .filter(c => !(typeof actorPhotoFor === "function" && actorPhotoFor(c.id)))
+    .sort((a, b) => a.name.localeCompare(b.name));
+  const castLabel = c => c.actor && !/^actor unknown$/i.test(c.actor)
+    ? `Played by ${escapeHTML(c.actor)}`
+    : "Actor not recorded";
 
   // Group by license so a reader can see the licence mix at a glance.
   const byLicense = {};
@@ -1414,7 +1439,7 @@ function viewCredits(app) {
     <div class="page-wrap">
       <div class="hero ambient-glow" style="padding-top:76px;padding-bottom:6px;">
         <h1 class="display">Credits &amp; Image Licensing</h1>
-        <p>Every actor photograph on this site uses a verified open license. 132 are sourced from
+        <p>Every actor photograph on this site uses a verified open license. 133 are sourced from
         Wikimedia Commons and one is a rights-holder YouTube frame published under CC BY. None are
         publicity stills or scraped IMDb images. Each is listed below with its creator, license, and
         source link — the attribution that CC BY and CC BY-SA require.</p>
@@ -1424,6 +1449,8 @@ function viewCredits(app) {
         <div style="display:flex;gap:22px;flex-wrap:wrap;align-items:center;">
           <div><div style="font-family:'Cinzel',serif;font-size:1.7rem;color:var(--accent);line-height:1;">${entries.length}</div>
             <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--text-dim);margin-top:4px;">Photographs</div></div>
+          <div><div style="font-family:'Cinzel',serif;font-size:1.7rem;color:var(--text);line-height:1;">${fallbackEntries.length}</div>
+            <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--text-dim);margin-top:4px;">Illustrated fallbacks</div></div>
           ${Object.keys(byLicense).sort().map(lic => `
             <div><div style="font-family:'Cinzel',serif;font-size:1.7rem;color:var(--text);line-height:1;">${byLicense[lic].length}</div>
               <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--text-dim);margin-top:4px;">${escapeHTML(lic)}</div></div>`).join("")}
@@ -1451,6 +1478,26 @@ function viewCredits(app) {
               </div>
             </div>
           </div>`).join("") || `<div class="empty-state">No photographs are in use.</div>`}
+      </div>
+
+      <div class="section-title" style="margin-top:36px;">Illustrated Portraits</div>
+      <p class="text-dim" style="max-width:760px;font-size:0.88rem;line-height:1.55;">
+        These characters use the site's original illustrated portrait because no verified
+        open-license photograph was available in the last source check. The actor names below
+        come from the site's cast dataset; “Actor not recorded” means the TV credit is not yet
+        identified in this reference set. This list keeps the boundary visible instead of hiding
+        it behind a broken image.
+      </p>
+      <div class="portrait-gap-grid">
+        ${fallbackEntries.map(c => `
+          <div class="card portrait-gap-card" style="${cardAccentStyle(c.sigilColor)}">
+            ${avatarHTML(c, 44)}
+            <div style="min-width:0;flex:1;">
+              <a href="#/character/${c.id}" style="font-family:'Cinzel',serif;font-size:0.86rem;color:var(--text);text-decoration:none;">${escapeHTML(c.name)}</a>
+              <div style="font-size:0.74rem;color:var(--text-dim);">${castLabel(c)}</div>
+              <span class="portrait-kind portrait-kind--illustration">Illustrated portrait</span>
+            </div>
+          </div>`).join("")}
       </div>
     </div>
   `;

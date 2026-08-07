@@ -79,6 +79,18 @@
   .char-card.featured .name { font-size: 1.15rem; white-space: normal; }
   @media (max-width: 640px) { .char-card.featured { grid-column: span 1; } }
   #result-count { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 10px; }
+  .portrait-coverage {
+    display: flex; gap: 10px 16px; flex-wrap: wrap; align-items: center;
+    margin: -2px 0 14px; color: var(--text); font-size: 0.76rem; letter-spacing: 0.02em;
+  }
+  .portrait-coverage strong { color: var(--accent); font-family: 'Cinzel', serif; font-size: 0.9rem; }
+  .portrait-coverage .text-dim { flex-basis: 100%; font-size: 0.72rem; }
+  .char-card .actor-line { color: var(--text-dim); font-size: 0.72rem; margin-top: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .portrait-kind { display: inline-block; margin-top: 7px; padding: 2px 7px; border: 1px solid var(--panel-border); border-radius: 999px; font-size: 0.63rem; letter-spacing: 0.07em; text-transform: uppercase; }
+  .portrait-kind--photo { color: #cbb36b; border-color: #cbb36b66; }
+  .portrait-kind--illustration { color: var(--text-faint); }
+  .portrait-gap-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  .portrait-gap-card { display: flex; align-items: center; gap: 12px; padding: 12px 14px; }
   #graph-detail li:hover { color: var(--accent); }
 
   /* ---------- Houses ---------- */
