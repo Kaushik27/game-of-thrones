@@ -552,11 +552,12 @@ function viewHouse(app, params) {
 
   app.innerHTML = `
     <div class="page-wrap">
-      <div id="house-header" class="ambient-glow" style="display:flex;gap:22px;align-items:center;padding:30px 0 10px;flex-wrap:wrap;--glow-color:${color};">
+      <div id="house-header" class="hero illustrated ambient-glow" style="text-align:left;display:flex;gap:22px;align-items:center;padding:56px 0 26px;flex-wrap:wrap;--glow-color:${color};">
+        <div class="hero-scene">${houseSceneSVG(color, info.sigil)}</div>
         <div id="house-sigil-big" style="width:92px;height:92px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid ${color};background:${color}1c;color:${color};flex-shrink:0;">${sigilSVG(info.sigil, { size: 46 })}</div>
         <div>
           <h1 class="display" style="color:${color}">House ${escapeHTML(houseName)}</h1>
-          <div style="font-style:italic;color:var(--text-dim);font-size:1rem;">"${escapeHTML(info.words)}"</div>
+          <div class="script-accent" style="text-align:left;color:${color};">"${escapeHTML(info.words)}"</div>
           <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:10px;font-size:0.85rem;color:var(--text-dim);">
             <span><strong style="color:var(--text);">Seat:</strong> ${escapeHTML(info.seat)}</span>
             <span><strong style="color:var(--text);">Region:</strong> ${escapeHTML(info.region)}</span>
@@ -719,7 +720,8 @@ function viewMap(app) {
   setTitle("Map of Westeros");
   app.innerHTML = `
     <div class="page-wrap">
-      <div class="hero ambient-glow" style="padding-top:36px;padding-bottom:6px;">
+      <div class="hero illustrated ambient-glow" style="padding-top:56px;padding-bottom:16px;">
+        <div class="hero-scene">${mapSceneSVG()}</div>
         <h1 class="display">Map of Westeros</h1>
         <p>A stylized map of the Seven Kingdoms. Hover a region to see its ruling house, click to see its characters and history.</p>
       </div>
