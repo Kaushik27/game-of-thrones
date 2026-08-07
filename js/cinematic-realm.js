@@ -8,6 +8,20 @@
   const mountedRoots = new WeakMap();
   const scenes = Object.freeze([
     {
+      id: "border",
+      eyebrow: "Prologue · Before the crown",
+      title: "Before crowns, there was a border.",
+      body: "A line of ice. A world asleep. A story waiting for someone to cross it.",
+      label: "The border",
+      focus: { name: "The Wall", role: "The edge of the known world", image: "assets/ui/north-journey-bg.jpg", characterId: "jon-snow" },
+      quote: { text: "The night is dark and full of terrors.", speaker: "Melisandre", quoteId: "q21" },
+      moments: [
+        { eyebrow: "The Wall", title: "A border before a crown", text: "Begin at the place where the story first looks back at us.", href: "#/map?season=1" },
+        { eyebrow: "A warning", title: "The night is listening", text: "Every legend begins as a voice no one wants to hear.", href: "#/quotes?quote=q21" },
+        { eyebrow: "Cross the line", title: "Enter the living realm", text: "Scroll once. The archive will open around you.", href: "#realm-journey-root" }
+      ]
+    },
+    {
       id: "ice",
       eyebrow: "Act I · The cold remembers",
       title: "First, the ice",
@@ -80,7 +94,7 @@
   function createShell(root) {
     root.innerHTML = `
       <section class="cinematic-prologue" id="cinematic-prologue" aria-labelledby="cinematic-prologue-title">
-        <div class="cinematic-prologue__stage" data-cinematic-stage data-scene="ice">
+        <div class="cinematic-prologue__stage" data-cinematic-stage data-scene="border">
           <div class="cinematic-prologue__layers" aria-hidden="true">
             <img class="cinematic-prologue__layer cinematic-prologue__layer--north" src="assets/ui/north-journey-bg.jpg" alt="">
             <img class="cinematic-prologue__layer cinematic-prologue__layer--fire" src="assets/ui/essos-journey-bg.jpg" alt="">
@@ -88,6 +102,7 @@
           </div>
           <div class="cinematic-prologue__veil" aria-hidden="true"></div>
           <div class="cinematic-prologue__grain" aria-hidden="true"></div>
+          <button class="cinematic-sound-toggle" type="button" data-cinematic-sound aria-pressed="false">Sound off</button>
           <div class="cinematic-prologue__copy">
             <p class="cinematic-prologue__eyebrow" data-cinematic-eyebrow></p>
             <h1 class="cinematic-prologue__title" id="cinematic-prologue-title" data-cinematic-title></h1>
@@ -104,7 +119,7 @@
             <div class="cinematic-prologue__focus-copy"><span data-cinematic-focus-role></span><strong data-cinematic-focus-name></strong><a data-cinematic-focus-link href="#/character/jon-snow">Open dossier <span aria-hidden="true">↗</span></a></div>
           </aside>
           <div class="cinematic-prologue__moments" aria-label="Story moments" data-cinematic-moments></div>
-          <p class="cinematic-prologue__counter"><span data-cinematic-counter>01</span><i aria-hidden="true"></i>04</p>
+          <p class="cinematic-prologue__counter"><span data-cinematic-counter>01</span><i aria-hidden="true"></i>${String(scenes.length).padStart(2, "0")}</p>
           <nav class="cinematic-prologue__chapters" aria-label="Cinematic opening chapters">
             ${scenes.map((scene, index) => `<button type="button" class="cinematic-prologue__chapter" data-cinematic-scene="${scene.id}" aria-current="${index === 0 ? "true" : "false"}"><span>${String(index + 1).padStart(2, "0")}</span>${scene.label}</button>`).join("")}
           </nav>
@@ -163,6 +178,7 @@
     let destroyed = false;
     let journeyHandle = null;
     let portalHandle = null;
+    const soundHandle = global.CinematicSound ? global.CinematicSound.mount(stage) : null;
     const journeyRoot = root.querySelector("#realm-journey-root");
     journeyRoot.setAttribute("tabindex", "-1");
 
@@ -203,7 +219,8 @@
       const rect = prologue.getBoundingClientRect();
       const runway = Math.max(1, prologue.offsetHeight - global.innerHeight);
       const value = clamp(-rect.top / runway, 0, 1);
-      const nextScene = value < 0.24 ? 0 : value < 0.52 ? 1 : value < 0.78 ? 2 : 3;
+      const nextScene = value < 0.16 ? 0 : value < 0.36 ? 1 : value < 0.58 ? 2 : value < 0.8 ? 3 : 4;
+      document.body.classList.toggle("realm-journey-route--started", value > 0.045);
       setScene(nextScene, false);
       stage.style.setProperty("--cinematic-progress", value.toFixed(4));
       stage.style.setProperty("--ice-opacity", clamp(1 - value * 4.2, 0, 1).toFixed(3));
@@ -244,6 +261,7 @@
     }
 
     function enterRealm(trigger) {
+      document.body.classList.add("realm-journey-route--started");
       const travel = behavior => {
         if (behavior === "smooth") {
           journeyRoot.scrollIntoView({ behavior: "smooth" });
@@ -323,6 +341,8 @@
         stage.removeEventListener("pointermove", handlePointerMove);
         if (journeyHandle) journeyHandle.destroy();
         if (portalHandle) portalHandle.destroy();
+        if (soundHandle) soundHandle.destroy();
+        document.body.classList.remove("realm-journey-route--started");
         root.replaceChildren();
         mountedRoots.delete(root);
       },

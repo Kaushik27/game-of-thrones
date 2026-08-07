@@ -8,7 +8,7 @@ html.cinematic-portal-jump body { scroll-behavior: auto !important; }
 .cinematic-portal { position: fixed; z-index: 400; inset: 0; overflow: hidden; background: #030507; pointer-events: none; }
 .cinematic-portal[hidden] { display: none; }
 .cinematic-portal__canvas { display: block; width: 100%; height: 100%; }
-.cinematic-prologue { position: relative; height: 360svh; background: #030608; }
+.cinematic-prologue { position: relative; height: 450svh; background: #030608; }
 .cinematic-prologue__stage { position: sticky; top: 0; height: 100svh; overflow: hidden; isolation: isolate; background: #030608; }
 .cinematic-prologue__layers, .cinematic-prologue__layer, .cinematic-prologue__veil, .cinematic-prologue__grain { position: absolute; inset: 0; }
 .cinematic-prologue__layer { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: saturate(0.76) contrast(1.08) brightness(0.58); opacity: 0; transform: translate3d(calc(var(--pointer-x, 0) * -10px), calc(var(--pointer-y, 0) * -8px), 0) scale(1.05); transition: opacity 700ms ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -16,6 +16,9 @@ html.cinematic-portal-jump body { scroll-behavior: auto !important; }
 .cinematic-prologue__layer--fire { opacity: var(--fire-opacity, 0); filter: saturate(0.86) contrast(1.08) brightness(0.56); transform: translate3d(calc(var(--pointer-x, 0) * -14px), calc(var(--pointer-y, 0) * -10px), 0) scale(1.09); }
 .cinematic-prologue__layer--realm { opacity: var(--realm-opacity, 0); filter: saturate(0.8) contrast(1.1) brightness(0.48); transform: translate3d(calc(var(--pointer-x, 0) * -18px), calc(var(--pointer-y, 0) * -12px), 0) scale(1.12); }
 .cinematic-prologue__stage[data-scene="ice"] .cinematic-prologue__layer--north { filter: saturate(0.52) contrast(1.16) brightness(0.46); }
+.cinematic-prologue__stage[data-scene="border"] { background: #010304; }
+.cinematic-prologue__stage[data-scene="border"] .cinematic-prologue__layer--north { filter: saturate(0.2) contrast(1.2) brightness(0.2); opacity: 0.34; }
+.cinematic-prologue__stage[data-scene="border"] .cinematic-prologue__veil { background: rgba(0, 2, 4, 0.78); }
 .cinematic-prologue__stage[data-scene="fire"] .cinematic-prologue__layer--fire { filter: saturate(1.04) contrast(1.08) brightness(0.64); }
 .cinematic-prologue__stage[data-scene="realm"] .cinematic-prologue__layer--realm,
 .cinematic-prologue__stage[data-scene="arrival"] .cinematic-prologue__layer--realm { filter: saturate(0.92) contrast(1.08) brightness(0.6); }
@@ -63,6 +66,8 @@ html.cinematic-portal-jump body { scroll-behavior: auto !important; }
 .cinematic-prologue__progress span { display: block; width: 100%; height: 100%; background: #d4b36a; transform: scaleX(0); transform-origin: left center; }
 .cinematic-prologue__cue { position: absolute; z-index: 10; bottom: 25px; left: 50%; display: flex; align-items: center; gap: 8px; margin: 0; color: #a7aaa6; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; transform: translateX(-50%); }
 .cinematic-prologue__cue img { width: 15px; height: 15px; filter: invert(74%) sepia(18%) saturate(535%) hue-rotate(358deg) brightness(87%); }
+.cinematic-sound-toggle { position: absolute; z-index: 12; top: 25px; right: clamp(22px, 4.5vw, 72px); min-height: 31px; padding: 6px 10px; border: 1px solid rgba(212, 179, 106, 0.32); background: rgba(3, 6, 8, 0.45); color: #b6b2a7; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; cursor: pointer; }
+.cinematic-sound-toggle:hover, .cinematic-sound-toggle[aria-pressed="true"] { border-color: #d4b36a; color: #f0d58d; }
 .cinematic-prologue__status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .cinematic-prologue__stage[data-scene="arrival"] .cinematic-prologue__moments { bottom: 30px; }
 .cinematic-prologue__stage[data-scene="arrival"] .cinematic-prologue__cue { opacity: 0; }
@@ -76,7 +81,7 @@ html.cinematic-portal-jump body { scroll-behavior: auto !important; }
 .cinematic-realm__journey-host { min-height: 100svh; }
 
 @media (max-width: 760px) {
-  .cinematic-prologue { height: 290svh; }
+  .cinematic-prologue { height: 360svh; }
   .cinematic-prologue__copy { top: 105px; left: 20px; width: min(330px, calc(100vw - 40px)); }
   .cinematic-prologue__title { font-size: clamp(2.8rem, 14vw, 4.5rem); }
   .cinematic-prologue__body { margin-top: 17px; font-size: 1.15rem; }
@@ -96,8 +101,21 @@ html.cinematic-portal-jump body { scroll-behavior: auto !important; }
   .cinematic-prologue__chapters::-webkit-scrollbar { display: none; }
   .cinematic-prologue__chapter { flex: 1 0 112px; grid-template-columns: 22px auto; min-width: 0; padding: 8px 6px; font-size: 0.55rem; }
   .cinematic-prologue__cue { display: none; }
+  .cinematic-sound-toggle { top: 18px; right: 18px; }
   .cinematic-handoff { display: block; min-height: 52svh; padding: 62px 20px; }
   .cinematic-handoff__link { margin-top: 28px; }
+}
+
+body.realm-journey-route #site-nav { position: fixed; z-index: 80; background: transparent; pointer-events: none; }
+body.realm-journey-route:not(.realm-journey-route--started) #site-nav { opacity: 0; transform: translateY(-12px); transition: opacity 420ms ease, transform 420ms ease; }
+body.realm-journey-route:not(.realm-journey-route--started) #site-nav .nav-links,
+body.realm-journey-route:not(.realm-journey-route--started) #site-nav .nav-search,
+body.realm-journey-route:not(.realm-journey-route--started) #site-nav .nav-toggle { visibility: hidden; }
+body.realm-journey-route.realm-journey-route--started #site-nav { pointer-events: auto; }
+body.realm-journey-route.realm-journey-route--started #site-nav { background: linear-gradient(180deg, rgba(3, 6, 8, 0.78), transparent); }
+
+@media (prefers-reduced-motion: reduce) {
+  body.realm-journey-route:not(.realm-journey-route--started) #site-nav { transition: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
