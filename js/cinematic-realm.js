@@ -13,7 +13,7 @@
       title: "Before crowns, there was a border.",
       body: "A line of ice. A world asleep. A story waiting for someone to cross it.",
       label: "The border",
-      focus: { name: "The Wall", role: "The edge of the known world", image: "assets/ui/north-journey-bg.jpg", characterId: "jon-snow" },
+      focus: { name: "Jon Snow", role: "The first watch", image: "assets/characters/jon-snow-visual.png", characterId: "jon-snow" },
       quote: { text: "The night is dark and full of terrors.", speaker: "Melisandre", quoteId: "q21" },
       moments: [
         { eyebrow: "The Wall", title: "A border before a crown", text: "Begin at the place where the story first looks back at us.", href: "#/map?season=1" },

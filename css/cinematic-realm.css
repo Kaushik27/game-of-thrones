@@ -86,15 +86,15 @@ html.cinematic-portal-jump body { scroll-behavior: auto !important; }
 .cinematic-prologue__stage[data-scene="arrival"] .cinematic-prologue__moments { bottom: 30px; }
 .cinematic-prologue__stage[data-scene="arrival"] .cinematic-prologue__cue { opacity: 0; }
 
-.cinematic-handoff { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 42px; align-items: center; min-height: clamp(210px, 31svh, 330px); overflow: hidden; padding: clamp(42px, 6vw, 76px) clamp(22px, 8vw, 132px); border-top: 1px solid rgba(212, 179, 106, 0.24); background: linear-gradient(180deg, rgba(3, 6, 8, 0.96) 0%, rgba(5, 10, 13, 0.72) 56%, rgba(5, 9, 12, 0.96) 100%), url('../assets/ui/north-journey-bg.jpg') center / cover; }
-.cinematic-handoff::after { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3, 6, 8, 0.3), transparent 48%, rgba(3, 6, 8, 0.38)), linear-gradient(180deg, #030608 0%, transparent 26%, transparent 72%, #05090c 100%); content: ""; pointer-events: none; }
+.cinematic-handoff { position: relative; z-index: 3; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 42px; align-items: center; min-height: clamp(220px, 34svh, 350px); margin-bottom: -92px; overflow: hidden; padding: clamp(42px, 6vw, 76px) clamp(22px, 8vw, 132px) 150px; border-top: 0; background: linear-gradient(180deg, rgba(3, 6, 8, 0.98) 0%, rgba(5, 10, 13, 0.68) 48%, rgba(5, 9, 12, 0.04) 100%), url('../assets/ui/north-journey-bg.jpg') center / cover; }
+.cinematic-handoff::after { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3, 6, 8, 0.28), transparent 48%, rgba(3, 6, 8, 0.24)), linear-gradient(180deg, #030608 0%, transparent 24%, transparent 62%, rgba(5, 9, 12, 0.04) 100%); content: ""; pointer-events: none; }
 .cinematic-handoff__copy { max-width: 680px; }
 .cinematic-handoff__copy, .cinematic-handoff__link { position: relative; z-index: 1; }
 .cinematic-handoff h2 { margin: 0; color: #efe8d8; font-size: clamp(2rem, 5vw, 4.9rem); letter-spacing: -0.04em; line-height: 1; }
 .cinematic-handoff p:not(.cinematic-handoff__eyebrow) { max-width: 52ch; margin: 20px 0 0; color: #aeb1b1; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.08rem, 1.8vw, 1.42rem); line-height: 1.5; }
 .cinematic-handoff__link { display: inline-flex; align-items: center; min-height: 48px; padding: 10px 16px; border: 1px solid rgba(212, 179, 106, 0.65); color: #efe3c7; font-size: 0.69rem; font-weight: 700; letter-spacing: 0.13em; text-decoration: none; text-transform: uppercase; }
 .cinematic-handoff__link:hover { background: rgba(212, 179, 106, 0.1); color: #fff0c8; text-decoration: none; }
-.cinematic-realm__journey-host { position: relative; z-index: 1; min-height: 100svh; margin-top: -1px; background: #05090c; }
+.cinematic-realm__journey-host { position: relative; z-index: 1; min-height: 100svh; margin-top: 0; background: #05090c; }
 
 @media (max-width: 760px) {
   .cinematic-prologue { height: 360svh; }
@@ -121,7 +121,7 @@ html.cinematic-portal-jump body { scroll-behavior: auto !important; }
   .cinematic-prologue__chapter { flex: 1 0 112px; grid-template-columns: 22px auto; min-width: 0; padding: 8px 6px; font-size: 0.55rem; }
   .cinematic-prologue__cue { display: none; }
   .cinematic-sound-toggle { top: 18px; right: 18px; }
-  .cinematic-handoff { display: block; min-height: 34svh; padding: 62px 20px; }
+  .cinematic-handoff { display: block; min-height: 34svh; margin-bottom: -52px; padding: 62px 20px 112px; }
   .cinematic-handoff__link { margin-top: 28px; }
 }
 
