@@ -80,6 +80,7 @@ The focused reference/People comparison keeps both screens at 1265 × 712 and co
 ## Cinematic Explore prologue
 
 - The Explore route now opens with a scroll-driven four-act prologue: First, the ice; Then, the fire; A story of power; and Enter the living realm. Existing local realm artwork supplies the atmosphere, while the current interactive Realm Journey remains the destination below the handoff.
+- Each act now carries a real local actor portrait, a canon quote, and three live story-moment links into the archive (episodes, battles, timelines, characters, and the map), so the opening behaves like an editorial index rather than a decorative hero. Pointer parallax adds a restrained depth cue on capable devices; reduced-motion keeps the same content without the motion.
 - Browser verification: desktop 1280 × 720 and mobile 390 × 844 both render the opening without horizontal overflow. Scroll progress updates the active act/title, chapter buttons jump to the correct progress, the entry CTA reaches the handoff, and the season journey link lands on the existing 3D route.
 - Interaction and accessibility: chapter controls expose `aria-current`, the live status region announces act changes, reduced-motion uses instant navigation, and the browser console remains clean.
 
