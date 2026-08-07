@@ -1,6 +1,6 @@
-# Game of Thrones — Journey Through Westeros
+# Game of Thrones — The Living Encyclopedia
 
-A cinematic, interactive reference site for HBO's *Game of Thrones* (TV canon) — led by an eight-season 3D journey with animated routes, actor markers, chapter controls, and progressive WebGL enhancement. The experience also includes a living map, 196-character archive, Great Houses, timeline, battles, quizzes, and quote wall. Built as a single-page app with vanilla JavaScript, Three.js, and D3.js. No build step, framework, or npm runtime.
+A cinematic, interactive reference site for HBO's *Game of Thrones* (TV canon). Explore an eight-season 3D journey, investigate 196 people and 437 documented ties, browse all 73 episodes, follow character journeys across a layered world atlas, and open 24 connected lore dossiers. Built as a single-page app with vanilla JavaScript, Three.js, and D3.js. No build step, framework, or npm runtime.
 
 **[Live demo →](https://kaushik27.github.io/game-of-thrones/)**
 
@@ -16,12 +16,14 @@ Everything lives under one shell ([`index.html`](index.html)) with a hash-based 
 | Route | Description |
 |---|---|
 | [`#/`](https://kaushik27.github.io/game-of-thrones/#/) | Cinematic **Realm Journey** with eight seasons, 24 story chapters, 3D terrain and routes, actor/place/battle markers, keyboard controls, and an image fallback for devices without WebGL |
-| [`#/characters`](https://kaushik27.github.io/game-of-thrones/#/characters) | Searchable/filterable character directory, plus the full force-directed **Relations Graph** (pan/zoom/drag, house + relation-type filters, click-to-highlight) |
+| [`#/characters`](https://kaushik27.github.io/game-of-thrones/#/characters) | Cinematic **People Intelligence** with curated spotlights, season-aware records, a searchable archive, relationship constellation, dossiers, and two-person connection comparisons |
 | [`#/character/:id`](https://kaushik27.github.io/game-of-thrones/#/character/jon-snow) | Per-character profile — gradient house-color avatar, bio, house, status, actor, full relations list, a scoped relations graph, and a personal timeline of major events |
 | [`#/houses`](https://kaushik27.github.io/game-of-thrones/#/houses) | Directory of the Great Houses (and the Night's Watch / Free Folk) with an original SVG sigil mark, words, and seat |
 | [`#/house/:name`](https://kaushik27.github.io/game-of-thrones/#/house/Stark) | Per-house page — sigil, words, seat, a full family tree (D3 hierarchy with fit-to-view zoom/pan, marriages/allegiances/conflicts overlaid as cross-links, unlinked members listed separately), a house timeline, and a member roster |
-| [`#/map`](https://kaushik27.github.io/game-of-thrones/#/map) | **Living Realm** map with Season 1–8 controls, source-grounded event/battle hotspots, region details, keyboard exploration, and pan/zoom controls |
-| [`#/timeline`](https://kaushik27.github.io/game-of-thrones/#/timeline) | Season-by-season event timeline, scrubbable by season and filterable by house/event type |
+| [`#/map`](https://kaushik27.github.io/game-of-thrones/#/map) | Layered **Worlds in Motion** atlas with Season 1–8 controls and four connected views: interactive geography, character journeys, power records, and regional lore |
+| [`#/timeline`](https://kaushik27.github.io/game-of-thrones/#/timeline) | Complete **Episode Atlas** spanning all 73 episodes, with season filmstrips, search, themes, consequences, people, houses, battles, quotes, and provenance |
+| [`#/episode/:id`](https://kaushik27.github.io/game-of-thrones/#/episode/s06e09) | Direct link to a selected episode inside the Episode Atlas |
+| [`#/lore`](https://kaushik27.github.io/game-of-thrones/#/lore) | Searchable **Living Lore Library** with 24 TV-canon dossiers across politics, factions, faiths, magic, artifacts, and prophecy |
 | [`#/battles`](https://kaushik27.github.io/game-of-thrones/#/battles) | Cards for major battles and events (Red Wedding, Battle of the Bastards, Battle of Winterfell, etc.) with combatants, outcome, casualties, and linked characters |
 | [`#/quiz`](https://kaushik27.github.io/game-of-thrones/#/quiz) | Three replayable quiz modes — "Who Said It?", "Match the Sigil", and "Family Tree" — 10 questions per round with live scoring and correct/incorrect answer feedback |
 | [`#/quotes`](https://kaushik27.github.io/game-of-thrones/#/quotes) | Searchable, styled quote wall filterable by house |
@@ -31,6 +33,7 @@ Everything lives under one shell ([`index.html`](index.html)) with a hash-based 
 Everything is driven by a shared, hand-curated dataset with no external API:
 
 - **`js/data.js`** — 196 characters and 437 relations (family / marriage / allegiance / conflict / bond), plus house metadata
+- **`js/episodes.js`** — all 73 TV episodes with credits, dates, runtimes, original summaries, themes, character links, and source notes
 - **`js/events.js`** — season-level timeline events, tagged by house and character, feeding the character pages, house pages, and the timeline explorer
 - **`js/battles.js`** — major battles/events with combatants, outcome, and casualties
 - **`js/quotes.js`** — famous character quotes, feeding both the quote wall and the quiz
@@ -40,9 +43,13 @@ Everything is driven by a shared, hand-curated dataset with no external API:
 - **`js/app.js`** — the hash router and every route's render function
 - **`js/realm-chapters.js`** — eight curated season journeys with 24 chapters, source URLs, camera direction, routes, and marker placement
 - **`js/realm-journey.js`** — progressive Three.js scene, season/chapter controls, actor markers, keyboard behavior, reduced-motion support, and fallback lifecycle
+- **`js/people-intelligence.js`** — spotlight, constellation, archive, dossier, and comparison experience for the People route
+- **`js/story-atlas.js`** — complete episode explorer with season, theme, consequence, search, and direct-link state
+- **`js/world-atlas.js`** — atlas, journey, power, and regional-lore views built on the existing grounded map records
+- **`js/lore-data.js`** / **`js/lore-library.js`** — 24 cross-linked TV-canon lore dossiers and the accessible searchable library
 - **`js/war-table.js`** — season-driven relationship constellation and battle dispatches
 - **`js/living-realm-map.js`** — accessible seasonal map controller and source-grounded hotspots
-- **`js/raven-search.js`** — keyboard-first search across characters, houses, events, battles, and quotes
+- **`js/raven-search.js`** — keyboard-first search across characters, episodes, lore, houses, events, battles, and quotes
 - **`js/actor-photos.js`** — 134 verified, locally hosted actor portraits with source and license records in [`CREDITS.md`](CREDITS.md)
 
 ## Running locally
