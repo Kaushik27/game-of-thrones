@@ -8,8 +8,9 @@
 const NAV_LINKS = [
   { href: "#/", label: "Explore", matches: ["#/"] },
   { href: "#/characters", label: "People", matches: ["#/characters", "#/character/"] },
-  { href: "#/timeline", label: "Stories", matches: ["#/timeline", "#/battles", "#/quotes"] },
-  { href: "#/map", label: "World", matches: ["#/map", "#/houses", "#/house/"] }
+  { href: "#/timeline", label: "Stories", matches: ["#/timeline", "#/battles", "#/quotes", "#/episode/"] },
+  { href: "#/map", label: "World", matches: ["#/map", "#/houses", "#/house/"] },
+  { href: "#/lore", label: "Lore", matches: ["#/lore"] }
 ];
 
 function renderNav() {

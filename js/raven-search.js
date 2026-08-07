@@ -13,6 +13,8 @@
   const MAX_RESULTS_PER_GROUP = 8;
   const GROUPS = [
     { key: "characters", label: "Characters" },
+    { key: "episodes", label: "Episodes" },
+    { key: "lore", label: "Lore" },
     { key: "houses", label: "Houses" },
     { key: "events", label: "Timeline events" },
     { key: "battles", label: "Battles" },
@@ -66,6 +68,18 @@
     if (typeof QUOTES !== "undefined" && Array.isArray(QUOTES)) return QUOTES;
     if (Array.isArray(window.quotes)) return window.quotes;
     if (Array.isArray(window.QUOTES)) return window.QUOTES;
+    return [];
+  }
+
+  function getEpisodes() {
+    if (typeof EPISODES !== "undefined" && Array.isArray(EPISODES)) return EPISODES;
+    if (Array.isArray(window.EPISODES)) return window.EPISODES;
+    return [];
+  }
+
+  function getLoreEntries() {
+    if (typeof LORE_ENTRIES !== "undefined" && Array.isArray(LORE_ENTRIES)) return LORE_ENTRIES;
+    if (Array.isArray(window.LORE_ENTRIES)) return window.LORE_ENTRIES;
     return [];
   }
 
@@ -152,6 +166,33 @@
         "#/character/" + encodeURIComponent(character.id),
         [character.id, character.house, character.status, character.actor, character.bio],
         character
+      ));
+    });
+
+    getEpisodes().forEach((episode) => {
+      const season = Number(episode.season) || 0;
+      const number = Number(episode.episode) || 0;
+      const code = season && number ? `S${season}E${String(number).padStart(2, "0")}` : "Episode";
+      items.push(makeItem(
+        "episodes",
+        episode.id,
+        episode.title,
+        [code, episode.airDate].filter(Boolean).join(" \u00b7 "),
+        "#/episode/" + encodeURIComponent(episode.id),
+        [episode.id, episode.summary, episode.director]
+          .concat(episode.writers || [], episode.themes || [], characterNames(episode.characterIds))
+      ));
+    });
+
+    getLoreEntries().forEach((entry) => {
+      items.push(makeItem(
+        "lore",
+        entry.id,
+        entry.title,
+        [titleCase(entry.category), entry.deck].filter(Boolean).join(" \u00b7 "),
+        "#/lore?entry=" + encodeURIComponent(entry.id),
+        [entry.id, entry.category, entry.deck]
+          .concat(entry.body || [], entry.relatedHouseNames || entry.relatedHouses || [], characterNames(entry.relatedCharacterIds))
       ));
     });
 
@@ -249,7 +290,7 @@
     if (!query) {
       setEmptyState(
         "Send a raven across the Seven Kingdoms",
-        "Search characters, houses, timeline events, battles, and memorable quotes."
+        "Search characters, episodes, lore, houses, events, battles, and memorable quotes."
       );
       status.textContent = "Enter a search term.";
       return;

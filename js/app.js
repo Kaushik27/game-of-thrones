@@ -14,10 +14,12 @@ const APP_ROUTES = [
   { pattern: /^\/houses$/, view: viewHouses },
   { pattern: /^\/house\/([^/]+)$/, view: viewHouse },
   { pattern: /^\/map$/, view: viewMap },
+  { pattern: /^\/episode\/([^/]+)$/, view: viewTimeline },
   { pattern: /^\/timeline$/, view: viewTimeline },
   { pattern: /^\/battles$/, view: viewBattles },
   { pattern: /^\/quiz$/, view: viewQuiz },
   { pattern: /^\/quotes$/, view: viewQuotes },
+  { pattern: /^\/lore$/, view: viewLore },
   { pattern: /^\/credits$/, view: viewCredits }
 ];
 
@@ -72,6 +74,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ---------- shared small helpers ----------
 function setTitle(t) { document.title = t + " — Game of Thrones"; }
+
+function navigateFeatureTarget(target) {
+  const destination = String(target || "").trim();
+  if (!destination) return;
+  if (destination.startsWith("#")) {
+    window.location.hash = destination;
+    return;
+  }
+  if (destination.startsWith("/")) {
+    window.location.hash = `#${destination}`;
+    return;
+  }
+  try {
+    const url = new URL(destination, window.location.href);
+    if (url.protocol === "http:" || url.protocol === "https:") {
+      window.open(url.href, "_blank", "noopener,noreferrer");
+    }
+  } catch (_error) {
+    // Ignore malformed destinations supplied by optional feature datasets.
+  }
+}
 
 // ==========================================================================
 // HOME
@@ -144,6 +167,27 @@ function viewHome(app, params, query) {
 // CHARACTERS DIRECTORY + RELATIONS GRAPH
 // ==========================================================================
 function viewCharacters(app, params, query) {
+  if (!window.PeopleIntelligence) {
+    viewCharactersLegacy(app, params, query);
+    return;
+  }
+
+  setTitle("People");
+  app.innerHTML = `<div id="people-intelligence-root" class="encyclopedia-feature-host"></div>`;
+  const root = document.getElementById("people-intelligence-root");
+  try {
+    const handle = window.PeopleIntelligence.mount(root, {
+      initialSeason: Number(query.get("season")) || 6,
+      onNavigate: navigateFeatureTarget
+    });
+    registerActiveView(handle);
+  } catch (error) {
+    console.error("The People experience could not be mounted.", error);
+    viewCharactersLegacy(app, params, query);
+  }
+}
+
+function viewCharactersLegacy(app, params, query) {
   setTitle("Characters");
   app.innerHTML = `
     <div class="page-wrap">
@@ -1042,7 +1086,28 @@ function viewLegacyMap(app) {
   }
 }
 
-function viewMap(app) {
+function viewMap(app, params, query) {
+  if (!window.WorldAtlas) {
+    viewMapLegacy(app, params, query);
+    return;
+  }
+
+  setTitle("World");
+  app.innerHTML = `<div id="world-atlas-root" class="encyclopedia-feature-host"></div>`;
+  const root = document.getElementById("world-atlas-root");
+  try {
+    const handle = window.WorldAtlas.mount(root, {
+      initialSeason: Number(query.get("season")) || 1,
+      onNavigate: navigateFeatureTarget
+    });
+    registerActiveView(handle);
+  } catch (error) {
+    console.error("The World experience could not be mounted.", error);
+    viewMapLegacy(app, params, query);
+  }
+}
+
+function viewMapLegacy(app) {
   setTitle("Living Realm");
   if (!window.LivingRealmMap) {
     viewLegacyMap(app);
@@ -1075,7 +1140,29 @@ function viewMap(app) {
 // ==========================================================================
 // TIMELINE
 // ==========================================================================
-function viewTimeline(app) {
+function viewTimeline(app, params, query) {
+  if (!window.StoryAtlas) {
+    viewTimelineLegacy(app, params, query);
+    return;
+  }
+
+  setTitle("Stories");
+  app.innerHTML = `<div id="story-atlas-root" class="encyclopedia-feature-host"></div>`;
+  const root = document.getElementById("story-atlas-root");
+  try {
+    const handle = window.StoryAtlas.mount(root, {
+      initialSeason: Number(query.get("season")) || undefined,
+      initialEpisodeId: params[0] || query.get("episode") || "",
+      onNavigate: navigateFeatureTarget
+    });
+    registerActiveView(handle);
+  } catch (error) {
+    console.error("The Stories experience could not be mounted.", error);
+    viewTimelineLegacy(app, params, query);
+  }
+}
+
+function viewTimelineLegacy(app) {
   setTitle("Timeline");
   const TYPE_COLOR = { battle: "#c23b3b", death: "#8a2f2f", wedding: "#d97ba0", coronation: "#d4af37", politics: "#4a90d9", birth: "#4c7a3f", other: "#8a8a93" };
   let activeSeason = "all", activeHouse = "", activeType = "";
@@ -1418,6 +1505,31 @@ function viewQuotes(app) {
   document.getElementById("search-input").addEventListener("input", e => { activeQuery = e.target.value; render(); });
   houseSel.addEventListener("change", e => { activeHouse = e.target.value; render(); });
   render();
+}
+
+// ==========================================================================
+// LIVING LORE LIBRARY
+// ==========================================================================
+function viewLore(app, params, query) {
+  setTitle("Lore");
+  app.innerHTML = `<div id="lore-library-root" class="encyclopedia-feature-host"></div>`;
+  const root = document.getElementById("lore-library-root");
+  if (!window.LoreLibrary) {
+    root.innerHTML = `<div class="page-wrap"><div class="empty-state">The archives are unavailable. <a href="#/timeline">Open the story atlas</a>.</div></div>`;
+    return;
+  }
+
+  try {
+    const handle = window.LoreLibrary.mount(root, {
+      initialEntryId: query.get("entry") || "",
+      initialCategory: query.get("category") || "",
+      onNavigate: navigateFeatureTarget
+    });
+    registerActiveView(handle);
+  } catch (error) {
+    console.error("The Lore library could not be mounted.", error);
+    root.innerHTML = `<div class="page-wrap"><div class="empty-state">The archives are unavailable. <a href="#/timeline">Open the story atlas</a>.</div></div>`;
+  }
 }
 
 // ==========================================================================
