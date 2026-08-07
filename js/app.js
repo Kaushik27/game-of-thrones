@@ -72,10 +72,12 @@ function viewHome(app) {
       <div class="section">
         <div class="section-title">Explore Westeros</div>
         <div class="feature-grid">
-          <a class="card feature-card reveal" href="#/characters" style="${cardAccentStyle('#d4af37')}">
-            <div class="icon">${sigilSVG('direwolf', { size: 30 })}</div>
-            <h3 class="display">Characters</h3>
-            <p>Browse every character with search and house/status filters — portraits, bios, relations, and personal timelines.</p>
+          <a class="card feature-card spotlight reveal" href="#/characters" style="${cardAccentStyle('#d4af37')}">
+            <div class="icon">${sigilSVG('direwolf', { size: 42 })}</div>
+            <div>
+              <h3 class="display">Characters</h3>
+              <p>Browse all ${characters.length}+ characters with search and house/status filters — original generative portraits, bios, relations, and personal timelines for every one of them.</p>
+            </div>
           </a>
           <a class="card feature-card reveal" href="#/houses" style="${cardAccentStyle('#b8862e')}">
             <div class="icon">${sigilSVG('lion', { size: 30 })}</div>
