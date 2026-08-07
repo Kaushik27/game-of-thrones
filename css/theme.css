@@ -68,15 +68,30 @@ html, body {
 }
 
 /* ---------- Type scale ----------
-   12/14/16/18/24/32/48 across labels -> display headings. Cinzel is
-   reserved for page titles, section headers and character names; every
-   other piece of UI chrome (nav, buttons, tags, filter/form labels)
-   stays on Inter so the serif display face never bleeds into controls. */
-h1, .display-1 { font-size: 3rem; font-weight: 700; line-height: 1.15; }
-h2, .display-2 { font-size: 2rem; font-weight: 700; line-height: 1.2; }
+   Pushed for much bigger jump between hero/display text and everything
+   else — hero titles now dominate the viewport instead of sitting close
+   in scale to section headers. Cinzel is reserved for page titles,
+   section headers and character names; every other piece of UI chrome
+   (nav, buttons, tags, filter/form labels) stays on Inter so the serif
+   display face never bleeds into controls. */
+h1, .display-1 { font-size: 3.4rem; font-weight: 700; line-height: 1.1; }
+h2, .display-2 { font-size: 2.1rem; font-weight: 700; line-height: 1.2; }
 h3, .display-3 { font-size: 1.5rem; font-weight: 600; line-height: 1.3; }
 h4, .display-4 { font-size: 1.125rem; font-weight: 600; line-height: 1.35; }
 label, .label-text { font-size: 0.875rem; font-weight: 500; }
+
+/* ---------- Script / decorative accent ----------
+   Reserved strictly for short emotional or quote-style accents (house
+   words, hero taglines) — never body text, never UI chrome. Paired with
+   Cinzel the way the reference site pairs its serif headline with a
+   script accent for phrases like "Las Vegas lights". */
+.script-accent {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.2px;
+}
 
 @media (prefers-reduced-motion: reduce) {
   html, body, * { scroll-behavior: auto !important; animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
@@ -193,7 +208,7 @@ img { max-width: 100%; }
   text-align: center;
 }
 .hero h1 {
-  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-size: clamp(2.6rem, 9vw, 5.6rem);
   margin: 0 0 10px;
 }
 .hero p {
@@ -202,6 +217,11 @@ img { max-width: 100%; }
   margin: 0 auto;
   font-size: 1.05rem;
   line-height: 1.6;
+}
+.hero .script-accent {
+  display: block;
+  font-size: clamp(1.6rem, 4.4vw, 2.6rem);
+  margin: 4px 0 14px;
 }
 
 /* ---------- Cards / grids ---------- */
