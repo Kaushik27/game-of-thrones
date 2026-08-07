@@ -4,28 +4,36 @@ import { createRoot } from "react-dom/client";
 const LINKS = [
   { href: "#", label: "Explore", matches: ["#/"] },
   { href: "#/characters", label: "People", matches: ["#/characters", "#/character/"] },
-  { href: "#/timeline", label: "Memory Wall", matches: ["#/timeline", "#/battles", "#/episode/"] },
+  { href: "#/timeline", label: "Memory Wall", section: "memory" },
+  { href: "#/timeline?atlas=1", label: "Atlas", section: "atlas" },
   { href: "#/quotes", label: "Voices", matches: ["#/quotes"] },
   { href: "#/map", label: "World", matches: ["#/map", "#/houses", "#/house/"] },
   { href: "#/lore", label: "Lore", matches: ["#/lore"] }
 ];
 
-function currentPath() {
-  return (window.location.hash || "#/").split("?")[0];
+function currentRoute() {
+  const [path, queryString = ""] = (window.location.hash || "#/").split("?");
+  return { path: path.trim() || "#/", query: new URLSearchParams(queryString) };
 }
 
-function isActive(link, path) {
-  return link.matches.some((match) => match === "#/" ? path === "#/" : path === match || path.startsWith(match));
+function isActive(link, route) {
+  if (link.section === "memory") {
+    return route.path === "#/timeline" && !["atlas", "season", "mode", "event", "episode"].some((key) => route.query.has(key));
+  }
+  if (link.section === "atlas") {
+    return (route.path === "#/timeline" && ["atlas", "season", "mode", "event", "episode"].some((key) => route.query.has(key))) || route.path === "#/battles" || route.path.startsWith("#/episode/");
+  }
+  return link.matches.some((match) => match === "#/" ? route.path === "#/" : route.path === match || route.path.startsWith(match));
 }
 
 function ReactNav() {
-  const [path, setPath] = useState(currentPath);
+  const [route, setRoute] = useState(currentRoute);
   const [open, setOpen] = useState(false);
   const [atmosphere, setAtmosphere] = useState(() => Boolean(window.GotAtmosphere?.isEnabled?.()));
 
   useEffect(() => {
     const onHashChange = () => {
-      setPath(currentPath());
+      setRoute(currentRoute());
       setOpen(false);
     };
     window.addEventListener("hashchange", onHashChange);
@@ -37,7 +45,7 @@ function ReactNav() {
     return window.GotAtmosphere.subscribe(setAtmosphere);
   }, []);
 
-  const activeLabel = useMemo(() => LINKS.find((link) => isActive(link, path))?.label || "Explore", [path]);
+  const activeLabel = useMemo(() => LINKS.find((link) => isActive(link, route))?.label || "Explore", [route]);
 
   return React.createElement(
     "nav",
@@ -54,12 +62,12 @@ function ReactNav() {
       "nav",
       { className: `nav-links${open ? " open" : ""}`, id: "react-nav-links", "aria-label": "Archive sections" },
       LINKS.map((link) => {
-        const active = isActive(link, path);
+        const active = isActive(link, route);
         return React.createElement(
           "a",
           {
-            href: link.href,
-            className: active ? "active" : "",
+          href: link.href,
+          className: active ? "active" : "",
             "aria-current": active ? "page" : undefined,
             onClick: () => setOpen(false),
             key: link.label

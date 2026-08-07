@@ -83,7 +83,7 @@
       const quote = momentQuote(moment);
       const rememberedNow = remembered.has(moment.id);
       root.dataset.moment = moment.id;
-      root.style.setProperty("--rw-image", `url('${moment.image}')`);
+      root.style.setProperty("--rw-image", `url('../${moment.image}')`);
       if (backdrop) backdrop.style.backgroundImage = `url("${moment.image}")`;
       root.querySelector("[data-rw-kicker]").textContent = moment.kicker;
       root.querySelector("[data-rw-title]").textContent = moment.title;
@@ -108,7 +108,7 @@
     }
 
     function scrapMarkup(moment, direction) {
-      return `<button class="raven-wall__scrap raven-wall__scrap--${direction}" type="button" data-rw-open="${escape(moment.id)}" style="--scrap-image:url('${escape(moment.image)}')"><span>${escape(moment.kicker)}</span><strong>${escape(moment.title)}</strong><small>${escape(moment.location)}</small></button>`;
+      return `<button class="raven-wall__scrap raven-wall__scrap--${direction}" type="button" data-rw-open="${escape(moment.id)}" style="--scrap-image:url('../${escape(moment.image)}')"><span>${escape(moment.kicker)}</span><strong>${escape(moment.title)}</strong><small>${escape(moment.location)}</small></button>`;
     }
 
     function move(delta) {
