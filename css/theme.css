@@ -337,6 +337,30 @@ input[type="text"], input[type="search"], select, textarea {
 }
 input:focus, select:focus, textarea:focus { outline: 1px solid var(--accent); }
 
+/* ---------- Accessibility floor ----------
+   Visible focus ring on every interactive element (never remove the
+   browser outline without replacing it), and a minimum 44x44px touch
+   target on buttons/controls/tappable chips. */
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible,
+.card:focus-visible,
+.chip:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+button, .btn, .tab-btn, .season-btn, .chip,
+input[type="text"], input[type="search"], select {
+  min-height: 44px;
+}
+.chip { min-height: 32px; } /* dense filter rows: chips stay compact, but keep >=32px hit area and rely on gap spacing for touch separation */
+
 /* ---------- Tabs ---------- */
 .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--panel-border); margin-bottom: 20px; flex-wrap: wrap; }
 .tab-btn {
