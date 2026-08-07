@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>House — Game of Thrones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<link rel="stylesheet" href="css/theme.css">
+<style>
+  #house-header { display: flex; gap: 22px; align-items: center; padding: 30px 0 10px; flex-wrap: wrap; }
+  #house-sigil-big { width: 92px; height: 92px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 42px; border: 3px solid; flex-shrink: 0; }
+  #house-header h1 { margin: 0 0 4px; }
+  #house-words { font-style: italic; color: var(--text-dim); font-size: 1rem; }
+  #house-facts { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 10px; font-size: 0.85rem; color: var(--text-dim); }
+  #house-facts strong { color: var(--text); }
+
+  #tree-host { width: 100%; height: 560px; background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: var(--radius); overflow: auto; }
+  .timeline-item { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--panel-border); }
+  .timeline-item .season-badge { flex-shrink: 0; font-family: 'Cinzel', serif; color: var(--accent); font-size: 0.8rem; width: 62px; }
+  .timeline-item h4 { margin: 0 0 4px; }
+  .timeline-item p { margin: 0; color: var(--text-dim); font-size: 0.88rem; }
+  .member-card { display: flex; gap: 10px; align-items: center; padding: 12px; }
+  .member-card .name { font-family: 'Cinzel', serif; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+  <div id="site-nav"></div>
+  <div class="page-wrap">
+    <div class="empty-state" id="not-found" style="display:none;">House not found. <a href="houses.html">Back to Houses</a></div>
+
+    <div id="house-content" style="display:none;">
+      <div id="house-header"></div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="tree">Family Tree</button>
+        <button class="tab-btn" data-tab="timeline">Timeline</button>
+        <button class="tab-btn" data-tab="members">Members</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-tree">
+        <p class="text-dim">Solid gold lines = family. Dashed pink = marriage. Grey = allegiance. Dashed red = conflict. Dotted blue = bond.</p>
+        <div id="tree-host"></div>
+      </div>
+
+      <div class="tab-panel" id="tab-timeline">
+        <div id="house-timeline"></div>
+      </div>
+
+      <div class="tab-panel" id="tab-members">
+        <div class="grid grid-narrow" id="member-grid"></div>
+      </div>
+    </div>
+  </div>
+  <div id="site-footer"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/quotes.js"></script>
+  <script src="js/battles.js"></script>
+  <script src="js/common.js"></script>
+  <script>
+    const SIGIL_EMOJI = {
+      "direwolf": "🐺", "lion": "🦁", "dragon": "🐉", "stag": "🦌", "kraken": "🐙",
+      "rose": "🌹", "sun-spear": "☀️", "trout": "🐟", "falcon-moon": "🦅",
+      "crossed-swords": "⚔️", "none": "❄️"
+    };
+
+    let houseName = null;
+
+    function renderHouse() {
+      houseName = qs("id");
+      if (!houseName || !HOUSE_COLORS[houseName]) {
+        document.getElementById("not-found").style.display = "block";
+        return;
+      }
+      const color = HOUSE_COLORS[houseName];
+      const info = HOUSE_INFO[houseName];
+      document.title = "House " + houseName + " — Game of Thrones";
+      document.getElementById("house-content").style.display = "block";
+
+      document.getElementById("house-header").innerHTML = `
+        <div id="house-sigil-big" style="border-color:${color};background:${color}22;">${SIGIL_EMOJI[info.sigil] || "🏰"}</div>
+        <div>
+          <h1 class="display" style="color:${color}">House ${escapeHTML(houseName)}</h1>
+          <div id="house-words">"${escapeHTML(info.words)}"</div>
+          <div id="house-facts">
+            <span><strong>Seat:</strong> ${escapeHTML(info.seat)}</span>
+            <span><strong>Region:</strong> ${escapeHTML(info.region)}</span>
+            <span><strong>By series end:</strong> ${escapeHTML(info.rulerEnd)}</span>
+          </div>
+        </div>
+      `;
+
+      renderMembers();
+      renderTimeline();
+
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+          document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+          btn.classList.add("active");
+          document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+          if (btn.dataset.tab === "tree" && typeof d3 !== 'undefined') renderTree();
+        });
+      });
+
+      if (typeof d3 !== 'undefined') renderTree();
+    }
+
+    function renderMembers() {
+      const members = charactersByHouse(houseName);
+      document.getElementById("member-grid").innerHTML = members.map(c => `
+        <a class="card member-card" href="character.html?id=${c.id}">
+          ${avatarHTML(c, 42)}
+          <div>
+            <div class="name" style="color:${c.sigilColor}">${escapeHTML(c.name)}</div>
+            <span class="badge ${c.status}">${c.status}</span>
+          </div>
+        </a>
+      `).join("") || `<div class="empty-state">No known members.</div>`;
+    }
+
+    function renderTimeline() {
+      const evs = eventsForHouse(houseName);
+      document.getElementById("house-timeline").innerHTML = evs.length
+        ? evs.map(e => `
+          <div class="timeline-item">
+            <div class="season-badge">S${e.season}</div>
+            <div><h4>${escapeHTML(e.title)}</h4><p>${escapeHTML(e.summary)}</p></div>
+          </div>`).join("")
+        : `<div class="empty-state">No major timeline events recorded for this house.</div>`;
+    }
+
+    // ---------- Family tree (ported from the original single-file app, scoped to one house) ----------
+    function buildFamilyHierarchy(house) {
+      const houseChars = charactersByHouse(house);
+      const houseIds = new Set(houseChars.map(c => c.id));
+      const parentSubtypeEdges = relations.filter(r => r.type === "family" && r.subtype === "parent" && houseIds.has(r.source) && houseIds.has(r.target));
+      const childSubtypeEdges = relations.filter(r => r.type === "family" && r.subtype === "child" && houseIds.has(r.source) && houseIds.has(r.target))
+        .map(r => ({ source: r.target, target: r.source }));
+      const parentEdges = [...parentSubtypeEdges, ...childSubtypeEdges];
+      const childIds = new Set(parentEdges.map(e => e.target));
+      const roots = houseChars.filter(c => !childIds.has(c.id));
+
+      function buildNode(char) {
+        const children = parentEdges.filter(e => e.source === char.id).map(e => getCharacter(e.target)).filter(Boolean);
+        return { ...char, children: children.map(buildNode) };
+      }
+      if (roots.length === 0) return null;
+      if (roots.length === 1) return buildNode(roots[0]);
+      return { id: "__root", name: house, house: house, sigilColor: HOUSE_COLORS[house], virtual: true, children: roots.map(buildNode) };
+    }
+
+    function renderTree() {
+      const host = document.getElementById("tree-host");
+      host.innerHTML = "";
+      const hierarchyData = buildFamilyHierarchy(houseName);
+      if (!hierarchyData) {
+        host.innerHTML = `<div class="empty-state">No family tree data available for this house.</div>`;
+        return;
+      }
+      const root = d3.hierarchy(hierarchyData);
+      const nodeCount = root.descendants().length;
+      const width = Math.max(host.clientWidth || 900, nodeCount * 40);
+      const height = Math.max(560, nodeCount * 26);
+      const svg = d3.select(host).append("svg").attr("width", width).attr("height", height);
+      const g = svg.append("g").attr("transform", "translate(80,40)");
+
+      d3.tree().size([height - 80, width - 200])(root);
+
+      g.selectAll(".tree-link").data(root.links()).join("path")
+        .attr("fill", "none").attr("stroke", "var(--panel-border)").attr("stroke-width", 1.5)
+        .attr("d", d3.linkHorizontal().x(d => d.y).y(d => d.x));
+
+      const node = g.selectAll(".tree-node").data(root.descendants()).join("g")
+        .attr("transform", d => `translate(${d.y},${d.x})`)
+        .style("cursor", d => d.data.virtual ? "default" : "pointer");
+
+      node.append("circle").attr("r", 9).attr("fill", d => d.data.sigilColor)
+        .attr("opacity", d => d.data.status === "dead" ? 0.4 : 1)
+        .attr("stroke", "#000");
+      node.append("text").attr("dy", 4).attr("x", 14).attr("fill", "var(--text)").style("font-size", "0.82rem").text(d => d.data.name);
+      node.filter(d => !d.data.virtual).on("click", (e, d) => { window.location.href = "character.html?id=" + d.data.id; });
+
+      // Cross-links: marriage/allegiance/conflict/bond between drawn nodes
+      const drawnIds = new Set(root.descendants().filter(d => !d.data.virtual).map(d => d.data.id));
+      const posById = new Map(root.descendants().filter(d => !d.data.virtual).map(d => [d.data.id, d]));
+      const crossLinks = relations.filter(r => r.type !== "family" && drawnIds.has(r.source) && drawnIds.has(r.target));
+      g.selectAll(".cross-link").data(crossLinks).join("path")
+        .attr("fill", "none")
+        .attr("stroke", d => RELATION_STYLE[d.type].color)
+        .attr("stroke-dasharray", d => RELATION_STYLE[d.type].dash)
+        .attr("stroke-width", 1.5).attr("opacity", 0.7)
+        .attr("d", d => {
+          const s = posById.get(d.source), t = posById.get(d.target);
+          if (!s || !t) return "";
+          return `M${s.y},${s.x} Q${(s.y + t.y) / 2},${(s.x + t.x) / 2 - 30} ${t.y},${t.x}`;
+        })
+        .append("title").text(d => d.label);
+    }
+
+    document.addEventListener("DOMContentLoaded", renderHouse);
+  </script>
+</body>
+</html>
