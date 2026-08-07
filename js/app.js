@@ -61,8 +61,10 @@ function viewHome(app) {
   setTitle("Home");
   const majorHouses = Object.keys(HOUSE_COLORS).filter(h => h !== "Unaffiliated");
   app.innerHTML = `
-    <div class="hero ambient-glow">
+    <div class="hero illustrated ambient-glow">
+      <div class="hero-scene">${homeSceneSVG()}</div>
       <h1 class="display">Game of Thrones</h1>
+      <div class="script-accent">Winter is coming, and so is everything after it.</div>
       <p>A complete interactive reference for the Seven Kingdoms — every character, every house, the war for the Iron Throne, and everything that happened along the way.</p>
       <div class="stat-row" id="stat-row"></div>
     </div>

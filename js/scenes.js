@@ -45,8 +45,13 @@ function homeSceneSVG() {
           <stop offset="100%" stop-color="#d4af37" stop-opacity="0.16"/>
         </linearGradient>
         <linearGradient id="home-ice" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#cfe6ea"/>
-          <stop offset="100%" stop-color="#7f9aa3"/>
+          <stop offset="0%" stop-color="#cfe6ea" stop-opacity="0"/>
+          <stop offset="35%" stop-color="#8fa8b0" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#3d454b" stop-opacity="0.7"/>
+        </linearGradient>
+        <linearGradient id="home-fade-bottom" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#050506" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#050506" stop-opacity="1"/>
         </linearGradient>
       </defs>
       <rect width="${w}" height="${h}" fill="url(#home-sky)"/>
@@ -55,12 +60,11 @@ function homeSceneSVG() {
       <!-- distant mountains -->
       <path d="M0 420 L120 330 L230 400 L340 300 L470 410 L600 320 L740 400 L880 310 L1020 405 L1170 330 L1300 410 L1440 340 L${w} 400 L${w} ${h} L0 ${h} Z" fill="#141221" opacity="0.85"/>
       <path d="M0 470 L160 400 L300 460 L460 380 L640 465 L820 390 L1000 470 L1180 400 L1360 465 L${w} 410 L${w} ${h} L0 ${h} Z" fill="#0c0a14" opacity="0.9"/>
-      <!-- the Wall -->
-      <rect x="0" y="500" width="${w}" height="70" fill="url(#home-ice)" opacity="0.9"/>
-      <rect x="0" y="500" width="${w}" height="70" fill="#050506" opacity="0.55"/>
-      ${Array.from({ length: 22 }).map((_, i) => `<rect x="${i * (w / 22)}" y="492" width="${w / 22 - 6}" height="14" fill="url(#home-ice)" opacity="0.85"/>`).join("")}
-      <rect x="0" y="565" width="${w}" height="${h - 565}" fill="#050506"/>
-      <filter id="soft-home"><feGaussianBlur stdDeviation="0.6"/></filter>
+      <!-- the Wall, faded rather than a hard slab so it reads as a distant
+           silhouette instead of a flat band cutting across the hero -->
+      <rect x="0" y="470" width="${w}" height="100" fill="url(#home-ice)"/>
+      ${Array.from({ length: 22 }).map((_, i) => `<rect x="${i * (w / 22)}" y="472" width="${w / 22 - 6}" height="10" fill="#8fa8b0" opacity="0.35"/>`).join("")}
+      <rect x="0" y="420" width="${w}" height="${h - 420}" fill="url(#home-fade-bottom)"/>
       <rect width="${w}" height="${h}" filter="url(#grain-home)" opacity="0.5"/>
     </svg>
   `;
