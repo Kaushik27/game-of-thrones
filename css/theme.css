@@ -207,6 +207,25 @@ img { max-width: 100%; }
   padding: 64px 20px 40px;
   text-align: center;
 }
+/* Full-bleed illustrated atmospheric hero — original SVG/gradient scene,
+   never a photo. Sits behind the ambient glow pseudo-element and the
+   hero copy in the same isolated stacking context. */
+.hero.illustrated {
+  position: relative;
+  overflow: hidden;
+  padding-top: 110px;
+  padding-bottom: 70px;
+}
+.hero-scene {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+}
+.hero-scene svg { width: 100%; height: 100%; display: block; }
+@media (max-width: 640px) {
+  .hero.illustrated { padding-top: 70px; padding-bottom: 40px; }
+}
 .hero h1 {
   font-size: clamp(2.6rem, 9vw, 5.6rem);
   margin: 0 0 10px;
