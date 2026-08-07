@@ -1,0 +1,95 @@
+"use strict";
+
+const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
+const vm = require("node:vm");
+
+const root = path.resolve(__dirname, "..");
+const read = relativePath => fs.readFileSync(path.join(root, relativePath), "utf8");
+
+const context = { window: {} };
+vm.createContext(context);
+["js/data.js", "js/events.js", "js/episodes.js", "js/battles.js", "js/quotes.js", "js/lore-data.js"]
+  .forEach(relativePath => vm.runInContext(read(relativePath), context, { filename: relativePath }));
+
+const value = name => vm.runInContext(name, context);
+const characters = value("characters");
+const events = value("events");
+const episodes = value("EPISODES");
+const battles = value("battles");
+const quotes = value("quotes");
+const loreEntries = value("LORE_ENTRIES");
+
+assert.equal(characters.length, 196, "character catalogue changed unexpectedly");
+assert.equal(episodes.length, 73, "episode catalogue must contain all 73 episodes");
+assert.deepEqual(
+  Array.from({ length: 8 }, (_, index) => episodes.filter(episode => episode.season === index + 1).length),
+  [10, 10, 10, 10, 10, 10, 7, 6],
+  "episode season counts must stay canonical"
+);
+assert.equal(loreEntries.length, 24, "lore library must retain all 24 dossiers");
+assert.equal(new Set(loreEntries.map(entry => entry.category)).size, 6, "lore library must retain six categories");
+
+const eventsById = new Map(events.map(event => [event.id, event]));
+const eventLinks = episodes.flatMap(episode => episode.eventIds.map(eventId => ({ eventId, episode })));
+assert.equal(eventLinks.length, events.length, "every timeline event must map to exactly one episode");
+assert.equal(new Set(eventLinks.map(link => link.eventId)).size, events.length, "timeline event mappings must be unique");
+eventLinks.forEach(({ eventId, episode }) => {
+  const event = eventsById.get(eventId);
+  assert.ok(event, `episode ${episode.id} references unknown event ${eventId}`);
+  assert.equal(event.season, episode.season, `${eventId} must map within its recorded season`);
+  assert.ok(Object.isFrozen(episode.eventIds), `${episode.id} eventIds must remain immutable`);
+});
+
+const characterIds = new Set(characters.map(character => character.id));
+episodes.forEach(episode => episode.characterIds.forEach(characterId => {
+  assert.ok(characterIds.has(characterId), `${episode.id} references unknown character ${characterId}`);
+}));
+loreEntries.forEach(entry => entry.relatedCharacterIds.forEach(characterId => {
+  assert.ok(characterIds.has(characterId), `${entry.id} references unknown character ${characterId}`);
+}));
+
+const appSource = read("js/app.js");
+const ravenSource = read("js/raven-search.js");
+const storySource = read("js/story-atlas.js");
+const worldSource = read("js/world-atlas.js");
+const loreSource = read("js/lore-library.js");
+const peopleSource = read("js/people-intelligence.js");
+
+const contracts = [
+  [appSource.includes('initialEventId: query.get("event") || ""'), "app must pass event deep links to StoryAtlas"],
+  [appSource.includes('query.get("battle") || ""'), "Battles must consume exact battle IDs"],
+  [appSource.includes('query.get("quote") || ""'), "Quotes must consume exact quote IDs"],
+  [appSource.includes("onEntryChange: entry => replaceHashQuery"), "Lore entry state must stay in the URL"],
+  [appSource.includes("onCategoryChange: category => replaceHashQuery"), "Lore category state must stay in the URL"],
+  [ravenSource.includes('mode: "consequences"') && ravenSource.includes("eventQuery.set"), "Raven event results must include their StoryAtlas context"],
+  [storySource.includes("config.initialEventId") && storySource.includes("episode.eventIds.includes"), "StoryAtlas must resolve explicit event-to-episode links"],
+  [worldSource.includes('#/battles?battle=${encodeURIComponent(record.id)}'), "World battle stops must target exact records"],
+  [worldSource.includes('&event=${encodeURIComponent(record.id)}'), "World event stops must target exact records"],
+  [loreSource.includes("settings.onEntryChange") && loreSource.includes("settings.onCategoryChange"), "Lore must publish drawer and category changes"],
+  [loreSource.includes("drawer.contains(document.activeElement)"), "Lore must not close when a higher modal owns focus"],
+  [peopleSource.includes('detailLayer.toggleAttribute("inert", detailCoveredByComparison)'), "People must inert a dossier beneath comparison"]
+];
+contracts.forEach(([condition, message]) => assert.ok(condition, message));
+
+assert.equal(new Set(battles.map(battle => battle.id)).size, battles.length, "exact battle destinations require unique IDs");
+assert.equal(new Set(quotes.map(quote => quote.id)).size, quotes.length, "exact quote destinations require unique IDs");
+
+const indexSource = read("index.html");
+const scripts = [...indexSource.matchAll(/<script[^>]+src="([^"]+)"/g)]
+  .map(match => match[1].split("?")[0]);
+assert.ok(scripts.indexOf("js/episodes.js") < scripts.indexOf("js/story-atlas.js"), "episodes must load before StoryAtlas");
+assert.ok(scripts.indexOf("js/lore-data.js") < scripts.indexOf("js/lore-library.js"), "lore data must load before LoreLibrary");
+assert.ok(scripts.indexOf("js/story-atlas.js") < scripts.indexOf("js/app.js"), "feature modules must load before the router");
+
+console.log(JSON.stringify({
+  characters: characters.length,
+  episodes: episodes.length,
+  eventsMapped: eventLinks.length,
+  battles: battles.length,
+  quotes: quotes.length,
+  loreEntries: loreEntries.length,
+  routeContracts: contracts.length,
+  result: "passed"
+}, null, 2));
