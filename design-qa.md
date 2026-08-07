@@ -71,4 +71,10 @@ The focused reference/People comparison keeps both screens at 1265 × 712 and co
 - [x] Validate desktop and mobile responsiveness, keyboard behavior, focus, images, and reduced motion.
 - [x] Preserve TV-canon/source disclosures and local open-license portrait provenance.
 
+## Character dossier refresh
+
+- The provided Jon Snow screenshot exposed the legacy character profile as the remaining stone-texture route. The profile now uses a scoped dark cinematic surface with the shared gold/ink system, actor portrait hierarchy, dossier metadata, responsive relation rows, quote links, graph surface, and timeline surface.
+- Browser verification: `#/character/jon-snow` rendered at 1280 × 720 and 390 × 844; overview, Relations Graph, and Timeline tabs switched correctly; 36 relations and 12 timeline records rendered; no console errors or warnings; document width stayed within the mobile viewport.
+- The old `war-table-stone.jpg` background is no longer visible inside the character route. Existing character, house, quote, relation, graph, timeline, and footer links remain functional.
+
 final result: passed
