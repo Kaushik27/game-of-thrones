@@ -79,9 +79,10 @@ The focused reference/People comparison keeps both screens at 1265 × 712 and co
 
 ## Cinematic Explore prologue
 
-- The Explore route now opens with a scroll-driven four-act prologue: First, the ice; Then, the fire; A story of power; and Enter the living realm. Existing local realm artwork supplies the atmosphere, while the current interactive Realm Journey remains the destination below the handoff.
+- The Explore route now opens with a scroll-driven five-beat prologue: a border before the crown, First, the ice; Then, the fire; A story of power; and Enter the living realm. The first frame is intentionally near-black, with the navigation hidden until the visitor begins or scrolls. Existing local realm artwork supplies the atmosphere, while the current interactive Realm Journey remains the destination below the handoff.
 - Each act now carries a real local actor portrait, a canon quote, and three live story-moment links into the archive (episodes, battles, timelines, characters, and the map), so the opening behaves like an editorial index rather than a decorative hero. Pointer parallax adds a restrained depth cue on capable devices; reduced-motion keeps the same content without the motion.
 - The Explore CTA now performs a short ink-and-ember canvas crossing before landing in the existing Realm Journey. The effect is isolated from page content, uses a no-canvas fallback, and keeps the destination route unchanged (`#/`).
+- Atmospheric sound is opt-in and local: a low synthesized wind layer starts only after the visitor presses Sound off, remains muted by default, and is skipped for reduced-motion users.
 - Browser verification: desktop 1280 × 720 and mobile 390 × 844 both render the opening without horizontal overflow. Scroll progress updates the active act/title, chapter buttons jump to the correct progress, the entry CTA reaches the handoff, and the season journey link lands on the existing 3D route.
 - Interaction and accessibility: chapter controls expose `aria-current`, the live status region announces act changes, reduced-motion uses instant navigation, and the browser console remains clean.
 
@@ -91,8 +92,15 @@ The focused reference/People comparison keeps both screens at 1265 × 712 and co
 - The stage is sticky while the surrounding runway becomes the playhead. The chapter rail, progress line, portrait, and local realm artwork stay in the same visual frame while scene copy crossfades in sequence.
 - Browser verification: `#/character/jon-snow` rendered the title scene, `Voice` selected the quote scene with `I know nothing, Jon Snow.`, `Turning point` selected `Jon Snow and Ygritte` with the exact event destination, and `Dossier` selected the archive scene. The open-dossier action landed on `#profile-header` and restored the full navigation chrome after the film. No broken cinematic images were found.
 - Pointer parallax is disabled under reduced motion; the mobile breakpoint changes the chapter rail to a horizontal control row and keeps the scene composition within the viewport.
-- Published verification: GitHub Pages serves `character-profile.css?v=living-encyclopedia-8` and `app.js?v=living-encyclopedia-6`; the live title scene and `Voice` chapter both render with zero browser warnings/errors.
+- Published verification: GitHub Pages serves the refreshed character film assets; the live title scene and `Voice` chapter both render with zero browser warnings/errors.
+- The film also exposes the same opt-in Sound off control; enabling it updates `aria-pressed` without introducing console warnings or an external audio request.
 - Atmosphere verification: the film mounts a local canvas particle layer and a dark scene-cut wipe; selecting `Voice` set the quote scene and the transition state, then cleared it after the 720 ms wipe without affecting the content layer. The canvas is removed on route teardown and skipped under reduced motion.
 - Focused captures: `/tmp/got-jon-film-title.png` and `/tmp/got-jon-film-quote.png`.
+
+## Quote interludes and World camera journey
+
+- Voices now opens with “Words That Moved the Realm”: one featured quote at a time, speaker portrait, house, season/episode context, editorial context, previous/next controls, exact archive links, and an opt-in sound control. The searchable quote archive remains below the interlude.
+- World now opens with a five-stop camera journey—Winterfell, the Wall, King's Landing, Meereen, and beyond the Wall. Scroll progress changes the backdrop, quote, story copy, and destination action; the existing Atlas, Journeys, Power, and Lore views remain available below the film.
+- Browser verification: quote interlude controls changed the featured line from “When you play the game of thrones…” to “Chaos isn't a pit. Chaos is a ladder.”; World stop selection set Meereen as the active stop and rendered its destination story; both routes produced zero warning/error logs.
 
 final result: passed
