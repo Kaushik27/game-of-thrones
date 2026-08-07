@@ -1,10 +1,6 @@
 {
   "misses": [
     [
-      "rickon-stark",
-      "no match"
-    ],
-    [
       "howland-reed",
       "no actor recorded"
     ],
@@ -58,10 +54,6 @@
     ],
     [
       "kevan-lannister",
-      "no match"
-    ],
-    [
-      "gregor-clegane",
       "no match"
     ],
     [
@@ -129,10 +121,6 @@
       "no match"
     ],
     [
-      "randyll-tarly",
-      "no match"
-    ],
-    [
       "areo-hotah",
       "no match"
     ],
@@ -141,7 +129,7 @@
       "no actor recorded"
     ],
     [
-      "walder-frey",
+      "hoster-tully",
       "no match"
     ],
     [
@@ -169,10 +157,6 @@
       "no actor recorded"
     ],
     [
-      "samwell-tarly",
-      "no match"
-    ],
-    [
       "aemon-targaryen-maester",
       "no match"
     ],
@@ -197,15 +181,7 @@
       "no actor recorded"
     ],
     [
-      "satin",
-      "no match"
-    ],
-    [
       "rast",
-      "no match"
-    ],
-    [
-      "wun-wun",
       "no match"
     ],
     [
@@ -237,10 +213,6 @@
       "no match"
     ],
     [
-      "hizdahr-zo-loraq",
-      "no match"
-    ],
-    [
       "rorge",
       "no actor recorded"
     ],
@@ -253,28 +225,12 @@
       "no actor recorded"
     ],
     [
-      "symon-silver-tongue",
-      "no match"
-    ],
-    [
       "mycah",
       "no actor recorded"
     ],
     [
-      "dontos-hollard",
-      "no match"
-    ],
-    [
-      "arthur-dayne",
-      "no match"
-    ],
-    [
       "gerold-hightower",
       "no actor recorded"
-    ],
-    [
-      "maggy-the-frog",
-      "no match"
     ],
     [
       "mero",
@@ -283,14 +239,6 @@
     [
       "quaithe",
       "no actor recorded"
-    ],
-    [
-      "belwas",
-      "no match"
-    ],
-    [
-      "izembaro",
-      "no match"
     ],
     [
       "tobho-mott",
@@ -332,6 +280,15 @@
       "license": "CC BY 2.0",
       "source": "https://commons.wikimedia.org/wiki/File:Jim_Broadbent_2012.jpg",
       "tier": "wikipedia-lead"
+    },
+    "arthur-dayne": {
+      "actor": "Luke Roberts",
+      "commonsTitle": "File:Luke Roberts at ComicCon 2026.jpg",
+      "credit": "Mateusz Malta",
+      "file": "assets/actors/arthur-dayne.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Luke_Roberts_at_ComicCon_2026.jpg",
+      "tier": "curated-commons"
     },
     "arya-stark": {
       "actor": "Maisie Williams",
@@ -504,6 +461,15 @@
       "source": "https://commons.wikimedia.org/wiki/File:Tom_Hopper_Brussels_Comiccon_2022_(cropped).jpg",
       "tier": "wikipedia-lead"
     },
+    "dontos-hollard": {
+      "actor": "Tony Way",
+      "commonsTitle": "File:Tony Way Speaking at ACME Comic Con Spring 2022.jpg",
+      "credit": "Barnosaur",
+      "file": "assets/actors/dontos-hollard.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Tony_Way_Speaking_at_ACME_Comic_Con_Spring_2022.jpg",
+      "tier": "curated-commons"
+    },
     "doran-martell": {
       "actor": "Alexander Siddig",
       "commonsTitle": "File:AlexanderSiddig09TIFF.jpg",
@@ -576,6 +542,15 @@
       "source": "https://commons.wikimedia.org/wiki/File:Hannah_Murray_by_Gage_Skidmore.jpg",
       "tier": "wikipedia-lead"
     },
+    "gregor-clegane": {
+      "actor": "Haf\u00fe\u00f3r J\u00fal\u00edus Bj\u00f6rnsson",
+      "commonsTitle": "File:Bj\u00f6rnsson Arnold Classic 2017 (cropped 2).jpg",
+      "credit": "Paula R. Lively from Zanesville",
+      "file": "assets/actors/gregor-clegane.jpg",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Bj%C3%B6rnsson_Arnold_Classic_2017_(cropped_2).jpg",
+      "tier": "curated-commons"
+    },
     "grey-worm": {
       "actor": "Jacob Anderson",
       "commonsTitle": "File:Jacob Anderson at San Diego Comic Con 2026.jpg",
@@ -603,6 +578,15 @@
       "source": "https://commons.wikimedia.org/wiki/File:Jonathan_Pryce_2016_(28577280662)_(cropped).jpg",
       "tier": "wikipedia-lead"
     },
+    "hizdahr-zo-loraq": {
+      "actor": "Joel Fry",
+      "commonsTitle": "File:Joel Fry in February 2017 (cropped).jpg",
+      "credit": "Steve Bowbrick",
+      "file": "assets/actors/hizdahr-zo-loraq.jpg",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Joel_Fry_in_February_2017_(cropped).jpg",
+      "tier": "curated-commons"
+    },
     "hodor": {
       "actor": "Kristian Nairn",
       "commonsTitle": "File:Kristian Nairn by Gage Skidmore 3.jpg",
@@ -610,15 +594,6 @@
       "file": "assets/actors/hodor.jpg",
       "license": "CC BY-SA 3.0",
       "source": "https://commons.wikimedia.org/wiki/File:Kristian_Nairn_by_Gage_Skidmore_3.jpg",
-      "tier": "wikipedia-lead"
-    },
-    "hoster-tully": {
-      "actor": "Mark Lewis Jones",
-      "commonsTitle": "File:Mark Lewis Jones.jpg",
-      "credit": "Actor",
-      "file": "assets/actors/hoster-tully.jpg",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Mark_Lewis_Jones.jpg",
       "tier": "wikipedia-lead"
     },
     "illyrio-mopatis": {
@@ -647,6 +622,15 @@
       "license": "CC BY 3.0",
       "source": "https://commons.wikimedia.org/wiki/File:Amrita_Acharia_at_Triforce_SFF_Awards_2014.jpg",
       "tier": "wikipedia-lead"
+    },
+    "izembaro": {
+      "actor": "Richard E. Grant",
+      "commonsTitle": "File:Richard E. Grant 2018 (edited).jpg",
+      "credit": "Greg2600",
+      "file": "assets/actors/izembaro.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Richard_E._Grant_2018_(edited).jpg",
+      "tier": "curated-commons"
     },
     "jaime-lannister": {
       "actor": "Nikolaj Coster-Waldau",
@@ -855,6 +839,16 @@
       "source": "https://commons.wikimedia.org/wiki/File:Donald_Sumpter.jpg",
       "tier": "wikipedia-lead"
     },
+    "maggy-the-frog": {
+      "actor": "Jodhi May",
+      "commonsTitle": "File:Jodhi May The Movie Blog 2024.png",
+      "credit": "The Movie Blog",
+      "file": "assets/actors/maggy-the-frog.jpg",
+      "license": "CC BY 3.0",
+      "licenseEvidence": "https://www.youtube.com/watch?v=yw7dAb3Ki8Y",
+      "source": "https://commons.wikimedia.org/wiki/File:Jodhi_May_The_Movie_Blog_2024.png",
+      "tier": "curated-commons"
+    },
     "mance-rayder": {
       "actor": "Ciar\u00e1n Hinds",
       "commonsTitle": "File:Ciar\u00e1n Hinds in 2022.jpg",
@@ -981,15 +975,6 @@
       "source": "https://commons.wikimedia.org/wiki/File:Natalia_Tena_(29613976213).jpg",
       "tier": "wikipedia-lead"
     },
-    "patchface": {
-      "actor": "Ross Mullan",
-      "commonsTitle": "File:5.19.19RossMullanByLuigiNovi1.jpg",
-      "credit": "Luigi Novi",
-      "file": "assets/actors/patchface.jpg",
-      "license": "CC BY 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:5.19.19RossMullanByLuigiNovi1.jpg",
-      "tier": "wikipedia-lead"
-    },
     "petyr-baelish": {
       "actor": "Aidan Gillen",
       "commonsTitle": "File:Aidan Gillen Official.jpg",
@@ -1062,6 +1047,15 @@
       "source": "https://commons.wikimedia.org/wiki/File:Iwan_Rheon_by_Gage_Skidmore.jpg",
       "tier": "wikidata-p18"
     },
+    "randyll-tarly": {
+      "actor": "James Faulkner",
+      "commonsTitle": "File:James-faulkner-2018.jpg",
+      "credit": "CelebHeights.com",
+      "file": "assets/actors/randyll-tarly.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:James-faulkner-2018.jpg",
+      "tier": "curated-commons"
+    },
     "renly-baratheon": {
       "actor": "Gethin Anthony",
       "commonsTitle": "File:Gethin anthony 2019 2.jpg",
@@ -1079,6 +1073,15 @@
       "license": "CC BY 3.0",
       "source": "https://commons.wikimedia.org/wiki/File:Wilf_scolding_2021_1.jpg",
       "tier": "wikipedia-lead"
+    },
+    "rickon-stark": {
+      "actor": "Art Parkinson",
+      "credit": "German Film & Comic Con",
+      "file": "assets/actors/rickon-stark.jpg",
+      "license": "CC BY 3.0",
+      "source": "https://www.youtube.com/watch?v=LpuR3AS-Vaw",
+      "sourceTitle": "Art Parkinson @ German Comic Con Berlin 2019",
+      "tier": "curated-youtube-cc"
     },
     "robb-stark": {
       "actor": "Richard Madden",
@@ -1152,6 +1155,15 @@
       "source": "https://commons.wikimedia.org/wiki/File:Lucian_Msamati_(2010)_headshot.jpg",
       "tier": "wikipedia-lead"
     },
+    "samwell-tarly": {
+      "actor": "John Bradley",
+      "commonsTitle": "File:John Bradley by Gage Skidmore.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/samwell-tarly.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:John_Bradley_by_Gage_Skidmore.jpg",
+      "tier": "curated-commons"
+    },
     "sandor-clegane": {
       "actor": "Rory McCann",
       "commonsTitle": "File:Rory McCann in 2014 by Gage Skidmore.jpg",
@@ -1204,15 +1216,6 @@
       "file": "assets/actors/shae.jpg",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:Sibel_Kekilli-68503.jpg",
-      "tier": "wikipedia-lead"
-    },
-    "shavepate": {
-      "actor": "Adewale Akinnuoye-Agbaje",
-      "commonsTitle": "File:Adewale Akinnuoye-Agbaje Thor 2 cropped.png",
-      "credit": "Benjamin Ellis",
-      "file": "assets/actors/shavepate.jpg",
-      "license": "CC BY-SA 2.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Adewale_Akinnuoye-Agbaje_Thor_2_cropped.png",
       "tier": "wikipedia-lead"
     },
     "shireen-baratheon": {
@@ -1385,6 +1388,24 @@
       "license": "CC BY 3.0",
       "source": "https://commons.wikimedia.org/wiki/File:Elizabeth_webster_gcc_2018.jpg",
       "tier": "wikipedia-lead"
+    },
+    "walder-frey": {
+      "actor": "David Bradley",
+      "commonsTitle": "File:David Bradley by Gage Skidmore.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/walder-frey.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:David_Bradley_by_Gage_Skidmore.jpg",
+      "tier": "curated-commons"
+    },
+    "wun-wun": {
+      "actor": "Ian Whyte",
+      "commonsTitle": "File:Ian-whyte-2018.jpg",
+      "credit": "CelebHeights.com",
+      "file": "assets/actors/wun-wun.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ian-whyte-2018.jpg",
+      "tier": "curated-commons"
     },
     "xaro-xhoan-daxos": {
       "actor": "Nonso Anozie",

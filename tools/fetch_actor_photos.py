@@ -1,29 +1,32 @@
 #!/usr/bin/env python3
 """
 Fetch freely-licensed portrait photographs of the real actors who played the
-Game of Thrones characters, from Wikimedia Commons.
+Game of Thrones characters, primarily from Wikimedia Commons.
 
 WHY THIS SCRIPT EXISTS / PROVENANCE
 -----------------------------------
 The site shows real photos of real people. That is only legally defensible if
 every image is genuinely free-licensed and correctly attributed. So:
 
-  * The ONLY source is Wikimedia Commons. No IMDb (ToS forbids scraping), no
-    HBO publicity stills (copyright HBO), no arbitrary web/image search.
+  * The primary source is Wikimedia Commons. A narrowly curated rights-holder
+    video frame may be used only when its source page explicitly grants a
+    Creative Commons license. No IMDb images, HBO publicity stills, or
+    arbitrary web/image search results are accepted.
   * Only these licenses are accepted:  CC0, Public Domain, CC BY (any ver),
     CC BY-SA (any ver).  Anything non-free / fair-use / "all rights reserved"
     / missing license metadata is REJECTED.
-  * Author, license and the Commons file-page URL are recorded for EVERY
-    downloaded image. CC BY and CC BY-SA legally require attribution; the
-    site renders it at #/credits and in CREDITS.md.
+  * Author, license and the canonical source page are recorded for EVERY
+    downloaded image. CC BY and CC BY-SA legally require attribution; the site
+    renders it at #/credits and in CREDITS.md.
 
 MATCHING SAFETY
 ---------------
 A wrong face on a character is worse than no face. Actor names are far more
 ambiguous than they look — "Craig Kelly", "John Stahl", "Peter Vaughan" and
 "Susan Brown" all collide with unrelated notable people who have Commons
-photos. Free-text image search cannot tell them apart, so this script never
-uses it. Instead every photo is resolved through the actor's own identity:
+photos. Free-text image search cannot tell them apart, so automated discovery
+never uses it. Instead every discovered photo is resolved through the actor's
+own identity:
 
   1. Resolve the actor to an English Wikipedia article (following redirects).
   2. GATE the article on two independent checks, both of which must pass:
@@ -38,8 +41,10 @@ uses it. Instead every photo is resolved through the actor's own identity:
      step left to get wrong.
   4. Verify the resulting Commons file's license against the allowlist.
 
-Anything that fails the gate is left without a photo; the site falls back to
-its generative SVG portrait art for those characters.
+Manually curated exceptions record an exact file or rights-holder source after
+the identity and license are independently checked. Anything without that
+evidence is left without a photo; the site falls back to its generative SVG
+portrait art for those characters.
 
 USAGE
 -----
@@ -89,6 +94,45 @@ TITLE_BLOCKLIST = [
 ]
 
 MAX_EDGE = 400  # px on the long edge
+
+# Commons files for actors whose identity-verified Wikipedia article has no
+# freely licensed lead image. Each entry was manually checked against the
+# Commons description and available actor-category metadata. Keeping the exact
+# file title makes these exceptional matches reproducible without falling back
+# to unsafe free-text face matching.
+CURATED_COMMONS_FILES = {
+    "David Bradley": "File:David Bradley by Gage Skidmore.jpg",
+    "Hafþór Júlíus Björnsson": "File:Björnsson Arnold Classic 2017 (cropped 2).jpg",
+    "Ian Whyte": "File:Ian-whyte-2018.jpg",
+    "James Faulkner": "File:James-faulkner-2018.jpg",
+    "Jodhi May": "File:Jodhi May The Movie Blog 2024.png",
+    "Joel Fry": "File:Joel Fry in February 2017 (cropped).jpg",
+    "John Bradley": "File:John Bradley by Gage Skidmore.jpg",
+    "Luke Roberts": "File:Luke Roberts at ComicCon 2026.jpg",
+    "Richard E. Grant": "File:Richard E. Grant 2018 (edited).jpg",
+    "Tony Way": "File:Tony Way Speaking at ACME Comic Con Spring 2022.jpg",
+}
+
+# Extra license evidence for a newly uploaded Commons frame whose source-video
+# review is still pending on Commons.
+CURATED_COMMONS_LICENSE_EVIDENCE = {
+    "Jodhi May": "https://www.youtube.com/watch?v=yw7dAb3Ki8Y",
+}
+
+# Rights-holder video frames used only when Commons has no suitable portrait.
+# The linked watch page was checked for YouTube's Creative Commons Attribution
+# license, and the channel/title establish the actor's identity.
+CURATED_EXTERNAL_PHOTOS = {
+    "Art Parkinson": {
+        "title": "Art Parkinson @ German Comic Con Berlin 2019",
+        "url": "https://i.ytimg.com/vi/LpuR3AS-Vaw/maxresdefault.jpg",
+        "mime": "image/jpeg",
+        "license": "CC BY 3.0",
+        "credit": "German Film & Comic Con",
+        "source": "https://www.youtube.com/watch?v=LpuR3AS-Vaw",
+        "tier": "curated-youtube-cc",
+    },
+}
 
 
 def log(*a):
@@ -150,6 +194,22 @@ def download(url, dest, retries=3):
         except Exception as exc:  # noqa: BLE001
             if attempt == retries - 1:
                 log(f"    ! download failed: {exc}")
+                return False
+            time.sleep(1.5 * (attempt + 1))
+    return False
+
+
+def youtube_cc_license_ok(url, retries=3):
+    """Confirm that a YouTube watch page still exposes its CC reuse license."""
+    marker = b"Creative Commons Attribution license (reuse allowed)"
+    for attempt in range(retries):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                return marker in resp.read()
+        except Exception as exc:  # noqa: BLE001 - network flakiness is expected
+            if attempt == retries - 1:
+                log(f"    ! YouTube license check failed: {exc}")
                 return False
             time.sleep(1.5 * (attempt + 1))
     return False
@@ -297,6 +357,33 @@ def wikidata_p18(item):
 
 
 def find_photo(actor):
+    external = CURATED_EXTERNAL_PHOTOS.get(actor)
+    if external:
+        if (
+            license_ok(external.get("license"))
+            and external.get("url", "").startswith("https://")
+            and youtube_cc_license_ok(external.get("source", ""))
+        ):
+            return dict(external)
+        log("    · curated external source no longer verifies as Creative Commons")
+        return None
+
+    curated_title = CURATED_COMMONS_FILES.get(actor)
+    if curated_title:
+        license_evidence = CURATED_COMMONS_LICENSE_EVIDENCE.get(actor)
+        if license_evidence and not youtube_cc_license_ok(license_evidence):
+            log("    · curated Commons source no longer verifies as Creative Commons")
+            return None
+        info = commons_fileinfo(curated_title)
+        if info and "rejected_license" not in info and info.get("url"):
+            info["tier"] = "curated-commons"
+            if license_evidence:
+                info["licenseEvidence"] = license_evidence
+            return info
+        if info and "rejected_license" in info:
+            log(f"    - curated file license rejected: {info['rejected_license']}")
+        return None
+
     gated = verified_actor_article(actor)
     if not gated:
         return None
@@ -357,7 +444,8 @@ def main():
         return
 
     os.makedirs(OUT_DIR, exist_ok=True)
-    chars = load_characters()
+    all_chars = load_characters()
+    chars = list(all_chars)
     log(f"parsed {len(chars)} characters from data.js")
 
     if args.only:
@@ -369,13 +457,28 @@ def main():
     # Many characters share an actor spelling only by coincidence, but caching
     # by actor name avoids hammering the API for duplicates.
     actor_cache = {}
-    results = {}
-    misses = []
+    if args.only and os.path.exists(OUT_PROV):
+        saved = json.load(open(OUT_PROV, encoding="utf-8"))
+        valid_character_ids = {ch["id"] for ch in all_chars}
+        results = {
+            cid: rec for cid, rec in saved.get("photos", {}).items()
+            if cid in valid_character_ids
+        }
+        misses_by_id = {
+            cid: reason for cid, reason in saved.get("misses", [])
+            if cid in valid_character_ids
+        }
+        for ch in chars:
+            results.pop(ch["id"], None)
+            misses_by_id.pop(ch["id"], None)
+    else:
+        results = {}
+        misses_by_id = {}
 
     for i, ch in enumerate(chars, 1):
         actor = ch["actor"]
         if not actor or actor.lower().startswith("actor unknown") or actor.lower() == "unknown":
-            misses.append((ch["id"], "no actor recorded"))
+            misses_by_id[ch["id"]] = "no actor recorded"
             continue
         log(f"[{i}/{len(chars)}] {ch['name']}  <-  {actor}")
 
@@ -388,29 +491,38 @@ def main():
 
         if not info or not info.get("url"):
             log("    · no free-licensed photo found")
-            misses.append((ch["id"], "no match"))
+            misses_by_id[ch["id"]] = "no match"
             continue
 
         dest = os.path.join(OUT_DIR, ch["id"] + ".jpg")
         if not download(info["url"], dest):
-            misses.append((ch["id"], "download failed"))
+            misses_by_id[ch["id"]] = "download failed"
             continue
         if not normalise_image(dest):
             os.remove(dest)
-            misses.append((ch["id"], "resize failed"))
+            misses_by_id[ch["id"]] = "resize failed"
             continue
 
-        results[ch["id"]] = {
+        result = {
             "file": f"assets/actors/{ch['id']}.jpg",
             "actor": actor,
             "credit": info["credit"],
             "license": info["license"],
             "source": info["source"],
-            "commonsTitle": info["title"],
             "tier": info.get("tier", ""),
         }
+        if info.get("tier") == "curated-youtube-cc":
+            result["sourceTitle"] = info["title"]
+        else:
+            result["commonsTitle"] = info["title"]
+        if info.get("licenseEvidence"):
+            result["licenseEvidence"] = info["licenseEvidence"]
+        results[ch["id"]] = result
+        misses_by_id.pop(ch["id"], None)
         log(f"    OK  {info['license']}  ({info['tier']})")
 
+    character_order = [ch["id"] for ch in all_chars]
+    misses = [[cid, misses_by_id[cid]] for cid in character_order if cid in misses_by_id]
     write_outputs(results, misses)
 
 
@@ -421,7 +533,7 @@ def write_outputs(results, misses):
     lines = [
         "// ==========================================================================",
         "// GENERATED FILE — do not edit by hand.",
-        "// Produced by tools/fetch_actor_photos.py from Wikimedia Commons.",
+        "// Produced by tools/fetch_actor_photos.py from verified open-license sources.",
         "//",
         "// Maps character id -> a freely-licensed photograph of the REAL ACTOR who",
         "// played that character. Every entry below is CC0 / Public Domain / CC BY /",

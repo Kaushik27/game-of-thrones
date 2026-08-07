@@ -55,7 +55,7 @@ function renderFooter() {
   if (!mount) return;
   const photoCount = (typeof ACTOR_PHOTOS !== "undefined") ? Object.keys(ACTOR_PHOTOS).length : 0;
   mount.innerHTML = `A fan-made reference site for HBO's Game of Thrones (TV canon). Built with vanilla JS + D3.js, no build step.
-    <br>${photoCount} actor photographs used under free licenses from Wikimedia Commons —
+    <br>${photoCount} actor photographs used under verified open licenses —
     <a href="#/credits">credits &amp; image licensing</a>
     · <a href="https://github.com/Kaushik27/game-of-thrones" target="_blank" rel="noopener">View source on GitHub</a>`;
 }

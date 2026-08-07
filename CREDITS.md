@@ -4,22 +4,21 @@ This is an unofficial, non-commercial fan reference site for HBO's *Game of Thro
 
 ## Actor photographs
 
-The site uses **125 photographs of the real actors**, every one of them sourced from 
-[Wikimedia Commons](https://commons.wikimedia.org/) under a free license. No publicity stills, 
-no IMDb images, no arbitrary web-search images are used — those are copyrighted and their reuse 
-here would not be permitted.
+The site uses **133 photographs of the real actors**: 132 sourced from
+[Wikimedia Commons](https://commons.wikimedia.org/) and one frame published by the rights holder on
+YouTube under CC BY. No publicity stills, IMDb images, or arbitrary web-search images are used.
 
 Only these licenses were accepted: **CC0, Public Domain, CC BY (any version), CC BY-SA (any version)**. 
 Anything non-free, fair-use, all-rights-reserved, or lacking license metadata was rejected.
 
 License breakdown:
 
-- CC BY 2.0 — 10 photos
-- CC BY 3.0 — 14 photos
-- CC BY 4.0 — 4 photos
+- CC BY 2.0 — 12 photos
+- CC BY 3.0 — 16 photos
+- CC BY 4.0 — 3 photos
 - CC BY-SA 2.0 — 35 photos
-- CC BY-SA 3.0 — 25 photos
-- CC BY-SA 4.0 — 30 photos
+- CC BY-SA 3.0 — 27 photos
+- CC BY-SA 4.0 — 33 photos
 - CC0 — 4 photos
 - Public domain — 3 photos
 
@@ -33,9 +32,10 @@ Photographs remain the copyright of their respective photographers.
 `tools/fetch_actor_photos.py` resolves each character's actor to their English Wikipedia article, 
 requires that the article both describes a performer and mentions *Game of Thrones* (this is what 
 prevents same-name collisions — e.g. the Australian MP Craig Kelly vs. the actor of the same name), 
-then takes only that verified article's lead image or its Wikidata P18 image, and finally verifies 
-the Commons file's license against the allowlist. Characters with no free-licensed photo are drawn 
-with the site's own generative SVG portrait art instead.
+then takes only that verified article's lead image or its Wikidata P18 image, and finally verifies
+the source license against the allowlist. A small, explicitly reviewed set of Commons files and one
+rights-holder CC BY video frame fills verified gaps. Characters with no qualifying open portrait are
+drawn with the site's own generative SVG portrait art instead.
 
 ### Attributions
 
@@ -44,6 +44,7 @@ with the site's own generative SVG portrait art instead.
 | Aerys II Targaryen | David Rintoul | John Thaxter ; derivative work by Eymery | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:David_Rintoul_(7_Avril_2009)_cropped.jpg) |
 | Alliser Thorne | Owen Teale | Sam from UK | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Owen_Teale_2.jpg) |
 | Archmaester Ebrose | Jim Broadbent | Scottish Documentary Institute | CC BY 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Jim_Broadbent_2012.jpg) |
+| Ser Arthur Dayne | Luke Roberts | Mateusz Malta | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Luke_Roberts_at_ComicCon_2026.jpg) |
 | Arya Stark | Maisie Williams | Gage Skidmore | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Maisie_Williams_by_Gage_Skidmore_3.jpg) |
 | Balon Greyjoy | Patrick Malahide | Simon Richards | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Patrick_Malahide_in_2012.png) |
 | Barristan Selmy | Ian McElhinney | Sam from UK | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Ian_McElhinney_(cropped).jpg) |
@@ -62,6 +63,7 @@ with the site's own generative SVG portrait art instead.
 | Dagmer Cleftjaw | Ralph Ineson | Jamgoodman | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Ralphinesonadjusted.jpg) |
 | Davos Seaworth | Liam Cunningham | Gage Skidmore | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Liam_Cunningham_by_Gage_Skidmore_3.jpg) |
 | Dickon Tarly | Tom Hopper | Miguel Discart | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Tom_Hopper_Brussels_Comiccon_2022_(cropped).jpg) |
+| Ser Dontos Hollard | Tony Way | Barnosaur | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Tony_Way_Speaking_at_ACME_Comic_Con_Spring_2022.jpg) |
 | Doran Martell | Alexander Siddig | gdcgraphics | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:AlexanderSiddig09TIFF.jpg) |
 | Doreah | Roxanne McKee | Elspeth Renfrew | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Roxane_McKee.jpg) |
 | Eddard "Ned" Stark | Sean Bean | Bryan Berlin | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Sean_Bean_Anemone-25_(cropped).jpg) |
@@ -72,13 +74,15 @@ with the site's own generative SVG portrait art instead.
 | Gendry Baratheon | Joe Dempsie | Estellecht | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Joe_Dempsie_Paris_2018_(cropped-J1).jpg) |
 | Gilly | Hannah Murray | Gage Skidmore | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Hannah_Murray_by_Gage_Skidmore.jpg) |
 | Grand Maester Pycelle | Julian Glover | Patrick Subotkiewiez | CC BY 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Julian_Glover_2014.jpg) |
+| Gregor Clegane | Hafþór Júlíus Björnsson | Paula R. Lively from Zanesville | CC BY 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Bj%C3%B6rnsson_Arnold_Classic_2017_(cropped_2).jpg) |
 | Grey Worm | Jacob Anderson | Kevin Paul | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Jacob_Anderson_at_San_Diego_Comic_Con_2026.jpg) |
 | Harry Strickland | Marc Rissmann | Ana Ularu | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Marc_Rissmann.jpg) |
+| Hizdahr zo Loraq | Joel Fry | Steve Bowbrick | CC BY 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Joel_Fry_in_February_2017_(cropped).jpg) |
 | Hodor (Wylis) | Kristian Nairn | Gage Skidmore | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Kristian_Nairn_by_Gage_Skidmore_3.jpg) |
-| Hoster Tully | Mark Lewis Jones | Actor | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Mark_Lewis_Jones.jpg) |
 | Illyrio Mopatis | Roger Allam | Sonnenuntergang | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Roger_Allam_La_Cage_120909_DSCF1622.JPG) |
 | Ilyn Payne | Wilko Johnson | Roxette~jawiki at Japanese Wikipedia | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Wilko_Johnson_01.jpg) |
 | Irri | Amrita Acharia | wizardradiomedia | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Amrita_Acharia_at_Triforce_SFF_Awards_2014.jpg) |
+| Izembaro | Richard E. Grant | Greg2600 | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Richard_E._Grant_2018_(edited).jpg) |
 | Jaime Lannister | Nikolaj Coster-Waldau | Harald Krichel | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Nikolaj_Coster-Waldau-68363.jpg) |
 | Jaqen H'ghar | Tom Wlaschiha | Miguel Discart | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Tom_Wlaschiha_Holland_2023.jpg) |
 | Jeor Mormont | James Cosmo | James English | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:James_Cosmo_2023.png) |
@@ -100,6 +104,7 @@ with the site's own generative SVG portrait art instead.
 | Lyanna Stark | Aisling Franciosi | Martin Kraft | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:MJK_33393_Aisling_Franciosi_(Medienboard_Party_2019)_(cropped).jpg) |
 | Lysa Arryn | Kate Dickie | Amy Martin Photography | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Kate_Dickie_2025.jpg) |
 | Mace Tyrell | Roger Ashton-Griffiths | Roger Ashton-Griffiths | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:Roger_Ashton-Griffiths_2023.jpg) |
+| Maggy the Frog | Jodhi May | The Movie Blog | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Jodhi_May_The_Movie_Blog_2024.png) |
 | Maester Cressen | Oliver Ford Davies | massattack05 from coventry, uk | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Oliver_Ford_Davies.jpg) |
 | Maester Luwin | Donald Sumpter | Ian Smith from London, England | CC BY 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Donald_Sumpter.jpg) |
 | Mance Rayder | Ciarán Hinds | WelcomeScreenUK | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Ciar%C3%A1n_Hinds_in_2022.jpg) |
@@ -115,7 +120,6 @@ with the site's own generative SVG portrait art instead.
 | Olenna Tyrell | Diana Rigg | NBC Television | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Diana_Rigg_1973_Cropped.jpg) |
 | Orell | Mackenzie Crook | Elyot Boudart | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Mackenzie_Crook_at_Series_Mania_2026_for_Small_Prophets.jpg) |
 | Osha | Natalia Tena | Super Festivals from Ft. Lauderdale, USA | CC BY 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Natalia_Tena_(29613976213).jpg) |
-| Patchface | Ross Mullan | Luigi Novi | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:5.19.19RossMullanByLuigiNovi1.jpg) |
 | Petyr "Littlefinger" Baelish | Aidan Gillen | Aidan Gillen | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Aidan_Gillen_Official.jpg) |
 | Podrick Payne | Daniel Portman | German Comic Con | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Daniel_portman_2018_1.jpg) |
 | Pyat Pree | Ian Hanmore | Caroline Rhea from Airdrie, UK, Scotland | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Ian_Hanmore.jpg) |
@@ -123,8 +127,10 @@ with the site's own generative SVG portrait art instead.
 | Qyburn | Anton Lesser | Philip Vial | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Anton_Lesser_(2011).jpg) |
 | Rakharo | Elyes Gabel | Gage Skidmore | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Elyes_Gabel_by_Gage_Skidmore.jpg) |
 | Ramsay Bolton | Iwan Rheon | Gage Skidmore | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Iwan_Rheon_by_Gage_Skidmore.jpg) |
+| Randyll Tarly | James Faulkner | CelebHeights.com | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:James-faulkner-2018.jpg) |
 | Renly Baratheon | Gethin Anthony | German Comic Con | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Gethin_anthony_2019_2.jpg) |
 | Rhaegar Targaryen | Wilf Scolding | German Comic Con | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Wilf_scolding_2021_1.jpg) |
+| Rickon Stark | Art Parkinson | German Film &amp; Comic Con | CC BY 3.0 | [YouTube](https://www.youtube.com/watch?v=LpuR3AS-Vaw) |
 | Robb Stark | Richard Madden | Gage Skidmore | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Richard_Madden_(48462874707)_(cropped).jpg) |
 | Robert Baratheon | Mark Addy | Caporaletti1983 | CC0 | [Commons](https://commons.wikimedia.org/wiki/File:Mark_Addy.JPG) |
 | Robett Glover | Tim McInnerny | eye4images | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Tim_McInnerny.jpg) |
@@ -133,6 +139,7 @@ with the site's own generative SVG portrait art instead.
 | Roose Bolton | Michael McElhatton | MTV UK | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Michael_McElhatton,_circa_2018.jpg) |
 | Ros | Esmé Bianco | Rabbitstalk | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Esm%C3%A9_Bianco_at_San_Diego_Comic_Con_2018.jpg) |
 | Salladhor Saan | Lucian Msamati | jamie.minoprio | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Lucian_Msamati_(2010)_headshot.jpg) |
+| Samwell Tarly | John Bradley | Gage Skidmore | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:John_Bradley_by_Gage_Skidmore.jpg) |
 | Sandor Clegane | Rory McCann | Gage Skidmore | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Rory_McCann_in_2014_by_Gage_Skidmore.jpg) |
 | Sansa Stark | Sophie Turner | Duk3L1xon | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Sophie_Turner_at_SXSW_London_June_2025_(cropped).jpg) |
 | Selyse Baratheon | Tara Fitzgerald | Tracy Howl from London, UK | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Tara_Fitzgerald_(cropped).jpg) |
@@ -146,7 +153,6 @@ with the site's own generative SVG portrait art instead.
 | Talisa Stark | Oona Chaplin | Amy Martin Photography | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Oona_Chaplin_at_Avatar_fire_and_ash_premiere_London_2025.jpg) |
 | The High Sparrow | Jonathan Pryce | Greg2600 | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Jonathan_Pryce_2016_(28577280662)_(cropped).jpg) |
 | The Night King | Vladimir Furdik | Malachi108 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Vladimir_Fudrik_in_2018.jpg) |
-| The Shavepate | Adewale Akinnuoye-Agbaje | Benjamin Ellis | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Adewale_Akinnuoye-Agbaje_Thor_2_cropped.png) |
 | The Three-Eyed Raven | Max von Sydow | LJP assistant | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Max_von_Sydow_1992.jpg) |
 | The Waif | Faye Marsay | Gage Skidmore | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Faye_Marsay_by_Gage_Skidmore.jpg) |
 | Theon Greyjoy | Alfie Allen | Gage Skidmore | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Alfie_Allen_by_Gage_Skidmore_2.jpg) |
@@ -161,6 +167,8 @@ with the site's own generative SVG portrait art instead.
 | Varys | Conleth Hill | Gage Skidmore | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Conleth_Hill_by_Gage_Skidmore_3.jpg) |
 | Viserys Targaryen | Harry Lloyd | Raboe001 | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Stuttgart_2023_-Comic_Con_Germany-_Harry_Lloyd-_by-RaBoe_034_(cropped).jpg) |
 | Walda Bolton | Elizabeth Webster | German Comic Con | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Elizabeth_webster_gcc_2018.jpg) |
+| Walder Frey | David Bradley | Gage Skidmore | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:David_Bradley_by_Gage_Skidmore.jpg) |
+| Wun Wun | Ian Whyte | CelebHeights.com | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Ian-whyte-2018.jpg) |
 | Xaro Xhoan Daxos | Nonso Anozie | Ibsan73 | CC BY 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Nonso_Anozie_at_the_Pan_Premiere_(cropped).jpg) |
 | Yara Greyjoy | Gemma Whelan | PPL Projects - www.pplphotography.nl | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Gemma_Whelan_(cropped).jpg) |
 | Yezzan zo Qaggaz | Enzo Cilenti | GabboT | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Enzo_Cilenti_(29152188673).jpg) |
