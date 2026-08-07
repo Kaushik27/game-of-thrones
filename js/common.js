@@ -1,0 +1,153 @@
+// ==========================================================================
+// Shared utilities used by every page: nav rendering, character/house
+// helpers, relation graph helpers (BFS/relations lookup), avatar rendering.
+// Depends on data.js (characters, relations, HOUSE_COLORS, HOUSE_INFO) and,
+// where present, events.js / quotes.js / battles.js having already loaded.
+// ==========================================================================
+
+const NAV_LINKS = [
+  { href: "index.html", label: "Home" },
+  { href: "characters.html", label: "Characters" },
+  { href: "houses.html", label: "Houses" },
+  { href: "map.html", label: "Map" },
+  { href: "timeline.html", label: "Timeline" },
+  { href: "battles.html", label: "Battles" },
+  { href: "quiz.html", label: "Quiz" },
+  { href: "quotes.html", label: "Quotes" }
+];
+
+function currentPageFile() {
+  const path = window.location.pathname.split("/").pop();
+  return path || "index.html";
+}
+
+function renderNav() {
+  const mount = document.getElementById("site-nav");
+  if (!mount) return;
+  const current = currentPageFile();
+  mount.innerHTML = `
+    <div class="brand">🐺 GAME OF <span>THRONES</span></div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">☰</button>
+    <nav class="nav-links" id="nav-links">
+      ${NAV_LINKS.map(l => `<a href="${l.href}" class="${l.href === current ? 'active' : ''}">${l.label}</a>`).join("")}
+    </nav>
+  `;
+  const toggle = document.getElementById("nav-toggle");
+  const links = document.getElementById("nav-links");
+  toggle.addEventListener("click", () => links.classList.toggle("open"));
+}
+
+function renderFooter() {
+  const mount = document.getElementById("site-footer");
+  if (!mount) return;
+  mount.innerHTML = `A fan-made reference site for HBO's Game of Thrones (TV canon). Built with vanilla JS + D3.js, no build step.
+    <br><a href="https://github.com/Kaushik27/game-of-thrones" target="_blank" rel="noopener">View source on GitHub</a>`;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderNav();
+  renderFooter();
+});
+
+// ---------- Character / house helpers ----------
+function getCharacter(id) {
+  return characters.find(c => c.id === id);
+}
+
+function getHouseColor(house) {
+  return HOUSE_COLORS[house] || HOUSE_COLORS["Unaffiliated"];
+}
+
+function initialsFor(name) {
+  const clean = name.replace(/["'()].*?["'()]|["'()]/g, "").replace(/\(.*?\)/g, "");
+  const parts = clean.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return "?";
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function avatarHTML(character, size) {
+  size = size || 56;
+  const color = character.sigilColor || getHouseColor(character.house);
+  const isDead = character.status === "dead";
+  return `<div class="avatar${isDead ? ' dead' : ''}" style="width:${size}px;height:${size}px;font-size:${size * 0.36}px;background:radial-gradient(circle at 30% 30%, ${color}, ${color}cc);">
+    ${initialsFor(character.name)}${isDead ? '<span class="skull">💀</span>' : ''}
+  </div>`;
+}
+
+function charactersByHouse(house) {
+  return characters.filter(c => c.house === house);
+}
+
+function relationsFor(id) {
+  return relations
+    .filter(r => r.source === id || r.target === id)
+    .map(r => {
+      const otherId = r.source === id ? r.target : r.source;
+      return { other: getCharacter(otherId), rel: r };
+    })
+    .filter(x => x.other);
+}
+
+const TYPE_ICON = { family: "🩸", marriage: "💍", allegiance: "🛡", conflict: "⚔", bond: "🤝" };
+const RELATION_STYLE = {
+  family:     { color: "#d4af37", dash: null },
+  marriage:   { color: "#d97ba0", dash: "6,3" },
+  allegiance: { color: "#8a8a93", dash: null },
+  conflict:   { color: "#c23b3b", dash: "4,4" },
+  bond:       { color: "#4a90d9", dash: "1,3" }
+};
+
+function findShortestPath(startId, endId) {
+  if (startId === endId) return { path: [startId], edges: [] };
+  const adjacency = new Map();
+  relations.forEach(r => {
+    if (!adjacency.has(r.source)) adjacency.set(r.source, []);
+    if (!adjacency.has(r.target)) adjacency.set(r.target, []);
+    adjacency.get(r.source).push({ to: r.target, rel: r });
+    adjacency.get(r.target).push({ to: r.source, rel: r });
+  });
+  const visited = new Set([startId]);
+  const queue = [{ id: startId, path: [startId], edges: [] }];
+  while (queue.length) {
+    const { id, path, edges } = queue.shift();
+    const neighbors = adjacency.get(id) || [];
+    for (const { to, rel } of neighbors) {
+      if (visited.has(to)) continue;
+      const newPath = [...path, to];
+      const newEdges = [...edges, rel];
+      if (to === endId) return { path: newPath, edges: newEdges };
+      visited.add(to);
+      queue.push({ id: to, path: newPath, edges: newEdges });
+    }
+  }
+  return null;
+}
+
+// ---------- Events / quotes / battles helpers (guarded — not every page loads all datasets) ----------
+function eventsFor(characterId) {
+  if (typeof events === "undefined") return [];
+  return events.filter(e => e.characters.includes(characterId)).sort((a, b) => a.season - b.season);
+}
+function eventsForHouse(house) {
+  if (typeof events === "undefined") return [];
+  return events.filter(e => e.houses.includes(house)).sort((a, b) => a.season - b.season);
+}
+function quotesFor(characterId) {
+  if (typeof quotes === "undefined") return [];
+  return quotes.filter(q => q.characterId === characterId);
+}
+function battlesFor(characterId) {
+  if (typeof battles === "undefined") return [];
+  return battles.filter(b => b.linkedCharacters.includes(characterId));
+}
+
+// ---------- Misc ----------
+function qs(param) {
+  return new URLSearchParams(window.location.search).get(param);
+}
+function escapeHTML(str) {
+  const div = document.createElement("div");
+  div.textContent = str == null ? "" : String(str);
+  return div.innerHTML;
+}
