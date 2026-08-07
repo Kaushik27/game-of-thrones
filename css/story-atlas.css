@@ -210,7 +210,7 @@ body.story-atlas-route #site-footer {
 .story-atlas__modes button:last-child { border-right: 0; }
 
 .story-atlas__modes button span {
-  color: #687176;
+  color: #7b8386;
   font-family: "Cinzel", Georgia, serif;
   font-size: 0.62rem;
 }
@@ -262,7 +262,7 @@ body.story-atlas-route #site-footer {
   font-size: 0.9rem;
 }
 
-.story-atlas__search-field input::placeholder { color: #697074; }
+.story-atlas__search-field input::placeholder { color: #7b8386; }
 
 .story-atlas__search-field button,
 .story-atlas__reset {
