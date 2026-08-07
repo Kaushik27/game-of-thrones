@@ -162,6 +162,13 @@
     let pointerY = 0;
     let destroyed = false;
     let journeyHandle = null;
+    let portalHandle = null;
+    const journeyRoot = root.querySelector("#realm-journey-root");
+    journeyRoot.setAttribute("tabindex", "-1");
+
+    if (global.CinematicPortal) {
+      portalHandle = global.CinematicPortal.mount(root, { reducedMotion });
+    }
 
     function setScene(index, announce) {
       const nextIndex = clamp(Number(index) || 0, 0, scenes.length - 1);
@@ -236,10 +243,41 @@
       global.scrollTo({ top: global.scrollY + rect.top + runway * clamp(value, 0, 1), behavior: reducedMotion ? "auto" : "smooth" });
     }
 
+    function enterRealm(trigger) {
+      const travel = behavior => {
+        if (behavior === "smooth") {
+          journeyRoot.scrollIntoView({ behavior: "smooth" });
+          return;
+        }
+        document.documentElement.classList.add("cinematic-portal-jump");
+        journeyRoot.focus({ preventScroll: false });
+        journeyRoot.blur();
+        global.setTimeout(() => document.documentElement.classList.remove("cinematic-portal-jump"), 1200);
+      };
+      const fallback = () => travel(reducedMotion ? "auto" : "smooth");
+      if (!portalHandle) {
+        fallback();
+        return;
+      }
+      const bounds = trigger && trigger.getBoundingClientRect ? trigger.getBoundingClientRect() : null;
+      portalHandle.enter({
+        origin: bounds ? { x: bounds.left + bounds.width * 0.5, y: bounds.top + bounds.height * 0.5 } : undefined,
+        onDone: () => {
+          // Browser focus/scroll settling can finish after the veil animation;
+          // repeat the landing briefly so the destination wins deterministically.
+          [0, 180, 360, 540, 720].forEach(delay => global.setTimeout(() => travel("auto"), delay));
+        },
+      });
+    }
+
     root.querySelectorAll("[data-cinematic-scene]").forEach((button, index) => {
       button.addEventListener("click", () => scrollToProgress(index / (scenes.length - 1)));
     });
-    root.querySelector("[data-cinematic-skip]").addEventListener("click", () => scrollToProgress(1));
+    root.querySelector("[data-cinematic-skip]").addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
+      enterRealm(event.currentTarget);
+    });
     root.addEventListener("click", event => {
       const navigation = event.target.closest("[data-cinematic-navigate]");
       if (!navigation) return;
@@ -251,7 +289,8 @@
     });
     root.querySelector(".cinematic-handoff__link").addEventListener("click", event => {
       event.preventDefault();
-      root.querySelector("#realm-journey-root").scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth" });
+      event.stopPropagation();
+      enterRealm(event.currentTarget);
     });
     global.addEventListener("scroll", scheduleUpdate, { passive: true });
     global.addEventListener("resize", scheduleUpdate, { passive: true });
@@ -264,7 +303,6 @@
     setScene(0, false);
     update();
 
-    const journeyRoot = root.querySelector("#realm-journey-root");
     if (global.RealmJourney) {
       journeyHandle = global.RealmJourney.mount(journeyRoot, {
         initialSeason,
@@ -283,6 +321,7 @@
         global.removeEventListener("resize", scheduleUpdate);
         stage.removeEventListener("pointermove", handlePointerMove);
         if (journeyHandle) journeyHandle.destroy();
+        if (portalHandle) portalHandle.destroy();
         root.replaceChildren();
         mountedRoots.delete(root);
       },
