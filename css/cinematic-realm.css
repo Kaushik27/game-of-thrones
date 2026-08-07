@@ -1,0 +1,62 @@
+/* ========================================================================
+   Cinematic Explore prologue — scroll becomes the chapter playhead
+   ======================================================================== */
+
+.cinematic-realm { min-height: 100%; background: #030608; color: #eee9df; }
+.cinematic-prologue { position: relative; height: 360svh; background: #030608; }
+.cinematic-prologue__stage { position: sticky; top: 0; height: 100svh; overflow: hidden; isolation: isolate; background: #030608; }
+.cinematic-prologue__layers, .cinematic-prologue__layer, .cinematic-prologue__veil, .cinematic-prologue__grain { position: absolute; inset: 0; }
+.cinematic-prologue__layer { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: saturate(0.76) contrast(1.08) brightness(0.58); opacity: 0; transform: scale(1.05); transition: opacity 700ms ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.cinematic-prologue__layer--north { opacity: var(--ice-opacity, 1); }
+.cinematic-prologue__layer--fire { opacity: var(--fire-opacity, 0); filter: saturate(0.86) contrast(1.08) brightness(0.56); transform: scale(1.09); }
+.cinematic-prologue__layer--realm { opacity: var(--realm-opacity, 0); filter: saturate(0.8) contrast(1.1) brightness(0.48); transform: scale(1.12); }
+.cinematic-prologue__stage[data-scene="ice"] .cinematic-prologue__layer--north { filter: saturate(0.52) contrast(1.16) brightness(0.46); }
+.cinematic-prologue__stage[data-scene="fire"] .cinematic-prologue__layer--fire { filter: saturate(1.04) contrast(1.08) brightness(0.64); }
+.cinematic-prologue__stage[data-scene="realm"] .cinematic-prologue__layer--realm,
+.cinematic-prologue__stage[data-scene="arrival"] .cinematic-prologue__layer--realm { filter: saturate(0.92) contrast(1.08) brightness(0.6); }
+.cinematic-prologue__veil { z-index: 2; background: rgba(1, 4, 6, 0.5); box-shadow: inset 35vw 0 190px rgba(0, 4, 7, 0.72), inset 0 -180px 160px rgba(2, 4, 6, 0.82), inset 0 120px 120px rgba(2, 4, 6, 0.48); pointer-events: none; }
+.cinematic-prologue__grain { z-index: 3; background-image: url("../assets/ui/war-table-stone.jpg"); background-size: 560px; mix-blend-mode: soft-light; opacity: 0.08; pointer-events: none; }
+.cinematic-prologue__copy { position: absolute; z-index: 10; top: clamp(150px, 22vh, 220px); left: clamp(24px, 8vw, 132px); width: min(560px, 44vw); text-shadow: 0 3px 28px rgba(0, 0, 0, 0.86); }
+.cinematic-prologue__eyebrow, .cinematic-handoff__eyebrow { display: flex; align-items: center; gap: 11px; margin: 0 0 23px; color: #d4b36a; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; }
+.cinematic-prologue__eyebrow::before, .cinematic-handoff__eyebrow::before { width: 34px; height: 1px; background: currentColor; content: ""; }
+.cinematic-prologue__title { max-width: 8ch; margin: 0; color: #f0e6d1; font-family: "Cinzel", Georgia, serif; font-size: clamp(3rem, 7vw, 7.5rem); font-weight: 400; letter-spacing: -0.045em; line-height: 0.98; text-transform: uppercase; }
+.cinematic-prologue__body { max-width: 37ch; margin: 24px 0 0; color: #c1c1bc; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.15rem, 1.7vw, 1.55rem); line-height: 1.45; }
+.cinematic-prologue__skip { min-height: 47px; margin-top: 32px; padding: 10px 18px; border: 1px solid rgba(212, 179, 106, 0.74); border-radius: 0; background: rgba(5, 8, 10, 0.64); color: #eee3c9; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: background 180ms ease, border-color 180ms ease, transform 180ms ease; }
+.cinematic-prologue__skip:hover, .cinematic-prologue__skip:focus-visible { border-color: #edd291; background: rgba(212, 179, 106, 0.16); transform: translateY(-2px); }
+.cinematic-prologue__skip:focus-visible, .cinematic-prologue__chapter:focus-visible, .cinematic-handoff__link:focus-visible { outline: 2px solid #edd291; outline-offset: 3px; }
+.cinematic-prologue__chapters { position: absolute; z-index: 10; top: 50%; right: clamp(22px, 4.5vw, 72px); display: grid; gap: 9px; transform: translateY(-50%); }
+.cinematic-prologue__chapter { display: grid; grid-template-columns: 27px auto; gap: 8px; align-items: center; min-width: 154px; padding: 8px 0 8px 10px; border: 0; border-left: 1px solid rgba(255, 255, 255, 0.2); background: transparent; color: #8e918e; font-size: 0.64rem; font-weight: 700; letter-spacing: 0.12em; text-align: left; text-transform: uppercase; cursor: pointer; transition: border-color 180ms ease, color 180ms ease, background 180ms ease; }
+.cinematic-prologue__chapter span { color: #6f7777; font-size: 0.6rem; }
+.cinematic-prologue__chapter:hover, .cinematic-prologue__chapter[aria-current="true"] { border-left-color: #d4b36a; background: rgba(212, 179, 106, 0.07); color: #efe8d8; }
+.cinematic-prologue__chapter[aria-current="true"] span { color: #d4b36a; }
+.cinematic-prologue__progress { position: absolute; z-index: 10; right: 0; bottom: 0; left: 0; height: 2px; background: rgba(255, 255, 255, 0.12); }
+.cinematic-prologue__progress span { display: block; width: 100%; height: 100%; background: #d4b36a; transform: scaleX(0); transform-origin: left center; }
+.cinematic-prologue__cue { position: absolute; z-index: 10; bottom: 28px; left: 50%; display: flex; align-items: center; gap: 8px; margin: 0; color: #a7aaa6; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; transform: translateX(-50%); }
+.cinematic-prologue__cue img { width: 15px; height: 15px; filter: invert(74%) sepia(18%) saturate(535%) hue-rotate(358deg) brightness(87%); }
+.cinematic-prologue__status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+.cinematic-handoff { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 42px; align-items: end; min-height: 52svh; padding: clamp(52px, 9vw, 120px) clamp(22px, 8vw, 132px); border-top: 1px solid rgba(212, 179, 106, 0.24); background: #080d10; }
+.cinematic-handoff__copy { max-width: 680px; }
+.cinematic-handoff h2 { margin: 0; color: #efe8d8; font-size: clamp(2rem, 5vw, 4.9rem); letter-spacing: -0.04em; line-height: 1; }
+.cinematic-handoff p:not(.cinematic-handoff__eyebrow) { max-width: 52ch; margin: 20px 0 0; color: #aeb1b1; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.08rem, 1.8vw, 1.42rem); line-height: 1.5; }
+.cinematic-handoff__link { display: inline-flex; align-items: center; min-height: 48px; padding: 10px 16px; border: 1px solid rgba(212, 179, 106, 0.65); color: #efe3c7; font-size: 0.69rem; font-weight: 700; letter-spacing: 0.13em; text-decoration: none; text-transform: uppercase; }
+.cinematic-handoff__link:hover { background: rgba(212, 179, 106, 0.1); color: #fff0c8; text-decoration: none; }
+.cinematic-realm__journey-host { min-height: 100svh; }
+
+@media (max-width: 760px) {
+  .cinematic-prologue { height: 290svh; }
+  .cinematic-prologue__copy { top: 118px; left: 20px; width: min(310px, calc(100vw - 40px)); }
+  .cinematic-prologue__title { font-size: clamp(2.8rem, 14vw, 4.5rem); }
+  .cinematic-prologue__body { margin-top: 17px; font-size: 1.15rem; }
+  .cinematic-prologue__skip { margin-top: 22px; min-height: 44px; }
+  .cinematic-prologue__chapters { top: auto; right: 16px; bottom: 64px; left: 16px; display: flex; gap: 3px; overflow-x: auto; padding-bottom: 2px; transform: none; scrollbar-width: none; }
+  .cinematic-prologue__chapters::-webkit-scrollbar { display: none; }
+  .cinematic-prologue__chapter { flex: 1 0 112px; grid-template-columns: 22px auto; min-width: 0; padding: 8px 6px; font-size: 0.55rem; }
+  .cinematic-prologue__cue { display: none; }
+  .cinematic-handoff { display: block; min-height: 52svh; padding: 62px 20px; }
+  .cinematic-handoff__link { margin-top: 28px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-prologue__layer, .cinematic-prologue__skip, .cinematic-prologue__chapter { transition: none; }
+}
