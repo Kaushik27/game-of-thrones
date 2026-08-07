@@ -101,7 +101,7 @@
     }
 
     function scrapMarkup(moment, direction) {
-      return `<button class="raven-wall__scrap raven-wall__scrap--${direction}" type="button" data-rw-open="${escape(moment.id)}" style="--scrap-image:url('${escape(moment.image)}')"><span>${escape(moment.kicker)}</span><strong>${escape(moment.title)}</strong><small>${escape(moment.location)}</small></button>`;
+      return `<button class="raven-wall__scrap raven-wall__scrap--${direction}" type="button" data-rw-open="${escape(moment.id)}" style="--scrap-image:url('../${escape(moment.image)}')"><span>${escape(moment.kicker)}</span><strong>${escape(moment.title)}</strong><small>${escape(moment.location)}</small></button>`;
     }
 
     function move(delta) {

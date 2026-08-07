@@ -711,7 +711,7 @@
           <div><h3>${escape(character.name)}</h3><p>${character.actor && !/^actor unknown$/i.test(character.actor) ? `Played by ${escape(character.actor)}` : "Cast credit not recorded"}</p></div>
         </div>
         <p class="pi-dossier__bio">${escape(character.bio || "No biography is recorded yet.")}</p>
-        ${memory ? `<section class="pi-memory-card" style="--pi-memory-image:url('${escape(memory.image)}')"><div class="pi-memory-card__image" aria-hidden="true"></div><div class="pi-memory-card__copy"><p class="pi-card-kicker">The scene fans return to</p><h4>${escape(memory.title)}</h4><blockquote>“${escape(memory.line)}”</blockquote><p>${escape(memory.fanNote)}</p><small>${escape(memory.location)} · ${escape(memory.consequence)}</small><a href="#/quotes?quote=${encodeURIComponent(memory.quoteId)}">Follow the line <span aria-hidden="true">↗</span></a></div></section>` : ""}
+        ${memory ? `<section class="pi-memory-card" style="--pi-memory-image:url('../${escape(memory.image)}')"><div class="pi-memory-card__image" aria-hidden="true"></div><div class="pi-memory-card__copy"><p class="pi-card-kicker">The scene fans return to</p><h4>${escape(memory.title)}</h4><blockquote>“${escape(memory.line)}”</blockquote><p>${escape(memory.fanNote)}</p><small>${escape(memory.location)} · ${escape(memory.consequence)}</small><a href="#/quotes?quote=${encodeURIComponent(memory.quoteId)}">Follow the line <span aria-hidden="true">↗</span></a></div></section>` : ""}
         <dl class="pi-dossier__facts">
           <div><dt>End state</dt><dd>${escape(statusLabel(character))}</dd></div>
           <div><dt>Documented seasons</dt><dd>${seasons.length ? seasons.join(", ") : "Not indexed"}</dd></div>
