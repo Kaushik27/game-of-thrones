@@ -1,0 +1,486 @@
+/* ==========================================================================
+   Interactive relationship constellation
+   ========================================================================== */
+
+.war-home {
+  position: relative;
+  min-height: calc(100svh - 74px);
+  overflow: clip;
+  border-bottom: 1px solid rgba(203, 168, 92, 0.28);
+  background: rgba(3, 5, 6, 0.3);
+}
+
+.war-table {
+  min-height: inherit;
+}
+
+.war-table__shell {
+  display: grid;
+  grid-template-columns: minmax(330px, 0.95fr) minmax(520px, 1.75fr) minmax(280px, 0.8fr);
+  grid-template-rows: minmax(760px, 1fr) auto;
+  width: min(100%, 1600px);
+  min-height: inherit;
+  margin: 0 auto;
+  border-right: 1px solid rgba(203, 168, 92, 0.18);
+  border-left: 1px solid rgba(203, 168, 92, 0.18);
+}
+
+.war-table__header,
+.war-table__body {
+  display: contents;
+}
+
+.war-table__heading {
+  z-index: 2;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  padding: clamp(84px, 10vh, 126px) clamp(26px, 3vw, 50px) 40px;
+}
+
+.war-table__eyebrow,
+.war-table__dispatch-kicker,
+.war-table__details-kicker,
+.war-table__legend-title,
+.war-table__season-label {
+  margin: 0 0 12px;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.war-table__title {
+  max-width: 7ch;
+  margin: 0;
+  color: #f1eee6;
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: clamp(3rem, 5.2vw, 5.65rem);
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  line-height: 0.98;
+  text-transform: uppercase;
+}
+
+.war-table__title::after {
+  content: "";
+  display: block;
+  width: min(100%, 230px);
+  height: 1px;
+  margin-top: 30px;
+  background: rgba(203, 168, 92, 0.65);
+}
+
+.war-table__intro {
+  max-width: 29ch;
+  margin: 26px 0 0;
+  color: #bbb7ae;
+  font-size: clamp(0.92rem, 1.15vw, 1.08rem);
+  line-height: 1.85;
+}
+
+.war-table__stage {
+  position: relative;
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  min-height: 760px;
+  overflow: hidden;
+  border-right: 1px solid rgba(203, 168, 92, 0.12);
+  border-left: 1px solid rgba(203, 168, 92, 0.16);
+}
+
+.war-table__stage::before {
+  content: "";
+  position: absolute;
+  inset: 7% 5%;
+  border: 1px solid rgba(203, 168, 92, 0.08);
+  pointer-events: none;
+}
+
+.war-table__svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+}
+
+.war-table__plot-background { fill: transparent; }
+
+.war-table__link {
+  stroke: var(--war-table-link-color, #7f817d);
+  stroke-width: 1.15;
+  stroke-linecap: round;
+  opacity: 0.48;
+  transition: opacity var(--dur) var(--ease-out), stroke-width var(--dur) var(--ease-out);
+}
+
+.war-table__link--family { --war-table-link-color: #c7a450; }
+.war-table__link--marriage { --war-table-link-color: #b57988; stroke-dasharray: 7 5; }
+.war-table__link--allegiance { --war-table-link-color: #789f60; }
+.war-table__link--conflict { --war-table-link-color: #ae4936; stroke-dasharray: 6 5; }
+.war-table__link--bond { --war-table-link-color: #7297aa; stroke-dasharray: 2 5; }
+.war-table__link--muted { opacity: 0.28; }
+.war-table__link--featured { opacity: 0.86; stroke-width: 1.8; }
+.war-table__link--selected { opacity: 1; stroke-width: 2.4; }
+
+.war-table__node {
+  cursor: pointer;
+  outline: none;
+  transition: opacity var(--dur) var(--ease-out);
+}
+
+.war-table__node-halo {
+  fill: transparent;
+  stroke: var(--war-table-house-color, var(--accent));
+  stroke-width: 1;
+  opacity: 0.22;
+  transition: opacity var(--dur) var(--ease-out), stroke-width var(--dur) var(--ease-out);
+}
+
+.war-table__node-ring {
+  fill: #080a0b;
+  stroke: var(--war-table-house-color, var(--accent));
+  stroke-width: 1.4;
+}
+
+.war-table__node-photo { filter: saturate(0.88) contrast(1.08); }
+.war-table__node--dead .war-table__node-photo { filter: grayscale(0.46) saturate(0.62) contrast(1.06); }
+
+.war-table__node-name {
+  fill: #eee8da;
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 9.4px;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  opacity: 0.9;
+  paint-order: stroke;
+  stroke: #050708;
+  stroke-width: 3.6px;
+  transition: opacity var(--dur) var(--ease-out);
+}
+
+.war-table__node-initials {
+  fill: var(--accent-bright);
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 13px;
+}
+
+.war-table__node:hover .war-table__node-halo,
+.war-table__node:focus-visible .war-table__node-halo,
+.war-table__node--related .war-table__node-halo,
+.war-table__node--featured .war-table__node-halo {
+  opacity: 0.95;
+  stroke-width: 2.2;
+}
+
+.war-table__node:focus-visible .war-table__node-ring,
+.war-table__node--selected .war-table__node-ring {
+  stroke: var(--accent-bright);
+  stroke-width: 3.2;
+}
+
+.war-table__node--selected .war-table__node-halo { opacity: 1; stroke-width: 3; }
+.war-table__node--muted { opacity: 0.4; }
+.war-table__node--muted .war-table__node-name { opacity: 0; }
+.war-table__node--muted:hover .war-table__node-name,
+.war-table__node--muted:focus-visible .war-table__node-name { opacity: 1; }
+.war-table__node--hub .war-table__node-ring { stroke-width: 2.4; }
+.war-table__node--hub .war-table__node-name { font-size: 10.6px; }
+
+.war-table__legend {
+  z-index: 2;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: end;
+  padding: 36px clamp(26px, 3vw, 50px) clamp(50px, 7vh, 76px);
+}
+
+.war-table__legend-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.war-table__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #c9c5bc;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.war-table__legend-line {
+  width: 32px;
+  height: 1px;
+  background: var(--legend-color, #777);
+}
+
+.war-table__legend-item--family { --legend-color: #c7a450; }
+.war-table__legend-item--marriage { --legend-color: #b57988; }
+.war-table__legend-item--allegiance { --legend-color: #789f60; }
+.war-table__legend-item--conflict { --legend-color: #ae4936; }
+.war-table__legend-item--bond { --legend-color: #7297aa; }
+
+.war-table__legend-note {
+  display: none;
+}
+
+.war-table__story {
+  display: flex;
+  grid-column: 3;
+  grid-row: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  padding: 40px clamp(20px, 2vw, 34px);
+}
+
+.war-table__dispatch,
+.war-table__details {
+  position: relative;
+  width: 100%;
+  max-width: 310px;
+  border: 1px solid rgba(203, 168, 92, 0.52);
+  background: rgba(6, 9, 10, 0.86);
+  box-shadow: var(--shadow);
+  clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px), 0 12px);
+}
+
+.war-table__dispatch { padding: clamp(22px, 2.3vw, 34px); text-align: center; }
+.war-table__details { max-height: 340px; overflow: auto; padding: 22px; }
+
+.war-table__dispatch::before,
+.war-table__details::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(203, 168, 92, 0.14);
+  pointer-events: none;
+}
+
+.war-table__dispatch-kicker,
+.war-table__details-kicker { position: relative; }
+
+.war-table__dispatch-title,
+.war-table__details-title {
+  position: relative;
+  margin: 0;
+  color: var(--accent-bright);
+  font-family: 'Cinzel', Georgia, serif;
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.war-table__dispatch-title { font-size: clamp(1.25rem, 2vw, 1.78rem); }
+.war-table__details-title { color: var(--text); font-size: 1.1rem; }
+
+.war-table__dispatch-summary,
+.war-table__details-bio,
+.war-table__details-empty {
+  position: relative;
+  color: #b7b3aa;
+  font-size: 0.8rem;
+  line-height: 1.65;
+}
+
+.war-table__dispatch-meta { position: relative; margin: 18px 0 0; text-align: left; }
+.war-table__dispatch-meta div { padding: 7px 0; border-top: 1px solid rgba(203, 168, 92, 0.16); }
+.war-table__dispatch-meta dt { color: var(--accent); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; }
+.war-table__dispatch-meta dd { margin: 2px 0 0; color: var(--text-dim); font-size: 0.72rem; line-height: 1.5; }
+
+.war-table__dispatch-houses {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.war-table__house {
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, var(--war-table-house-color) 55%, transparent);
+  color: var(--war-table-house-color, var(--text-dim));
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.war-table__details-heading { position: relative; display: flex; align-items: center; gap: 12px; }
+.war-table__details-avatar { width: 52px; height: 52px; overflow: hidden; border: 1px solid var(--war-table-house-color, var(--accent)); border-radius: 50%; flex: 0 0 auto; }
+.war-table__details-photo { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 22%; }
+.war-table__details-initials { display: grid; height: 100%; place-items: center; color: var(--accent); font-family: 'Cinzel', serif; }
+.war-table__details-subtitle,
+.war-table__details-actor { margin: 3px 0 0; color: var(--text-faint); font-size: 0.68rem; }
+.war-table__details-relations-title { margin: 16px 0 8px; color: var(--accent); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.war-table__details-relations { position: relative; display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.war-table__details-relation button { width: 100%; min-height: 0; padding: 6px 0; border: 0; border-bottom: 1px solid rgba(203, 168, 92, 0.12); background: transparent; text-align: left; }
+.war-table__details-relation-type { display: block; color: var(--accent); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.war-table__details-link { position: relative; display: inline-flex; margin-top: 16px; color: var(--accent-bright); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; }
+
+.war-table__season-picker {
+  display: flex;
+  z-index: 3;
+  grid-column: 1 / -1;
+  grid-row: 2;
+  align-items: center;
+  gap: 18px;
+  padding: 18px clamp(20px, 3vw, 46px) 22px;
+  border-top: 1px solid rgba(203, 168, 92, 0.28);
+  background: rgba(3, 5, 6, 0.96);
+}
+
+.war-table__season-label { flex: 0 0 auto; margin: 0; }
+.war-table__season-controls { display: grid; grid-template-columns: repeat(8, minmax(80px, 1fr)); width: 100%; }
+
+.war-table__season {
+  position: relative;
+  min-height: 46px;
+  padding: 9px 8px;
+  border: 0;
+  border-bottom: 1px solid rgba(238, 233, 223, 0.18);
+  background: transparent;
+  color: #a6a39b;
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.war-table__season::before {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  border: 1px solid rgba(238, 233, 223, 0.34);
+  background: #090b0c;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.war-table__season:hover { color: var(--text); border-color: rgba(203, 168, 92, 0.52); }
+.war-table__season--active { color: var(--accent-bright); border-bottom-color: var(--accent-bright); }
+.war-table__season--active::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--accent-bright);
+  background: #090b0c;
+  transform: translateX(-50%) rotate(45deg);
+}
+.war-table__season--active::before { opacity: 0; }
+
+.war-table__status { padding: 40px; color: var(--text-dim); text-align: center; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .war-table__node--featured .war-table__node-halo { animation: war-table-pulse 2.8s ease-in-out infinite; }
+}
+
+@keyframes war-table-pulse {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+
+@media (max-width: 1180px) {
+  .war-table__shell {
+    grid-template-columns: minmax(250px, 0.72fr) minmax(520px, 1.5fr);
+    grid-template-rows: minmax(660px, 1fr) auto auto;
+  }
+  .war-table__story {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    padding: 24px;
+    border-top: 1px solid rgba(203, 168, 92, 0.18);
+  }
+  .war-table__season-picker { grid-row: 3; }
+  .war-table__details { max-height: none; }
+}
+
+@media (max-width: 820px) {
+  .war-home { min-height: 0; overflow: visible; }
+  .war-table__shell { display: block; min-height: 0; border: 0; }
+  .war-table__header,
+  .war-table__body { display: block; }
+  .war-table__heading { padding: 62px 20px 28px; text-align: center; }
+  .war-table__title { max-width: none; font-size: clamp(2.7rem, 14vw, 4.6rem); }
+  .war-table__title::after { margin-inline: auto; }
+  .war-table__intro { margin-inline: auto; }
+  .war-table__stage { min-height: clamp(480px, 112vw, 620px); border-right: 0; border-left: 0; border-block: 1px solid rgba(203, 168, 92, 0.18); }
+  .war-table__legend { padding: 24px 20px; }
+  .war-table__legend-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .war-table__legend-note { max-width: none; }
+  .war-table__story { display: grid; grid-template-columns: 1fr; padding: 20px; }
+  .war-table__season-picker { display: block; padding: 18px 12px 22px; overflow: hidden; }
+  .war-table__season-label { display: block; margin: 0 0 10px 8px; }
+  .war-table__season-controls {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+  .war-table__season-controls::-webkit-scrollbar { display: none; }
+  .war-table__season { min-width: 96px; scroll-snap-align: start; }
+}
+
+@media (max-width: 520px) {
+  .war-table__heading { padding-top: 44px; }
+  .war-table__eyebrow { font-size: 0.64rem; }
+  .war-table__stage { min-height: 500px; }
+  .war-table__stage::before { inset: 3%; }
+  .war-table__node-name { opacity: 0; }
+  .war-table__node--selected .war-table__node-name,
+  .war-table__node:hover .war-table__node-name,
+  .war-table__node:focus-visible .war-table__node-name { opacity: 1; }
+  .war-table__legend-list { grid-template-columns: 1fr 1fr; }
+  .war-table__dispatch,
+  .war-table__details { padding: 22px 18px; }
+}
+
+/* ---------- Route index below the table ---------- */
+.realm-index { padding-top: clamp(72px, 9vw, 120px); padding-bottom: clamp(80px, 10vw, 140px); }
+.realm-index__header { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 0.7fr); column-gap: 40px; align-items: end; margin-bottom: 38px; }
+.realm-index__eyebrow { grid-column: 1 / -1; margin: 0 0 12px; color: var(--accent); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
+.realm-index__header h2 { margin: 0; color: var(--text); font-size: clamp(2.1rem, 4.2vw, 4.2rem); font-weight: 400; line-height: 1.08; }
+.realm-index__header p:last-child { margin: 0; color: var(--text-dim); line-height: 1.7; }
+.realm-index__header kbd { padding: 2px 7px; border: 1px solid rgba(203, 168, 92, 0.35); color: var(--accent-bright); font: inherit; }
+.realm-index__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid rgba(203, 168, 92, 0.3); border-left: 1px solid rgba(203, 168, 92, 0.22); }
+.realm-index__link { display: flex; min-height: 150px; align-items: flex-start; gap: 20px; padding: 26px; border-right: 1px solid rgba(203, 168, 92, 0.22); border-bottom: 1px solid rgba(203, 168, 92, 0.22); color: var(--text); background: rgba(5, 8, 9, 0.68); text-decoration: none; transition: background var(--dur) var(--ease-out), color var(--dur) var(--ease-out); }
+.realm-index__link:hover { background: rgba(203, 168, 92, 0.08); color: var(--accent-bright); text-decoration: none; }
+.realm-index__number { color: var(--accent); font: 600 0.68rem 'Cinzel', serif; letter-spacing: 0.12em; }
+.realm-index__link span:last-child { display: grid; gap: 10px; }
+.realm-index__link strong { font: 500 clamp(1rem, 1.5vw, 1.25rem) 'Cinzel', serif; }
+.realm-index__link small { max-width: 29ch; color: var(--text-dim); font-size: 0.76rem; line-height: 1.55; }
+.realm-index__link--wide { grid-column: span 2; }
+
+@media (max-width: 820px) {
+  .realm-index__header { grid-template-columns: 1fr; gap: 18px; }
+  .realm-index__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .realm-index__link--wide { grid-column: span 2; }
+}
+
+@media (max-width: 520px) {
+  .realm-index__grid { grid-template-columns: 1fr; }
+  .realm-index__link,
+  .realm-index__link--wide { grid-column: auto; min-height: 126px; }
+}
