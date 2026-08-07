@@ -59,6 +59,8 @@
 .cinematic-prologue__cue { position: absolute; z-index: 10; bottom: 25px; left: 50%; display: flex; align-items: center; gap: 8px; margin: 0; color: #a7aaa6; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; transform: translateX(-50%); }
 .cinematic-prologue__cue img { width: 15px; height: 15px; filter: invert(74%) sepia(18%) saturate(535%) hue-rotate(358deg) brightness(87%); }
 .cinematic-prologue__status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.cinematic-prologue__stage[data-scene="arrival"] .cinematic-prologue__moments { bottom: 30px; }
+.cinematic-prologue__stage[data-scene="arrival"] .cinematic-prologue__cue { opacity: 0; }
 
 .cinematic-handoff { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 42px; align-items: end; min-height: 52svh; padding: clamp(52px, 9vw, 120px) clamp(22px, 8vw, 132px); border-top: 1px solid rgba(212, 179, 106, 0.24); background: #080d10; }
 .cinematic-handoff__copy { max-width: 680px; }
