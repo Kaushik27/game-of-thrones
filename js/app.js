@@ -1761,7 +1761,6 @@ function viewQuotes(app, params, query) {
   })());
   const quoteHref = quote => {
     const episode = episodeForQuote(quote);
-    const memory = fanMomentForQuote(quote.id);
     return episode ? `#/episode/${encodeURIComponent(episode.id)}` : `#/quotes?quote=${encodeURIComponent(quote.id)}`;
   };
   const toggleSavedQuote = quote => {
@@ -1777,6 +1776,7 @@ function viewQuotes(app, params, query) {
     const c = getCharacter(quote.characterId);
     const themes = collectionByQuote.get(quote.id) || [];
     const episode = episodeForQuote(quote);
+    const memory = fanMomentForQuote(quote.id);
     const saved = savedQuoteIds.has(quote.id);
     filmQuote.innerHTML = `<span class="voices-film__mark" aria-hidden="true">“</span><blockquote>${escapeHTML(quote.text)}</blockquote><div class="voices-film__speaker"><div class="voices-film__portrait">${avatarHTML(c, 58)}</div><div><strong>${escapeHTML(c ? c.name : "Unknown voice")}</strong><span>${escapeHTML(c ? c.house : "The realm")} · Season ${quote.season}</span></div></div><p class="voices-film__context">${escapeHTML(memory ? memory.fanNote : (interludeContext[quote.id] || "A line remembered long after the scene has ended."))}</p><p class="voices-film__episode">${episode ? `Episode context · ${escapeHTML(episode.id.toUpperCase())} · ${escapeHTML(episode.title)}` : `Season ${quote.season} · Featured voice`} ${memory ? `· ${escapeHTML(memory.location)}` : (themes.length ? `· ${escapeHTML(themes[0])}` : "")}</p><div class="voices-film__actions"><a class="voices-button voices-button--solid" href="${escapeHTML(quoteHref(quote))}">Explore this moment <span aria-hidden="true">↗</span></a><button type="button" class="voices-button voices-button--ghost" data-save-film-quote="${escapeHTML(quote.id)}" aria-pressed="${String(saved)}">${saved ? "Saved line" : "Remember this line"}</button></div>`;
     filmRoot.dataset.quoteId = quote.id;
