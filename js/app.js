@@ -411,8 +411,9 @@ function viewCharacter(app, params) {
       </div>
 
       <div class="tab-panel" id="tab-graph">
-        <p class="text-dim">Character and their direct connections.</p>
+        <p class="text-dim" id="mini-graph-hint">Showing ${escapeHTML(c.name)} and their direct connections. Click a node to re-center the graph on them — double-click (or the link below) to open their full profile.</p>
         <div id="mini-graph-host" style="width:100%;height:480px;background:var(--panel-bg);border:1px solid var(--panel-border);border-radius:var(--radius);"></div>
+        <p style="margin-top:10px;" id="mini-graph-profile-link"></p>
       </div>
 
       <div class="tab-panel" id="tab-timeline">
@@ -425,7 +426,21 @@ function viewCharacter(app, params) {
     </div>
   `;
 
-  function renderMiniGraph() {
+  // The mini-graph defaults to the profile's own character + their direct
+  // (1-hop) connections. Clicking a neighboring node re-centers the graph
+  // on them (fetching *their* 1-hop connections) instead of immediately
+  // navigating away, so exploring the family/allegiance web doesn't mean
+  // leaving the page on every click — a double-click (or the explicit link
+  // under the graph) opens that character's full profile.
+  function renderMiniGraph(centerId) {
+    const center = getCharacter(centerId) || c;
+    const centerRels = center.id === c.id ? rels : relationsFor(center.id);
+
+    const hint = document.getElementById("mini-graph-hint");
+    if (hint) hint.innerHTML = `Showing <strong style="color:${center.sigilColor}">${escapeHTML(center.name)}</strong> and their direct connections. Click a node to re-center the graph on them — double-click (or the link below) to open their full profile.`;
+    const profileLink = document.getElementById("mini-graph-profile-link");
+    if (profileLink) profileLink.innerHTML = center.id === c.id ? "" : `<a href="#/character/${center.id}">View ${escapeHTML(center.name)}'s full profile →</a>`;
+
     const host = document.getElementById("mini-graph-host");
     host.innerHTML = "";
     const width = host.clientWidth || 700, height = host.clientHeight || 480;
@@ -433,8 +448,8 @@ function viewCharacter(app, params) {
     const zoomLayer = svg.append("g");
     svg.call(d3.zoom().scaleExtent([0.3, 4]).on("zoom", e => zoomLayer.attr("transform", e.transform)));
 
-    const nodes = [{ ...c }, ...rels.map(r => ({ ...r.other }))];
-    const links = rels.map(r => ({ source: c.id, target: r.other.id, type: r.rel.type, label: r.rel.label }));
+    const nodes = [{ ...center }, ...centerRels.map(r => ({ ...r.other }))];
+    const links = centerRels.map(r => ({ source: center.id, target: r.other.id, type: r.rel.type, label: r.rel.label }));
 
     const sim = d3.forceSimulation(nodes)
       .force("link", d3.forceLink(links).id(d => d.id).distance(110))
@@ -449,18 +464,19 @@ function viewCharacter(app, params) {
     link.append("title").text(d => d.label);
 
     const node = zoomLayer.append("g").selectAll("circle").data(nodes).join("circle")
-      .attr("r", d => d.id === c.id ? 16 : 10)
+      .attr("r", d => d.id === center.id ? 16 : 10)
       .attr("fill", d => d.sigilColor)
       .attr("opacity", d => d.status === "dead" ? 0.5 : 1)
-      .attr("stroke", d => d.id === c.id ? "var(--accent)" : "#000")
-      .attr("stroke-width", d => d.id === c.id ? 2.5 : 1)
+      .attr("stroke", d => d.id === center.id ? "var(--accent)" : "#000")
+      .attr("stroke-width", d => d.id === center.id ? 2.5 : 1)
       .style("cursor", "pointer")
       .call(d3.drag()
         .on("start", (e, d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
         .on("drag", (e, d) => { d.fx = e.x; d.fy = e.y; })
         .on("end", (e, d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; }));
-    node.append("title").text(d => d.name);
-    node.on("click", (e, d) => { if (d.id !== c.id) window.location.hash = "#/character/" + d.id; });
+    node.append("title").text(d => d.id === center.id ? d.name : `${d.name} — click to re-center, double-click to open profile`);
+    node.on("click", (e, d) => { if (d.id !== center.id) renderMiniGraph(d.id); });
+    node.on("dblclick", (e, d) => { window.location.hash = "#/character/" + d.id; });
 
     const label = zoomLayer.append("g").selectAll("text").data(nodes).join("text")
       .text(d => d.name).attr("font-size", 10).attr("fill", "var(--text)")
