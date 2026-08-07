@@ -1473,67 +1473,185 @@ function viewQuiz(app) {
 }
 
 // ==========================================================================
-// QUOTE WALL
+// VOICES OF THE REALM
 // ==========================================================================
 function viewQuotes(app, params, query) {
-  setTitle("Quote Wall");
-  let activeQuery = "", activeHouse = "";
+  setTitle("Voices of the Realm");
+  let activeQuery = "", activeHouse = "", activeSeason = "";
+  let activeCollection = query.get("quote") ? "all" : "featured";
+  let spotlightIndex = 0;
   const requestedQuoteId = query.get("quote") || "";
+  const featuredIds = new Set(Array.isArray(window.FEATURED_QUOTE_IDS) ? window.FEATURED_QUOTE_IDS : []);
+  const collections = Array.isArray(window.QUOTE_COLLECTIONS) ? window.QUOTE_COLLECTIONS : [];
+  const collectionByQuote = new Map();
+  collections.forEach(collection => collection.quoteIds.forEach(id => {
+    if (!collectionByQuote.has(id)) collectionByQuote.set(id, []);
+    collectionByQuote.get(id).push(collection.label);
+  }));
 
   app.innerHTML = `
-    <div class="page-wrap">
-      <div class="hero ambient-glow" style="padding-top:76px;padding-bottom:10px;">
-        <h1 class="display">Quote Wall</h1>
-        <p>The lines Westeros never forgot. Search by character or browse the whole wall.</p>
+    <div class="voices-archive" id="voices-archive">
+      <div class="voices-hero">
+        <div class="voices-hero__eyebrow"><span class="voices-hero__rule"></span>Words carry farther than ravens</div>
+        <h1 class="voices-hero__title">Voices of the Realm</h1>
+        <p class="voices-hero__dek">The promises, threats, jokes, and last words that changed the story. Find a line, follow its speaker, and hear Westeros speak back.</p>
+        <div class="voices-hero__stats" aria-label="Quote archive statistics">
+          <span><strong>${quotes.length}</strong> recorded lines</span>
+          <span><strong>8</strong> seasons</span>
+          <span><strong>${featuredIds.size || 10}</strong> featured voices</span>
+        </div>
       </div>
-      <div id="controls" style="display:flex;gap:12px;flex-wrap:wrap;margin:20px 0;">
-        <input type="text" id="search-input" style="width:260px;" placeholder="Search quotes or characters...">
-        <select id="house-filter"><option value="">All Houses</option></select>
+
+      <section class="voices-spotlight" aria-labelledby="voices-spotlight-title">
+        <div class="voices-spotlight__meta"><span class="voices-kicker">The line of the night</span><button class="voices-button voices-button--ghost" type="button" id="voices-surprise">Surprise me <span aria-hidden="true">↗</span></button></div>
+        <div class="voices-spotlight__body" id="voices-spotlight-body"></div>
+      </section>
+
+      <div class="voices-archive__layout">
+        <aside class="voices-sidebar" aria-label="Quote archive filters">
+          <div class="voices-sidebar__label">Browse by mood</div>
+          <div class="voices-collections" id="voices-collections" role="group" aria-label="Quote collections"></div>
+          <div class="voices-sidebar__label voices-sidebar__label--filters">Refine the archive</div>
+          <label class="voices-field"><span>Search the words</span><input type="search" id="voices-search" placeholder="Try “winter” or “ladder”" autocomplete="off"></label>
+          <label class="voices-field"><span>House</span><select id="voices-house"><option value="">All houses</option></select></label>
+          <label class="voices-field"><span>Season</span><select id="voices-season"><option value="">All seasons</option>${Array.from({ length: 8 }, (_, i) => `<option value="${i + 1}">Season ${i + 1}</option>`).join("")}</select></label>
+          <p class="voices-sidebar__note">Quotes are attributed to the season in which they appear. Episode-level context lives in the Story Atlas.</p>
+        </aside>
+
+        <section class="voices-results" aria-labelledby="voices-results-title">
+          <div class="voices-results__head">
+            <div><span class="voices-kicker">The archive</span><h2 id="voices-results-title">Every word leaves a mark</h2></div>
+            <div id="voices-count" class="voices-count" aria-live="polite"></div>
+          </div>
+          <div class="voices-grid" id="voices-grid"></div>
+          <div class="voices-status" id="voices-status" role="status" aria-live="polite"></div>
+        </section>
       </div>
-      <div id="quote-count" class="text-dim" style="margin-bottom:14px;font-size:0.85rem;"></div>
-      <div class="grid grid-wide" id="quote-grid"></div>
     </div>
   `;
 
-  function render() {
-    const q = activeQuery.toLowerCase();
-    const filtered = quotes.filter(qt => {
+  const root = document.getElementById("voices-archive");
+  const spotlightBody = root.querySelector("#voices-spotlight-body");
+  const quoteGrid = root.querySelector("#voices-grid");
+  const count = root.querySelector("#voices-count");
+  const status = root.querySelector("#voices-status");
+
+  function quoteMatchesCollection(qt) {
+    if (activeCollection === "featured") return featuredIds.has(qt.id);
+    if (activeCollection === "all") return true;
+    const collection = collections.find(item => item.id === activeCollection);
+    return Boolean(collection && collection.quoteIds.includes(qt.id));
+  }
+
+  function matchingQuotes() {
+    const q = activeQuery.trim().toLowerCase();
+    return quotes.filter(qt => {
       const c = getCharacter(qt.characterId);
-      if (!c) return false;
+      if (!c || !quoteMatchesCollection(qt)) return false;
       if (activeHouse && c.house !== activeHouse) return false;
+      if (activeSeason && String(qt.season) !== activeSeason) return false;
       if (q && !qt.text.toLowerCase().includes(q) && !c.name.toLowerCase().includes(q)) return false;
       return true;
     });
-    document.getElementById("quote-count").textContent = `${filtered.length} quote${filtered.length === 1 ? '' : 's'}`;
-    document.getElementById("quote-grid").innerHTML = filtered.map(qt => {
-      const c = getCharacter(qt.characterId);
-      const selected = qt.id === requestedQuoteId;
-      return `
-      <div class="card quote-card reveal" data-quote-id="${escapeHTML(qt.id)}"${selected ? ` tabindex="-1"` : ""} style="padding:26px 22px 18px;background:linear-gradient(160deg, var(--panel-bg), var(--panel-bg-alt));position:relative;overflow:hidden;${cardAccentStyle(c.sigilColor)}${selected ? "border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);" : ""}">
-        <div class="season-badge" style="position:absolute;top:12px;right:14px;font-size:0.7rem;color:var(--text-faint);">S${qt.season}</div>
-        <blockquote style="margin:0 0 16px;font-family:'Cinzel',serif;font-size:1.05rem;line-height:1.5;position:relative;z-index:1;">"${escapeHTML(qt.text)}"</blockquote>
-        <a style="display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none;" href="#/character/${c.id}">
-          ${avatarHTML(c, 34)}
-          <div>
-            <div style="font-size:0.88rem;color:${c.sigilColor}">${escapeHTML(c.name)}</div>
-            <div style="font-size:0.75rem;color:var(--text-dim);">${escapeHTML(c.house)}</div>
-          </div>
-        </a>
-      </div>`;
-    }).join("") || `<div class="empty-state">No quotes match your search.</div>`;
-    observeReveals(document.getElementById("quote-grid"));
   }
 
-  const houseSel = document.getElementById("house-filter");
+  function renderCollections() {
+    const items = [{ id: "featured", label: "Featured voices", description: "The lines everyone remembers." }, { id: "all", label: "All voices", description: "Every recorded line." }, ...collections];
+    root.querySelector("#voices-collections").innerHTML = items.map(item => `
+      <button type="button" class="voices-collection${activeCollection === item.id ? " is-active" : ""}" data-voices-collection="${escapeHTML(item.id)}" aria-pressed="${activeCollection === item.id}">
+        <span class="voices-collection__label">${escapeHTML(item.label)}</span><span class="voices-collection__description">${escapeHTML(item.description)}</span>
+      </button>`).join("");
+  }
+
+  function renderSpotlight(filtered) {
+    if (!filtered.length) {
+      spotlightBody.innerHTML = `<div class="voices-spotlight__empty">No voice answers that search. Try another collection.</div>`;
+      return;
+    }
+    const spotlightPool = filtered.filter(qt => featuredIds.has(qt.id));
+    const pool = spotlightPool.length ? spotlightPool : filtered;
+    const quote = pool[spotlightIndex % pool.length];
+    const c = getCharacter(quote.characterId);
+    const themes = collectionByQuote.get(quote.id) || [];
+    spotlightBody.innerHTML = `
+      <div class="voices-spotlight__quote"><span class="voices-spotlight__mark" aria-hidden="true">“</span><blockquote id="voices-spotlight-title">${escapeHTML(quote.text)}</blockquote><div class="voices-spotlight__tags"><span>S${quote.season}</span>${themes.slice(0, 2).map(theme => `<span>${escapeHTML(theme)}</span>`).join("")}</div></div>
+      <div class="voices-spotlight__speaker">
+        <div class="voices-spotlight__portrait">${avatarHTML(c, 68)}</div><div><span class="voices-kicker">Spoken by</span><a href="#/character/${c.id}">${escapeHTML(c.name)}</a><span>${escapeHTML(c.house)}</span></div>
+        <a class="voices-button voices-button--solid" href="#/quotes?quote=${encodeURIComponent(quote.id)}">Open line <span aria-hidden="true">→</span></a>
+      </div>`;
+  }
+
+  function renderCards(filtered) {
+    count.textContent = `${filtered.length} ${filtered.length === 1 ? "line" : "lines"}`;
+    quoteGrid.innerHTML = filtered.map(qt => {
+      const c = getCharacter(qt.characterId);
+      const selected = qt.id === requestedQuoteId;
+      const themes = collectionByQuote.get(qt.id) || [];
+      return `
+        <article class="voices-card${selected ? " is-selected" : ""}" data-quote-id="${escapeHTML(qt.id)}"${selected ? ` tabindex="-1"` : ""} style="${cardAccentStyle(c.sigilColor)}">
+          <div class="voices-card__top"><span class="voices-card__index">${String(qt.id).replace("q", "#")}</span><span class="voices-card__season">Season ${qt.season}</span></div>
+          <blockquote class="voices-card__quote">“${escapeHTML(qt.text)}”</blockquote>
+          <div class="voices-card__tags">${(featuredIds.has(qt.id) ? ["Featured", ...themes] : themes).slice(0, 2).map(theme => `<span>${escapeHTML(theme)}</span>`).join("")}</div>
+          <div class="voices-card__footer"><a class="voices-card__speaker" href="#/character/${c.id}">${avatarHTML(c, 38)}<span><strong>${escapeHTML(c.name)}</strong><small>${escapeHTML(c.house)}</small></span></a><button type="button" class="voices-copy" data-copy-quote="${escapeHTML(qt.id)}" aria-label="Copy quote by ${escapeHTML(c.name)}">Copy line</button></div>
+        </article>`;
+    }).join("") || `<div class="voices-empty"><strong>The archive is quiet.</strong><span>No lines match these filters. Clear one and try again.</span></div>`;
+    observeReveals(quoteGrid);
+  }
+
+  function render() {
+    const filtered = matchingQuotes();
+    renderCollections();
+    renderSpotlight(filtered);
+    renderCards(filtered);
+  }
+
+  const houseSel = root.querySelector("#voices-house");
   Object.keys(HOUSE_COLORS).forEach(h => {
     const opt = document.createElement("option");
     opt.value = h; opt.textContent = h;
     houseSel.appendChild(opt);
   });
-  document.getElementById("search-input").addEventListener("input", e => { activeQuery = e.target.value; render(); });
+  root.querySelector("#voices-search").addEventListener("input", e => { activeQuery = e.target.value; render(); });
   houseSel.addEventListener("change", e => { activeHouse = e.target.value; render(); });
+  root.querySelector("#voices-season").addEventListener("change", e => { activeSeason = e.target.value; render(); });
+  root.querySelector("#voices-collections").addEventListener("click", e => {
+    const button = e.target.closest("[data-voices-collection]");
+    if (!button) return;
+    activeCollection = button.dataset.voicesCollection;
+    spotlightIndex = 0;
+    render();
+  });
+  root.querySelector("#voices-surprise").addEventListener("click", () => {
+    spotlightIndex += 1;
+    renderSpotlight(matchingQuotes());
+    status.textContent = "A new voice has entered the spotlight.";
+  });
+  root.querySelector("#voices-grid").addEventListener("click", async e => {
+    const button = e.target.closest("[data-copy-quote]");
+    if (!button) return;
+    const quote = quotes.find(item => item.id === button.dataset.copyQuote);
+    if (!quote) return;
+    const c = getCharacter(quote.characterId);
+    const text = `“${quote.text}” — ${c ? c.name : "Unknown voice"}`;
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const area = document.createElement("textarea");
+        area.value = text; area.setAttribute("readonly", ""); area.style.position = "fixed"; area.style.opacity = "0";
+        document.body.appendChild(area); area.select();
+        if (!document.execCommand("copy")) throw new Error("copy unavailable");
+        area.remove();
+      }
+      button.textContent = "Copied";
+      status.textContent = `Copied ${c ? c.name : "the quote"} to your clipboard.`;
+      window.setTimeout(() => { if (button.isConnected) button.textContent = "Copy line"; }, 1400);
+    } catch (error) {
+      status.textContent = "Copy is unavailable here. Select the quote text to copy it.";
+    }
+  });
   render();
-  const requestedCard = [...app.querySelectorAll("[data-quote-id]")]
+  const requestedCard = [...root.querySelectorAll("[data-quote-id]")]
     .find(card => card.dataset.quoteId === requestedQuoteId);
   if (requestedCard) {
     window.requestAnimationFrame(() => {
