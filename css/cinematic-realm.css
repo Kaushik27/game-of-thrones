@@ -76,16 +76,16 @@
   .cinematic-prologue__quote { margin-top: 18px; padding-left: 17px; }
   .cinematic-prologue__quote blockquote { font-size: 1.08rem; }
   .cinematic-prologue__skip { margin-top: 22px; min-height: 44px; }
-  .cinematic-prologue__focus { top: auto; right: 20px; bottom: 190px; grid-template-columns: 52px auto; width: min(226px, calc(100vw - 40px)); padding: 7px; }
+  .cinematic-prologue__focus { top: auto; right: 20px; bottom: 235px; grid-template-columns: 52px auto; width: min(226px, calc(100vw - 40px)); padding: 7px; }
   .cinematic-prologue__focus-image-wrap { width: 52px; height: 62px; }
   .cinematic-prologue__focus-copy strong { font-size: 0.75rem; }
-  .cinematic-prologue__moments { right: 20px; bottom: 80px; left: 20px; display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
+  .cinematic-prologue__moments { right: 20px; bottom: 128px; left: 20px; display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
   .cinematic-prologue__moments::-webkit-scrollbar { display: none; }
   .cinematic-prologue__moment { flex: 0 0 205px; min-height: 83px; padding: 10px 25px 9px 12px; }
   .cinematic-prologue__moment strong { margin-top: 5px; font-size: 0.76rem; }
   .cinematic-prologue__moment-text { margin-top: 4px; font-size: 0.88rem; }
-  .cinematic-prologue__counter { right: 20px; bottom: 57px; }
-  .cinematic-prologue__chapters { top: auto; right: 16px; bottom: 64px; left: 16px; display: flex; gap: 3px; overflow-x: auto; padding-bottom: 2px; transform: none; scrollbar-width: none; }
+  .cinematic-prologue__counter { right: 20px; bottom: 76px; }
+  .cinematic-prologue__chapters { top: auto; right: 16px; bottom: 18px; left: 16px; display: flex; gap: 3px; overflow-x: auto; padding-bottom: 2px; transform: none; scrollbar-width: none; }
   .cinematic-prologue__chapters::-webkit-scrollbar { display: none; }
   .cinematic-prologue__chapter { flex: 1 0 112px; grid-template-columns: 22px auto; min-width: 0; padding: 8px 6px; font-size: 0.55rem; }
   .cinematic-prologue__cue { display: none; }
