@@ -106,16 +106,34 @@ function initialsFor(name) {
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
+// Renders a character's avatar. Prefers a real, CC-licensed photograph of the
+// actor who played them (js/actor-photos.js); characters with no free-licensed
+// photo keep the generative SVG portrait art (js/avatars.js) rather than
+// regressing to initials. Every other treatment — circular frame, house-colour
+// border, dead-state styling, sigil badge — is identical either way, so photo
+// and art characters sit together in the same grid without looking mismatched.
+//
+// Many Commons photos are red-carpet or podium shots where the subject's face
+// sits in the upper third, so the image is cover-fitted with the focal point
+// biased upward instead of dead-centre.
 function avatarHTML(character, size) {
   size = size || 56;
   const color = character.sigilColor || getHouseColor(character.house);
   const isDead = character.status === "dead";
   const sigilId = houseSigilId(character.house);
   const showSigilBadge = size >= 36 && sigilId !== "none";
-  const art = (typeof generativeAvatarSVG === "function")
-    ? generativeAvatarSVG(character)
-    : initialsFor(character.name);
-  return `<div class="avatar${isDead ? ' dead' : ''}" style="width:${size}px;height:${size}px;border-color:${color}55;overflow:hidden;">
+  const photo = (typeof actorPhotoFor === "function") ? actorPhotoFor(character.id) : null;
+  let art;
+  if (photo) {
+    art = `<img class="avatar-photo" src="${photo.file}" loading="lazy" decoding="async"
+      alt="${escapeHTML(photo.actor)}, who played ${escapeHTML(character.name)}"
+      width="${size}" height="${size}">`;
+  } else if (typeof generativeAvatarSVG === "function") {
+    art = generativeAvatarSVG(character);
+  } else {
+    art = initialsFor(character.name);
+  }
+  return `<div class="avatar${isDead ? ' dead' : ''}${photo ? ' has-photo' : ''}" style="width:${size}px;height:${size}px;border-color:${color}55;overflow:hidden;">
     ${art}
     ${showSigilBadge ? sigilSVG(sigilId, { size: Math.max(12, Math.round(size * 0.3)), className: "avatar-sigil" }) : ""}
     ${isDead ? `<span class="skull">${glyphSVG('skull', { size: Math.max(10, Math.round(size * 0.26)) })}</span>` : ''}

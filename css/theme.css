@@ -302,6 +302,18 @@ a.card:hover, .card.clickable:hover {
 }
 .avatar.dead { filter: grayscale(0.6) brightness(0.7); opacity: 0.85; }
 .avatar .generative-avatar { display: block; width: 100%; height: 100%; }
+/* Real actor photographs. Most are red-carpet / panel shots framed wider than
+   a headshot, with the face in the upper third — so cover-fit and pull the
+   focal point up rather than centring on the subject's chest. The slight
+   contrast lift stops washed-out flash photography from reading as flat next
+   to the deeply-saturated generative portraits it sits beside. */
+.avatar .avatar-photo {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; object-position: center 22%;
+  border-radius: 50%;
+  filter: saturate(1.05) contrast(1.04);
+}
+.avatar.has-photo { background: #14141a; }
 .avatar .skull { position: absolute; bottom: -2px; right: -2px; font-size: 0.7em; }
 .avatar .avatar-sigil {
   position: absolute; bottom: -3px; right: -3px;
