@@ -4,11 +4,21 @@
    ========================================================================== */
 
 :root {
-  --bg: #0d0d0f;
-  --bg-alt: #0a0a0c;
-  --panel-bg: #17171b;
-  --panel-bg-alt: #1d1d22;
-  --panel-border: #2a2a30;
+  /* Layered dark surfaces — each step a few % lighter than the last, never
+     pure black (OLED smear / flat "dead" look), so cards and panels read as
+     physically raised above the page rather than just outlined boxes. */
+  --bg-deep: #050506;
+  --bg-base: #0d0d0f;
+  --bg-elevated: #17171b;
+  --bg-elevated-2: #1d1d22;
+  --surface-tint: rgba(255,255,255,0.05);
+  --hairline: rgba(255,255,255,0.08);
+
+  --bg: var(--bg-base);
+  --bg-alt: var(--bg-deep);
+  --panel-bg: var(--bg-elevated);
+  --panel-bg-alt: var(--bg-elevated-2);
+  --panel-border: var(--hairline);
   --text: #e8e6df;
   --text-dim: #8a8a93;
   --text-faint: #5f5f68;
@@ -152,7 +162,7 @@ img { max-width: 100%; }
 .grid.grid-wide { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
 
 .card {
-  background: var(--panel-bg);
+  background: linear-gradient(var(--surface-tint), var(--surface-tint)), var(--panel-bg);
   border: 1px solid var(--panel-border);
   border-left: 3px solid var(--card-accent, var(--panel-border));
   border-radius: var(--radius);
