@@ -1,0 +1,1435 @@
+{
+  "misses": [
+    [
+      "rickon-stark",
+      "no match"
+    ],
+    [
+      "howland-reed",
+      "no actor recorded"
+    ],
+    [
+      "rickard-karstark",
+      "no match"
+    ],
+    [
+      "alys-karstark",
+      "no actor recorded"
+    ],
+    [
+      "smalljon-umber",
+      "no match"
+    ],
+    [
+      "ned-umber",
+      "no match"
+    ],
+    [
+      "maege-mormont",
+      "no match"
+    ],
+    [
+      "alysane-mormont",
+      "no actor recorded"
+    ],
+    [
+      "wyman-manderly",
+      "no actor recorded"
+    ],
+    [
+      "lord-cerwyn",
+      "no actor recorded"
+    ],
+    [
+      "maester-wolkan",
+      "no actor recorded"
+    ],
+    [
+      "aeron-greyjoy",
+      "no actor recorded"
+    ],
+    [
+      "harrag-greyjoy",
+      "no actor recorded"
+    ],
+    [
+      "wex-pyke",
+      "no actor recorded"
+    ],
+    [
+      "kevan-lannister",
+      "no match"
+    ],
+    [
+      "gregor-clegane",
+      "no match"
+    ],
+    [
+      "amory-lorch",
+      "no match"
+    ],
+    [
+      "boros-blount",
+      "no actor recorded"
+    ],
+    [
+      "osney-kettleblack",
+      "no actor recorded"
+    ],
+    [
+      "falyse-stokeworth",
+      "no actor recorded"
+    ],
+    [
+      "tickler",
+      "no actor recorded"
+    ],
+    [
+      "polliver",
+      "no match"
+    ],
+    [
+      "willem-lannister",
+      "no actor recorded"
+    ],
+    [
+      "martyn-lannister",
+      "no actor recorded"
+    ],
+    [
+      "addam-marbrand",
+      "no actor recorded"
+    ],
+    [
+      "harys-swyft",
+      "no actor recorded"
+    ],
+    [
+      "rhaenys-targaryen",
+      "no actor recorded"
+    ],
+    [
+      "aegon-targaryen-infant",
+      "no actor recorded"
+    ],
+    [
+      "qotho",
+      "no actor recorded"
+    ],
+    [
+      "mirri-maz-duur",
+      "no match"
+    ],
+    [
+      "axell-florent",
+      "no actor recorded"
+    ],
+    [
+      "matthos-seaworth",
+      "no match"
+    ],
+    [
+      "randyll-tarly",
+      "no match"
+    ],
+    [
+      "areo-hotah",
+      "no match"
+    ],
+    [
+      "elia-martell",
+      "no actor recorded"
+    ],
+    [
+      "walder-frey",
+      "no match"
+    ],
+    [
+      "roslin-frey",
+      "no match"
+    ],
+    [
+      "ryman-frey",
+      "no actor recorded"
+    ],
+    [
+      "jon-arryn",
+      "no actor recorded"
+    ],
+    [
+      "vardis-egen",
+      "no match"
+    ],
+    [
+      "mord",
+      "no actor recorded"
+    ],
+    [
+      "robar-royce",
+      "no actor recorded"
+    ],
+    [
+      "samwell-tarly",
+      "no match"
+    ],
+    [
+      "aemon-targaryen-maester",
+      "no match"
+    ],
+    [
+      "grenn",
+      "no match"
+    ],
+    [
+      "janos-slynt",
+      "no match"
+    ],
+    [
+      "yoren",
+      "no match"
+    ],
+    [
+      "qhorin-halfhand",
+      "no match"
+    ],
+    [
+      "othell-yarwyck",
+      "no actor recorded"
+    ],
+    [
+      "satin",
+      "no match"
+    ],
+    [
+      "rast",
+      "no match"
+    ],
+    [
+      "wun-wun",
+      "no match"
+    ],
+    [
+      "craster",
+      "no match"
+    ],
+    [
+      "val",
+      "no actor recorded"
+    ],
+    [
+      "rattleshirt",
+      "no actor recorded"
+    ],
+    [
+      "dalla",
+      "no actor recorded"
+    ],
+    [
+      "kindly-man",
+      "no actor recorded"
+    ],
+    [
+      "hot-pie",
+      "no match"
+    ],
+    [
+      "kraznys-mo-nakloz",
+      "no match"
+    ],
+    [
+      "hizdahr-zo-loraq",
+      "no match"
+    ],
+    [
+      "rorge",
+      "no actor recorded"
+    ],
+    [
+      "biter",
+      "no actor recorded"
+    ],
+    [
+      "old-high-septon",
+      "no actor recorded"
+    ],
+    [
+      "symon-silver-tongue",
+      "no match"
+    ],
+    [
+      "mycah",
+      "no actor recorded"
+    ],
+    [
+      "dontos-hollard",
+      "no match"
+    ],
+    [
+      "arthur-dayne",
+      "no match"
+    ],
+    [
+      "gerold-hightower",
+      "no actor recorded"
+    ],
+    [
+      "maggy-the-frog",
+      "no match"
+    ],
+    [
+      "mero",
+      "no match"
+    ],
+    [
+      "quaithe",
+      "no actor recorded"
+    ],
+    [
+      "belwas",
+      "no match"
+    ],
+    [
+      "izembaro",
+      "no match"
+    ],
+    [
+      "tobho-mott",
+      "no actor recorded"
+    ],
+    [
+      "hallyne",
+      "no actor recorded"
+    ],
+    [
+      "selwyn-tarth",
+      "no actor recorded"
+    ]
+  ],
+  "photos": {
+    "aerys-targaryen": {
+      "actor": "David Rintoul",
+      "commonsTitle": "File:David Rintoul (7 Avril 2009) cropped.jpg",
+      "credit": "John Thaxter ; derivative work by Eymery",
+      "file": "assets/actors/aerys-targaryen.jpg",
+      "license": "CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:David_Rintoul_(7_Avril_2009)_cropped.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "alliser-thorne": {
+      "actor": "Owen Teale",
+      "commonsTitle": "File:Owen Teale 2.jpg",
+      "credit": "Sam from UK",
+      "file": "assets/actors/alliser-thorne.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Owen_Teale_2.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "archmaester-ebrose": {
+      "actor": "Jim Broadbent",
+      "commonsTitle": "File:Jim Broadbent 2012.jpg",
+      "credit": "Scottish Documentary Institute",
+      "file": "assets/actors/archmaester-ebrose.jpg",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Jim_Broadbent_2012.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "arya-stark": {
+      "actor": "Maisie Williams",
+      "commonsTitle": "File:Maisie Williams by Gage Skidmore 3.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/arya-stark.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Maisie_Williams_by_Gage_Skidmore_3.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "balon-greyjoy": {
+      "actor": "Patrick Malahide",
+      "commonsTitle": "File:Patrick Malahide in 2012.png",
+      "credit": "Simon Richards",
+      "file": "assets/actors/balon-greyjoy.jpg",
+      "license": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Patrick_Malahide_in_2012.png",
+      "tier": "wikipedia-lead"
+    },
+    "barristan-selmy": {
+      "actor": "Ian McElhinney",
+      "commonsTitle": "File:Ian McElhinney (cropped).jpg",
+      "credit": "Sam from UK",
+      "file": "assets/actors/barristan-selmy.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ian_McElhinney_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "benjen-stark": {
+      "actor": "Joseph Mawle",
+      "commonsTitle": "File:Joseph Mawle in Shell 2012.jpg",
+      "credit": "Dublin International Film Festival",
+      "file": "assets/actors/benjen-stark.jpg",
+      "license": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Joseph_Mawle_in_Shell_2012.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "beric-dondarrion": {
+      "actor": "Richard Dormer",
+      "commonsTitle": "File:Richard Dormer (2009) (headshot).jpg",
+      "credit": "nico fell photography from Northern Ireland",
+      "file": "assets/actors/beric-dondarrion.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Richard_Dormer_(2009)_(headshot).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "black-walder-frey": {
+      "actor": "Tim Plester",
+      "commonsTitle": "File:Tim Plester 2021.jpg",
+      "credit": "Plesterdog",
+      "file": "assets/actors/black-walder-frey.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Tim_Plester_2021.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "bloodraven": {
+      "actor": "Max von Sydow",
+      "commonsTitle": "File:Max von Sydow 1992.jpg",
+      "credit": "LJP assistant",
+      "file": "assets/actors/bloodraven.jpg",
+      "license": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Max_von_Sydow_1992.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "bowen-marsh": {
+      "actor": "Clive Mantle",
+      "commonsTitle": "File:Clive Mantle (cropped).jpg",
+      "credit": "Philip Guest",
+      "file": "assets/actors/bowen-marsh.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Clive_Mantle_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "bran-stark": {
+      "actor": "Isaac Hempstead Wright",
+      "commonsTitle": "File:Isaac Hempstead Wright (2019) (cropped).jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/bran-stark.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Isaac_Hempstead_Wright_(2019)_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "brienne-of-tarth": {
+      "actor": "Gwendoline Christie",
+      "commonsTitle": "File:Gwendoline Christie at Berlinale 2025.jpg",
+      "credit": "Elena Ternovaja",
+      "file": "assets/actors/brienne-of-tarth.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Gwendoline_Christie_at_Berlinale_2025.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "bronn": {
+      "actor": "Jerome Flynn",
+      "commonsTitle": "File:Jerome Flynn 2013 (cropped).jpg",
+      "credit": "dalekhelen",
+      "file": "assets/actors/bronn.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Jerome_Flynn_2013_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "brynden-tully": {
+      "actor": "Clive Russell",
+      "commonsTitle": "File:Clive-russell-2018 (cropped-J2).jpg",
+      "credit": "CelebHeights.com",
+      "file": "assets/actors/brynden-tully.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Clive-russell-2018_(cropped-J2).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "catelyn-stark": {
+      "actor": "Michelle Fairley",
+      "commonsTitle": "File:Michelle Fairley by Gage Skidmore 2.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/catelyn-stark.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Michelle_Fairley_by_Gage_Skidmore_2.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "cersei-lannister": {
+      "actor": "Lena Headey",
+      "commonsTitle": "File:Lena Headey (47086135862) (cropped).jpg",
+      "credit": "Greg2600",
+      "file": "assets/actors/cersei-lannister.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Lena_Headey_(47086135862)_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "daario-naharis": {
+      "actor": "Michiel Huisman",
+      "commonsTitle": "File:Michielhuisman2015 (cropped).jpg",
+      "credit": "Sebahed at English Wikipedia",
+      "file": "assets/actors/daario-naharis.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Michielhuisman2015_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "daenerys-targaryen": {
+      "actor": "Emilia Clarke",
+      "commonsTitle": "File:Emilia Clarke at the 2023 Harper's Bazaar Women of the Year Awards.jpg",
+      "credit": "Vengerb3rg",
+      "file": "assets/actors/daenerys-targaryen.jpg",
+      "license": "CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:Emilia_Clarke_at_the_2023_Harper%27s_Bazaar_Women_of_the_Year_Awards.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "dagmer-cleftjaw": {
+      "actor": "Ralph Ineson",
+      "commonsTitle": "File:Ralphinesonadjusted.jpg",
+      "credit": "Jamgoodman",
+      "file": "assets/actors/dagmer-cleftjaw.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ralphinesonadjusted.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "davos-seaworth": {
+      "actor": "Liam Cunningham",
+      "commonsTitle": "File:Liam Cunningham by Gage Skidmore 3.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/davos-seaworth.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Liam_Cunningham_by_Gage_Skidmore_3.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "dickon-tarly": {
+      "actor": "Tom Hopper",
+      "commonsTitle": "File:Tom Hopper Brussels Comiccon 2022 (cropped).jpg",
+      "credit": "Miguel Discart",
+      "file": "assets/actors/dickon-tarly.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Tom_Hopper_Brussels_Comiccon_2022_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "doran-martell": {
+      "actor": "Alexander Siddig",
+      "commonsTitle": "File:AlexanderSiddig09TIFF.jpg",
+      "credit": "gdcgraphics",
+      "file": "assets/actors/doran-martell.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:AlexanderSiddig09TIFF.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "doreah": {
+      "actor": "Roxanne McKee",
+      "commonsTitle": "File:Roxane McKee.jpg",
+      "credit": "Elspeth Renfrew",
+      "file": "assets/actors/doreah.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Roxane_McKee.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "eddison-tollett": {
+      "actor": "Ben Crompton",
+      "commonsTitle": "File:Ben Crompton GFCC Babelsberg 2024.jpg",
+      "credit": "German Film &amp; Comic Con",
+      "file": "assets/actors/eddison-tollett.jpg",
+      "license": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ben_Crompton_GFCC_Babelsberg_2024.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "edmure-tully": {
+      "actor": "Tobias Menzies",
+      "commonsTitle": "File:Outlander premiere episode screening at 92nd Street Y in New York 17 (crop).jpg",
+      "credit": "Christine Ring",
+      "file": "assets/actors/edmure-tully.jpg",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Outlander_premiere_episode_screening_at_92nd_Street_Y_in_New_York_17_(crop).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "ellaria-sand": {
+      "actor": "Indira Varma",
+      "commonsTitle": "File:Stuttgart 2022 -Comic Con Germany-Indira Varma- by-RaBoe 001 (cropped).jpg",
+      "credit": "Raboe001",
+      "file": "assets/actors/ellaria-sand.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Stuttgart_2022_-Comic_Con_Germany-Indira_Varma-_by-RaBoe_001_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "euron-greyjoy": {
+      "actor": "Pilou Asb\u00e6k",
+      "commonsTitle": "File:Pilou Asb\u00e6k 2025.jpg",
+      "credit": "Amy Martin Photography",
+      "file": "assets/actors/euron-greyjoy.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Pilou_Asb%C3%A6k_2025.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "gendry-baratheon": {
+      "actor": "Joe Dempsie",
+      "commonsTitle": "File:Joe Dempsie Paris 2018 (cropped-J1).jpg",
+      "credit": "Estellecht",
+      "file": "assets/actors/gendry-baratheon.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Joe_Dempsie_Paris_2018_(cropped-J1).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "gilly": {
+      "actor": "Hannah Murray",
+      "commonsTitle": "File:Hannah Murray by Gage Skidmore.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/gilly.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Hannah_Murray_by_Gage_Skidmore.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "grey-worm": {
+      "actor": "Jacob Anderson",
+      "commonsTitle": "File:Jacob Anderson at San Diego Comic Con 2026.jpg",
+      "credit": "Kevin Paul",
+      "file": "assets/actors/grey-worm.jpg",
+      "license": "CC BY 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Jacob_Anderson_at_San_Diego_Comic_Con_2026.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "harry-strickland": {
+      "actor": "Marc Rissmann",
+      "commonsTitle": "File:Marc Rissmann.jpg",
+      "credit": "Ana Ularu",
+      "file": "assets/actors/harry-strickland.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Marc_Rissmann.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "high-sparrow": {
+      "actor": "Jonathan Pryce",
+      "commonsTitle": "File:Jonathan Pryce 2016 (28577280662) (cropped).jpg",
+      "credit": "Greg2600",
+      "file": "assets/actors/high-sparrow.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Jonathan_Pryce_2016_(28577280662)_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "hodor": {
+      "actor": "Kristian Nairn",
+      "commonsTitle": "File:Kristian Nairn by Gage Skidmore 3.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/hodor.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Kristian_Nairn_by_Gage_Skidmore_3.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "hoster-tully": {
+      "actor": "Mark Lewis Jones",
+      "commonsTitle": "File:Mark Lewis Jones.jpg",
+      "credit": "Actor",
+      "file": "assets/actors/hoster-tully.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Mark_Lewis_Jones.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "illyrio-mopatis": {
+      "actor": "Roger Allam",
+      "commonsTitle": "File:Roger Allam La Cage 120909 DSCF1622.JPG",
+      "credit": "Sonnenuntergang",
+      "file": "assets/actors/illyrio-mopatis.jpg",
+      "license": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Roger_Allam_La_Cage_120909_DSCF1622.JPG",
+      "tier": "wikipedia-lead"
+    },
+    "ilyn-payne": {
+      "actor": "Wilko Johnson",
+      "commonsTitle": "File:Wilko Johnson 01.jpg",
+      "credit": "Roxette~jawiki at Japanese Wikipedia",
+      "file": "assets/actors/ilyn-payne.jpg",
+      "license": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Wilko_Johnson_01.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "irri": {
+      "actor": "Amrita Acharia",
+      "commonsTitle": "File:Amrita Acharia at Triforce SFF Awards 2014.jpg",
+      "credit": "wizardradiomedia",
+      "file": "assets/actors/irri.jpg",
+      "license": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Amrita_Acharia_at_Triforce_SFF_Awards_2014.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "jaime-lannister": {
+      "actor": "Nikolaj Coster-Waldau",
+      "commonsTitle": "File:Nikolaj Coster-Waldau-68363.jpg",
+      "credit": "Harald Krichel",
+      "file": "assets/actors/jaime-lannister.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Nikolaj_Coster-Waldau-68363.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "jaqen-hghar": {
+      "actor": "Tom Wlaschiha",
+      "commonsTitle": "File:Tom Wlaschiha Holland 2023.jpg",
+      "credit": "Miguel Discart",
+      "file": "assets/actors/jaqen-hghar.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Tom_Wlaschiha_Holland_2023.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "jeor-mormont": {
+      "actor": "James Cosmo",
+      "commonsTitle": "File:James Cosmo 2023.png",
+      "credit": "James English",
+      "file": "assets/actors/jeor-mormont.jpg",
+      "license": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:James_Cosmo_2023.png",
+      "tier": "wikipedia-lead"
+    },
+    "joffrey-baratheon": {
+      "actor": "Jack Gleeson",
+      "commonsTitle": "File:2023-04-29 18-12-54 ILCE-7C DSC15799 Kiri DxO.jpg",
+      "credit": "Miguel Discart &amp; Kiri Karma (Photos Vrac)",
+      "file": "assets/actors/joffrey-baratheon.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:2023-04-29_18-12-54_ILCE-7C_DSC15799_Kiri_DxO.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "jojen-reed": {
+      "actor": "Thomas Brodie-Sangster",
+      "commonsTitle": "File:Thomas Brodie-Sangster by Gage Skidmore 2.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/jojen-reed.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Thomas_Brodie-Sangster_by_Gage_Skidmore_2.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "jon-snow": {
+      "actor": "Kit Harington",
+      "commonsTitle": "File:Kit harrington by sachyn mital (cropped 2).jpg",
+      "credit": "Sachyn",
+      "file": "assets/actors/jon-snow.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Kit_harrington_by_sachyn_mital_(cropped_2).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "jorah-mormont": {
+      "actor": "Iain Glen",
+      "commonsTitle": "File:Iain Glen.jpg",
+      "credit": "uberpixelphoto (Alan Chang)",
+      "file": "assets/actors/jorah-mormont.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Iain_Glen.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "karl-tanner": {
+      "actor": "Burn Gorman",
+      "commonsTitle": "File:Burn Gorman 2.jpg",
+      "credit": "David Johnson from Sheffield, England",
+      "file": "assets/actors/karl-tanner.jpg",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Burn_Gorman_2.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "karsi": {
+      "actor": "Birgitte Hjort S\u00f8rensen",
+      "commonsTitle": "File:Birgitte Hjort S\u00f8rensen (30555295316) (cropped).jpg",
+      "credit": "Greg2600",
+      "file": "assets/actors/karsi.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Birgitte_Hjort_S%C3%B8rensen_(30555295316)_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "khal-drogo": {
+      "actor": "Jason Momoa",
+      "commonsTitle": "File:Jason Momoa (43055621224) (cropped).jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/khal-drogo.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Jason_Momoa_(43055621224)_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "kinvara": {
+      "actor": "Ania Bukstein",
+      "commonsTitle": "File:Ania Bukstein .jpg",
+      "credit": "Sherban Lupu (\u05e9\u05e8\u05d1\u05df \u05dc\u05d5\u05e4\u05d5)",
+      "file": "assets/actors/kinvara.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ania_Bukstein_.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "lady-crane": {
+      "actor": "Essie Davis",
+      "commonsTitle": "File:Essie Davis-67964.jpg",
+      "credit": "Harald Krichel",
+      "file": "assets/actors/lady-crane.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Essie_Davis-67964.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "lancel-lannister": {
+      "actor": "Eugene Simon",
+      "commonsTitle": "File:Eugene simon 2020 1.jpg",
+      "credit": "German Comic Con",
+      "file": "assets/actors/lancel-lannister.jpg",
+      "license": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Eugene_simon_2020_1.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "leaf": {
+      "actor": "Kae Alexander",
+      "commonsTitle": "File:Kae alexander 2019 1.jpg",
+      "credit": "German Comic Con",
+      "file": "assets/actors/leaf.jpg",
+      "license": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Kae_alexander_2019_1.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "locke": {
+      "actor": "Noah Taylor",
+      "commonsTitle": "File:Noah Taylor (29694898461).jpg",
+      "credit": "GabboT",
+      "file": "assets/actors/locke.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Noah_Taylor_(29694898461).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "loras-tyrell": {
+      "actor": "Finn Jones",
+      "commonsTitle": "File:Finn Jones (53318496987).jpg",
+      "credit": "Miguel Discart",
+      "file": "assets/actors/loras-tyrell.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Finn_Jones_(53318496987).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "lothar-frey": {
+      "actor": "Tom Brooke",
+      "commonsTitle": "File:EmpireOfLightBFI121022 (29 of 33) (52448303643) (cropped).jpg",
+      "credit": "Raph_PH",
+      "file": "assets/actors/lothar-frey.jpg",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:EmpireOfLightBFI121022_(29_of_33)_(52448303643)_(cropped).jpg",
+      "tier": "wikidata-p18"
+    },
+    "lyanna-mormont": {
+      "actor": "Bella Ramsey",
+      "commonsTitle": "File:Bella Ramsey-3066.jpg",
+      "credit": "Harald Krichel",
+      "file": "assets/actors/lyanna-mormont.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Bella_Ramsey-3066.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "lyanna-stark": {
+      "actor": "Aisling Franciosi",
+      "commonsTitle": "File:MJK 33393 Aisling Franciosi (Medienboard Party 2019) (cropped).jpg",
+      "credit": "Martin Kraft",
+      "file": "assets/actors/lyanna-stark.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:MJK_33393_Aisling_Franciosi_(Medienboard_Party_2019)_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "lysa-arryn": {
+      "actor": "Kate Dickie",
+      "commonsTitle": "File:Kate Dickie 2025.jpg",
+      "credit": "Amy Martin Photography",
+      "file": "assets/actors/lysa-arryn.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Kate_Dickie_2025.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "mace-tyrell": {
+      "actor": "Roger Ashton-Griffiths",
+      "commonsTitle": "File:Roger Ashton-Griffiths 2023.jpg",
+      "credit": "Roger Ashton-Griffiths",
+      "file": "assets/actors/mace-tyrell.jpg",
+      "license": "CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:Roger_Ashton-Griffiths_2023.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "maester-cressen": {
+      "actor": "Oliver Ford Davies",
+      "commonsTitle": "File:Oliver Ford Davies.jpg",
+      "credit": "massattack05 from coventry, uk",
+      "file": "assets/actors/maester-cressen.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Oliver_Ford_Davies.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "maester-luwin": {
+      "actor": "Donald Sumpter",
+      "commonsTitle": "File:Donald Sumpter.jpg",
+      "credit": "Ian Smith from London, England",
+      "file": "assets/actors/maester-luwin.jpg",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Donald_Sumpter.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "mance-rayder": {
+      "actor": "Ciar\u00e1n Hinds",
+      "commonsTitle": "File:Ciar\u00e1n Hinds in 2022.jpg",
+      "credit": "WelcomeScreenUK",
+      "file": "assets/actors/mance-rayder.jpg",
+      "license": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ciar%C3%A1n_Hinds_in_2022.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "margaery-tyrell": {
+      "actor": "Natalie Dormer",
+      "commonsTitle": "File:Natalie Dormer by Gage Skidmore 2.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/margaery-tyrell.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Natalie_Dormer_by_Gage_Skidmore_2.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "meera-reed": {
+      "actor": "Ellie Kendrick",
+      "commonsTitle": "File:Ellie Kendrick in 2018.jpg",
+      "credit": "Malachi108",
+      "file": "assets/actors/meera-reed.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ellie_Kendrick_in_2018.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "melisandre": {
+      "actor": "Carice van Houten",
+      "commonsTitle": "File:Carice van Houten at the 2026 Berlin International Film Festival-60396.jpg",
+      "credit": "Harald Krichel",
+      "file": "assets/actors/melisandre.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Carice_van_Houten_at_the_2026_Berlin_International_Film_Festival-60396.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "meryn-trant": {
+      "actor": "Ian Beattie",
+      "commonsTitle": "File:Ian Beattie.jpg",
+      "credit": "Evamaria from Basel, Switzerland",
+      "file": "assets/actors/meryn-trant.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ian_Beattie.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "missandei": {
+      "actor": "Nathalie Emmanuel",
+      "commonsTitle": "File:Nathalie Emmanuel at 82nd Venice International Film Festival-3 (cropped).jpg",
+      "credit": "LucaFazPhoto",
+      "file": "assets/actors/missandei.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Nathalie_Emmanuel_at_82nd_Venice_International_Film_Festival-3_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "myrcella-baratheon": {
+      "actor": "Nell Tiger Free",
+      "commonsTitle": "File:Nell Tiger Free 2.jpg",
+      "credit": "Amy Martin Photography",
+      "file": "assets/actors/myrcella-baratheon.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Nell_Tiger_Free_2.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "ned-stark": {
+      "actor": "Sean Bean",
+      "commonsTitle": "File:Sean Bean Anemone-25 (cropped).jpg",
+      "credit": "Bryan Berlin",
+      "file": "assets/actors/ned-stark.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Sean_Bean_Anemone-25_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "nymeria-sand": {
+      "actor": "Jessica Henwick",
+      "commonsTitle": "File:Jessica Henwick at an interview for 'The Royal Hotel'.png",
+      "credit": "Girl Not on Fire",
+      "file": "assets/actors/nymeria-sand.jpg",
+      "license": "CC BY 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Jessica_Henwick_at_an_interview_for_%27The_Royal_Hotel%27.png",
+      "tier": "wikipedia-lead"
+    },
+    "obara-sand": {
+      "actor": "Keisha Castle-Hughes",
+      "commonsTitle": "File:Maori women at BBQ.jpg",
+      "credit": "Sarah Said-1952",
+      "file": "assets/actors/obara-sand.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Maori_women_at_BBQ.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "oberyn-martell": {
+      "actor": "Pedro Pascal",
+      "commonsTitle": "File:Pedro Pascal at the 2025 Cannes Film Festival 04.jpg",
+      "credit": "Gabriel Hutchinson",
+      "file": "assets/actors/oberyn-martell.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Pedro_Pascal_at_the_2025_Cannes_Film_Festival_04.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "olenna-tyrell": {
+      "actor": "Diana Rigg",
+      "commonsTitle": "File:Diana Rigg 1973 Cropped.jpg",
+      "credit": "NBC Television",
+      "file": "assets/actors/olenna-tyrell.jpg",
+      "license": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Diana_Rigg_1973_Cropped.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "orell": {
+      "actor": "Mackenzie Crook",
+      "commonsTitle": "File:Mackenzie Crook at Series Mania 2026 for Small Prophets.jpg",
+      "credit": "Elyot Boudart",
+      "file": "assets/actors/orell.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Mackenzie_Crook_at_Series_Mania_2026_for_Small_Prophets.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "osha": {
+      "actor": "Natalia Tena",
+      "commonsTitle": "File:Natalia Tena (29613976213).jpg",
+      "credit": "Super Festivals from Ft. Lauderdale, USA",
+      "file": "assets/actors/osha.jpg",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Natalia_Tena_(29613976213).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "patchface": {
+      "actor": "Ross Mullan",
+      "commonsTitle": "File:5.19.19RossMullanByLuigiNovi1.jpg",
+      "credit": "Luigi Novi",
+      "file": "assets/actors/patchface.jpg",
+      "license": "CC BY 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:5.19.19RossMullanByLuigiNovi1.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "petyr-baelish": {
+      "actor": "Aidan Gillen",
+      "commonsTitle": "File:Aidan Gillen Official.jpg",
+      "credit": "Aidan Gillen",
+      "file": "assets/actors/petyr-baelish.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Aidan_Gillen_Official.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "podrick-payne": {
+      "actor": "Daniel Portman",
+      "commonsTitle": "File:Daniel portman 2018 1.jpg",
+      "credit": "German Comic Con",
+      "file": "assets/actors/podrick-payne.jpg",
+      "license": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Daniel_portman_2018_1.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "pyat-pree": {
+      "actor": "Ian Hanmore",
+      "commonsTitle": "File:Ian Hanmore.jpg",
+      "credit": "Caroline Rhea from Airdrie, UK, Scotland",
+      "file": "assets/actors/pyat-pree.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ian_Hanmore.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "pycelle": {
+      "actor": "Julian Glover",
+      "commonsTitle": "File:Julian Glover 2014.jpg",
+      "credit": "Patrick Subotkiewiez",
+      "file": "assets/actors/pycelle.jpg",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Julian_Glover_2014.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "pyp": {
+      "actor": "Josef Altin",
+      "commonsTitle": "File:Josef Altin.jpg",
+      "credit": "Elspeth Renfrew",
+      "file": "assets/actors/pyp.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Josef_Altin.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "qyburn": {
+      "actor": "Anton Lesser",
+      "commonsTitle": "File:Anton Lesser (2011).jpg",
+      "credit": "Philip Vial",
+      "file": "assets/actors/qyburn.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Anton_Lesser_(2011).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "rakharo": {
+      "actor": "Elyes Gabel",
+      "commonsTitle": "File:Elyes Gabel by Gage Skidmore.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/rakharo.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Elyes_Gabel_by_Gage_Skidmore.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "ramsay-bolton": {
+      "actor": "Iwan Rheon",
+      "commonsTitle": "File:Iwan Rheon by Gage Skidmore.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/ramsay-bolton.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Iwan_Rheon_by_Gage_Skidmore.jpg",
+      "tier": "wikidata-p18"
+    },
+    "renly-baratheon": {
+      "actor": "Gethin Anthony",
+      "commonsTitle": "File:Gethin anthony 2019 2.jpg",
+      "credit": "German Comic Con",
+      "file": "assets/actors/renly-baratheon.jpg",
+      "license": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Gethin_anthony_2019_2.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "rhaegar-targaryen": {
+      "actor": "Wilf Scolding",
+      "commonsTitle": "File:Wilf scolding 2021 1.jpg",
+      "credit": "German Comic Con",
+      "file": "assets/actors/rhaegar-targaryen.jpg",
+      "license": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Wilf_scolding_2021_1.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "robb-stark": {
+      "actor": "Richard Madden",
+      "commonsTitle": "File:Richard Madden (48462874707) (cropped).jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/robb-stark.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Richard_Madden_(48462874707)_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "robert-baratheon": {
+      "actor": "Mark Addy",
+      "commonsTitle": "File:Mark Addy.JPG",
+      "credit": "Caporaletti1983",
+      "file": "assets/actors/robert-baratheon.jpg",
+      "license": "CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:Mark_Addy.JPG",
+      "tier": "wikipedia-lead"
+    },
+    "robett-glover": {
+      "actor": "Tim McInnerny",
+      "commonsTitle": "File:Tim McInnerny.jpg",
+      "credit": "eye4images",
+      "file": "assets/actors/robett-glover.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Tim_McInnerny.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "robin-arryn": {
+      "actor": "Lino Facioli",
+      "commonsTitle": "File:Lino Facioli in the Park.jpg",
+      "credit": "Lino Facioli",
+      "file": "assets/actors/robin-arryn.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Lino_Facioli_in_the_Park.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "rodrik-cassel": {
+      "actor": "Ron Donachie",
+      "commonsTitle": "File:Ron Donachie.jpg",
+      "credit": "Nick Brooker",
+      "file": "assets/actors/rodrik-cassel.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Ron_Donachie.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "roose-bolton": {
+      "actor": "Michael McElhatton",
+      "commonsTitle": "File:Michael McElhatton, circa 2018.jpg",
+      "credit": "MTV UK",
+      "file": "assets/actors/roose-bolton.jpg",
+      "license": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Michael_McElhatton,_circa_2018.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "ros": {
+      "actor": "Esm\u00e9 Bianco",
+      "commonsTitle": "File:Esm\u00e9 Bianco at San Diego Comic Con 2018.jpg",
+      "credit": "Rabbitstalk",
+      "file": "assets/actors/ros.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Esm%C3%A9_Bianco_at_San_Diego_Comic_Con_2018.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "salladhor-saan": {
+      "actor": "Lucian Msamati",
+      "commonsTitle": "File:Lucian Msamati (2010) headshot.jpg",
+      "credit": "jamie.minoprio",
+      "file": "assets/actors/salladhor-saan.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Lucian_Msamati_(2010)_headshot.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "sandor-clegane": {
+      "actor": "Rory McCann",
+      "commonsTitle": "File:Rory McCann in 2014 by Gage Skidmore.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/sandor-clegane.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Rory_McCann_in_2014_by_Gage_Skidmore.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "sansa-stark": {
+      "actor": "Sophie Turner",
+      "commonsTitle": "File:Sophie Turner at SXSW London June 2025 (cropped).jpg",
+      "credit": "Duk3L1xon",
+      "file": "assets/actors/sansa-stark.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Sophie_Turner_at_SXSW_London_June_2025_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "selyse-baratheon": {
+      "actor": "Tara Fitzgerald",
+      "commonsTitle": "File:Tara Fitzgerald (cropped).jpg",
+      "credit": "Tracy Howl from London, UK",
+      "file": "assets/actors/selyse-baratheon.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Tara_Fitzgerald_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "septa-unella": {
+      "actor": "Hannah Waddingham",
+      "commonsTitle": "File:Hannah Waddingham-2790.jpg",
+      "credit": "Harald Krichel",
+      "file": "assets/actors/septa-unella.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Hannah_Waddingham-2790.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "septon-ray": {
+      "actor": "Ian McShane",
+      "commonsTitle": "File:McShaneTamLinRio311022 (1 of 21) (52470810951) (cropped 3\u00d74).jpg",
+      "credit": "Raph_PH",
+      "file": "assets/actors/septon-ray.jpg",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:McShaneTamLinRio311022_(1_of_21)_(52470810951)_(cropped_3%C3%974).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "shae": {
+      "actor": "Sibel Kekilli",
+      "commonsTitle": "File:Sibel Kekilli-68503.jpg",
+      "credit": "Harald Krichel",
+      "file": "assets/actors/shae.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Sibel_Kekilli-68503.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "shavepate": {
+      "actor": "Adewale Akinnuoye-Agbaje",
+      "commonsTitle": "File:Adewale Akinnuoye-Agbaje Thor 2 cropped.png",
+      "credit": "Benjamin Ellis",
+      "file": "assets/actors/shavepate.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Adewale_Akinnuoye-Agbaje_Thor_2_cropped.png",
+      "tier": "wikipedia-lead"
+    },
+    "shireen-baratheon": {
+      "actor": "Kerry Ingram",
+      "commonsTitle": "File:Kerry Ingram by Gage Skidmore.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/shireen-baratheon.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Kerry_Ingram_by_Gage_Skidmore.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "stannis-baratheon": {
+      "actor": "Stephen Dillane",
+      "commonsTitle": "File:Stephen Dillane at Dinard 2012.jpg",
+      "credit": "Tiphaine Buccino",
+      "file": "assets/actors/stannis-baratheon.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Stephen_Dillane_at_Dinard_2012.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "styr": {
+      "actor": "Yuri Kolokolnikov",
+      "commonsTitle": "File:\u041a\u043e\u043b\u043e\u043a\u043e\u043b\u044c\u043d\u0438\u043a\u043e\u0432 \u042e\u0440\u0438\u0439 \u0410\u043d\u0434\u0440\u0435\u0435\u0432\u0438\u0447.jpg",
+      "credit": "Mikhail Popov",
+      "file": "assets/actors/styr.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%BE%D0%BB%D0%BE%D0%BA%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2_%D0%AE%D1%80%D0%B8%D0%B9_%D0%90%D0%BD%D0%B4%D1%80%D0%B5%D0%B5%D0%B2%D0%B8%D1%87.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "syrio-forel": {
+      "actor": "Miltos Yerolemou",
+      "commonsTitle": "File:Miltos Yerolemou Brussels Comic Con 2018.jpg",
+      "credit": "Miguel Discart",
+      "file": "assets/actors/syrio-forel.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Miltos_Yerolemou_Brussels_Comic_Con_2018.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "talisa-stark": {
+      "actor": "Oona Chaplin",
+      "commonsTitle": "File:Oona Chaplin at Avatar fire and ash premiere London 2025.jpg",
+      "credit": "Amy Martin Photography",
+      "file": "assets/actors/talisa-stark.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Oona_Chaplin_at_Avatar_fire_and_ash_premiere_London_2025.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "the-night-king": {
+      "actor": "Vladimir Furdik",
+      "commonsTitle": "File:Vladimir Fudrik in 2018.jpg",
+      "credit": "Malachi108",
+      "file": "assets/actors/the-night-king.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Vladimir_Fudrik_in_2018.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "the-waif": {
+      "actor": "Faye Marsay",
+      "commonsTitle": "File:Faye Marsay by Gage Skidmore.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/the-waif.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Faye_Marsay_by_Gage_Skidmore.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "theon-greyjoy": {
+      "actor": "Alfie Allen",
+      "commonsTitle": "File:Alfie Allen by Gage Skidmore 2.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/theon-greyjoy.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Alfie_Allen_by_Gage_Skidmore_2.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "thoros-of-myr": {
+      "actor": "Paul Kaye",
+      "commonsTitle": "File:Paul Kaye in 2018.jpg",
+      "credit": "Malachi108",
+      "file": "assets/actors/thoros-of-myr.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Paul_Kaye_in_2018.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "tommen-baratheon": {
+      "actor": "Dean-Charles Chapman",
+      "commonsTitle": "File:Dean-Charles Chapman - Comic Con Germany 2022 - 253 (cropped).jpg",
+      "credit": "Raboe001",
+      "file": "assets/actors/tommen-baratheon.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Dean-Charles_Chapman_-_Comic_Con_Germany_2022_-_253_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "tormund-giantsbane": {
+      "actor": "Kristofer Hivju",
+      "commonsTitle": "File:Kristofer Hivju (Cropped, 2015).jpg",
+      "credit": "Patrik Nygren",
+      "file": "assets/actors/tormund-giantsbane.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Kristofer_Hivju_(Cropped,_2015).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "trystane-martell": {
+      "actor": "Toby Sebastian",
+      "commonsTitle": "File:Toby-sebastian-arrives-for-the-world-premiere-of-game-of-news-photo-1579209210.jpg",
+      "credit": "KARWAI TANG",
+      "file": "assets/actors/trystane-martell.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Toby-sebastian-arrives-for-the-world-premiere-of-game-of-news-photo-1579209210.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "tycho-nestoris": {
+      "actor": "Mark Gatiss",
+      "commonsTitle": "File:Mark Gatiss by Gage Skidmore 2.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/tycho-nestoris.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Mark_Gatiss_by_Gage_Skidmore_2.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "tyene-sand": {
+      "actor": "Rosabell Laurenti Sellers",
+      "commonsTitle": "File:Rosabell Laurenti Sellers.jpg",
+      "credit": "Claudia Celli Simi from Viterbo, Italia",
+      "file": "assets/actors/tyene-sand.jpg",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Rosabell_Laurenti_Sellers.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "tyrion-lannister": {
+      "actor": "Peter Dinklage",
+      "commonsTitle": "File:Peter Dinklage by Gage Skidmore 2.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/tyrion-lannister.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Peter_Dinklage_by_Gage_Skidmore_2.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "tywin-lannister": {
+      "actor": "Charles Dance",
+      "commonsTitle": "File:FrankensteinBFILFF131025-87 (54863424291) (cropped).jpg",
+      "credit": "Raph_PH",
+      "file": "assets/actors/tywin-lannister.jpg",
+      "license": "CC BY 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:FrankensteinBFILFF131025-87_(54863424291)_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "varys": {
+      "actor": "Conleth Hill",
+      "commonsTitle": "File:Conleth Hill by Gage Skidmore 3.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/varys.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Conleth_Hill_by_Gage_Skidmore_3.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "viserys-targaryen": {
+      "actor": "Harry Lloyd",
+      "commonsTitle": "File:Stuttgart 2023 -Comic Con Germany- Harry Lloyd- by-RaBoe 034 (cropped).jpg",
+      "credit": "Raboe001",
+      "file": "assets/actors/viserys-targaryen.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Stuttgart_2023_-Comic_Con_Germany-_Harry_Lloyd-_by-RaBoe_034_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "walda-bolton": {
+      "actor": "Elizabeth Webster",
+      "commonsTitle": "File:Elizabeth webster gcc 2018.jpg",
+      "credit": "German Comic Con",
+      "file": "assets/actors/walda-bolton.jpg",
+      "license": "CC BY 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Elizabeth_webster_gcc_2018.jpg",
+      "tier": "wikipedia-lead"
+    },
+    "xaro-xhoan-daxos": {
+      "actor": "Nonso Anozie",
+      "commonsTitle": "File:Nonso Anozie at the Pan Premiere (cropped).jpg",
+      "credit": "Ibsan73",
+      "file": "assets/actors/xaro-xhoan-daxos.jpg",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Nonso_Anozie_at_the_Pan_Premiere_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "yara-greyjoy": {
+      "actor": "Gemma Whelan",
+      "commonsTitle": "File:Gemma Whelan (cropped).jpg",
+      "credit": "PPL Projects - www.pplphotography.nl",
+      "file": "assets/actors/yara-greyjoy.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Gemma_Whelan_(cropped).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "yezzan": {
+      "actor": "Enzo Cilenti",
+      "commonsTitle": "File:Enzo Cilenti (29152188673).jpg",
+      "credit": "GabboT",
+      "file": "assets/actors/yezzan.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Enzo_Cilenti_(29152188673).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "ygritte": {
+      "actor": "Rose Leslie",
+      "commonsTitle": "File:Rose Leslie (March 2013) (headshot).jpg",
+      "credit": "Suzi Pratt",
+      "file": "assets/actors/ygritte.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Rose_Leslie_(March_2013)_(headshot).jpg",
+      "tier": "wikipedia-lead"
+    },
+    "yohn-royce": {
+      "actor": "Rupert Vansittart",
+      "commonsTitle": "File:Rupert Vansittart by Gage Skidmore.jpg",
+      "credit": "Gage Skidmore",
+      "file": "assets/actors/yohn-royce.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Rupert_Vansittart_by_Gage_Skidmore.jpg",
+      "tier": "wikipedia-lead"
+    }
+  }
+}

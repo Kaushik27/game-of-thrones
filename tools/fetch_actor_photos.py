@@ -175,6 +175,29 @@ def strip_html(value):
     return text.strip()
 
 
+def clean_credit(raw):
+    """Tidy Commons Artist metadata into a readable byline.
+
+    The raw field is free-form wikitext-turned-HTML, so it can carry a source
+    filename, a "derivative work:" chain, a wiki "( talk )" link or a Flickr
+    URL. We only trim that packaging — the author's name itself is never
+    dropped, because CC BY / CC BY-SA require it.
+    """
+    if not raw:
+        return "Unknown"
+    text = raw
+    # "Some_File.jpg : Real Author" -> "Real Author"
+    text = re.sub(r"^[^\s:]+\.(?:jpg|jpeg|png|tif|tiff)\s*:\s*", "", text, flags=re.I)
+    text = re.sub(r"\bderivative work\s*:\s*", "; derivative work by ", text, flags=re.I)
+    text = re.sub(r"\(\s*talk\s*\)", "", text, flags=re.I)
+    text = re.sub(r"\s+at\s+https?://\S+", "", text, flags=re.I)
+    # "Gage Skidmore from Peoria, AZ, United States of America" -> "Gage Skidmore"
+    text = re.sub(r"\s+from\s+[^,]+(?:,\s*[^,]+){0,3},\s*United States of America\b", "", text, flags=re.I)
+    text = re.sub(r"\s+from\s+[^,]+,\s*(?:United Kingdom|Canada|Australia|Germany|France)\b", "", text, flags=re.I)
+    text = re.sub(r"\s{2,}", " ", text).strip(" ,;·-")
+    return text or "Unknown"
+
+
 def commons_fileinfo(file_title):
     """Given 'File:Foo.jpg', return dict with url/license/author/source, or None."""
     url = (
@@ -200,7 +223,7 @@ def commons_fileinfo(file_title):
             "url": info.get("url", "").split("?")[0],
             "mime": info.get("mime", ""),
             "license": lic,
-            "credit": strip_html((meta.get("Artist") or {}).get("value", "")) or "Unknown",
+            "credit": clean_credit(strip_html((meta.get("Artist") or {}).get("value", ""))),
             "source": info.get("descriptionurl", ""),
         }
     return None
@@ -320,7 +343,18 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=0, help="only process N characters")
     ap.add_argument("--only", default="", help="comma-separated character ids")
+    ap.add_argument("--rebuild", action="store_true",
+                    help="regenerate js/actor-photos.js from the saved provenance "
+                         "file without re-downloading anything")
     args = ap.parse_args()
+
+    if args.rebuild:
+        saved = json.load(open(OUT_PROV, encoding="utf-8"))
+        photos = saved["photos"]
+        for rec in photos.values():
+            rec["credit"] = clean_credit(rec.get("credit", ""))
+        write_outputs(photos, saved.get("misses", []))
+        return
 
     os.makedirs(OUT_DIR, exist_ok=True)
     chars = load_characters()
