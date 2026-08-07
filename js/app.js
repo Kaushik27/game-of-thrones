@@ -17,7 +17,8 @@ const APP_ROUTES = [
   { pattern: /^\/timeline$/, view: viewTimeline },
   { pattern: /^\/battles$/, view: viewBattles },
   { pattern: /^\/quiz$/, view: viewQuiz },
-  { pattern: /^\/quotes$/, view: viewQuotes }
+  { pattern: /^\/quotes$/, view: viewQuotes },
+  { pattern: /^\/credits$/, view: viewCredits }
 ];
 
 function parseHash() {
@@ -1195,4 +1196,71 @@ function viewQuotes(app) {
   document.getElementById("search-input").addEventListener("input", e => { activeQuery = e.target.value; render(); });
   houseSel.addEventListener("change", e => { activeHouse = e.target.value; render(); });
   render();
+}
+
+// ==========================================================================
+// CREDITS
+//
+// Not decorative: the actor photographs are CC BY / CC BY-SA, which legally
+// require crediting the photographer and naming the license. This page is
+// where that obligation is discharged, so it lists every single photo with
+// its author, its license, and a link back to the Commons file page. It is
+// linked from the site footer on every route.
+// ==========================================================================
+function viewCredits(app) {
+  setTitle("Credits & Image Licensing");
+  const entries = (typeof ACTOR_PHOTOS !== "undefined")
+    ? Object.entries(ACTOR_PHOTOS).map(([id, p]) => ({ id, ...p, character: getCharacter(id) }))
+        .filter(e => e.character)
+        .sort((a, b) => a.character.name.localeCompare(b.character.name))
+    : [];
+
+  // Group by license so a reader can see the licence mix at a glance.
+  const byLicense = {};
+  entries.forEach(e => { (byLicense[e.license] = byLicense[e.license] || []).push(e); });
+
+  app.innerHTML = `
+    <div class="page-wrap">
+      <div class="hero ambient-glow" style="padding-top:76px;padding-bottom:6px;">
+        <h1 class="display">Credits &amp; Image Licensing</h1>
+        <p>Every actor photograph on this site is a freely-licensed photograph sourced from
+        Wikimedia Commons. None are publicity stills and none are scraped from IMDb. Each one is
+        listed below with its photographer, its license, and a link to its Commons file page —
+        the attribution that CC BY and CC BY-SA require.</p>
+      </div>
+
+      <div class="card" style="padding:20px;margin-top:8px;">
+        <div style="display:flex;gap:22px;flex-wrap:wrap;align-items:center;">
+          <div><div style="font-family:'Cinzel',serif;font-size:1.7rem;color:var(--accent);line-height:1;">${entries.length}</div>
+            <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--text-dim);margin-top:4px;">Photographs</div></div>
+          ${Object.keys(byLicense).sort().map(lic => `
+            <div><div style="font-family:'Cinzel',serif;font-size:1.7rem;color:var(--text);line-height:1;">${byLicense[lic].length}</div>
+              <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--text-dim);margin-top:4px;">${escapeHTML(lic)}</div></div>`).join("")}
+        </div>
+        <p class="text-dim" style="font-size:0.85rem;margin:16px 0 0;">
+          Photographs remain the copyright of their photographers and are reused here under the
+          terms of their respective licenses. Game of Thrones, its characters and its imagery are
+          the property of HBO; this is an unofficial, non-commercial fan reference. Region maps,
+          sigils, glyphs and the generative character portraits are original work created for this site.
+        </p>
+      </div>
+
+      <div class="section-title" style="margin-top:28px;">Photograph Attributions</div>
+      <div id="credits-list" style="display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));">
+        ${entries.map(e => `
+          <div class="card reveal" style="padding:12px 14px;display:flex;gap:12px;align-items:center;${cardAccentStyle(e.character.sigilColor)}">
+            ${avatarHTML(e.character, 44)}
+            <div style="min-width:0;flex:1;">
+              <a href="#/character/${e.id}" style="font-family:'Cinzel',serif;font-size:0.9rem;color:var(--text);text-decoration:none;">${escapeHTML(e.character.name)}</a>
+              <div style="font-size:0.78rem;color:var(--text-dim);">Played by ${escapeHTML(e.actor)}</div>
+              <div style="font-size:0.74rem;color:var(--text-faint);margin-top:3px;">
+                Photo: ${escapeHTML(e.credit)} ·
+                <span style="color:var(--accent);">${escapeHTML(e.license)}</span> ·
+                <a href="${escapeHTML(e.source)}" target="_blank" rel="noopener" style="color:var(--text-dim);">Commons</a>
+              </div>
+            </div>
+          </div>`).join("") || `<div class="empty-state">No photographs are in use.</div>`}
+      </div>
+    </div>
+  `;
 }
