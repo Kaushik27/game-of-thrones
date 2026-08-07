@@ -4,7 +4,7 @@
 
 .voices-film { position: relative; min-height: 100svh; overflow: hidden; background: #050809; color: #f1eee7; }
 .voices-film__backdrop, .voices-film__grain { position: absolute; inset: 0; pointer-events: none; }
-.voices-film__backdrop { background: linear-gradient(90deg, rgba(3, 5, 6, 0.98) 0%, rgba(8, 12, 13, 0.76) 52%, rgba(3, 5, 6, 0.96) 100%), url('../assets/ui/capital-journey-bg.jpg') center / cover; filter: saturate(0.45) contrast(1.08) brightness(0.54); transform: scale(1.04); }
+.voices-film__backdrop { background: linear-gradient(90deg, rgba(3, 5, 6, 0.78) 0%, rgba(8, 12, 13, 0.28) 56%, rgba(3, 5, 6, 0.68) 100%), url('../assets/ui/capital-journey-bg.jpg') center / cover; filter: saturate(0.78) contrast(1.08) brightness(0.78); transform: scale(1.04); }
 .voices-film__backdrop::after { position: absolute; inset: 0; background: radial-gradient(circle at 70% 42%, rgba(212, 179, 106, 0.16), transparent 32%), linear-gradient(180deg, rgba(5, 8, 9, 0.14), #050809 94%); content: ""; }
 .voices-film__grain { opacity: 0.15; background-image: radial-gradient(rgba(255,255,255,0.16) 0.6px, transparent 0.7px); background-size: 5px 5px; mix-blend-mode: screen; }
 .voices-film__inner { position: relative; z-index: 1; display: grid; width: min(1120px, calc(100% - 44px)); min-height: 100svh; margin: 0 auto; padding: clamp(28px, 6vw, 80px) 0 clamp(44px, 7vw, 86px); align-content: center; }

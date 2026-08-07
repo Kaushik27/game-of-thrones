@@ -102,6 +102,7 @@
           </div>
           <div class="cinematic-prologue__veil" aria-hidden="true"></div>
           <div class="cinematic-prologue__grain" aria-hidden="true"></div>
+          <div class="cinematic-prologue__transition" data-cinematic-transition aria-hidden="true"></div>
           <button class="cinematic-sound-toggle" type="button" data-cinematic-sound aria-pressed="false">Sound off</button>
           <div class="cinematic-prologue__copy">
             <p class="cinematic-prologue__eyebrow" data-cinematic-eyebrow></p>
@@ -192,6 +193,10 @@
       currentScene = nextIndex;
       const scene = scenes[currentScene];
       stage.dataset.scene = scene.id;
+      if (eyebrow.textContent) {
+        stage.dataset.cut = String(Date.now());
+        global.setTimeout(() => stage.removeAttribute("data-cut"), 760);
+      }
       eyebrow.textContent = scene.eyebrow;
       title.textContent = scene.title;
       body.textContent = scene.body;
@@ -224,8 +229,8 @@
       setScene(nextScene, false);
       stage.style.setProperty("--cinematic-progress", value.toFixed(4));
       stage.style.setProperty("--ice-opacity", clamp(1 - value * 4.2, 0, 1).toFixed(3));
-      stage.style.setProperty("--fire-opacity", clamp((value - 0.18) * 3.2, 0, 0.88).toFixed(3));
-      stage.style.setProperty("--realm-opacity", clamp((value - 0.48) * 2.8, 0, 0.78).toFixed(3));
+      stage.style.setProperty("--fire-opacity", clamp((value - 0.16) * 3.5, 0, 1).toFixed(3));
+      stage.style.setProperty("--realm-opacity", clamp((value - 0.44) * 3.1, 0, 0.96).toFixed(3));
       progress.style.transform = `scaleX(${value})`;
     }
 
