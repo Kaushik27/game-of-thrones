@@ -213,20 +213,43 @@ function viewCharacters(app, params, query) {
     });
   });
 
+  // Default to a curated view — two major houses, every relation type —
+  // instead of dumping all 442 relations across all houses on first paint.
+  // The full unfiltered graph is still one click away: select more house
+  // chips (or "Select all") to widen it back out.
+  const DEFAULT_GRAPH_HOUSES = ["Stark", "Lannister"];
   const graphState = {
-    houseFilter: new Set(Object.keys(HOUSE_COLORS)),
+    houseFilter: new Set(DEFAULT_GRAPH_HOUSES),
     typeFilter: new Set(["family", "marriage", "allegiance", "conflict", "bond"]),
     highlightIds: new Set()
   };
 
   function initGraphFilters() {
     const mount = document.getElementById("graph-filters");
-    mount.style.cssText = "display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;";
+    mount.style.cssText = "display:flex;flex-direction:column;gap:8px;margin-bottom:12px;";
     const houseChips = Object.keys(HOUSE_COLORS).map(h =>
-      `<span class="chip active" data-house="${h}"><span class="swatch" style="background:${HOUSE_COLORS[h]}"></span>${h}</span>`).join("");
+      `<span class="chip${graphState.houseFilter.has(h) ? ' active' : ''}" data-house="${h}"><span class="swatch" style="background:${HOUSE_COLORS[h]}"></span>${h}</span>`).join("");
     const typeChips = Object.keys(RELATION_STYLE).map(t =>
       `<span class="chip active" data-type="${t}"><span class="swatch" style="background:${RELATION_STYLE[t].color}"></span>${t}</span>`).join("");
-    mount.innerHTML = houseChips + typeChips;
+    mount.innerHTML = `
+      <div class="text-dim" style="font-size:0.82rem;">Showing <strong style="color:var(--text);">${DEFAULT_GRAPH_HOUSES.join(" &amp; ")}</strong> by default — select more houses below (or "Select all") to widen the graph.</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+        <button type="button" class="btn" id="graph-select-all" style="font-size:0.78rem;padding:5px 12px;min-height:0;">Select all houses</button>
+        <button type="button" class="btn" id="graph-select-default" style="font-size:0.78rem;padding:5px 12px;min-height:0;">Reset to default</button>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">${houseChips}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">${typeChips}</div>
+    `;
+    document.getElementById("graph-select-all").addEventListener("click", () => {
+      graphState.houseFilter = new Set(Object.keys(HOUSE_COLORS));
+      mount.querySelectorAll("[data-house]").forEach(chip => chip.classList.add("active"));
+      renderCharGraph();
+    });
+    document.getElementById("graph-select-default").addEventListener("click", () => {
+      graphState.houseFilter = new Set(DEFAULT_GRAPH_HOUSES);
+      mount.querySelectorAll("[data-house]").forEach(chip => chip.classList.toggle("active", graphState.houseFilter.has(chip.dataset.house)));
+      renderCharGraph();
+    });
     mount.querySelectorAll("[data-house]").forEach(chip => chip.addEventListener("click", () => {
       const h = chip.dataset.house;
       chip.classList.toggle("active");
