@@ -26,7 +26,7 @@ Everything lives under one shell ([`index.html`](index.html)) with a hash-based 
 | [`#/lore`](https://kaushik27.github.io/game-of-thrones/#/lore) | Searchable **Living Lore Library** with 24 TV-canon dossiers across politics, factions, faiths, magic, artifacts, and prophecy |
 | [`#/battles`](https://kaushik27.github.io/game-of-thrones/#/battles) | Cards for major battles and events (Red Wedding, Battle of the Bastards, Battle of Winterfell, etc.) with combatants, outcome, casualties, and linked characters |
 | [`#/quiz`](https://kaushik27.github.io/game-of-thrones/#/quiz) | Three replayable quiz modes — "Who Said It?", "Match the Sigil", and "Family Tree" — 10 questions per round with live scoring and correct/incorrect answer feedback |
-| [`#/quotes`](https://kaushik27.github.io/game-of-thrones/#/quotes) | Searchable, styled quote wall filterable by house |
+| [`#/quotes`](https://kaushik27.github.io/game-of-thrones/#/quotes) | **Voices of the Realm** — a spotlight for powerful lines, mood collections, speaker portraits, house/season filters, deep links, and one-click copy |
 
 ## Dataset
 
@@ -36,7 +36,8 @@ Everything is driven by a shared, hand-curated dataset with no external API:
 - **`js/episodes.js`** — all 73 TV episodes with credits, dates, runtimes, original summaries, themes, character links, canonical event links, and source notes
 - **`js/events.js`** — season-level timeline events, tagged by house and character, feeding the character pages, house pages, and the timeline explorer
 - **`js/battles.js`** — major battles/events with combatants, outcome, and casualties
-- **`js/quotes.js`** — famous character quotes, feeding both the quote wall and the quiz
+- **`js/quotes.js`** — 44 famous character quotes, feeding the Voices archive and the quiz
+- **`js/quote-curation.js`** — immutable featured voices and editorial collections for power, identity, duty, survival, and freedom
 - **`js/map-data.js`** — the Seven Kingdoms' regions as SVG landmass paths, seats, and controlling houses
 - **`js/sigils.js`** — original line-art SVG sigil marks per house (direwolf, lion, dragon, stag, kraken, rose, sun-spear, trout, falcon-moon, crossed-swords)
 - **`js/common.js`** — shared helpers: nav rendering, avatar generation, relation lookups, BFS shortest-path, scroll-reveal, escaping utilities
