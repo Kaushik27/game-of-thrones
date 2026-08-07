@@ -187,6 +187,7 @@
 
     const characterById = new Map(characterRecords.map(character => [String(character.id), character]));
     const episodeById = new Map(episodeRecords.map(episode => [episode.id, episode]));
+    const eventById = new Map(eventRecords.filter(event => event && event.id).map(event => [String(event.id), event]));
     const seasons = [...new Set(episodeRecords.map(episode => episode.season))].sort((a, b) => a - b);
     const allThemes = [...new Set(episodeRecords.flatMap(episode => episode.themes))]
       .sort((a, b) => a.localeCompare(b));
@@ -311,7 +312,13 @@
       return index < 0 ? null : episodeRecords[index + offset] || null;
     }
 
-    function whyItMattered(episode, matchedEvents) {
+    function whyItMattered(episode, matchedEvents, eventFocus) {
+      if (eventFocus && !eventFocus.exact) {
+        return `This episode is the neutral opening point for Season ${episode.season}. The focused event “${cleanString(eventFocus.event.title)}” is recorded only at season level, so the atlas does not assign it to this chapter.`;
+      }
+      if (eventFocus && eventFocus.exact) {
+        return `The loaded records explicitly connect this episode to “${cleanString(eventFocus.event.title)}”: ${cleanString(eventFocus.event.summary)}`;
+      }
       if (matchedEvents.length) {
         const event = matchedEvents[0];
         return `A related season record marks “${cleanString(event.title)}” as a turning point: ${cleanString(event.summary)}`;
@@ -326,16 +333,64 @@
       return `The episode closes this season’s recorded chronology with ${themeText || "its central conflicts"} indexed among its defining threads.`;
     }
 
+    function explicitlyLinkedEpisode(event) {
+      if (!event || !event.id) return null;
+      const linkedByEpisode = episodeRecords.find(episode => episode.eventIds.includes(String(event.id)));
+      if (linkedByEpisode) return linkedByEpisode;
+
+      const eventSeason = seasonNumber(event.season);
+      const references = uniqueStrings([
+        event.episodeId,
+        ...safeArray(event.episodeIds),
+        ...safeArray(event.episodes)
+      ]);
+      for (const reference of references) {
+        const byId = episodeById.get(reference);
+        if (byId) return byId;
+        const episodeNumber = positiveInteger(reference, 0);
+        if (eventSeason && episodeNumber) {
+          const byNumber = episodeRecords.find(episode => episode.season === eventSeason && episode.episode === episodeNumber);
+          if (byNumber) return byNumber;
+        }
+      }
+
+      const eventEpisodeNumber = positiveInteger(event.episode, 0);
+      return eventSeason && eventEpisodeNumber
+        ? episodeRecords.find(episode => episode.season === eventSeason && episode.episode === eventEpisodeNumber) || null
+        : null;
+    }
+
     const requestedMode = cleanString(config.initialMode).toLowerCase();
-    const requestedEpisode = episodeById.get(cleanString(config.initialEpisodeId));
-    const requestedSeason = positiveInteger(config.initialSeason, requestedEpisode ? requestedEpisode.season : seasons[0]);
+    const requestedEventRecord = eventById.get(cleanString(config.initialEventId)) || null;
+    const eventEpisode = explicitlyLinkedEpisode(requestedEventRecord);
+    const recordedEventSeason = seasonNumber(requestedEventRecord && requestedEventRecord.season);
+    const requestedEvent = requestedEventRecord && (eventEpisode || seasons.includes(recordedEventSeason))
+      ? requestedEventRecord
+      : null;
+    const configuredEpisode = episodeById.get(cleanString(config.initialEpisodeId));
+    const eventSeason = eventEpisode ? eventEpisode.season : (requestedEvent ? recordedEventSeason : 0);
+    const requestedEpisode = eventEpisode || (
+      requestedEvent ? episodeRecords.find(episode => episode.season === eventSeason) : configuredEpisode
+    );
+    const requestedSeason = eventSeason || positiveInteger(config.initialSeason, requestedEpisode ? requestedEpisode.season : seasons[0]);
     const state = {
-      mode: MODES.includes(requestedMode) ? requestedMode : "episodes",
+      mode: requestedEvent ? "consequences" : (MODES.includes(requestedMode) ? requestedMode : "episodes"),
       season: seasons.includes(requestedSeason) ? requestedSeason : (seasons[0] || "all"),
-      theme: allThemes.includes(cleanString(config.initialTheme)) ? cleanString(config.initialTheme) : "",
+      theme: requestedEvent ? "" : (allThemes.includes(cleanString(config.initialTheme)) ? cleanString(config.initialTheme) : ""),
       query: "",
-      selectedId: requestedEpisode ? requestedEpisode.id : ""
+      selectedId: requestedEpisode ? requestedEpisode.id : "",
+      eventId: requestedEvent ? String(requestedEvent.id) : "",
+      eventEpisodeId: eventEpisode ? eventEpisode.id : ""
     };
+
+    function focusedEvent() {
+      return state.eventId ? eventById.get(state.eventId) || null : null;
+    }
+
+    function clearEventFocus() {
+      state.eventId = "";
+      state.eventEpisodeId = "";
+    }
 
     function filteredEpisodes(ignoreTheme) {
       const query = state.query.trim().toLowerCase();
@@ -588,20 +643,30 @@
         </article>`;
     }
 
-    function renderConsequenceMode(episode, episodeEvents, episodeBattles) {
+    function renderConsequenceMode(episode, episodeEvents, episodeBattles, eventFocus) {
       const previous = adjacentEpisode(episode, -1);
       const next = adjacentEpisode(episode, 1);
+      const focusedEventHTML = eventFocus ? `
+        <div class="story-atlas__season-record">
+          <small>${eventFocus.exact ? "Explicit episode event" : `Season ${seasonNumber(eventFocus.event.season)} event focus`}</small>
+          <strong>${escapeHTML(eventFocus.event.title)}</strong>
+          <p>${escapeHTML(eventFocus.event.summary)}</p>
+          <p class="story-atlas__precision-note">${eventFocus.exact
+            ? `This event is explicitly linked to Season ${episode.season}, Episode ${episode.episode} in the loaded records.`
+            : `This event record identifies Season ${seasonNumber(eventFocus.event.season)} but no exact episode. Episode 1 is shown only as a neutral navigation anchor; the atlas does not infer a more precise placement.`}</p>
+        </div>` : "";
       return `
         <div class="story-atlas__aside-heading">
           <p class="story-atlas__eyebrow">Consequence path</p>
           <h3>Before, now, and next</h3>
         </div>
+        ${focusedEventHTML}
         <div class="story-atlas__chain">
           ${chainCardHTML("Before", previous, false)}
           ${chainCardHTML("Selected", episode, true)}
           ${chainCardHTML("Next thread", next, false)}
         </div>
-        ${episodeEvents.length ? `
+        ${!eventFocus && episodeEvents.length ? `
           <div class="story-atlas__season-record">
             <small>Related season record</small>
             <strong>${escapeHTML(episodeEvents[0].title)}</strong>
@@ -686,8 +751,19 @@
           </div>`;
         return;
       }
+      const activeEvent = focusedEvent();
+      const eventFocus = activeEvent ? {
+        event: activeEvent,
+        exact: Boolean(state.eventEpisodeId && state.eventEpisodeId === episode.id)
+      } : null;
       const episodeEvents = relatedEvents(episode);
-      const episodeBattles = relatedBattles(episode, episodeEvents);
+      const eventLinkRecords = eventFocus
+        ? [eventFocus.event, ...episodeEvents.filter(event => String(event.id) !== String(eventFocus.event.id))]
+        : episodeEvents;
+      const whyEvents = eventFocus && !eventFocus.exact
+        ? episodeEvents.filter(event => String(event.id) !== String(eventFocus.event.id))
+        : eventLinkRecords;
+      const episodeBattles = relatedBattles(episode, eventLinkRecords);
       const seasonQuotes = quotesForSeason(episode.season);
       const previous = adjacentEpisode(episode, -1);
       const next = adjacentEpisode(episode, 1);
@@ -695,7 +771,7 @@
       const modeContent = state.mode === "themes"
         ? renderThemeMode(episode)
         : state.mode === "consequences"
-          ? renderConsequenceMode(episode, episodeEvents, episodeBattles)
+          ? renderConsequenceMode(episode, episodeEvents, episodeBattles, eventFocus)
           : renderEpisodeMode(episode, episodeEvents, episodeBattles, seasonQuotes);
 
       workspace.setAttribute("aria-labelledby", `story-mode-${state.mode}`);
@@ -720,7 +796,7 @@
             <section class="story-atlas__why" aria-labelledby="story-atlas-why-title">
               <p class="story-atlas__eyebrow">Why it mattered</p>
               <h3 id="story-atlas-why-title">The thread it leaves behind</h3>
-              <p>${escapeHTML(whyItMattered(episode, episodeEvents))}</p>
+              <p>${escapeHTML(whyItMattered(episode, whyEvents, eventFocus))}</p>
             </section>
             <div class="story-atlas__chapter-nav">
               <button type="button" data-episode-id="${previous ? escapeHTML(previous.id) : ""}" ${previous ? "" : "disabled"}>
@@ -742,9 +818,15 @@
       const hash = global.location && cleanString(global.location.hash);
       let nextHash = "";
       if (hash.startsWith("#/timeline")) {
-        nextHash = `#/timeline?season=${episode.season}&episode=${encodeURIComponent(episode.id)}`;
+        const activeEvent = focusedEvent();
+        nextHash = activeEvent
+          ? `#/timeline?event=${encodeURIComponent(activeEvent.id)}`
+          : `#/timeline?season=${episode.season}&episode=${encodeURIComponent(episode.id)}`;
       } else if (hash.startsWith("#/episode/")) {
-        nextHash = `#/episode/${encodeURIComponent(episode.id)}`;
+        const activeEvent = focusedEvent();
+        nextHash = activeEvent
+          ? `#/episode/${encodeURIComponent(episode.id)}?event=${encodeURIComponent(activeEvent.id)}`
+          : `#/episode/${encodeURIComponent(episode.id)}`;
       }
       if (!nextHash) return;
       if (hash !== nextHash) global.history.replaceState(global.history.state, "", nextHash);
@@ -775,6 +857,8 @@
       if (state.season !== "all") qualifiers.push(`Season ${state.season}`);
       if (state.theme) qualifiers.push(state.theme);
       if (state.query) qualifiers.push(`matching “${state.query}”`);
+      const activeEvent = focusedEvent();
+      if (activeEvent) qualifiers.push(`event focus: ${cleanString(activeEvent.title)}`);
       resultCount.textContent = `${visible.length} of ${episodeRecords.length} episodes${qualifiers.length ? ` · ${qualifiers.join(" · ")}` : ""}`;
       atlas.classList.toggle("story-atlas--reduced-motion", Boolean(motionQuery && motionQuery.matches));
       if (episode) updateDeepLink(episode);
@@ -804,6 +888,7 @@
     function chooseEpisode(id, focusTarget) {
       const episode = episodeById.get(cleanString(id));
       if (!episode) return;
+      clearEventFocus();
       const currentlyVisible = filteredEpisodes(false).some(item => item.id === episode.id);
       if (!currentlyVisible) {
         state.theme = "";
@@ -819,6 +904,7 @@
     }
 
     function resetFilters() {
+      clearEventFocus();
       state.season = "all";
       state.theme = "";
       state.query = "";
@@ -830,6 +916,7 @@
     function chooseSeason(value, focusButton) {
       const season = value === "all" ? "all" : Number(value);
       if (season !== "all" && !seasons.includes(season)) return;
+      clearEventFocus();
       state.season = season;
       const visible = filteredEpisodes(false);
       state.selectedId = visible[0] ? visible[0].id : "";
@@ -850,6 +937,7 @@
     }
 
     function chooseTheme(theme, focusButton) {
+      clearEventFocus();
       const nextTheme = cleanString(theme);
       state.theme = allThemes.includes(nextTheme) ? nextTheme : "";
       state.mode = "themes";
@@ -867,6 +955,7 @@
 
     function chooseMode(mode, focusTab) {
       if (!MODES.includes(mode)) return;
+      if (mode !== "consequences") clearEventFocus();
       state.mode = mode;
       render({ focusEpisode: false });
       if (focusTab) later(() => root.querySelector(`[data-mode="${mode}"]`).focus());
@@ -947,6 +1036,7 @@
     }
 
     function onSearchInput(event) {
+      clearEventFocus();
       state.query = event.target.value;
       render({ focusEpisode: false });
     }

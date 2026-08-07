@@ -96,6 +96,19 @@ function navigateFeatureTarget(target) {
   }
 }
 
+function replaceHashQuery(path, updates) {
+  const current = parseHash();
+  if (current.path !== path) return;
+  Object.entries(updates || {}).forEach(([key, value]) => {
+    const normalized = String(value == null ? "" : value).trim();
+    if (normalized) current.query.set(key, normalized);
+    else current.query.delete(key);
+  });
+  const encoded = current.query.toString();
+  const nextHash = `#${path}${encoded ? `?${encoded}` : ""}`;
+  if (window.location.hash !== nextHash) window.history.replaceState(null, "", nextHash);
+}
+
 // ==========================================================================
 // HOME
 // ==========================================================================
@@ -1153,6 +1166,8 @@ function viewTimeline(app, params, query) {
     const handle = window.StoryAtlas.mount(root, {
       initialSeason: Number(query.get("season")) || undefined,
       initialEpisodeId: params[0] || query.get("episode") || "",
+      initialEventId: query.get("event") || "",
+      initialMode: query.get("mode") || "",
       onNavigate: navigateFeatureTarget
     });
     registerActiveView(handle);
@@ -1247,8 +1262,9 @@ function viewTimelineLegacy(app) {
 // ==========================================================================
 // BATTLES
 // ==========================================================================
-function viewBattles(app) {
+function viewBattles(app, params, query) {
   setTitle("Battles & Events");
+  const requestedBattleId = query.get("battle") || "";
   function pill(id) {
     const c = getCharacter(id);
     if (!c) return "";
@@ -1261,8 +1277,10 @@ function viewBattles(app) {
         <p>The turning points of the war for the Iron Throne — and the war for the dawn.</p>
       </div>
       <div class="grid grid-wide" id="battle-grid">
-        ${battles.map(b => `
-          <div class="card battle-card reveal" style="padding:22px;${cardAccentStyle('#c23b3b')}">
+        ${battles.map(b => {
+          const selected = b.id === requestedBattleId;
+          return `
+          <div class="card battle-card reveal" data-battle-id="${escapeHTML(b.id)}"${selected ? ` tabindex="-1"` : ""} style="padding:22px;${cardAccentStyle('#c23b3b')}${selected ? "border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);" : ""}">
             <h3 class="display" style="margin:0 0 4px;">${escapeHTML(b.name)}</h3>
             <div class="text-dim" style="font-size:0.82rem;margin-bottom:12px;">${escapeHTML(b.season)} · ${escapeHTML(b.location)}</div>
             ${b.combatants.map(c => `
@@ -1283,12 +1301,20 @@ function viewBattles(app) {
               <strong style="color:var(--text);display:block;margin-bottom:2px;font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.5px;">Linked Characters</strong>
               <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">${b.linkedCharacters.map(pill).join("")}</div>
             </div>
-          </div>
-        `).join("")}
+          </div>`;
+        }).join("")}
       </div>
     </div>
   `;
   observeReveals(app);
+  const requestedCard = [...app.querySelectorAll("[data-battle-id]")]
+    .find(card => card.dataset.battleId === requestedBattleId);
+  if (requestedCard) {
+    window.requestAnimationFrame(() => {
+      requestedCard.scrollIntoView({ block: "center", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+      requestedCard.focus({ preventScroll: true });
+    });
+  }
 }
 
 // ==========================================================================
@@ -1449,9 +1475,10 @@ function viewQuiz(app) {
 // ==========================================================================
 // QUOTE WALL
 // ==========================================================================
-function viewQuotes(app) {
+function viewQuotes(app, params, query) {
   setTitle("Quote Wall");
   let activeQuery = "", activeHouse = "";
+  const requestedQuoteId = query.get("quote") || "";
 
   app.innerHTML = `
     <div class="page-wrap">
@@ -1480,8 +1507,9 @@ function viewQuotes(app) {
     document.getElementById("quote-count").textContent = `${filtered.length} quote${filtered.length === 1 ? '' : 's'}`;
     document.getElementById("quote-grid").innerHTML = filtered.map(qt => {
       const c = getCharacter(qt.characterId);
+      const selected = qt.id === requestedQuoteId;
       return `
-      <div class="card quote-card reveal" style="padding:26px 22px 18px;background:linear-gradient(160deg, var(--panel-bg), var(--panel-bg-alt));position:relative;overflow:hidden;${cardAccentStyle(c.sigilColor)}">
+      <div class="card quote-card reveal" data-quote-id="${escapeHTML(qt.id)}"${selected ? ` tabindex="-1"` : ""} style="padding:26px 22px 18px;background:linear-gradient(160deg, var(--panel-bg), var(--panel-bg-alt));position:relative;overflow:hidden;${cardAccentStyle(c.sigilColor)}${selected ? "border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);" : ""}">
         <div class="season-badge" style="position:absolute;top:12px;right:14px;font-size:0.7rem;color:var(--text-faint);">S${qt.season}</div>
         <blockquote style="margin:0 0 16px;font-family:'Cinzel',serif;font-size:1.05rem;line-height:1.5;position:relative;z-index:1;">"${escapeHTML(qt.text)}"</blockquote>
         <a style="display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none;" href="#/character/${c.id}">
@@ -1505,6 +1533,14 @@ function viewQuotes(app) {
   document.getElementById("search-input").addEventListener("input", e => { activeQuery = e.target.value; render(); });
   houseSel.addEventListener("change", e => { activeHouse = e.target.value; render(); });
   render();
+  const requestedCard = [...app.querySelectorAll("[data-quote-id]")]
+    .find(card => card.dataset.quoteId === requestedQuoteId);
+  if (requestedCard) {
+    window.requestAnimationFrame(() => {
+      requestedCard.scrollIntoView({ block: "center", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+      requestedCard.focus({ preventScroll: true });
+    });
+  }
 }
 
 // ==========================================================================
@@ -1523,6 +1559,8 @@ function viewLore(app, params, query) {
     const handle = window.LoreLibrary.mount(root, {
       initialEntryId: query.get("entry") || "",
       initialCategory: query.get("category") || "",
+      onEntryChange: entry => replaceHashQuery("/lore", { entry: entry ? entry.id : "" }),
+      onCategoryChange: category => replaceHashQuery("/lore", { category: category === "all" ? "" : category }),
       onNavigate: navigateFeatureTarget
     });
     registerActiveView(handle);

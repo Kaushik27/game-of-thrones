@@ -210,12 +210,19 @@
     });
 
     getEvents().forEach((event) => {
+      const eventQuery = new URLSearchParams({
+        mode: "consequences",
+        event: String(event.id || "")
+      });
+      if (Number(event.season) >= 1 && Number(event.season) <= 8) {
+        eventQuery.set("season", String(Number(event.season)));
+      }
       items.push(makeItem(
         "events",
         event.id,
         event.title,
         [event.date || (event.season ? "Season " + event.season : ""), titleCase(event.type)].filter(Boolean).join(" \u00b7 "),
-        "#/timeline?event=" + encodeURIComponent(event.id),
+        "#/timeline?" + eventQuery.toString(),
         [event.id, event.summary, event.type].concat(event.houses || [], characterNames(event.characters))
       ));
     });
