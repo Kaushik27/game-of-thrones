@@ -33,7 +33,7 @@ Everything lives under one shell ([`index.html`](index.html)) with a hash-based 
 Everything is driven by a shared, hand-curated dataset with no external API:
 
 - **`js/data.js`** — 196 characters and 437 relations (family / marriage / allegiance / conflict / bond), plus house metadata
-- **`js/episodes.js`** — all 73 TV episodes with credits, dates, runtimes, original summaries, themes, character links, and source notes
+- **`js/episodes.js`** — all 73 TV episodes with credits, dates, runtimes, original summaries, themes, character links, canonical event links, and source notes
 - **`js/events.js`** — season-level timeline events, tagged by house and character, feeding the character pages, house pages, and the timeline explorer
 - **`js/battles.js`** — major battles/events with combatants, outcome, and casualties
 - **`js/quotes.js`** — famous character quotes, feeding both the quote wall and the quiz
@@ -61,6 +61,12 @@ python3 -m http.server 8000
 ```
 
 Hash routing needs an HTTP server (not `file://`) for the initial-load JS to behave consistently across browsers — open `http://localhost:8000/`.
+
+Run the release smoke check with:
+
+```bash
+node tests/living-encyclopedia-smoke.js
+```
 
 ## Tech stack
 

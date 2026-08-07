@@ -44,6 +44,12 @@ The focused reference/People comparison keeps both screens at 1265 × 712 and co
    - Fix: episode deep links now choose the episode's season when no season query is supplied; URL synchronization covers both route forms; adjacent navigation clears incompatible filters; rails use grouped pressed buttons; and focus returns to the active control or episode heading. Quotes are explicitly labelled as season-level voices because the source quote records do not contain episode IDs.
    - Post-fix evidence: `#/episode/s06e09` opens “Battle of the Bastards”; filtered previous/next opens the exact adjacent episode; URL, focus, and pressed states update together; final independent review found no remaining P0–P2 issue.
 
+3. Final route and modal integration review
+   - [P1] Global event results initially opened the default episode because the new Story Atlas did not consume the legacy event query.
+   - [P2] Battle and quote record links did not focus their requested cards; Lore drawer/category state was not shareable; stacked dialogs could both consume Escape or remain simultaneously exposed; several small functional labels missed 4.5:1 contrast.
+   - Fix: all 34 timeline events now map exactly once to their canonical episode; Raven, World, Story, battle, quote, and Lore routes preserve exact record state; stacked modals honor focus ownership and inert their lower layer; readable faint and house-text palettes replace low-contrast functional colors.
+   - Post-fix evidence: Raven's Red Wedding event opens S3E9 in Consequences mode; exact battle/quote cards receive focus; Lore URLs update on open, close, and category changes; Raven closes before an underlying Lore drawer; People comparisons inert and restore the dossier; the 12-contract smoke test and final independent P0–P2 review pass.
+
 ## Browser and interaction checks
 
 - People: Spotlight, Constellation, Archive search/filtering, dossiers, two-person comparison, season lens, character navigation, keyboard focus, and mobile bottom-sheet behavior.
@@ -51,8 +57,11 @@ The focused reference/People comparison keeps both screens at 1265 × 712 and co
 - World: Atlas, Journeys, Power, and Lore modes; all eight seasons; map hotspots; region and journey details; mobile controls; lifecycle cleanup.
 - Lore: all six categories, search, featured and archive cards, deep-linked drawers, related dossiers, character/house links, focus trap, Escape restoration, mobile drawer.
 - Global search: grouped results include characters, episodes, lore, houses, events, battles, and quotes; “iron throne” returned episode and lore matches.
+- Exact record routing: Raven's Red Wedding event opens `s03e09`; Story and World battle/quote/event actions focus their requested destination; Lore category and drawer state remain shareable in the hash.
+- Modal lifecycle: focus returns correctly after People dossiers/comparisons and Lore drawers; when Raven opens above Lore, the first Escape closes only Raven and the second closes Lore.
 - Desktop and mobile: no horizontal document overflow, no broken images, and no route fallback states at 1280 × 720 or 390 × 844.
 - Source/data checks: 73 unique episode IDs, 24 unique lore IDs, six valid lore categories, and all episode/lore character references resolve against the 196-character dataset.
+- Automated smoke: `node tests/living-encyclopedia-smoke.js` validates canonical counts, 34 unique event-to-episode mappings, script order, exact route consumers, URL state callbacks, and stacked-modal guards.
 
 ## Implementation checklist
 
