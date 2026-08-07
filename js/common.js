@@ -6,14 +6,10 @@
 // ==========================================================================
 
 const NAV_LINKS = [
-  { href: "#/", label: "Home" },
-  { href: "#/characters", label: "Characters" },
-  { href: "#/houses", label: "Houses" },
-  { href: "#/map", label: "Map" },
-  { href: "#/timeline", label: "Timeline" },
-  { href: "#/battles", label: "Battles" },
-  { href: "#/quiz", label: "Quiz" },
-  { href: "#/quotes", label: "Quotes" }
+  { href: "#/", label: "Explore", matches: ["#/"] },
+  { href: "#/characters", label: "People", matches: ["#/characters", "#/character/"] },
+  { href: "#/timeline", label: "Stories", matches: ["#/timeline", "#/battles", "#/quotes"] },
+  { href: "#/map", label: "World", matches: ["#/map", "#/houses", "#/house/"] }
 ];
 
 function renderNav() {
@@ -21,13 +17,15 @@ function renderNav() {
   if (!mount) return;
   const hash = window.location.hash || "#/";
   const activePath = hash.split("?")[0];
+  const isActive = link => link.matches.some(match => match === "#/"
+    ? activePath === "#/"
+    : activePath === match || activePath.startsWith(match));
   mount.innerHTML = `
     <a class="brand" href="#/" aria-label="Game of Thrones home">
-      ${sigilSVG("direwolf", { size: 28, className: "brand-sigil" })}
       <span class="brand-title">GAME <small>OF</small> <strong>THRONES</strong></span>
     </a>
     <nav class="nav-links" id="nav-links" aria-label="Primary navigation">
-      ${NAV_LINKS.map(l => `<a href="${l.href}" class="${activePath === l.href || (l.href !== "#/" && activePath.startsWith(l.href)) ? 'active' : ''}"${activePath === l.href ? ' aria-current="page"' : ''}>${l.label}</a>`).join("")}
+      ${NAV_LINKS.map(l => `<a href="${l.href}" class="${isActive(l) ? 'active' : ''}"${isActive(l) ? ' aria-current="page"' : ''}>${l.label}</a>`).join("")}
     </nav>
     <button type="button" class="nav-search" data-raven-search-trigger aria-label="Search the realm">
       <span>Search</span><kbd>/</kbd>
@@ -54,7 +52,7 @@ function renderFooter() {
   const mount = document.getElementById("site-footer");
   if (!mount) return;
   const photoCount = (typeof ACTOR_PHOTOS !== "undefined") ? Object.keys(ACTOR_PHOTOS).length : 0;
-  mount.innerHTML = `A fan-made reference site for HBO's Game of Thrones (TV canon). Built with vanilla JS + D3.js, no build step.
+  mount.innerHTML = `A fan-made reference site for HBO's Game of Thrones (TV canon). Built with vanilla JS, D3.js and Three.js, no build step.
     <br>${photoCount} actor photographs used under verified open licenses —
     <a href="#/credits">credits &amp; image licensing</a>
     · <a href="https://github.com/Kaushik27/game-of-thrones" target="_blank" rel="noopener">View source on GitHub</a>`;

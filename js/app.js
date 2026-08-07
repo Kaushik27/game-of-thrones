@@ -45,6 +45,7 @@ function router() {
   const app = document.getElementById("app");
   const { path, query } = parseHash();
   destroyActiveView();
+  document.body.classList.toggle("realm-journey-route", path === "/");
   for (const route of APP_ROUTES) {
     const m = path.match(route.pattern);
     if (m) {
@@ -75,57 +76,68 @@ function setTitle(t) { document.title = t + " — Game of Thrones"; }
 // ==========================================================================
 // HOME
 // ==========================================================================
-function viewHome(app) {
-  setTitle("Home");
+function viewHome(app, params, query) {
+  setTitle("Explore");
+  const requestedSeason = Number(query.get("season"));
+  const initialSeason = Number.isInteger(requestedSeason) && requestedSeason >= 1 && requestedSeason <= 8
+    ? requestedSeason
+    : 6;
+
   app.innerHTML = `
-    <section class="war-home" aria-label="Interactive War Table">
-      <div id="war-table-root" data-war-table></div>
-    </section>
-    <section class="realm-index page-wrap" aria-labelledby="realm-index-title">
-      <header class="realm-index__header reveal">
-        <p class="realm-index__eyebrow">Beyond the table</p>
-        <h2 id="realm-index-title">Enter the Seven Kingdoms</h2>
-        <p>Every path below opens a different lens on the same living record. Search at any moment with the <kbd>/</kbd> key.</p>
-      </header>
-      <nav class="realm-index__grid" aria-label="Explore the realm">
-        <a class="realm-index__link realm-index__link--wide reveal" href="#/map">
-          <span class="realm-index__number">01</span>
-          <span><strong>Living Realm</strong><small>Move through Westeros, season by season</small></span>
-        </a>
-        <a class="realm-index__link reveal" href="#/characters">
-          <span class="realm-index__number">02</span>
-          <span><strong>Character Archive</strong><small>${characters.length} lives, faces, and loyalties</small></span>
-        </a>
-        <a class="realm-index__link reveal" href="#/houses">
-          <span class="realm-index__number">03</span>
-          <span><strong>Great Houses</strong><small>Words, rulers, heirs, and sworn banners</small></span>
-        </a>
-        <a class="realm-index__link reveal" href="#/timeline">
-          <span class="realm-index__number">04</span>
-          <span><strong>Eight Seasons</strong><small>Trace the decisions that remade the realm</small></span>
-        </a>
-        <a class="realm-index__link reveal" href="#/battles">
-          <span class="realm-index__number">05</span>
-          <span><strong>Battle Records</strong><small>Combatants, turning points, and cost</small></span>
-        </a>
-        <a class="realm-index__link reveal" href="#/quiz">
-          <span class="realm-index__number">06</span>
-          <span><strong>Claim the Throne</strong><small>Put your memory of the realm to trial</small></span>
-        </a>
-      </nav>
-    </section>
+    <div id="realm-journey-root" class="realm-journey-host">
+      <div class="realm-journey-loading" role="status">
+        <img src="assets/icons/compass.svg" alt="">
+        <span>Opening the realm…</span>
+      </div>
+    </div>
   `;
 
-  const root = document.getElementById("war-table-root");
-  if (window.WarTable) {
-    registerActiveView(window.WarTable.mount(root, {
-      season: 2,
-      nodeLimit: 18,
-      title: "Power Is a Web"
-    }));
+  const root = document.getElementById("realm-journey-root");
+  let journeyHandle = null;
+  let destroyed = false;
+
+  const navigate = target => {
+    const destination = String(target || "");
+    if (!destination) return;
+    if (destination.startsWith("#")) {
+      window.location.hash = destination;
+      return;
+    }
+    window.open(destination, "_blank", "noopener,noreferrer");
+  };
+
+  const mountJourney = () => {
+    if (destroyed || journeyHandle || !window.RealmJourney) return;
+    root.replaceChildren();
+    try {
+      journeyHandle = window.RealmJourney.mount(root, { initialSeason, onNavigate: navigate });
+    } catch (error) {
+      console.error("The realm journey could not be mounted.", error);
+      root.innerHTML = `
+        <div class="realm-journey-loading realm-journey-loading--error" role="alert">
+          <span>The road is blocked for now.</span>
+          <a href="#/timeline">Open the season archive</a>
+        </div>`;
+    }
+  };
+
+  if (window.RealmJourney) {
+    mountJourney();
   } else {
-    root.innerHTML = `<div class="empty-state">The War Table could not be opened. <a href="#/characters?graph=1">View relationships</a>.</div>`;
+    root.innerHTML = `
+      <div class="realm-journey-loading realm-journey-loading--error" role="alert">
+        <span>The road is blocked for now.</span>
+        <a href="#/timeline">Open the season archive</a>
+      </div>`;
   }
+
+  registerActiveView({
+    destroy() {
+      destroyed = true;
+      if (journeyHandle) journeyHandle.destroy();
+      document.body.classList.remove("realm-journey-route");
+    }
+  });
 }
 
 // ==========================================================================
