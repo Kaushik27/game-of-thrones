@@ -53,6 +53,7 @@ loreEntries.forEach(entry => entry.relatedCharacterIds.forEach(characterId => {
 }));
 
 const appSource = read("js/app.js");
+const cinematicSource = read("js/cinematic-realm.js");
 const ravenSource = read("js/raven-search.js");
 const storySource = read("js/story-atlas.js");
 const worldSource = read("js/world-atlas.js");
@@ -61,8 +62,11 @@ const peopleSource = read("js/people-intelligence.js");
 
 const contracts = [
   [appSource.includes('initialEventId: query.get("event") || ""'), "app must pass event deep links to StoryAtlas"],
+  [appSource.includes("window.CinematicRealm.mount"), "Explore must mount the cinematic realm shell"],
   [appSource.includes('query.get("battle") || ""'), "Battles must consume exact battle IDs"],
   [appSource.includes('query.get("quote") || ""'), "Quotes must consume exact quote IDs"],
+  [cinematicSource.includes("cinematic-prologue") && cinematicSource.includes("scrollToProgress"), "Cinematic Explore must expose a scroll-driven prologue"],
+  [cinematicSource.includes("global.RealmJourney.mount"), "Cinematic Explore must hand off to RealmJourney"],
   [appSource.includes("onEntryChange: entry => replaceHashQuery"), "Lore entry state must stay in the URL"],
   [appSource.includes("onCategoryChange: category => replaceHashQuery"), "Lore category state must stay in the URL"],
   [ravenSource.includes('mode: "consequences"') && ravenSource.includes("eventQuery.set"), "Raven event results must include their StoryAtlas context"],
@@ -93,6 +97,8 @@ const indexSource = read("index.html");
 const scripts = [...indexSource.matchAll(/<script[^>]+src="([^"]+)"/g)]
   .map(match => match[1].split("?")[0]);
 assert.ok(scripts.indexOf("js/episodes.js") < scripts.indexOf("js/story-atlas.js"), "episodes must load before StoryAtlas");
+assert.ok(scripts.indexOf("js/realm-journey.js") < scripts.indexOf("js/cinematic-realm.js"), "RealmJourney must load before cinematic Explore");
+assert.ok(scripts.indexOf("js/cinematic-realm.js") < scripts.indexOf("js/app.js"), "cinematic Explore must load before the router");
 assert.ok(scripts.indexOf("js/quotes.js") < scripts.indexOf("js/quote-curation.js"), "quotes must load before quote curation");
 assert.ok(scripts.indexOf("js/quote-curation.js") < scripts.indexOf("js/app.js"), "quote curation must load before the router");
 assert.ok(scripts.indexOf("js/lore-data.js") < scripts.indexOf("js/lore-library.js"), "lore data must load before LoreLibrary");
