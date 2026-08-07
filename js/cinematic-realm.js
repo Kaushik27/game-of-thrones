@@ -27,7 +27,7 @@
       title: "First, the ice",
       body: "Before crowns, there is a border. Before the war, there is a warning.",
       label: "The cold",
-      focus: { name: "Jon Snow", role: "The reluctant heir", image: "assets/actors/jon-snow.jpg", characterId: "jon-snow" },
+      focus: { name: "Jon Snow", role: "The reluctant heir", image: "assets/characters/jon-snow-visual.png", characterId: "jon-snow" },
       quote: { text: "Winter is coming.", speaker: "Eddard Stark", quoteId: "q1" },
       moments: [
         { eyebrow: "Winterfell", title: "The warning", text: "A household hears the first truth of the long night.", href: "#/timeline?season=1&mode=consequences" },
@@ -41,7 +41,7 @@
       title: "Then, the fire",
       body: "Old magic returns to the world, and every promise begins to burn.",
       label: "The fire",
-      focus: { name: "Daenerys Targaryen", role: "The breaker of chains", image: "assets/actors/daenerys-targaryen.jpg", characterId: "daenerys-targaryen" },
+      focus: { name: "Daenerys Targaryen", role: "The breaker of chains", image: "assets/characters/daenerys-visual.png", characterId: "daenerys-targaryen" },
       quote: { text: "Dracarys.", speaker: "Daenerys Targaryen", quoteId: "q8" },
       moments: [
         { eyebrow: "The Dothraki Sea", title: "A crown in ash", text: "A widow walks into the fire and comes out changed.", href: "#/timeline?season=1&mode=consequences" },
@@ -55,7 +55,7 @@
       title: "A story of power",
       body: "Follow the people, places, and battles that turned a map into a memory.",
       label: "The realm",
-      focus: { name: "Tyrion Lannister", role: "The mind behind the throne", image: "assets/actors/tyrion-lannister.jpg", characterId: "tyrion-lannister" },
+      focus: { name: "Tyrion Lannister", role: "The mind behind the throne", image: "assets/characters/tyrion-visual.png", characterId: "tyrion-lannister" },
       quote: { text: "Chaos isn't a pit. Chaos is a ladder.", speaker: "Petyr Baelish", quoteId: "q13" },
       moments: [
         { eyebrow: "King's Landing", title: "The game begins", text: "Every alliance is a door. Every door has a price.", href: "#/timeline?season=1&mode=power" },
@@ -69,7 +69,7 @@
       title: "The map is waiting",
       body: "Choose a season. Open a chapter. Move through Westeros at your own pace.",
       label: "Enter",
-      focus: { name: "Arya Stark", role: "No one. Everyone.", image: "assets/actors/arya-stark.jpg", characterId: "arya-stark" },
+      focus: { name: "Arya Stark", role: "No one. Everyone.", image: "assets/characters/arya-visual.png", characterId: "arya-stark" },
       quote: { text: "What do we say to the god of death? Not today.", speaker: "Arya Stark", quoteId: "q10" },
       moments: [
         { eyebrow: "The living archive", title: "73 episodes", text: "Trace every turning point from the first raven to the last crown.", href: "#/timeline" },
@@ -116,7 +116,7 @@
             <button class="cinematic-prologue__skip" type="button" data-cinematic-skip>Enter the living realm</button>
           </div>
           <aside class="cinematic-prologue__focus" data-cinematic-focus aria-label="Featured character">
-            <div class="cinematic-prologue__focus-image-wrap"><img data-cinematic-focus-image class="cinematic-prologue__focus-image" src="assets/actors/jon-snow.jpg" alt=""></div>
+            <div class="cinematic-prologue__focus-image-wrap"><img data-cinematic-focus-image class="cinematic-prologue__focus-image" src="assets/characters/jon-snow-visual.png" alt=""></div>
             <div class="cinematic-prologue__focus-copy"><span data-cinematic-focus-role></span><strong data-cinematic-focus-name></strong><a data-cinematic-focus-link href="#/character/jon-snow">Open dossier <span aria-hidden="true">↗</span></a></div>
           </aside>
           <div class="cinematic-prologue__moments" aria-label="Story moments" data-cinematic-moments></div>

@@ -18,10 +18,10 @@
     lore: "Lore"
   });
   const JOURNEY_PEOPLE = Object.freeze([
-    { id: "jon-snow", label: "Jon Snow", portrait: "assets/actors/jon-snow.jpg" },
-    { id: "arya-stark", label: "Arya Stark", portrait: "assets/actors/arya-stark.jpg" },
-    { id: "daenerys-targaryen", label: "Daenerys Targaryen", portrait: "assets/actors/daenerys-targaryen.jpg" },
-    { id: "jaime-lannister", label: "Jaime Lannister", portrait: "assets/actors/jaime-lannister.jpg" }
+    { id: "jon-snow", label: "Jon Snow", portrait: "assets/characters/jon-snow-visual.png" },
+    { id: "arya-stark", label: "Arya Stark", portrait: "assets/characters/arya-visual.png" },
+    { id: "daenerys-targaryen", label: "Daenerys Targaryen", portrait: "assets/characters/daenerys-visual.png" },
+    { id: "jaime-lannister", label: "Jaime Lannister", portrait: "assets/characters/jaime-visual.png" }
   ]);
   const HOUSE_TEXT_COLORS = Object.freeze({
     Stark: "#c8ced6",

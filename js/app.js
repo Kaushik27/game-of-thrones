@@ -77,6 +77,32 @@ document.addEventListener("DOMContentLoaded", () => {
 // ---------- shared small helpers ----------
 function setTitle(t) { document.title = t + " — Game of Thrones"; }
 
+// Cinematic layers use original in-world visual studies rather than cast
+// photography. The ordinary archive can still expose licensed identity data,
+// but these assets keep the film surfaces inside the world of the story.
+const CINEMATIC_VISUALS = Object.freeze({
+  "jon-snow": "assets/characters/jon-snow-visual.png",
+  "daenerys-targaryen": "assets/characters/daenerys-visual.png",
+  "tyrion-lannister": "assets/characters/tyrion-visual.png",
+  "arya-stark": "assets/characters/arya-visual.png",
+  "jaime-lannister": "assets/characters/jaime-visual.png"
+});
+
+function cinematicVisualFor(characterId) {
+  return CINEMATIC_VISUALS[characterId] || "";
+}
+
+function cinematicPortraitHTML(character, size) {
+  if (!character) return "";
+  const source = cinematicVisualFor(character.id);
+  if (source) {
+    return `<img class="cinematic-visual" src="${escapeHTML(source)}" alt="Original in-world visual study for ${escapeHTML(character.name)}" width="${size}" height="${size}" loading="lazy" decoding="async">`;
+  }
+  const color = character.sigilColor || getHouseColor(character.house);
+  const art = typeof generativeAvatarSVG === "function" ? generativeAvatarSVG(character) : initialsFor(character.name);
+  return `<span class="cinematic-visual cinematic-visual--illustration" role="img" aria-label="Original illustrated visual study for ${escapeHTML(character.name)}" style="--cinematic-visual-accent:${escapeHTML(color)}">${art}</span>`;
+}
+
 function navigateFeatureTarget(target) {
   const destination = String(target || "").trim();
   if (!destination) return;
@@ -499,8 +525,8 @@ function viewCharacter(app, params) {
             <button type="button" class="character-film__enter" data-character-film-enter>Open the dossier <span aria-hidden="true">↓</span></button>
           </div>
           <figure class="character-film__portrait">
-            <div class="character-film__portrait-frame">${avatarHTML(c, 250)}</div>
-            <figcaption>${escapeHTML(c.actor)} <span aria-hidden="true">·</span> on screen</figcaption>
+            <div class="character-film__portrait-frame">${cinematicPortraitHTML(c, 250)}</div>
+            <figcaption>Original visual study <span aria-hidden="true">·</span> in-world</figcaption>
           </figure>
           <nav class="character-film__chapters" aria-label="Character story chapters">
             <button type="button" data-film-jump="title" aria-current="true"><span>01</span> Entrance</button>
@@ -1675,7 +1701,7 @@ function viewQuotes(app, params, query) {
     const episode = (typeof EPISODES !== "undefined" && Array.isArray(EPISODES))
       ? EPISODES.find(item => item.season === quote.season && item.characterIds && item.characterIds.includes(quote.characterId))
       : null;
-    filmQuote.innerHTML = `<span class="voices-film__mark" aria-hidden="true">“</span><blockquote>${escapeHTML(quote.text)}</blockquote><div class="voices-film__speaker"><div class="voices-film__portrait">${avatarHTML(c, 58)}</div><div><strong>${escapeHTML(c ? c.name : "Unknown voice")}</strong><span>${escapeHTML(c ? c.house : "The realm")} · Season ${quote.season}</span></div></div><p class="voices-film__context">${escapeHTML(interludeContext[quote.id] || "A line remembered long after the scene has ended.")}</p><p class="voices-film__episode">${episode ? `Episode context · ${escapeHTML(episode.title)}` : `Season ${quote.season} · Featured voice`} ${themes.length ? `· ${escapeHTML(themes[0])}` : ""}</p><a class="voices-button voices-button--solid" href="#/timeline?season=${quote.season}&mode=consequences">Explore this moment <span aria-hidden="true">↗</span></a>`;
+    filmQuote.innerHTML = `<span class="voices-film__mark" aria-hidden="true">“</span><blockquote>${escapeHTML(quote.text)}</blockquote><div class="voices-film__speaker"><div class="voices-film__portrait">${cinematicPortraitHTML(c, 58)}</div><div><strong>${escapeHTML(c ? c.name : "Unknown voice")}</strong><span>${escapeHTML(c ? c.house : "The realm")} · Season ${quote.season}</span></div></div><p class="voices-film__context">${escapeHTML(interludeContext[quote.id] || "A line remembered long after the scene has ended.")}</p><p class="voices-film__episode">${episode ? `Episode context · ${escapeHTML(episode.title)}` : `Season ${quote.season} · Featured voice`} ${themes.length ? `· ${escapeHTML(themes[0])}` : ""}</p><a class="voices-button voices-button--solid" href="#/timeline?season=${quote.season}&mode=consequences">Explore this moment <span aria-hidden="true">↗</span></a>`;
     filmRoot.dataset.quoteId = quote.id;
     filmDots.innerHTML = interludeIds.map((id, index) => `<button type="button" role="tab" class="voices-film__dot" data-voices-index="${index}" aria-label="Quote ${index + 1}" aria-selected="${String(index === filmIndex)}"><span aria-hidden="true">0${index + 1}</span></button>`).join("");
   }
