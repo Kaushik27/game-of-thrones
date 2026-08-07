@@ -7,13 +7,6 @@
   "use strict";
 
   const mountedRoots = new WeakMap();
-  const IN_WORLD_CHARACTER_ART = Object.freeze({
-    "jon-snow": "assets/characters/jon-snow-visual.png",
-    "daenerys-targaryen": "assets/characters/daenerys-visual.png",
-    "tyrion-lannister": "assets/characters/tyrion-visual.png",
-    "arya-stark": "assets/characters/arya-visual.png",
-    "jaime-lannister": "assets/characters/jaime-visual.png"
-  });
   const seasonNumbers = [1, 2, 3, 4, 5, 6, 7, 8];
   const iconPaths = Object.freeze({
     character: "assets/icons/person.svg",
@@ -226,10 +219,15 @@
   }
 
   function photoPathFor(runtime, characterId) {
-    // The cinematic map uses in-world visual studies, never cast photography.
-    // Keep the actor-photo dependency available for legacy consumers, but do
-    // not let it leak into this film surface.
-    return safeAssetPath(IN_WORLD_CHARACTER_ART[characterId] || "", "");
+    if (!runtime.actorPhotoFor || !characterId) return "";
+    try {
+      const photo = runtime.actorPhotoFor(characterId);
+      if (typeof photo === "string") return safeAssetPath(photo, "");
+      if (photo && typeof photo.file === "string") return safeAssetPath(photo.file, "");
+    } catch (error) {
+      return "";
+    }
+    return "";
   }
 
   function normalizedScreenPosition(source, index) {
@@ -1180,6 +1178,10 @@
 
     function updateStory(view) {
       dom.shell.style.setProperty("--journey-accent", view.accent);
+      dom.fallbackImage.dataset.change = String(Date.now());
+      global.setTimeout(() => {
+        if (dom.fallbackImage.dataset.change) delete dom.fallbackImage.dataset.change;
+      }, 900);
       dom.fallbackImage.src = safeAssetPath(view.background, "assets/ui/war-table-stone.jpg");
       dom.kicker.textContent = view.kicker || `Season ${view.season}`;
       dom.title.textContent = view.title || `Season ${view.season}`;

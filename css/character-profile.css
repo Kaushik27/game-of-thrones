@@ -141,12 +141,10 @@
 .character-film__enter { display: inline-flex; align-items: center; gap: 18px; min-height: 48px; margin-top: 28px; padding: 10px 17px; border: 1px solid rgba(212, 179, 106, 0.7); background: rgba(4, 8, 10, 0.6); color: #f0e3c5; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: background 180ms ease, border-color 180ms ease, transform 180ms ease; }
 .character-film__enter:hover, .character-film__enter:focus-visible { border-color: #f0da9a; background: rgba(212, 179, 106, 0.16); transform: translateY(-2px); }
 .character-film__enter:focus-visible, .character-film__chapters button:focus-visible { outline: 2px solid #f0da9a; outline-offset: 3px; }
-.character-film__portrait { position: absolute; z-index: 4; right: clamp(32px, 10vw, 168px); bottom: clamp(92px, 13vh, 150px); width: clamp(230px, 30vw, 440px); margin: 0; opacity: 0.98; transform: translate3d(calc(var(--film-pointer-x, 0) * 8px), calc(var(--film-pointer-y, 0) * 6px), 0); transition: opacity 700ms ease, transform 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
-.character-film__portrait-frame { overflow: hidden; aspect-ratio: 16 / 10; border: 1px solid rgba(212, 179, 106, 0.62); background: #0b1114; box-shadow: 0 24px 80px rgba(0, 0, 0, 0.58); }
-.character-film__portrait .cinematic-visual { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; filter: saturate(0.86) contrast(1.08); }
-.character-film__portrait .cinematic-visual--illustration { display: grid; place-items: center; background: radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--cinematic-visual-accent) 30%, transparent), transparent 55%), #0b1114; }
-.character-film__portrait .avatar { display: block; width: 100% !important; height: 100% !important; min-width: 0; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
-.character-film__portrait .avatar img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; filter: saturate(0.82) contrast(1.08); }
+.character-film__portrait { position: absolute; z-index: 4; right: clamp(44px, 13vw, 210px); bottom: clamp(92px, 13vh, 150px); width: clamp(190px, 22vw, 320px); margin: 0; opacity: 0.98; transform: translate3d(calc(var(--film-pointer-x, 0) * 8px), calc(var(--film-pointer-y, 0) * 6px), 0); transition: opacity 700ms ease, transform 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.character-film__portrait-frame { display: grid; place-items: center; aspect-ratio: 3 / 4; border: 1px solid rgba(212, 179, 106, 0.62); background: #0b1114; box-shadow: 0 24px 80px rgba(0, 0, 0, 0.58); }
+.character-film__portrait .avatar { width: min(250px, 100%) !important; height: auto !important; aspect-ratio: 1; border-width: 1px !important; box-shadow: 0 0 0 5px rgba(212, 179, 106, 0.08) !important; }
+.character-film__portrait .avatar img { object-position: 50% 18%; filter: saturate(0.84) contrast(1.08); }
 .character-film__portrait figcaption { margin-top: 8px; color: #9fa09b; font-size: 0.57rem; letter-spacing: 0.13em; text-align: right; text-transform: uppercase; }
 .character-film__portrait figcaption span { color: #d4b36a; padding: 0 5px; }
 .character-film__chapters { position: absolute; z-index: 8; top: 50%; right: clamp(22px, 4vw, 66px); display: grid; gap: 8px; transform: translateY(-50%); }
