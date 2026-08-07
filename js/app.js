@@ -476,53 +476,53 @@ function viewCharacter(app, params) {
   const evs = eventsFor(c.id);
 
   app.innerHTML = `
-    <div class="page-wrap">
-      <div id="profile-header" class="ambient-glow" style="display:flex;gap:22px;align-items:center;padding:30px 0 10px;flex-wrap:wrap;--glow-color:${c.sigilColor};">
-        ${avatarHTML(c, 96)}
-        <div>
-          <h1 class="display" style="color:${c.sigilColor}">${escapeHTML(c.name)}</h1>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:6px;">
-            <a class="badge house" href="#/house/${encodeURIComponent(c.house)}" style="color:${c.sigilColor};border-color:${c.sigilColor}66;">${sigilSVG(houseSigilId(c.house), { size: 12 })} ${escapeHTML(c.house)}</a>
-            <span class="badge ${c.status}">${c.status === 'alive' ? 'Alive' : 'Dead'}</span>
-            <span class="text-dim" style="font-size:0.85rem;">Played by ${escapeHTML(c.actor)}</span>
+    <div class="character-profile" style="--character-accent:${c.sigilColor};">
+      <div class="character-profile__inner">
+        <a class="character-profile__back" href="#/characters"><span aria-hidden="true">←</span> People Intelligence</a>
+        <header id="profile-header" class="character-profile__hero">
+          <div class="character-profile__portrait">${avatarHTML(c, 112)}</div>
+          <div class="character-profile__identity">
+            <div class="character-profile__kicker">Character dossier · ${escapeHTML(c.house)}</div>
+            <h1 class="character-profile__title">${escapeHTML(c.name)}</h1>
+            <div class="character-profile__meta">
+              <a class="character-profile__house" href="#/house/${encodeURIComponent(c.house)}">${sigilSVG(houseSigilId(c.house), { size: 13 })} ${escapeHTML(c.house)}</a>
+              <span class="character-profile__status character-profile__status--${c.status}">${c.status === 'alive' ? 'Alive' : 'Dead'}</span>
+              <span class="character-profile__actor">Played by ${escapeHTML(c.actor)}</span>
+            </div>
+            <p class="character-profile__bio">${escapeHTML(c.bio)}</p>
           </div>
-          <p style="max-width:760px;color:var(--text-dim);line-height:1.6;margin-top:14px;">${escapeHTML(c.bio)}</p>
+          <div class="character-profile__signal" aria-hidden="true"><span></span><span></span><span></span></div>
+        </header>
+
+        <nav class="tabs character-profile__tabs" aria-label="Character dossier sections">
+          <button class="tab-btn active" data-tab="overview">Overview <span>01</span></button>
+          <button class="tab-btn" data-tab="graph">Relations Graph <span>02</span></button>
+          <button class="tab-btn" data-tab="timeline">Timeline <span>03</span></button>
+        </nav>
+
+        <div class="tab-panel active character-profile__panel" id="tab-overview">
+          <div class="character-profile__section-head"><div><span class="character-profile__eyebrow">The web around them</span><h2>Relations</h2></div><span class="character-profile__section-count">${rels.length} recorded ties</span></div>
+          <div class="character-profile__relations">${rels.length ? rels.map(r => `
+            <a class="character-profile__relation" href="#/character/${r.other.id}">
+              <span class="character-profile__relation-avatar">${avatarHTML(r.other, 42)}</span>
+              <span class="character-profile__relation-copy"><strong>${escapeHTML(r.other.name)}</strong><small>${TYPE_ICON[r.rel.type]} ${escapeHTML(r.rel.label)}</small></span>
+              <span class="character-profile__relation-arrow" aria-hidden="true">↗</span>
+            </a>`).join("") : `<div class="character-profile__empty">No recorded relations.</div>`}</div>
+          ${cq.length ? `<section class="character-profile__quotes"><div class="character-profile__section-head"><div><span class="character-profile__eyebrow">In their own words</span><h2>Quotes</h2></div><a href="#/quotes?quote=${encodeURIComponent(cq[0].id)}">Open quote archive <span aria-hidden="true">↗</span></a></div>${cq.map(q => `<a class="character-profile__quote" href="#/quotes?quote=${encodeURIComponent(q.id)}"><span aria-hidden="true">“</span><span>${escapeHTML(q.text)}</span><small>Season ${q.season} · Open line ↗</small></a>`).join("")}</section>` : ""}
         </div>
-      </div>
 
-      <div class="tabs">
-        <button class="tab-btn active" data-tab="overview">Overview</button>
-        <button class="tab-btn" data-tab="graph">Relations Graph</button>
-        <button class="tab-btn" data-tab="timeline">Timeline</button>
-      </div>
-
-      <div class="tab-panel active" id="tab-overview">
-        <div class="section">
-          <div class="section-title">Relations</div>
-          <ul style="list-style:none;padding:0;">${rels.length ? rels.map(r => `
-            <li style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--panel-border);">
-              ${avatarHTML(r.other, 34)}
-              <div>
-                <a href="#/character/${r.other.id}" style="color:var(--text);font-weight:600;">${escapeHTML(r.other.name)}</a>
-                <div class="text-dim" style="font-size:0.85rem;">${TYPE_ICON[r.rel.type]} ${escapeHTML(r.rel.label)}</div>
-              </div>
-            </li>`).join("") : `<li class="text-dim">No recorded relations.</li>`}</ul>
+        <div class="tab-panel character-profile__panel" id="tab-graph">
+          <div class="character-profile__section-head"><div><span class="character-profile__eyebrow">One degree of separation</span><h2>Relations Graph</h2></div><span class="character-profile__section-count">Drag nodes · double-click to open</span></div>
+          <p class="character-profile__helper" id="mini-graph-hint">Showing ${escapeHTML(c.name)} and their direct connections. Click a node to re-center the graph on them.</p>
+          <div id="mini-graph-host" class="character-profile__graph"></div>
+          <p id="mini-graph-profile-link" class="character-profile__graph-link"></p>
         </div>
-        ${cq.length ? `<div class="section"><div class="section-title">Quotes</div>${cq.map(q => `<div class="quote-mini" style="border-left:3px solid var(--accent);padding:10px 14px;margin:10px 0;font-style:italic;color:var(--text-dim);background:var(--panel-bg);border-radius:0 6px 6px 0;">"${escapeHTML(q.text)}"</div>`).join("")}</div>` : ""}
-      </div>
 
-      <div class="tab-panel" id="tab-graph">
-        <p class="text-dim" id="mini-graph-hint">Showing ${escapeHTML(c.name)} and their direct connections. Click a node to re-center the graph on them — double-click (or the link below) to open their full profile.</p>
-        <div id="mini-graph-host" style="width:100%;height:480px;background:var(--panel-bg);border:1px solid var(--panel-border);border-radius:var(--radius);"></div>
-        <p style="margin-top:10px;" id="mini-graph-profile-link"></p>
-      </div>
-
-      <div class="tab-panel" id="tab-timeline">
-        <div id="char-timeline">${evs.length ? evs.map(e => `
-          <div class="timeline-item" style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--panel-border);">
-            <div class="season-badge" style="flex-shrink:0;font-family:'Cinzel',serif;color:var(--accent);font-size:0.8rem;width:62px;">S${e.season}</div>
-            <div><h4 style="margin:0 0 4px;">${escapeHTML(e.title)}</h4><p style="margin:0;color:var(--text-dim);font-size:0.88rem;">${escapeHTML(e.summary)}</p></div>
-          </div>`).join("") : `<div class="empty-state">No major timeline events recorded for this character.</div>`}</div>
+        <div class="tab-panel character-profile__panel" id="tab-timeline">
+          <div class="character-profile__section-head"><div><span class="character-profile__eyebrow">Across eight seasons</span><h2>Timeline</h2></div><span class="character-profile__section-count">${evs.length} recorded moments</span></div>
+          <div id="char-timeline" class="character-profile__timeline">${evs.length ? evs.map(e => `
+            <article class="character-profile__event"><div class="character-profile__event-season">S${e.season}</div><div><h3>${escapeHTML(e.title)}</h3><p>${escapeHTML(e.summary)}</p></div></article>`).join("") : `<div class="character-profile__empty">No major timeline events recorded for this character.</div>`}</div>
+        </div>
       </div>
     </div>
   `;
