@@ -469,6 +469,7 @@ function viewCharacter(app, params) {
           <img class="character-film__backdrop" src="${escapeHTML(cinematicBackdrop)}" alt="" aria-hidden="true">
           <div class="character-film__veil" aria-hidden="true"></div>
           <div class="character-film__frame" aria-hidden="true"></div>
+          <div class="character-film__transition" data-film-transition aria-hidden="true"></div>
           <div class="character-film__scene character-film__scene--title" data-film-scene="title">
             <p class="character-film__eyebrow">A living portrait <span aria-hidden="true">·</span> ${escapeHTML(c.house)}</p>
             <p class="character-film__chapter">Chapter 01 <span aria-hidden="true">/</span> The first impression</p>
@@ -568,11 +569,14 @@ function viewCharacter(app, params) {
   const filmProgress = app.querySelector("[data-film-progress]");
   const filmStatus = app.querySelector("[data-character-film-status]");
   const cinematicEnter = app.querySelector("[data-character-film-enter]");
+  const filmFx = window.CharacterFilmFX && typeof window.CharacterFilmFX.mount === "function"
+    ? window.CharacterFilmFX.mount(filmStage, { reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches })
+    : null;
   const profileHeader = app.querySelector("#profile-header");
   let filmFrame = 0;
   let filmDestroyed = false;
-  const filmScenesById = Object.fromEntries(filmScenes.map(scene => [scene.dataset.filmScene, scene]));
   const filmOrder = ["title", "quote", "turn", "archive"];
+  let previousFilmScene = "title";
   const updateFilm = () => {
     filmFrame = 0;
     if (filmDestroyed || !film) return;
@@ -582,6 +586,12 @@ function viewCharacter(app, params) {
     const sceneIndex = Math.min(filmOrder.length - 1, Math.floor(progressValue * filmOrder.length));
     const sceneId = filmOrder[sceneIndex];
     filmStage.dataset.scene = sceneId;
+    if (sceneId !== previousFilmScene) {
+      previousFilmScene = sceneId;
+      filmFx?.transition(sceneId);
+      filmStage.dataset.cut = String(Date.now());
+      window.setTimeout(() => filmStage.removeAttribute("data-cut"), 720);
+    }
     filmStage.style.setProperty("--film-progress", progressValue.toFixed(4));
     if (filmProgress) filmProgress.style.transform = `scaleX(${progressValue})`;
     filmScenes.forEach(scene => scene.setAttribute("aria-hidden", scene.dataset.filmScene === sceneId ? "false" : "true"));
@@ -610,7 +620,7 @@ function viewCharacter(app, params) {
   if (film) {
     const chromeObserver = new IntersectionObserver(entries => {
       const entry = entries[0];
-      if (!document.body.contains(film)) { chromeObserver.disconnect(); filmDestroyed = true; return; }
+      if (!document.body.contains(film)) { chromeObserver.disconnect(); filmDestroyed = true; filmFx?.destroy(); return; }
       document.body.classList.toggle("character-cinematic-route--archive", !entry.isIntersecting || entry.boundingClientRect.top < 0);
     }, { threshold: 0.08 });
     chromeObserver.observe(film);
