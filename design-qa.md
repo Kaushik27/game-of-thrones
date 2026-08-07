@@ -77,4 +77,10 @@ The focused reference/People comparison keeps both screens at 1265 × 712 and co
 - Browser verification: `#/character/jon-snow` rendered at 1280 × 720 and 390 × 844; overview, Relations Graph, and Timeline tabs switched correctly; 36 relations and 12 timeline records rendered; no console errors or warnings; document width stayed within the mobile viewport.
 - The old `war-table-stone.jpg` background is no longer visible inside the character route. Existing character, house, quote, relation, graph, timeline, and footer links remain functional.
 
+## Cinematic Explore prologue
+
+- The Explore route now opens with a scroll-driven four-act prologue: First, the ice; Then, the fire; A story of power; and Enter the living realm. Existing local realm artwork supplies the atmosphere, while the current interactive Realm Journey remains the destination below the handoff.
+- Browser verification: desktop 1280 × 720 and mobile 390 × 844 both render the opening without horizontal overflow. Scroll progress updates the active act/title, chapter buttons jump to the correct progress, the entry CTA reaches the handoff, and the season journey link lands on the existing 3D route.
+- Interaction and accessibility: chapter controls expose `aria-current`, the live status region announces act changes, reduced-motion uses instant navigation, and the browser console remains clean.
+
 final result: passed
