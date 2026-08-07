@@ -1502,7 +1502,7 @@ function viewQuotes(app, params, query) {
         </div>
       </div>
 
-      <section class="voices-spotlight" aria-labelledby="voices-spotlight-title">
+      <section class="voices-spotlight" aria-label="Quote spotlight">
         <div class="voices-spotlight__meta"><span class="voices-kicker">The line of the night</span><button class="voices-button voices-button--ghost" type="button" id="voices-surprise">Surprise me <span aria-hidden="true">↗</span></button></div>
         <div class="voices-spotlight__body" id="voices-spotlight-body"></div>
       </section>
