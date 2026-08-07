@@ -61,7 +61,7 @@ function viewHome(app) {
   setTitle("Home");
   const majorHouses = Object.keys(HOUSE_COLORS).filter(h => h !== "Unaffiliated");
   app.innerHTML = `
-    <div class="hero">
+    <div class="hero ambient-glow">
       <h1 class="display">Game of Thrones</h1>
       <p>A complete interactive reference for the Seven Kingdoms — every character, every house, the war for the Iron Throne, and everything that happened along the way.</p>
       <div class="stat-row" id="stat-row"></div>
@@ -137,7 +137,7 @@ function viewCharacters(app, params, query) {
   setTitle("Characters");
   app.innerHTML = `
     <div class="page-wrap">
-      <div class="hero" style="padding-top:36px;padding-bottom:10px;">
+      <div class="hero ambient-glow" style="padding-top:36px;padding-bottom:10px;">
         <h1 class="display">Characters of Westeros</h1>
         <p>Every major character, searchable and filterable. Click through for a full profile with bio, relations, and personal timeline.</p>
       </div>
@@ -353,7 +353,7 @@ function viewCharacter(app, params) {
 
   app.innerHTML = `
     <div class="page-wrap">
-      <div id="profile-header" style="display:flex;gap:22px;align-items:center;padding:30px 0 10px;flex-wrap:wrap;">
+      <div id="profile-header" class="ambient-glow" style="display:flex;gap:22px;align-items:center;padding:30px 0 10px;flex-wrap:wrap;--glow-color:${c.sigilColor};">
         ${avatarHTML(c, 96)}
         <div>
           <h1 class="display" style="color:${c.sigilColor}">${escapeHTML(c.name)}</h1>
@@ -469,7 +469,7 @@ function viewHouses(app) {
   const houses = Object.keys(HOUSE_COLORS);
   app.innerHTML = `
     <div class="page-wrap">
-      <div class="hero" style="padding-top:36px;padding-bottom:10px;">
+      <div class="hero ambient-glow" style="padding-top:36px;padding-bottom:10px;">
         <h1 class="display">The Great Houses</h1>
         <p>Sigils, words, seats, and family trees for every house of Westeros — plus the Night's Watch and the Free Folk beyond the Wall.</p>
       </div>
@@ -511,7 +511,7 @@ function viewHouse(app, params) {
 
   app.innerHTML = `
     <div class="page-wrap">
-      <div id="house-header" style="display:flex;gap:22px;align-items:center;padding:30px 0 10px;flex-wrap:wrap;">
+      <div id="house-header" class="ambient-glow" style="display:flex;gap:22px;align-items:center;padding:30px 0 10px;flex-wrap:wrap;--glow-color:${color};">
         <div id="house-sigil-big" style="width:92px;height:92px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid ${color};background:${color}1c;color:${color};flex-shrink:0;">${sigilSVG(info.sigil, { size: 46 })}</div>
         <div>
           <h1 class="display" style="color:${color}">House ${escapeHTML(houseName)}</h1>
@@ -678,7 +678,7 @@ function viewMap(app) {
   setTitle("Map of Westeros");
   app.innerHTML = `
     <div class="page-wrap">
-      <div class="hero" style="padding-top:36px;padding-bottom:6px;">
+      <div class="hero ambient-glow" style="padding-top:36px;padding-bottom:6px;">
         <h1 class="display">Map of Westeros</h1>
         <p>A stylized map of the Seven Kingdoms. Hover a region to see its ruling house, click to see its characters and history.</p>
       </div>
@@ -799,7 +799,7 @@ function viewTimeline(app) {
 
   app.innerHTML = `
     <div class="page-wrap">
-      <div class="hero" style="padding-top:36px;padding-bottom:6px;">
+      <div class="hero ambient-glow" style="padding-top:36px;padding-bottom:6px;">
         <h1 class="display">Timeline of Westeros</h1>
         <p>Scrub through the seasons and filter by house or event type to trace how the War of the Five Kings became the war for the dawn — and the war for the throne.</p>
       </div>
@@ -886,7 +886,7 @@ function viewBattles(app) {
   }
   app.innerHTML = `
     <div class="page-wrap">
-      <div class="hero" style="padding-top:36px;padding-bottom:10px;">
+      <div class="hero ambient-glow" style="padding-top:36px;padding-bottom:10px;">
         <h1 class="display">Battles &amp; Major Events</h1>
         <p>The turning points of the war for the Iron Throne — and the war for the dawn.</p>
       </div>
@@ -934,7 +934,7 @@ function viewQuiz(app) {
 
   app.innerHTML = `
     <div class="page-wrap">
-      <div class="hero" style="padding-top:36px;padding-bottom:6px;">
+      <div class="hero ambient-glow" style="padding-top:36px;padding-bottom:6px;">
         <h1 class="display">Test Your Knowledge</h1>
         <p>Ten questions per round. Pick a mode and see how well you truly know Westeros.</p>
       </div>
@@ -1085,7 +1085,7 @@ function viewQuotes(app) {
 
   app.innerHTML = `
     <div class="page-wrap">
-      <div class="hero" style="padding-top:36px;padding-bottom:10px;">
+      <div class="hero ambient-glow" style="padding-top:36px;padding-bottom:10px;">
         <h1 class="display">Quote Wall</h1>
         <p>The lines Westeros never forgot. Search by character or browse the whole wall.</p>
       </div>

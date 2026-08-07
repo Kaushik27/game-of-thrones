@@ -138,6 +138,32 @@ img { max-width: 100%; }
   #site-nav .nav-links a { padding: 10px 12px; }
 }
 
+/* ---------- Ambient glow ----------
+   Soft, low-opacity radial glow behind hero/section headers, tinted with
+   the current house accent color (via --glow-color, default gold). Kept
+   very subtle (0.1 opacity) and only pulses if the user allows motion. */
+.ambient-glow { position: relative; isolation: isolate; }
+.ambient-glow::before {
+  content: "";
+  position: absolute;
+  top: -60px; left: 50%;
+  width: min(640px, 90vw); height: 320px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, var(--glow-color, var(--accent)) 0%, transparent 72%);
+  opacity: 0.1;
+  filter: blur(6px);
+  z-index: -1;
+  pointer-events: none;
+  animation: glow-pulse 8s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ambient-glow::before { animation: none; }
+}
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.08; }
+  50% { opacity: 0.13; }
+}
+
 /* ---------- Hero ---------- */
 .hero {
   padding: 64px 20px 40px;
