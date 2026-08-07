@@ -85,4 +85,11 @@ The focused reference/People comparison keeps both screens at 1265 × 712 and co
 - Browser verification: desktop 1280 × 720 and mobile 390 × 844 both render the opening without horizontal overflow. Scroll progress updates the active act/title, chapter buttons jump to the correct progress, the entry CTA reaches the handoff, and the season journey link lands on the existing 3D route.
 - Interaction and accessibility: chapter controls expose `aria-current`, the live status region announces act changes, reduced-motion uses instant navigation, and the browser console remains clean.
 
+## Cinematic character entrance
+
+- The character route now opens with a full-viewport authored beat before the dossier: local realm artwork, a verified portrait through the existing avatar helper, character-specific tagline, actor credit, and the first recorded quote.
+- The new `Continue to dossier` control scrolls to the existing profile header, announces the handoff through a live status region, and leaves every overview, graph, timeline, relation, and quote link unchanged.
+- Browser verification: `#/character/jon-snow` rendered at the desktop audit viewport with no broken cinematic images; the rendered portrait resolved to the existing Jon Snow actor asset, the quote resolved to `I know nothing, Jon Snow.`, and the handoff landed on `#profile-header` with `Dossier opened` announced. Pointer parallax is disabled under reduced motion and the mobile breakpoint stacks the portrait/quote without adding document overflow.
+- Focused capture: `/tmp/got-jon-cinematic-final.png`.
+
 final result: passed

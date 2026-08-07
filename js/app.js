@@ -444,9 +444,48 @@ function viewCharacter(app, params) {
   const rels = relationsFor(c.id);
   const cq = quotesFor(c.id);
   const evs = eventsFor(c.id);
+  const cinematicTaglines = {
+    "jon-snow": "The reluctant heir",
+    "daenerys-targaryen": "The breaker of chains",
+    "arya-stark": "No one. Everyone.",
+    "tyrion-lannister": "The mind behind the throne",
+    "sansa-stark": "The north remembers",
+    "jaime-lannister": "The kingslayer who came home"
+  };
+  const cinematicTagline = cinematicTaglines[c.id] || "A life written in fire and ice";
+  const cinematicBackdrop = ["Stark", "Night's Watch", "Free Folk"].includes(c.house)
+    ? "assets/ui/north-journey-bg.jpg"
+    : ["Targaryen", "Martell", "Greyjoy"].includes(c.house)
+      ? "assets/ui/essos-journey-bg.jpg"
+      : "assets/ui/capital-journey-bg.jpg";
+  const cinematicQuote = cq[0] || { text: "The story remembers.", speaker: c.name };
 
   app.innerHTML = `
     <div class="character-profile" style="--character-accent:${c.sigilColor};">
+      <section class="character-cinematic" data-character-cinematic aria-labelledby="character-cinematic-title" style="--character-backdrop:url('${cinematicBackdrop}');">
+        <img class="character-cinematic__backdrop" src="${escapeHTML(cinematicBackdrop)}" alt="" aria-hidden="true">
+        <div class="character-cinematic__veil" aria-hidden="true"></div>
+        <div class="character-cinematic__grid" aria-hidden="true"></div>
+        <div class="character-cinematic__copy">
+          <p class="character-cinematic__eyebrow">A living portrait <span aria-hidden="true">·</span> ${escapeHTML(c.house)}</p>
+          <p class="character-cinematic__chapter">Chapter 01 <span aria-hidden="true">/</span> The first impression</p>
+          <h1 id="character-cinematic-title">${escapeHTML(c.name)}</h1>
+          <p class="character-cinematic__tagline">${escapeHTML(cinematicTagline)}</p>
+          <p class="character-cinematic__summary">${escapeHTML(c.bio)}</p>
+          <blockquote class="character-cinematic__quote">
+            <span class="character-cinematic__quote-mark" aria-hidden="true">“</span>
+            <p>${escapeHTML(cinematicQuote.text)}</p>
+            <cite>— ${escapeHTML(cinematicQuote.speaker || c.name)}</cite>
+          </blockquote>
+          <button type="button" class="character-cinematic__enter" data-character-cinematic-enter>Continue to dossier <span aria-hidden="true">↓</span></button>
+        </div>
+        <figure class="character-cinematic__portrait">
+          <div class="character-cinematic__portrait-frame">${avatarHTML(c, 250)}</div>
+          <figcaption>${escapeHTML(c.actor)} <span aria-hidden="true">·</span> on screen</figcaption>
+        </figure>
+        <p class="character-cinematic__scroll" aria-hidden="true"><span></span> Scroll to uncover the story</p>
+        <p class="character-cinematic__status" data-character-cinematic-status role="status" aria-live="polite"></p>
+      </section>
       <div class="character-profile__inner">
         <a class="character-profile__back" href="#/characters"><span aria-hidden="true">←</span> People Intelligence</a>
         <header id="profile-header" class="character-profile__hero">
@@ -496,6 +535,28 @@ function viewCharacter(app, params) {
       </div>
     </div>
   `;
+
+  const cinematic = app.querySelector("[data-character-cinematic]");
+  const cinematicEnter = app.querySelector("[data-character-cinematic-enter]");
+  const profileHeader = app.querySelector("#profile-header");
+  const cinematicStatus = app.querySelector("[data-character-cinematic-status]");
+  if (cinematicEnter && profileHeader) {
+    cinematicEnter.addEventListener("click", () => {
+      cinematic.dataset.revealed = "true";
+      if (cinematicStatus) cinematicStatus.textContent = "Dossier opened";
+      profileHeader.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+  if (cinematic && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const updateParallax = event => {
+      const bounds = cinematic.getBoundingClientRect();
+      const x = Math.max(-1, Math.min(1, ((event.clientX - bounds.left) / bounds.width) * 2 - 1));
+      const y = Math.max(-1, Math.min(1, ((event.clientY - bounds.top) / bounds.height) * 2 - 1));
+      cinematic.style.setProperty("--cinematic-pointer-x", x.toFixed(3));
+      cinematic.style.setProperty("--cinematic-pointer-y", y.toFixed(3));
+    };
+    cinematic.addEventListener("pointermove", updateParallax, { passive: true });
+  }
 
   // The mini-graph defaults to the profile's own character + their direct
   // (1-hop) connections. Clicking a neighboring node re-centers the graph
