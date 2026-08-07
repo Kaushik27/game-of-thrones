@@ -48,6 +48,8 @@ function router() {
   const { path, query } = parseHash();
   destroyActiveView();
   document.body.classList.toggle("realm-journey-route", path === "/");
+  document.body.classList.toggle("character-cinematic-route", /^\/character\//.test(path));
+  document.body.classList.remove("character-cinematic-route--archive");
   for (const route of APP_ROUTES) {
     const m = path.match(route.pattern);
     if (m) {
@@ -462,29 +464,52 @@ function viewCharacter(app, params) {
 
   app.innerHTML = `
     <div class="character-profile" style="--character-accent:${c.sigilColor};">
-      <section class="character-cinematic" data-character-cinematic aria-labelledby="character-cinematic-title" style="--character-backdrop:url('${cinematicBackdrop}');">
-        <img class="character-cinematic__backdrop" src="${escapeHTML(cinematicBackdrop)}" alt="" aria-hidden="true">
-        <div class="character-cinematic__veil" aria-hidden="true"></div>
-        <div class="character-cinematic__grid" aria-hidden="true"></div>
-        <div class="character-cinematic__copy">
-          <p class="character-cinematic__eyebrow">A living portrait <span aria-hidden="true">·</span> ${escapeHTML(c.house)}</p>
-          <p class="character-cinematic__chapter">Chapter 01 <span aria-hidden="true">/</span> The first impression</p>
-          <h1 id="character-cinematic-title">${escapeHTML(c.name)}</h1>
-          <p class="character-cinematic__tagline">${escapeHTML(cinematicTagline)}</p>
-          <p class="character-cinematic__summary">${escapeHTML(c.bio)}</p>
-          <blockquote class="character-cinematic__quote">
-            <span class="character-cinematic__quote-mark" aria-hidden="true">“</span>
-            <p>${escapeHTML(cinematicQuote.text)}</p>
-            <cite>— ${escapeHTML(cinematicQuote.speaker || c.name)}</cite>
-          </blockquote>
-          <button type="button" class="character-cinematic__enter" data-character-cinematic-enter>Continue to dossier <span aria-hidden="true">↓</span></button>
+      <section class="character-film" data-character-film aria-labelledby="character-film-title" style="--character-backdrop:url('${cinematicBackdrop}');">
+        <div class="character-film__stage" data-character-film-stage data-scene="title">
+          <img class="character-film__backdrop" src="${escapeHTML(cinematicBackdrop)}" alt="" aria-hidden="true">
+          <div class="character-film__veil" aria-hidden="true"></div>
+          <div class="character-film__frame" aria-hidden="true"></div>
+          <div class="character-film__scene character-film__scene--title" data-film-scene="title">
+            <p class="character-film__eyebrow">A living portrait <span aria-hidden="true">·</span> ${escapeHTML(c.house)}</p>
+            <p class="character-film__chapter">Chapter 01 <span aria-hidden="true">/</span> The first impression</p>
+            <h1 id="character-film-title">${escapeHTML(c.name)}</h1>
+            <p class="character-film__tagline">${escapeHTML(cinematicTagline)}</p>
+          </div>
+          <div class="character-film__scene character-film__scene--quote" data-film-scene="quote" aria-hidden="true">
+            <p class="character-film__chapter">Chapter 02 <span aria-hidden="true">/</span> A line that remains</p>
+            <blockquote>
+              <span class="character-film__quote-mark" aria-hidden="true">“</span>
+              <p>${escapeHTML(cinematicQuote.text)}</p>
+              <cite>— ${escapeHTML(cinematicQuote.speaker || c.name)}</cite>
+            </blockquote>
+          </div>
+          <div class="character-film__scene character-film__scene--turn" data-film-scene="turn" aria-hidden="true">
+            <p class="character-film__chapter">Chapter 03 <span aria-hidden="true">/</span> The turning point</p>
+            <p class="character-film__season">Season ${escapeHTML((evs[0] && evs[0].season) || "—")}</p>
+            <h2>${escapeHTML((evs[0] && evs[0].title) || "The story shifts")}</h2>
+            <p>${escapeHTML((evs[0] && evs[0].summary) || c.bio)}</p>
+            ${evs[0] ? `<a class="character-film__event-link" href="#/timeline?season=${encodeURIComponent(evs[0].season)}&mode=consequences&event=${encodeURIComponent(evs[0].id)}">Follow this moment <span aria-hidden="true">↗</span></a>` : ""}
+          </div>
+          <div class="character-film__scene character-film__scene--archive" data-film-scene="archive" aria-hidden="true">
+            <p class="character-film__chapter">Chapter 04 <span aria-hidden="true">/</span> The living dossier</p>
+            <h2>${escapeHTML(c.name)}</h2>
+            <p>${escapeHTML(c.bio)}</p>
+            <button type="button" class="character-film__enter" data-character-film-enter>Open the dossier <span aria-hidden="true">↓</span></button>
+          </div>
+          <figure class="character-film__portrait">
+            <div class="character-film__portrait-frame">${avatarHTML(c, 250)}</div>
+            <figcaption>${escapeHTML(c.actor)} <span aria-hidden="true">·</span> on screen</figcaption>
+          </figure>
+          <nav class="character-film__chapters" aria-label="Character story chapters">
+            <button type="button" data-film-jump="title" aria-current="true"><span>01</span> Entrance</button>
+            <button type="button" data-film-jump="quote" aria-current="false"><span>02</span> Voice</button>
+            <button type="button" data-film-jump="turn" aria-current="false"><span>03</span> Turning point</button>
+            <button type="button" data-film-jump="archive" aria-current="false"><span>04</span> Dossier</button>
+          </nav>
+          <div class="character-film__progress" aria-hidden="true"><span data-film-progress></span></div>
+          <p class="character-film__scroll" aria-hidden="true"><span></span> Scroll to play the story</p>
+          <p class="character-film__status" data-character-film-status role="status" aria-live="polite"></p>
         </div>
-        <figure class="character-cinematic__portrait">
-          <div class="character-cinematic__portrait-frame">${avatarHTML(c, 250)}</div>
-          <figcaption>${escapeHTML(c.actor)} <span aria-hidden="true">·</span> on screen</figcaption>
-        </figure>
-        <p class="character-cinematic__scroll" aria-hidden="true"><span></span> Scroll to uncover the story</p>
-        <p class="character-cinematic__status" data-character-cinematic-status role="status" aria-live="polite"></p>
       </section>
       <div class="character-profile__inner">
         <a class="character-profile__back" href="#/characters"><span aria-hidden="true">←</span> People Intelligence</a>
@@ -536,26 +561,65 @@ function viewCharacter(app, params) {
     </div>
   `;
 
-  const cinematic = app.querySelector("[data-character-cinematic]");
-  const cinematicEnter = app.querySelector("[data-character-cinematic-enter]");
+  const film = app.querySelector("[data-character-film]");
+  const filmStage = app.querySelector("[data-character-film-stage]");
+  const filmScenes = [...app.querySelectorAll("[data-film-scene]")];
+  const filmJumps = [...app.querySelectorAll("[data-film-jump]")];
+  const filmProgress = app.querySelector("[data-film-progress]");
+  const filmStatus = app.querySelector("[data-character-film-status]");
+  const cinematicEnter = app.querySelector("[data-character-film-enter]");
   const profileHeader = app.querySelector("#profile-header");
-  const cinematicStatus = app.querySelector("[data-character-cinematic-status]");
+  let filmFrame = 0;
+  let filmDestroyed = false;
+  const filmScenesById = Object.fromEntries(filmScenes.map(scene => [scene.dataset.filmScene, scene]));
+  const filmOrder = ["title", "quote", "turn", "archive"];
+  const updateFilm = () => {
+    filmFrame = 0;
+    if (filmDestroyed || !film) return;
+    const rect = film.getBoundingClientRect();
+    const runway = Math.max(1, film.offsetHeight - window.innerHeight);
+    const progressValue = Math.max(0, Math.min(1, -rect.top / runway));
+    const sceneIndex = Math.min(filmOrder.length - 1, Math.floor(progressValue * filmOrder.length));
+    const sceneId = filmOrder[sceneIndex];
+    filmStage.dataset.scene = sceneId;
+    filmStage.style.setProperty("--film-progress", progressValue.toFixed(4));
+    if (filmProgress) filmProgress.style.transform = `scaleX(${progressValue})`;
+    filmScenes.forEach(scene => scene.setAttribute("aria-hidden", scene.dataset.filmScene === sceneId ? "false" : "true"));
+    filmJumps.forEach(button => button.setAttribute("aria-current", button.dataset.filmJump === sceneId ? "true" : "false"));
+  };
+  const scheduleFilm = () => {
+    if (!filmFrame) filmFrame = requestAnimationFrame(updateFilm);
+  };
+  const jumpToFilmScene = sceneId => {
+    const index = Math.max(0, filmOrder.indexOf(sceneId));
+    const rect = film.getBoundingClientRect();
+    const runway = Math.max(1, film.offsetHeight - window.innerHeight);
+    window.scrollTo({ top: window.scrollY + rect.top + runway * (index / filmOrder.length + 0.012), behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  };
+  filmJumps.forEach(button => button.addEventListener("click", () => jumpToFilmScene(button.dataset.filmJump)));
+  window.addEventListener("scroll", scheduleFilm, { passive: true });
+  window.addEventListener("resize", scheduleFilm, { passive: true });
+  scheduleFilm();
   if (cinematicEnter && profileHeader) {
     cinematicEnter.addEventListener("click", () => {
-      cinematic.dataset.revealed = "true";
-      if (cinematicStatus) cinematicStatus.textContent = "Dossier opened";
-      profileHeader.scrollIntoView({ behavior: "smooth", block: "start" });
+      jumpToFilmScene("archive");
+      if (filmStatus) filmStatus.textContent = "Dossier chapter selected";
+      window.setTimeout(() => profileHeader.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" }), 500);
     });
   }
-  if (cinematic && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    const updateParallax = event => {
-      const bounds = cinematic.getBoundingClientRect();
-      const x = Math.max(-1, Math.min(1, ((event.clientX - bounds.left) / bounds.width) * 2 - 1));
-      const y = Math.max(-1, Math.min(1, ((event.clientY - bounds.top) / bounds.height) * 2 - 1));
-      cinematic.style.setProperty("--cinematic-pointer-x", x.toFixed(3));
-      cinematic.style.setProperty("--cinematic-pointer-y", y.toFixed(3));
-    };
-    cinematic.addEventListener("pointermove", updateParallax, { passive: true });
+  if (film) {
+    const chromeObserver = new IntersectionObserver(entries => {
+      const entry = entries[0];
+      if (!document.body.contains(film)) { chromeObserver.disconnect(); filmDestroyed = true; return; }
+      document.body.classList.toggle("character-cinematic-route--archive", !entry.isIntersecting || entry.boundingClientRect.top < 0);
+    }, { threshold: 0.08 });
+    chromeObserver.observe(film);
+    film.addEventListener("pointermove", event => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || window.matchMedia("(pointer: coarse)").matches) return;
+      const bounds = filmStage.getBoundingClientRect();
+      filmStage.style.setProperty("--film-pointer-x", (((event.clientX - bounds.left) / bounds.width) * 2 - 1).toFixed(3));
+      filmStage.style.setProperty("--film-pointer-y", (((event.clientY - bounds.top) / bounds.height) * 2 - 1).toFixed(3));
+    }, { passive: true });
   }
 
   // The mini-graph defaults to the profile's own character + their direct

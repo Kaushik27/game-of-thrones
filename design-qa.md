@@ -85,12 +85,12 @@ The focused reference/People comparison keeps both screens at 1265 × 712 and co
 - Browser verification: desktop 1280 × 720 and mobile 390 × 844 both render the opening without horizontal overflow. Scroll progress updates the active act/title, chapter buttons jump to the correct progress, the entry CTA reaches the handoff, and the season journey link lands on the existing 3D route.
 - Interaction and accessibility: chapter controls expose `aria-current`, the live status region announces act changes, reduced-motion uses instant navigation, and the browser console remains clean.
 
-## Cinematic character entrance
+## Cinematic character film
 
-- The character route now opens with a full-viewport authored beat before the dossier: local realm artwork, a verified portrait through the existing avatar helper, character-specific tagline, actor credit, and the first recorded quote.
-- The new `Continue to dossier` control scrolls to the existing profile header, announces the handoff through a live status region, and leaves every overview, graph, timeline, relation, and quote link unchanged.
-- The entrance uses a short staggered title/quote/CTA reveal and restrained portrait arrival; the same content is immediately visible when reduced motion is requested.
-- Browser verification: `#/character/jon-snow` rendered at the desktop audit viewport with no broken cinematic images; the rendered portrait resolved to the existing Jon Snow actor asset, the quote resolved to `I know nothing, Jon Snow.`, and the handoff landed on `#profile-header` with `Dossier opened` announced. Pointer parallax is disabled under reduced motion and the mobile breakpoint stacks the portrait/quote without adding document overflow.
-- Focused capture: `/tmp/got-jon-cinematic-final.png`.
+- The character route now behaves like a four-beat scroll film rather than a dossier with a decorative header: title card, quote card, canon turning point, then the living dossier handoff.
+- The stage is sticky while the surrounding runway becomes the playhead. The chapter rail, progress line, portrait, and local realm artwork stay in the same visual frame while scene copy crossfades in sequence.
+- Browser verification: `#/character/jon-snow` rendered the title scene, `Voice` selected the quote scene with `I know nothing, Jon Snow.`, `Turning point` selected `Jon Snow and Ygritte` with the exact event destination, and `Dossier` selected the archive scene. The open-dossier action landed on `#profile-header` and restored the full navigation chrome after the film. No broken cinematic images were found.
+- Pointer parallax is disabled under reduced motion; the mobile breakpoint changes the chapter rail to a horizontal control row and keeps the scene composition within the viewport.
+- Focused captures: `/tmp/got-jon-film-title.png` and `/tmp/got-jon-film-quote.png`.
 
 final result: passed
