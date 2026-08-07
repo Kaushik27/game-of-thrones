@@ -262,6 +262,7 @@ a.card:hover, .card.clickable:hover {
   border: 2px solid rgba(255,255,255,0.15);
 }
 .avatar.dead { filter: grayscale(0.6) brightness(0.7); opacity: 0.85; }
+.avatar .generative-avatar { display: block; width: 100%; height: 100%; }
 .avatar .skull { position: absolute; bottom: -2px; right: -2px; font-size: 0.7em; }
 .avatar .avatar-sigil {
   position: absolute; bottom: -3px; right: -3px;

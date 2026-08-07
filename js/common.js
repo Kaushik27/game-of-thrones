@@ -111,10 +111,13 @@ function avatarHTML(character, size) {
   const color = character.sigilColor || getHouseColor(character.house);
   const isDead = character.status === "dead";
   const sigilId = houseSigilId(character.house);
-  const showSigil = size >= 36 && sigilId !== "none";
-  return `<div class="avatar${isDead ? ' dead' : ''}" style="width:${size}px;height:${size}px;font-size:${size * 0.36}px;background:linear-gradient(150deg, ${color}, ${color}99 55%, ${color}33); border-color:${color}55;">
-    ${initialsFor(character.name)}
-    ${showSigil ? sigilSVG(sigilId, { size: Math.max(12, Math.round(size * 0.3)), className: "avatar-sigil" }) : ""}
+  const showSigilBadge = size >= 36 && sigilId !== "none";
+  const art = (typeof generativeAvatarSVG === "function")
+    ? generativeAvatarSVG(character)
+    : initialsFor(character.name);
+  return `<div class="avatar${isDead ? ' dead' : ''}" style="width:${size}px;height:${size}px;border-color:${color}55;overflow:hidden;">
+    ${art}
+    ${showSigilBadge ? sigilSVG(sigilId, { size: Math.max(12, Math.round(size * 0.3)), className: "avatar-sigil" }) : ""}
     ${isDead ? `<span class="skull">${glyphSVG('skull', { size: Math.max(10, Math.round(size * 0.26)) })}</span>` : ''}
   </div>`;
 }
