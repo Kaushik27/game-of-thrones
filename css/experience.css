@@ -73,9 +73,10 @@ body::before {
 }
 
 #site-nav .brand-sigil { color: var(--accent); }
-#site-nav .brand-title { white-space: nowrap; }
+#site-nav .brand-title { display: inline-flex; align-items: baseline; gap: 5px; white-space: nowrap; }
 #site-nav .brand-title small { font-size: 0.58em; font-weight: 400; }
 #site-nav .brand-title strong { color: var(--accent-bright); font-weight: 600; }
+#site-nav .brand-title .brand-note { margin-left: 8px; color: #898d8b; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 0.66em; font-style: italic; letter-spacing: 0.02em; text-transform: none; }
 
 #site-nav .nav-links {
   display: flex;
@@ -230,6 +231,7 @@ button.primary,
   #site-nav .brand { gap: 7px; }
   #site-nav .brand-sigil { width: 24px; height: 24px; }
   #site-nav .brand-title { font-size: 0.82rem; }
+  #site-nav .brand-title .brand-note { display: none; }
   #site-nav .nav-search,
   #site-nav .nav-toggle { min-width: 42px; padding-inline: 8px; }
   #site-nav .nav-search kbd { border: 0; padding: 0; }

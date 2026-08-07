@@ -8,7 +8,8 @@
 const NAV_LINKS = [
   { href: "#/", label: "Explore", matches: ["#/"] },
   { href: "#/characters", label: "People", matches: ["#/characters", "#/character/"] },
-  { href: "#/timeline", label: "Stories", matches: ["#/timeline", "#/battles", "#/quotes", "#/episode/"] },
+  { href: "#/timeline", label: "Stories", matches: ["#/timeline", "#/battles", "#/episode/"] },
+  { href: "#/quotes", label: "Voices", matches: ["#/quotes"] },
   { href: "#/map", label: "World", matches: ["#/map", "#/houses", "#/house/"] },
   { href: "#/lore", label: "Lore", matches: ["#/lore"] }
 ];
@@ -23,7 +24,7 @@ function renderNav() {
     : activePath === match || activePath.startsWith(match));
   mount.innerHTML = `
     <a class="brand" href="#/" aria-label="Game of Thrones home">
-      <span class="brand-title">GAME <small>OF</small> <strong>THRONES</strong></span>
+      <span class="brand-title">GAME <small>OF</small> <strong>THRONES</strong><small class="brand-note">A fan archive</small></span>
     </a>
     <nav class="nav-links" id="nav-links" aria-label="Primary navigation">
       ${NAV_LINKS.map(l => `<a href="${l.href}" class="${isActive(l) ? 'active' : ''}"${isActive(l) ? ' aria-current="page"' : ''}>${l.label}</a>`).join("")}
@@ -53,7 +54,7 @@ function renderFooter() {
   const mount = document.getElementById("site-footer");
   if (!mount) return;
   const photoCount = (typeof ACTOR_PHOTOS !== "undefined") ? Object.keys(ACTOR_PHOTOS).length : 0;
-  mount.innerHTML = `A fan-made reference site for HBO's Game of Thrones (TV canon). Built with vanilla JS, D3.js and Three.js, no build step.
+  mount.innerHTML = `A fan-made field guide to HBO's Game of Thrones (TV canon) — built for the lines, betrayals, and arguments fans keep returning to. Built with vanilla JS, D3.js and Three.js, no build step.
     <br>${photoCount} actor photographs used under verified open licenses —
     <a href="#/credits">credits &amp; image licensing</a>
     · <a href="https://github.com/Kaushik27/game-of-thrones" target="_blank" rel="noopener">View source on GitHub</a>`;

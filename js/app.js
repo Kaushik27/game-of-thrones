@@ -1674,8 +1674,9 @@ function viewQuotes(app, params, query) {
       <div class="voices-film__grain" aria-hidden="true"></div>
       <div class="voices-film__inner">
         <div class="voices-film__masthead"><span class="voices-kicker">A cinematic interlude</span><button class="voices-sound-toggle" type="button" data-cinematic-sound aria-pressed="false">Sound off</button></div>
-        <p class="voices-film__eyebrow">Words That Moved the Realm</p>
-        <h1 id="voices-film-title">The lines that outlived the kings.</h1>
+        <p class="voices-film__eyebrow">A fan's shelf · Words That Moved the Realm</p>
+        <h1 id="voices-film-title">The lines fans still carry.</h1>
+        <p class="voices-film__fan-note">For the moments we quote before we remember the episode title.</p>
         <div class="voices-film__quote" data-voices-film-quote></div>
         <div class="voices-film__controls"><button type="button" class="voices-button voices-button--ghost" data-voices-prev aria-label="Previous quote">← Previous</button><div class="voices-film__dots" role="tablist" aria-label="Featured quote interludes"></div><button type="button" class="voices-button voices-button--ghost" data-voices-next aria-label="Next quote">Next →</button></div>
       </div>
@@ -1684,7 +1685,7 @@ function viewQuotes(app, params, query) {
       <div class="voices-hero">
         <div class="voices-hero__eyebrow"><span class="voices-hero__rule"></span>Words carry farther than ravens</div>
         <h1 class="voices-hero__title">Voices of the Realm</h1>
-        <p class="voices-hero__dek">The promises, threats, jokes, and last words that changed the story. Find a line, follow its speaker, and hear Westeros speak back.</p>
+        <p class="voices-hero__dek">A fan-curated wall of promises, threats, jokes, and last words. Find the line you came for, then follow the speaker, the house, and the moment that made it stick.</p>
         <div class="voices-hero__stats" aria-label="Quote archive statistics">
           <span><strong>${quotes.length}</strong> recorded lines</span>
           <span><strong>8</strong> seasons</span>

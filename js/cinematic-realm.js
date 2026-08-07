@@ -92,6 +92,20 @@
   }
 
   function createShell(root) {
+    const fanQuotes = ["q5", "q13", "q10"]
+      .map(id => datasetQuotes().find(item => item.id === id))
+      .filter(Boolean);
+    const quoteSpeaker = quote => {
+      try {
+        const character = typeof getCharacter === "function" ? getCharacter(quote.characterId) : null;
+        return character ? character.name : quote.characterId;
+      } catch (error) { return quote.characterId; }
+    };
+    const fanNotes = {
+      q5: "The line that turns a throne into a dare.",
+      q13: "A sentence every fan eventually hears differently.",
+      q10: "The smallest answer to the biggest fear."
+    };
     root.innerHTML = `
       <section class="cinematic-prologue" id="cinematic-prologue" aria-labelledby="cinematic-prologue-title">
         <div class="cinematic-prologue__stage" data-cinematic-stage data-scene="border">
@@ -137,6 +151,17 @@
           <p>Now step inside the interactive journey. Rotate the terrain, open a marker, and follow the story from the Wall to the Narrow Sea.</p>
         </div>
         <a class="cinematic-handoff__link" href="#realm-journey-root">Open the season journey</a>
+      </section>
+      <section class="cinematic-fan-shelf" aria-labelledby="cinematic-fan-shelf-title">
+        <div class="cinematic-fan-shelf__intro">
+          <p class="cinematic-handoff__eyebrow">A fan's shelf</p>
+          <h2 id="cinematic-fan-shelf-title">Words we still quote at the table.</h2>
+          <p>Not a press kit. Not a plot summary. These are the lines that became shorthand between people who watched the same episode and never quite recovered.</p>
+          <a href="#/quotes" class="cinematic-fan-shelf__link">Open the full Voices archive</a>
+        </div>
+        <div class="cinematic-fan-shelf__quotes">
+          ${fanQuotes.map(quote => `<a class="cinematic-fan-shelf__quote" href="#/quotes?quote=${escapeText(quote.id)}"><span class="cinematic-fan-shelf__mark" aria-hidden="true">“</span><blockquote>${escapeText(quote.text)}</blockquote><span class="cinematic-fan-shelf__speaker">${escapeText(quoteSpeaker(quote))} · Season ${quote.season}</span><small>${escapeText(fanNotes[quote.id] || "A line that refuses to leave the realm.")}</small></a>`).join("")}
+        </div>
       </section>
       <div id="realm-journey-root" class="realm-journey-host cinematic-realm__journey-host">
         <div class="realm-journey-loading" role="status"><img src="assets/icons/compass.svg" alt=""><span>Opening the realm…</span></div>
