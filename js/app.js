@@ -77,79 +77,55 @@ function setTitle(t) { document.title = t + " — Game of Thrones"; }
 // ==========================================================================
 function viewHome(app) {
   setTitle("Home");
-  const majorHouses = Object.keys(HOUSE_COLORS).filter(h => h !== "Unaffiliated");
   app.innerHTML = `
-    <div class="hero illustrated ambient-glow">
-      <div class="hero-scene">${homeSceneSVG()}</div>
-      <h1 class="display">Game of Thrones</h1>
-      <div class="script-accent">Winter is coming, and so is everything after it.</div>
-      <p>A complete interactive reference for the Seven Kingdoms — every character, every house, the war for the Iron Throne, and everything that happened along the way.</p>
-      <div class="stat-row" id="stat-row"></div>
-    </div>
-    <div class="page-wrap">
-      <div class="section">
-        <div class="section-title">Explore Westeros</div>
-        <div class="feature-grid">
-          <a class="card feature-card spotlight reveal" href="#/characters" style="${cardAccentStyle('#d4af37')}">
-            <div class="icon">${sigilSVG('direwolf', { size: 42 })}</div>
-            <div>
-              <h3 class="display">Characters</h3>
-              <p>Browse all ${characters.length}+ characters with search and house/status filters — original generative portraits, bios, relations, and personal timelines for every one of them.</p>
-            </div>
-          </a>
-          <a class="card feature-card reveal" href="#/houses" style="${cardAccentStyle('#b8862e')}">
-            <div class="icon">${sigilSVG('lion', { size: 30 })}</div>
-            <h3 class="display">Houses</h3>
-            <p>Sigils, words, seats, full family trees, and the rise and fall of each great house across the show.</p>
-          </a>
-          <a class="card feature-card reveal" href="#/map" style="${cardAccentStyle('#4c7a3f')}">
-            <div class="icon">${sigilSVG('sun-spear', { size: 30 })}</div>
-            <h3 class="display">Map of Westeros</h3>
-            <p>An interactive map of the Seven Kingdoms — click a region to see who ruled it and what happened there.</p>
-          </a>
-          <a class="card feature-card reveal" href="#/timeline" style="${cardAccentStyle('#3f6ea5')}">
-            <div class="icon">${sigilSVG('falcon-moon', { size: 30 })}</div>
-            <h3 class="display">Timeline</h3>
-            <p>Scrub through all eight seasons — battles, deaths, weddings, and the political shifts that moved the story.</p>
-          </a>
-          <a class="card feature-card reveal" href="#/battles" style="${cardAccentStyle('#8f1d21')}">
-            <div class="icon">${sigilSVG('crossed-swords', { size: 30 })}</div>
-            <h3 class="display">Battles &amp; Events</h3>
-            <p>Combatants, outcomes, and casualties for the Red Wedding, the Battle of the Bastards, and more.</p>
-          </a>
-          <a class="card feature-card reveal" href="#/quiz" style="${cardAccentStyle('#2a7f7f')}">
-            <div class="icon">${sigilSVG('kraken', { size: 30 })}</div>
-            <h3 class="display">Quiz</h3>
-            <p>Test your knowledge — who said it, match the sigil, or trace a family tree. Keep score, play again.</p>
-          </a>
-          <a class="card feature-card reveal" href="#/quotes" style="${cardAccentStyle('#d16a2e')}">
-            <div class="icon">${sigilSVG('trout', { size: 30 })}</div>
-            <h3 class="display">Quote Wall</h3>
-            <p>Searchable, shareable-styled cards of the show's most memorable lines.</p>
-          </a>
-          <a class="card feature-card reveal" href="#/characters?graph=1" style="${cardAccentStyle('#6fa9d1')}">
-            <div class="icon">${sigilSVG('rose', { size: 30 })}</div>
-            <h3 class="display">Relations Graph</h3>
-            <p>The original force-directed relationship graph — now available on every character's profile page.</p>
-          </a>
-        </div>
-      </div>
-      <div class="section">
-        <div class="section-title">The Great Houses</div>
-        <div class="house-strip" id="house-strip"></div>
-      </div>
-    </div>
+    <section class="war-home" aria-label="Interactive War Table">
+      <div id="war-table-root" data-war-table></div>
+    </section>
+    <section class="realm-index page-wrap" aria-labelledby="realm-index-title">
+      <header class="realm-index__header reveal">
+        <p class="realm-index__eyebrow">Beyond the table</p>
+        <h2 id="realm-index-title">Enter the Seven Kingdoms</h2>
+        <p>Every path below opens a different lens on the same living record. Search at any moment with the <kbd>/</kbd> key.</p>
+      </header>
+      <nav class="realm-index__grid" aria-label="Explore the realm">
+        <a class="realm-index__link realm-index__link--wide reveal" href="#/map">
+          <span class="realm-index__number">01</span>
+          <span><strong>Living Realm</strong><small>Move through Westeros, season by season</small></span>
+        </a>
+        <a class="realm-index__link reveal" href="#/characters">
+          <span class="realm-index__number">02</span>
+          <span><strong>Character Archive</strong><small>${characters.length} lives, faces, and loyalties</small></span>
+        </a>
+        <a class="realm-index__link reveal" href="#/houses">
+          <span class="realm-index__number">03</span>
+          <span><strong>Great Houses</strong><small>Words, rulers, heirs, and sworn banners</small></span>
+        </a>
+        <a class="realm-index__link reveal" href="#/timeline">
+          <span class="realm-index__number">04</span>
+          <span><strong>Eight Seasons</strong><small>Trace the decisions that remade the realm</small></span>
+        </a>
+        <a class="realm-index__link reveal" href="#/battles">
+          <span class="realm-index__number">05</span>
+          <span><strong>Battle Records</strong><small>Combatants, turning points, and cost</small></span>
+        </a>
+        <a class="realm-index__link reveal" href="#/quiz">
+          <span class="realm-index__number">06</span>
+          <span><strong>Claim the Throne</strong><small>Put your memory of the realm to trial</small></span>
+        </a>
+      </nav>
+    </section>
   `;
-  document.getElementById("stat-row").innerHTML = `
-    <div class="stat"><div class="num">${characters.length}+</div><div class="label">Characters</div></div>
-    <div class="stat"><div class="num">${majorHouses.length}</div><div class="label">Houses</div></div>
-    <div class="stat"><div class="num">${relations.length}+</div><div class="label">Relations</div></div>
-    <div class="stat"><div class="num">${battles.length}</div><div class="label">Major Battles</div></div>
-    <div class="stat"><div class="num">8</div><div class="label">Seasons</div></div>
-  `;
-  document.getElementById("house-strip").innerHTML = majorHouses.map(h =>
-    `<a href="#/house/${encodeURIComponent(h)}" style="border-color:${HOUSE_COLORS[h]}55;color:${HOUSE_COLORS[h]}">${sigilSVG(houseSigilId(h), { size: 14 })} ${h}</a>`
-  ).join("");
+
+  const root = document.getElementById("war-table-root");
+  if (window.WarTable) {
+    registerActiveView(window.WarTable.mount(root, {
+      season: 2,
+      nodeLimit: 18,
+      title: "Power Is a Web"
+    }));
+  } else {
+    root.innerHTML = `<div class="empty-state">The War Table could not be opened. <a href="#/characters?graph=1">View relationships</a>.</div>`;
+  }
 }
 
 // ==========================================================================
@@ -751,7 +727,7 @@ function renderFamilyTree(houseName, color) {
 // ==========================================================================
 // MAP
 // ==========================================================================
-function viewMap(app) {
+function viewLegacyMap(app) {
   setTitle("Map of Westeros");
 
   const VB = (typeof MAP_VIEWBOX === "string") ? MAP_VIEWBOX : "-90 -60 880 1090";
@@ -1033,6 +1009,37 @@ function viewMap(app) {
       </div>
     `;
   }
+}
+
+function viewMap(app) {
+  setTitle("Living Realm");
+  if (!window.LivingRealmMap) {
+    viewLegacyMap(app);
+    return;
+  }
+
+  app.innerHTML = `
+    <div class="living-map-page page-wrap">
+      <header class="living-map-hero">
+        <p class="living-map-hero__eyebrow">The realm remembers</p>
+        <div>
+          <h1>The Living Realm</h1>
+          <p>Move through all eight seasons to see where power shifted, armies collided, and the story changed course. Every plotted point is tied to an explicit place in the site's records.</p>
+        </div>
+        <dl class="living-map-hero__facts" aria-label="Map features">
+          <div><dt>8</dt><dd>seasons</dd></div>
+          <div><dt>${MAP_REGIONS.length}</dt><dd>regions</dd></div>
+          <div><dt>${battles.length}</dt><dd>battle records</dd></div>
+        </dl>
+      </header>
+      <div id="living-realm-root"></div>
+    </div>
+  `;
+
+  registerActiveView(window.LivingRealmMap.mount(document.getElementById("living-realm-root"), {
+    initialSeason: 1,
+    onNavigate(hash) { window.location.hash = hash; }
+  }));
 }
 // ==========================================================================
 // TIMELINE
@@ -1388,7 +1395,7 @@ function viewQuotes(app) {
 // Not decorative: the actor photographs are CC BY / CC BY-SA, which legally
 // require crediting the photographer and naming the license. This page is
 // where that obligation is discharged, so it lists every single photo with
-// its author, its license, and a link back to the Commons file page. It is
+// its author, its license, and a link back to the source page. It is
 // linked from the site footer on every route.
 // ==========================================================================
 function viewCredits(app) {
@@ -1407,10 +1414,10 @@ function viewCredits(app) {
     <div class="page-wrap">
       <div class="hero ambient-glow" style="padding-top:76px;padding-bottom:6px;">
         <h1 class="display">Credits &amp; Image Licensing</h1>
-        <p>Every actor photograph on this site is a freely-licensed photograph sourced from
-        Wikimedia Commons. None are publicity stills and none are scraped from IMDb. Each one is
-        listed below with its photographer, its license, and a link to its Commons file page —
-        the attribution that CC BY and CC BY-SA require.</p>
+        <p>Every actor photograph on this site uses a verified open license. 132 are sourced from
+        Wikimedia Commons and one is a rights-holder YouTube frame published under CC BY. None are
+        publicity stills or scraped IMDb images. Each is listed below with its creator, license, and
+        source link — the attribution that CC BY and CC BY-SA require.</p>
       </div>
 
       <div class="card" style="padding:20px;margin-top:8px;">
@@ -1440,7 +1447,7 @@ function viewCredits(app) {
               <div style="font-size:0.74rem;color:var(--text-faint);margin-top:3px;">
                 Photo: ${escapeHTML(e.credit)} ·
                 <span style="color:var(--accent);">${escapeHTML(e.license)}</span> ·
-                <a href="${escapeHTML(e.source)}" target="_blank" rel="noopener" style="color:var(--text-dim);">Commons</a>
+                <a href="${escapeHTML(e.source)}" target="_blank" rel="noopener" style="color:var(--text-dim);">${e.source.includes("youtube.com") ? "YouTube" : "Commons"}</a>
               </div>
             </div>
           </div>`).join("") || `<div class="empty-state">No photographs are in use.</div>`}
