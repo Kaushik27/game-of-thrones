@@ -210,6 +210,16 @@ function viewHome(app, params, query) {
     window.open(destination, "_blank", "noopener,noreferrer");
   };
 
+  if (window.MotherTemplate) {
+    try {
+      registerActiveView(window.MotherTemplate.mountHome(root, { initialSeason, onNavigate: navigate }));
+      window.MotherTemplate.installRail();
+      return;
+    } catch (error) {
+      console.error("The mother observatory could not be mounted.", error);
+    }
+  }
+
   if (!window.CinematicRealm) {
     root.innerHTML = `<div class="realm-journey-loading realm-journey-loading--error" role="alert"><span>The road is blocked for now.</span><a href="#/timeline">Open the season archive</a></div>`;
     return;
@@ -835,13 +845,17 @@ function viewHouses(app) {
     const info = HOUSE_INFO[h];
     const color = HOUSE_COLORS[h];
     const count = charactersByHouse(h).length;
+    const representative = window.MotherTemplate?.houseEntries?.().find(entry => entry.house === h)?.character || charactersByHouse(h)[0] || null;
+    const representativeVisual = representative ? cinematicVisualFor(representative.id) : "";
     return `
     <a class="houses-card reveal" href="#/house/${encodeURIComponent(h)}" style="--house-accent:${color}" data-house-card="${escapeHTML(h)}">
       <span class="houses-card__wash" aria-hidden="true"></span>
+      ${representativeVisual ? `<span class="houses-card__portrait" style="--house-portrait:url('${escapeHTML(representativeVisual)}')" aria-hidden="true"></span>` : ""}
       <span class="houses-card__index" aria-hidden="true">${String(houses.indexOf(h) + 1).padStart(2, "0")}</span>
       <span class="houses-card__sigil">${sigilSVG(info.sigil, { size: 44 })}</span>
       <span class="houses-card__region">${escapeHTML(info.region)}</span>
       <h3>${escapeHTML(h)}</h3>
+      ${representative ? `<span class="houses-card__representative">${escapeHTML(representative.name)} · representative study</span>` : ""}
       <span class="houses-card__words">“${escapeHTML(info.words)}”</span>
       <span class="houses-card__seat">${escapeHTML(info.seat)}</span>
       <span class="houses-card__meta"><span>${count} record${count === 1 ? "" : "s"}</span><span>Open dossier <b aria-hidden="true">↗</b></span></span>

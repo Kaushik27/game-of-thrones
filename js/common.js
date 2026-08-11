@@ -62,10 +62,11 @@ function renderFooter() {
   const mount = document.getElementById("site-footer");
   if (!mount) return;
   const photoCount = (typeof ACTOR_PHOTOS !== "undefined") ? Object.keys(ACTOR_PHOTOS).length : 0;
-  mount.innerHTML = `A fan-made field guide to HBO's Game of Thrones (TV canon) — built for the lines, betrayals, and arguments fans keep returning to. Built with a progressively migrating React shell, vanilla JS, D3.js and Three.js.
+  mount.innerHTML = `<div class="mother-footer-meta">A fan-made field guide to HBO's Game of Thrones (TV canon) — built for the lines, betrayals, and arguments fans keep returning to. Built with a progressively migrating React shell, vanilla JS, D3.js and Three.js.
     <br>${photoCount} actor photographs used under verified open licenses —
     <a href="#/credits">credits &amp; image licensing</a>
-    · <a href="https://github.com/Kaushik27/game-of-thrones" target="_blank" rel="noopener">View source on GitHub</a>`;
+    · <a href="https://github.com/Kaushik27/game-of-thrones" target="_blank" rel="noopener">View source on GitHub</a></div>`;
+  window.MotherTemplate?.installRail?.();
 }
 
 // ---------- Scroll reveal ----------

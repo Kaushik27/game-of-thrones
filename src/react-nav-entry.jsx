@@ -2,16 +2,12 @@ import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 
 const LINKS = [
-  { href: "#", label: "Explore", matches: ["#/"] },
-  { href: "#/characters", label: "People", matches: ["#/characters", "#/character/"] },
-  { href: "#/timeline", label: "Memory Wall", section: "memory" },
-  { href: "#/timeline?atlas=1", label: "Atlas", section: "atlas" },
-  { href: "#/chronicle", label: "Chronicle", matches: ["#/chronicle"] },
-  { href: "#/quotes", label: "Voices", matches: ["#/quotes"] },
-  { href: "#/map", label: "World", matches: ["#/map", "#/houses", "#/house/"] },
+  { href: "#/", label: "Realms", matches: ["#/"] },
+  { href: "#/houses", label: "Houses", matches: ["#/houses", "#/house/", "#/characters", "#/character/"] },
+  { href: "#/chronicle", label: "History", matches: ["#/chronicle"] },
+  { href: "#/timeline", label: "Chronicles", section: "chronicles" },
+  { href: "#/map", label: "Maps", matches: ["#/map"] },
   { href: "#/lore", label: "Lore", matches: ["#/lore"] }
-  , { href: "#/what-if", label: "What If", matches: ["#/what-if"] }
-  , { href: "#/desk", label: "Desk", matches: ["#/desk"] }
 ];
 
 function currentRoute() {
@@ -20,11 +16,8 @@ function currentRoute() {
 }
 
 function isActive(link, route) {
-  if (link.section === "memory") {
+  if (link.section === "chronicles") {
     return route.path === "#/timeline" && !["atlas", "season", "mode", "event", "episode"].some((key) => route.query.has(key));
-  }
-  if (link.section === "atlas") {
-    return (route.path === "#/timeline" && ["atlas", "season", "mode", "event", "episode"].some((key) => route.query.has(key))) || route.path === "#/battles" || route.path.startsWith("#/episode/");
   }
   return link.matches.some((match) => match === "#/" ? route.path === "#/" : route.path === match || route.path.startsWith(match));
 }
@@ -61,10 +54,11 @@ function ReactNav() {
     { className: "react-nav-shell", "aria-label": "Primary navigation", "data-react-owned": "true" },
     React.createElement(
       "a",
-      { className: "brand", href: "#/", "aria-label": "Game of Thrones home" },
+      { className: "brand", href: "#/", "aria-label": "The Raven Wall home" },
+      React.createElement("span", { className: "brand-mark", "aria-hidden": "true" }, "✦"),
       React.createElement("span", { className: "brand-title" },
-        "GAME ", React.createElement("small", null, "OF"), " ", React.createElement("strong", null, "THRONES"),
-        React.createElement("small", { className: "brand-note" }, "A fan archive")
+        React.createElement("strong", null, "THE RAVEN WALL"),
+        React.createElement("small", { className: "brand-note" }, "A GAME OF THRONES ARCHIVE")
       )
     ),
     React.createElement(
