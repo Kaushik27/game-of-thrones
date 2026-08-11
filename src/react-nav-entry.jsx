@@ -6,6 +6,7 @@ const LINKS = [
   { href: "#/characters", label: "People", matches: ["#/characters", "#/character/"] },
   { href: "#/timeline", label: "Memory Wall", section: "memory" },
   { href: "#/timeline?atlas=1", label: "Atlas", section: "atlas" },
+  { href: "#/chronicle", label: "Chronicle", matches: ["#/chronicle"] },
   { href: "#/quotes", label: "Voices", matches: ["#/quotes"] },
   { href: "#/map", label: "World", matches: ["#/map", "#/houses", "#/house/"] },
   { href: "#/lore", label: "Lore", matches: ["#/lore"] }
@@ -66,8 +67,8 @@ function ReactNav() {
         return React.createElement(
           "a",
           {
-          href: link.href,
-          className: active ? "active" : "",
+            href: link.href,
+            className: active ? "active" : "",
             "aria-current": active ? "page" : undefined,
             onClick: () => setOpen(false),
             key: link.label

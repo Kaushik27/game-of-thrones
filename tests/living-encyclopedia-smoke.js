@@ -10,7 +10,7 @@ const read = relativePath => fs.readFileSync(path.join(root, relativePath), "utf
 
 const context = { window: {} };
 vm.createContext(context);
-["js/data.js", "js/events.js", "js/episodes.js", "js/battles.js", "js/quotes.js", "js/quote-curation.js", "js/fan-moments.js", "js/lore-data.js"]
+["js/data.js", "js/events.js", "js/episodes.js", "js/battles.js", "js/quotes.js", "js/quote-curation.js", "js/fan-moments.js", "js/lore-data.js", "js/chronicle-data.js"]
   .forEach(relativePath => vm.runInContext(read(relativePath), context, { filename: relativePath }));
 
 const value = name => vm.runInContext(name, context);
@@ -23,6 +23,7 @@ const featuredQuoteIds = value("window.FEATURED_QUOTE_IDS");
 const quoteCollections = value("window.QUOTE_COLLECTIONS");
 const loreEntries = value("LORE_ENTRIES");
 const fanMoments = value("window.FAN_MOMENTS");
+const chronicle = value("window.REALM_CHRONICLE");
 
 assert.equal(characters.length, 196, "character catalogue changed unexpectedly");
 assert.equal(episodes.length, 73, "episode catalogue must contain all 73 episodes");
@@ -34,6 +35,13 @@ assert.deepEqual(
 assert.equal(loreEntries.length, 24, "lore library must retain all 24 dossiers");
 assert.equal(new Set(loreEntries.map(entry => entry.category)).size, 6, "lore library must retain six categories");
 assert.equal(fanMoments.length, 7, "fan memory reel must retain its seven editorial anchors");
+assert.equal(chronicle.length, 15, "realm chronicle must retain its fifteen illustrated moments");
+assert.equal(new Set(chronicle.map(record => record.id)).size, chronicle.length, "chronicle IDs must be unique");
+chronicle.forEach(record => {
+  assert.ok(record.title && record.period && record.image, "chronicle records need title, period, and image");
+  assert.ok(fs.existsSync(path.join(root, record.image)), `${record.id} image must exist locally`);
+  assert.ok(Object.isFrozen(record.bullets), `${record.id} bullets must remain immutable`);
+});
 fanMoments.forEach(moment => {
   assert.ok(moment.id && moment.title && moment.image, "fan moments need stable identity, title, and imagery");
   assert.ok(characterIdsPlaceholder(moment.characterId), `${moment.id} must reference a known character`);
@@ -75,6 +83,7 @@ const ravenWallSource = read("js/raven-wall.js");
 const atmosphereSource = read("js/global-atmosphere.js");
 const navSource = read("src/react-nav-entry.jsx");
 const archiveShellSource = read("css/archive-shell.css");
+const chronicleSource = read("js/chronicle-timeline.js");
 
 const contracts = [
   [appSource.includes('initialEventId: query.get("event") || ""'), "app must pass event deep links to StoryAtlas"],
@@ -104,6 +113,8 @@ const contracts = [
   [navSource.includes("data-atmosphere-control") && navSource.includes("GotAtmosphere"), "React shell must own the persistent atmosphere control"],
   [archiveShellSource.includes("body.archive-route") && archiveShellSource.includes("--archive-gold"), "archive routes must share a visual shell token system"],
   [appSource.includes("window.RavenWall.mount") && appSource.includes("atlasRequested"), "Timeline must route plain navigation to the Memory Wall and preserve the Episode Atlas"]
+  , [appSource.includes("viewChronicle") && appSource.includes("window.RealmChronicle.mount"), "Chronicle must have a dedicated route and mount"]
+  , [chronicleSource.includes("data-chronicle-filter") && chronicleSource.includes("data-chronicle-random"), "Chronicle must expose filter and surprise interactions"]
 ];
 contracts.forEach(([condition, message]) => assert.ok(condition, message));
 
@@ -136,6 +147,9 @@ assert.ok(indexSource.includes("css/archive-shell.css?v=archive-shell-2"), "shar
 assert.ok(scripts.indexOf("js/quote-curation.js") < scripts.indexOf("js/app.js"), "quote curation must load before the router");
 assert.ok(scripts.indexOf("js/lore-data.js") < scripts.indexOf("js/lore-library.js"), "lore data must load before LoreLibrary");
 assert.ok(scripts.indexOf("js/story-atlas.js") < scripts.indexOf("js/app.js"), "feature modules must load before the router");
+assert.ok(scripts.indexOf("js/chronicle-data.js") < scripts.indexOf("js/chronicle-timeline.js"), "chronicle data must load before the module");
+assert.ok(scripts.indexOf("js/chronicle-timeline.js") < scripts.indexOf("js/app.js"), "chronicle module must load before the router");
+assert.ok(indexSource.includes("css/realm-chronicle.css?v=realm-chronicle-1"), "chronicle styling must load in the static entrypoint");
 
 console.log(JSON.stringify({
   characters: characters.length,

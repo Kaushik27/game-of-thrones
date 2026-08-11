@@ -104,3 +104,55 @@ The focused reference/People comparison keeps both screens at 1265 × 712 and co
 - Browser verification: quote interlude controls changed the featured line from “When you play the game of thrones…” to “Chaos isn't a pit. Chaos is a ladder.”; World stop selection set Meereen as the active stop and rendered its destination story; both routes produced zero warning/error logs.
 
 final result: passed
+
+## Realm Chronicle timeline
+
+### Source visual truth
+
+- Reference: [Instagram timeline carousel](https://www.instagram.com/p/Db6Crm-k0Yr/?img_index=4&igsh=MTEyODExcmw4OHU5Nw==)
+- Captured source: `audit/reference-instagram-timeline.png`
+- Source viewport: 1280 × 720 browser capture; the reference is a portrait infographic carousel presented inside an Instagram post.
+
+### Implementation evidence
+
+- Desktop capture: `audit/chronicle-desktop.png`
+- Mobile focused capture: `audit/chronicle-mobile-card.png`
+- Desktop CSS viewport: 1280 × 720, default device density.
+- Mobile CSS viewport: 390 × 844, default device density.
+- State: `/chronicle?entry=red-wedding` with the chronology mounted, the Red Wedding detail selected, and the “All eras” filter active.
+
+### Comparison
+
+The source visual uses an illustrated historical card with a prominent era/date, a short title, two concise beats, and a strong image. The implementation adapts that visual language into a fan archive experience: a cinematic realm hero, an alternating chronological spine, parchment-style illustrated cards, a selected-moment detail panel, era filters, and deep links into the existing archive. The implementation is intentionally not a pixel clone of Instagram or the source artwork.
+
+### Required fidelity surfaces
+
+- Typography: Cormorant Garamond carries the editorial titles and italic emotional copy; Cinzel/Inter handle labels and controls. The display hierarchy is consistent with the existing archive shell and preserves the source’s poster-like title/date contrast.
+- Spacing and layout: the desktop timeline alternates cards around a central spine; the selected detail remains readable in a sticky side panel. At 390px the spine becomes a single readable column, controls become horizontally scrollable, and the page remains exactly 390px wide with no horizontal overflow.
+- Colors and tokens: the source’s parchment, rust, charcoal, and muted gold are represented by `--chronicle-paper`, `--chronicle-rust`, `--chronicle-ink`, and `--chronicle-gold`. Selected states use the same gold outline language as the archive shell.
+- Image quality and assets: cards use existing local realm/memory imagery and existing icon assets; no remote image dependency or placeholder art was introduced. Images are cropped with explicit focal positions so the cards keep a visible location or moment at both breakpoints.
+- Copy and content: the chronology is fan-curated and explicitly labels approximate dates, avoiding false precision where canon is intentionally unresolved. Each card has a title, period, emotional marker, two beats, a longer context line, and an optional archive destination.
+
+### Primary interactions tested
+
+- Era filters: “The wars” reduces the visible cards to four records; “All eras” restores all fifteen.
+- Card selection: selecting “The Red Wedding” updates the detail panel and URL to `#/chronicle?entry=red-wedding`.
+- Surprise me: selects another visible record and preserves the current filter.
+- Follow this thread: “The Red Wedding” opens the exact existing battle route `#/battles?battle=red-wedding`.
+- Keyboard: arrow keys move through visible chronology cards; Enter/click selection updates the detail panel.
+- Responsive: desktop and mobile screenshots captured; mobile scroll width equals the 390px viewport.
+- Console: no browser console errors during route load or interaction QA.
+
+### Comparison history
+
+1. Initial implementation: added the illustrated chronology, filters, selected detail, and deep links.
+2. Review pass: replaced per-card event listeners with a single delegated interaction boundary so repeated renders do not accumulate handlers.
+3. Final pass: verified the aligned desktop hero/card states and the mobile card state; no actionable P0/P1/P2 findings remain.
+
+### Findings
+
+- No actionable P0/P1/P2 fidelity or interaction findings remain.
+- P3 follow-up: add optional fan-submitted annotations to cards after a moderation/data model is agreed.
+
+### final result: passed
+

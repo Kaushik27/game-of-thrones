@@ -14,6 +14,7 @@ const APP_ROUTES = [
   { pattern: /^\/houses$/, view: viewHouses },
   { pattern: /^\/house\/([^/]+)$/, view: viewHouse },
   { pattern: /^\/map$/, view: viewMap },
+  { pattern: /^\/chronicle$/, view: viewChronicle },
   { pattern: /^\/episode\/([^/]+)$/, view: viewTimeline },
   { pattern: /^\/timeline$/, view: viewTimeline },
   { pattern: /^\/battles$/, view: viewBattles },
@@ -1372,6 +1373,24 @@ function viewTimeline(app, params, query) {
   } catch (error) {
     console.error("The Stories experience could not be mounted.", error);
     viewTimelineLegacy(app, params, query);
+  }
+}
+
+function viewChronicle(app, params, query) {
+  if (!window.RealmChronicle) {
+    app.innerHTML = `<div class="page-wrap"><div class="empty-state">The chronicle is unavailable. <a href="#/timeline?atlas=1">Open the episode atlas</a>.</div></div>`;
+    return;
+  }
+  setTitle("The Realm Chronicle");
+  app.innerHTML = `<div id="realm-chronicle-root" class="encyclopedia-feature-host"></div>`;
+  try {
+    registerActiveView(window.RealmChronicle.mount(document.getElementById("realm-chronicle-root"), {
+      initialEntryId: query.get("entry") || "",
+      onNavigate: navigateFeatureTarget
+    }));
+  } catch (error) {
+    console.error("The Realm Chronicle could not be mounted.", error);
+    app.innerHTML = `<div class="page-wrap"><div class="empty-state">The chronicle is unavailable. <a href="#/">Return to the realm</a>.</div></div>`;
   }
 }
 
