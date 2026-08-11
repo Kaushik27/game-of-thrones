@@ -230,9 +230,12 @@
     const mobileSheet = typeof global.matchMedia === "function"
       ? global.matchMedia("(max-width: 760px)")
       : null;
+    const reducedMotion = typeof global.matchMedia === "function" && global.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let destroyed = false;
     let lastFocus = null;
+    let spotlightObserver = null;
+    let pointerCard = null;
     let archiveLimit = 48;
     const initialSeason = normalizeSeason(options.initialSeason);
     const requestedMode = safeText(options.initialMode).toLowerCase();
@@ -287,6 +290,52 @@
       } catch (_error) {
         return null;
       }
+    }
+
+    function clearSpotlightPointer() {
+      if (!pointerCard) return;
+      pointerCard.classList.remove("is-pointer");
+      pointerCard.style.removeProperty("--pi-pointer-x");
+      pointerCard.style.removeProperty("--pi-pointer-y");
+      pointerCard.style.removeProperty("--pi-light-x");
+      pointerCard.style.removeProperty("--pi-light-y");
+      pointerCard = null;
+    }
+
+    function handleSpotlightPointerMove(event) {
+      if (reducedMotion) return;
+      const card = event.target.closest(".pi-spotlight-card");
+      if (!card || !panel.contains(card)) {
+        clearSpotlightPointer();
+        return;
+      }
+      if (pointerCard && pointerCard !== card) clearSpotlightPointer();
+      pointerCard = card;
+      const bounds = card.getBoundingClientRect();
+      const x = Math.max(0, Math.min(100, ((event.clientX - bounds.left) / Math.max(bounds.width, 1)) * 100));
+      const y = Math.max(0, Math.min(100, ((event.clientY - bounds.top) / Math.max(bounds.height, 1)) * 100));
+      card.classList.add("is-pointer");
+      card.style.setProperty("--pi-pointer-x", `${((x - 50) * .08).toFixed(2)}px`);
+      card.style.setProperty("--pi-pointer-y", `${((y - 50) * .06).toFixed(2)}px`);
+      card.style.setProperty("--pi-light-x", `${x.toFixed(1)}%`);
+      card.style.setProperty("--pi-light-y", `${y.toFixed(1)}%`);
+    }
+
+    function observeSpotlightCards() {
+      if (spotlightObserver) spotlightObserver.disconnect();
+      const cards = [...panel.querySelectorAll(".pi-spotlight-card")];
+      cards.forEach((card, index) => {
+        card.style.setProperty("--pi-reveal-delay", `${Math.min(index, 7) * 55}ms`);
+      });
+      if (!cards.length) return;
+      if (reducedMotion || typeof global.IntersectionObserver !== "function") {
+        cards.forEach(card => card.classList.add("is-inview"));
+        return;
+      }
+      spotlightObserver = new global.IntersectionObserver(entries => {
+        entries.forEach(entry => entry.target.classList.toggle("is-inview", entry.isIntersecting));
+      }, { threshold: .12, rootMargin: "0px 0px -7% 0px" });
+      cards.forEach(card => spotlightObserver.observe(card));
     }
 
     function portraitMarkup(character, variant) {
@@ -546,6 +595,8 @@
           ${visible.length ? `<div class="pi-spotlight-grid">${visible.map(spotlightCardMarkup).join("")}</div>` : `
             <div class="pi-empty"><h3>No spotlight records found</h3><p>Choose another season to continue exploring.</p></div>`}
         </section>`;
+      clearSpotlightPointer();
+      observeSpotlightCards();
     }
 
     function constellationFiltersMarkup() {
@@ -1133,6 +1184,8 @@
     listen(root, "input", handleInput);
     listen(root, "change", handleChange);
     listen(root, "keydown", handleKeydown);
+    listen(panel, "pointermove", handleSpotlightPointerMove, { passive: true });
+    listen(panel, "pointerleave", clearSpotlightPointer, { passive: true });
     if (mobileSheet) {
       if (typeof mobileSheet.addEventListener === "function") {
         mobileSheet.addEventListener("change", handleMobileChange);
@@ -1150,6 +1203,8 @@
       destroy() {
         if (destroyed) return;
         destroyed = true;
+        clearSpotlightPointer();
+        if (spotlightObserver) spotlightObserver.disconnect();
         cleanup.splice(0).forEach(remove => remove());
         document.body.classList.remove("pi-overlay-open");
         if (root.querySelector(".pi-shell")) root.replaceChildren();

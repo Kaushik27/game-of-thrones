@@ -426,7 +426,15 @@ body.pi-overlay-open { overflow: hidden; }
   background: #0b0e10;
   clip-path: polygon(13px 0, 100% 0, 100% calc(100% - 13px), calc(100% - 13px) 100%, 0 100%, 0 13px);
   isolation: isolate;
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition: opacity 620ms var(--ease-out), transform 620ms var(--ease-out), border-color 220ms ease, box-shadow 220ms ease;
+  transition-delay: var(--pi-reveal-delay, 0ms);
 }
+
+.pi-spotlight-card.is-inview { opacity: 1; transform: translate3d(0, 0, 0); }
+.pi-spotlight-card.is-pointer,
+.pi-spotlight-card:focus-within { border-color: rgba(203, 168, 92, .68); box-shadow: 0 22px 60px rgba(0, 0, 0, .4), 0 0 0 1px rgba(203, 168, 92, .14); }
 
 .pi-spotlight-card--lead {
   grid-column: span 8;
@@ -442,6 +450,20 @@ body.pi-overlay-open { overflow: hidden; }
   content: "";
   pointer-events: none;
 }
+
+.pi-spotlight-card::before {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background: radial-gradient(circle at var(--pi-light-x, 50%) var(--pi-light-y, 50%), rgba(242, 210, 132, .18), transparent 24%);
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 320ms ease;
+}
+
+.pi-spotlight-card.is-pointer::before,
+.pi-spotlight-card:focus-within::before { opacity: 1; }
 
 .pi-spotlight-card__portrait {
   position: absolute;
@@ -468,6 +490,8 @@ body.pi-overlay-open { overflow: hidden; }
 }
 
 .pi-spotlight-card:hover .pi-spotlight-card__portrait .pi-portrait { transform: scale(1.025); }
+.pi-spotlight-card.is-pointer .pi-spotlight-card__portrait .pi-portrait,
+.pi-spotlight-card:focus-within .pi-spotlight-card__portrait .pi-portrait { transform: translate3d(var(--pi-pointer-x, 0px), var(--pi-pointer-y, 0px), 0) scale(1.025); }
 
 .pi-spotlight-card__scrim {
   position: absolute;
@@ -1272,7 +1296,12 @@ body.pi-overlay-open { overflow: hidden; }
   }
 
   .pi-spotlight-card:hover .pi-spotlight-card__portrait .pi-portrait,
+  .pi-spotlight-card.is-pointer .pi-spotlight-card__portrait .pi-portrait,
+  .pi-spotlight-card:focus-within .pi-spotlight-card__portrait .pi-portrait,
   .pi-archive-card:hover { transform: none; }
+
+  .pi-spotlight-card { opacity: 1; transform: none; }
+  .pi-spotlight-card::before { display: none; }
 }
 
 @media (forced-colors: active) {

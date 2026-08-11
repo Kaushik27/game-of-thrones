@@ -119,6 +119,7 @@ const contracts = [
   , [chronicleSource.includes("dustHTML") && chronicleSource.includes("onPointerMove"), "Chronicle must provide ambient and pointer-driven life"]
   , [chronicleSource.includes("function entryButton") && chronicleSource.includes("Open moment"), "Chronicle cards must expose a resilient click target and visible action cue"]
   , [archiveShellSource.includes("archive-horizon-drift") && archiveShellSource.includes("north-journey-bg.jpg") && archiveShellSource.includes("capital-journey-bg.jpg"), "Archive routes must share a fluid atmospheric backdrop"]
+  , [peopleSource.includes("observeSpotlightCards") && peopleSource.includes("handleSpotlightPointerMove"), "People spotlight must provide scroll and pointer interaction"]
 ];
 contracts.forEach(([condition, message]) => assert.ok(condition, message));
 
