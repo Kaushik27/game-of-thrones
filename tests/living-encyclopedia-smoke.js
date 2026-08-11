@@ -138,6 +138,7 @@ const contracts = [
   , [peopleSource.includes("observeSpotlightCards") && peopleSource.includes("handleSpotlightPointerMove"), "People spotlight must provide scroll and pointer interaction"]
   , [appSource.includes("houses-page") && appSource.includes("data-house-card"), "Houses must use the cinematic banner directory"]
   , [compassSource.includes("Spoiler lens") && compassSource.includes("randomDestination"), "archive must provide a persistent spoiler lens and daily raven"]
+  , [ravenSource.includes('key: "what-if"') && ravenSource.includes("getWhatIfs"), "global search must index fan counterfactual branches"]
   , [whatIfSource.includes("WhatIfChamber") && whatIfSource.includes("Fan speculation"), "archive must provide a clearly labeled counterfactual chamber"]
   , [deskSource.includes("MaestersDesk") && deskSource.includes("Image provenance"), "archive must provide a source and provenance desk"]
 ];

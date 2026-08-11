@@ -15,6 +15,7 @@
     { key: "characters", label: "Characters" },
     { key: "episodes", label: "Episodes" },
     { key: "lore", label: "Lore" },
+    { key: "what-if", label: "What-if branches" },
     { key: "houses", label: "Houses" },
     { key: "events", label: "Timeline events" },
     { key: "battles", label: "Battles" },
@@ -80,6 +81,11 @@
   function getLoreEntries() {
     if (typeof LORE_ENTRIES !== "undefined" && Array.isArray(LORE_ENTRIES)) return LORE_ENTRIES;
     if (Array.isArray(window.LORE_ENTRIES)) return window.LORE_ENTRIES;
+    return [];
+  }
+
+  function getWhatIfs() {
+    if (Array.isArray(window.WHAT_IFS)) return window.WHAT_IFS;
     return [];
   }
 
@@ -194,6 +200,18 @@
         "#/lore?entry=" + encodeURIComponent(entry.id),
         [entry.id, entry.category, entry.deck]
           .concat(entry.body || [], entry.relatedHouseNames || entry.relatedHouses || [], characterNames(entry.relatedCharacterIds))
+      ));
+    });
+
+    getWhatIfs().forEach((record) => {
+      if (window.RealmCompass && !window.RealmCompass.isVisible(record)) return;
+      items.push(makeItem(
+        "what-if",
+        record.id,
+        record.title,
+        [record.kicker, "Fan speculation"].filter(Boolean).join(" · "),
+        "#/what-if?branch=" + encodeURIComponent(record.id),
+        [record.id, record.title, record.premise, record.divergence].concat(record.branches || [], record.relatedCharacters || [])
       ));
     });
 
