@@ -227,6 +227,7 @@
     const cleanup = [];
     document.body.classList.add("people-route");
     cleanup.push(() => document.body.classList.remove("people-route"));
+    cleanup.push(() => document.body.classList.remove("people-constellation-mode"));
     const originalClass = root.getAttribute("class");
     const originalMarker = root.getAttribute("data-people-intelligence");
     const mobileSheet = typeof global.matchMedia === "function"
@@ -522,6 +523,8 @@
     }
 
     function updateModeTabs() {
+      root.dataset.piMode = state.mode;
+      document.body.classList.toggle("people-constellation-mode", state.mode === "constellation");
       root.querySelectorAll("[data-pi-mode]").forEach(button => {
         const selected = button.dataset.piMode === state.mode;
         button.classList.toggle("is-active", selected);
@@ -785,11 +788,31 @@
       });
     }
 
+    function bindNeighborButtons(scope) {
+      if (!scope || typeof scope.querySelectorAll !== "function") return;
+      scope.querySelectorAll("[data-pi-neighbor]").forEach(button => {
+        button.addEventListener("click", event => {
+          event.preventDefault();
+          event.stopPropagation();
+          const characterId = button.dataset.piNeighbor;
+          if (state.mode === "constellation") {
+            state.selectedId = characterId;
+            renderConstellation();
+            const focus = panel.querySelector(".pi-constellation-hero__center [data-pi-character]");
+            if (focus) focus.focus({ preventScroll: true });
+          } else {
+            openCharacter(characterId, button);
+          }
+        });
+      });
+    }
+
     function renderMode() {
       if (state.mode === "constellation") renderConstellation();
       else if (state.mode === "archive") renderArchive();
       else renderSpotlight();
       bindCharacterButtons(panel);
+      bindNeighborButtons(panel);
       updateModeTabs();
       updateCompareLayer();
       updateDetailLayer();
@@ -832,6 +855,13 @@
       const character = data.charactersById.get(state.selectedId);
       detailLayer.classList.add("is-open");
       detailLayer.innerHTML = `<button class="pi-layer-scrim" type="button" data-pi-close-detail tabindex="-1" aria-label="Close character intelligence"></button><aside class="pi-dossier pi-dossier--layer ${houseClass(character.house)}" role="dialog" aria-modal="true" aria-labelledby="${id}-detail-title"><span class="pi-visually-hidden" id="${id}-detail-title">Character intelligence for ${escape(character.name)}</span>${dossierMarkup(character, true)}</aside>`;
+      detailLayer.querySelectorAll("[data-pi-close-detail]").forEach(button => {
+        button.addEventListener("click", event => {
+          event.preventDefault();
+          event.stopPropagation();
+          closeDetail(true);
+        });
+      });
       updateBodyLock();
     }
 

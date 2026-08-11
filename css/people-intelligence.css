@@ -20,6 +20,8 @@
   --pi-house-text: var(--pi-gold-bright);
   min-height: calc(100svh - 68px);
   overflow-x: clip;
+  position: relative;
+  z-index: 3;
   color: var(--pi-parchment);
   background: var(--pi-ink);
   color-scheme: dark;
@@ -28,6 +30,7 @@
 body.pi-overlay-open { overflow: hidden; }
 body.people-route { overflow-x: hidden; }
 body.people-route #app { overflow-x: clip; }
+body.people-route #app.route-enter { animation: none; transform: none; }
 
 .people-intelligence button,
 .people-intelligence input,
@@ -961,6 +964,64 @@ body.people-route #app { overflow-x: clip; }
 .pi-constellation-lower .pi-focus-index { border-right: 1px solid var(--pi-line); }
 .pi-constellation-lower .pi-dossier--inline { min-height: 340px; }
 
+/* Reference migration: the constellation is the first screen, not a card
+   appended beneath the old directory hero. The archive remains available as
+   progressive detail below the cinematic stage. */
+@media (min-width: 981px) {
+  body.people-constellation-mode #site-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 80;
+    background: linear-gradient(180deg, rgba(3, 6, 8, .7), transparent);
+    border-bottom-color: transparent;
+  }
+
+  body.people-constellation-mode #site-nav .nav-links,
+  body.people-constellation-mode #site-nav .nav-search,
+  body.people-constellation-mode #site-nav .nav-atmosphere,
+  body.people-constellation-mode #site-nav .realm-lens,
+  body.people-constellation-mode #site-nav .nav-raven,
+  body.people-constellation-mode #site-nav .nav-toggle { display: none; }
+
+  .people-intelligence[data-pi-mode="constellation"] .pi-shell { display: flex; min-height: 100svh; flex-direction: column; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-hero { display: none; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-content { order: 1; min-height: 0; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-command-bar { position: fixed; top: auto; right: 0; bottom: 0; left: 0; z-index: 60; display: flex; align-items: center; justify-content: center; width: 100%; max-width: none; height: auto; padding: 0 26px; border-top: 1px solid rgba(203, 168, 92, .28); border-bottom: 0; background: rgba(4, 7, 9, .88); }
+  .people-intelligence[data-pi-mode="constellation"] .pi-mode-tabs { justify-content: center; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-mode-tab { min-width: 120px; flex-direction: column; gap: 3px; align-items: center; justify-content: center; padding: 10px 18px 9px; text-align: center; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-mode-tab img { width: 22px; height: 22px; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-mode-tab strong { font-size: .62rem; letter-spacing: .14em; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-mode-tab small { display: none; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-season-lens { margin-left: auto; padding: 0 0 0 18px; border-left: 1px solid rgba(203, 168, 92, .18); }
+  .people-intelligence[data-pi-mode="constellation"] .pi-season-lens__copy { display: none; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-seasons { align-items: center; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-season { min-width: 34px; min-height: 34px; }
+
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation { display: flex; width: 100%; max-width: none; flex-direction: column; padding: 0 0 150px; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-intro { order: 2; width: min(100%, 1500px); margin: 0 auto; padding: 84px clamp(18px, 4vw, 58px) 20px; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-controls { order: 3; width: min(100% - 36px, 1500px); margin: 0 auto 20px; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero { order: 1; display: block; min-height: calc(100svh - 8px); border-right: 0; border-left: 0; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero::before { background: linear-gradient(180deg, rgba(3, 6, 8, .25), rgba(3, 6, 8, .62) 76%, rgba(3, 6, 8, .92)), url("../assets/ui/north-journey-bg.jpg") center / cover; opacity: .92; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__stage { position: absolute; inset: 0; min-height: 0; background: radial-gradient(circle at 50% 42%, rgba(226, 199, 125, .11), transparent 28%), repeating-conic-gradient(from 12deg at 50% 42%, rgba(226, 199, 125, .06) 0deg .45deg, transparent .45deg 26deg); }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__copy { position: absolute; bottom: 145px; left: 50%; z-index: 8; display: grid; justify-items: center; width: min(440px, 44vw); max-width: none; padding: 0; text-align: center; pointer-events: none; transform: translateX(-50%); }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__copy a,
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__copy button { pointer-events: auto; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__copy .pi-card-kicker { margin-bottom: 9px; font-size: .64rem; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__copy h3 { max-width: none; font-family: 'Cinzel', Georgia, serif; font-size: clamp(2.5rem, 5vw, 4.4rem); font-style: normal; letter-spacing: .12em; line-height: .95; text-transform: uppercase; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__role { max-width: 34ch; margin: 9px 0 0; color: var(--pi-house-text); font-family: Inter, 'Segoe UI', sans-serif; font-size: .66rem; font-style: normal; font-weight: 700; letter-spacing: .2em; line-height: 1.25; text-transform: uppercase; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__copy blockquote { max-width: 34ch; margin: 15px 0 0; padding: 0; border: 0; font-size: 1.18rem; line-height: 1.15; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__actions { justify-content: center; margin-top: 18px; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__center { top: 36%; width: 270px; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__center .pi-portrait { width: 230px; height: 292px; border-width: 2px; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__center > button > span:last-child { display: none; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-node--5,
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-node--6 { top: 70%; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__count { bottom: 24px; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-lower { order: 4; width: min(100% - 36px, 1500px); margin: 0 auto; }
+}
+
 /* Dossier --------------------------------------------------------------- */
 .pi-dossier {
   --pi-house: var(--pi-gold);
@@ -1421,6 +1482,39 @@ body.people-route #app { overflow-x: clip; }
   .pi-constellation-hero__count { right: 14px; bottom: 16px; font-size: .53rem; }
   .pi-constellation-lower { display: block; border-right: 0; border-left: 0; }
   .pi-constellation-lower .pi-focus-index { border-right: 0; }
+
+  body.people-constellation-mode #site-nav { position: fixed; top: 0; right: 0; left: 0; z-index: 80; background: linear-gradient(180deg, rgba(3, 6, 8, .78), transparent); border-bottom-color: transparent; }
+  body.people-constellation-mode #site-nav .nav-links,
+  body.people-constellation-mode #site-nav .nav-search,
+  body.people-constellation-mode #site-nav .nav-atmosphere,
+  body.people-constellation-mode #site-nav .realm-lens,
+  body.people-constellation-mode #site-nav .nav-raven,
+  body.people-constellation-mode #site-nav .nav-toggle { display: none; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-shell { display: flex; min-height: 100svh; flex-direction: column; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-hero { display: none; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-command-bar { position: fixed; top: auto; right: 0; bottom: 0; left: 0; z-index: 60; display: block; width: 100%; max-width: none; height: auto; padding: 0 10px; border-top: 1px solid rgba(203, 168, 92, .3); border-bottom: 0; background: rgba(4, 7, 9, .92); }
+  .people-intelligence[data-pi-mode="constellation"] .pi-mode-tabs { justify-content: space-around; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-mode-tab { min-width: 0; flex: 1; flex-direction: column; gap: 2px; align-items: center; justify-content: center; padding: 7px 5px 8px; text-align: center; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-mode-tab img { width: 18px; height: 18px; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-mode-tab strong { font-size: .52rem; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-season-lens { display: none; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation { display: flex; width: 100%; flex-direction: column; padding: 0 0 92px; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-intro { order: 2; padding: 58px 18px 16px; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-controls { order: 3; margin: 0 14px 14px; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero { order: 1; min-height: calc(100svh - 8px); border-right: 0; border-left: 0; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero::before { background: linear-gradient(180deg, rgba(3, 6, 8, .3), rgba(3, 6, 8, .66) 74%, rgba(3, 6, 8, .94)), url("../assets/ui/north-journey-bg.jpg") center / cover; opacity: .94; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__copy { top: auto; right: 16px; bottom: 78px; left: 16px; z-index: 8; width: auto; max-width: none; padding: 0; text-align: center; pointer-events: none; transform: none; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__copy a,
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__copy button { pointer-events: auto; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__copy h3 { max-width: none; font-family: 'Cinzel', Georgia, serif; font-size: clamp(2rem, 10vw, 3.2rem); font-style: normal; letter-spacing: .1em; line-height: .95; text-transform: uppercase; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__role { max-width: 28ch; margin: 8px auto 0; color: var(--pi-house-text); font-family: Inter, 'Segoe UI', sans-serif; font-size: .54rem; font-style: normal; letter-spacing: .15em; text-transform: uppercase; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__copy blockquote { max-width: 30ch; margin: 10px auto 0; padding: 0; border: 0; font-size: 1rem; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__actions { justify-content: center; margin-top: 13px; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__stage { position: absolute; inset: 0; min-height: 0; margin: 0; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__center { top: 37%; width: 164px; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__center .pi-portrait { width: 138px; height: 178px; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-hero__center > button > span:last-child { display: none; }
+  .people-intelligence[data-pi-mode="constellation"] .pi-constellation-lower { order: 4; margin: 0 14px; }
 
   .pi-archive-controls { grid-template-columns: 1fr; }
   .pi-results-heading { display: grid; gap: 4px; }

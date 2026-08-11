@@ -170,6 +170,15 @@ The source visual uses an illustrated historical card with a prominent era/date,
 
 ### final result: passed
 
+## Constellation fidelity correction
+
+- The selected constellation reference is now the first-screen People composition rather than a secondary panel below the previous People hero. In Constellation mode, the old directory hero is hidden, the stage fills the viewport, the global route chrome is reduced to a brand mark, and the mode/season controls become a compact bottom rail.
+- The hero now matches the reference hierarchy: atmospheric full-bleed realm image, central portrait, orbital relationship nodes, house-colored lines, centered character identity, quote, dossier action, and comparison action. Existing Spotlight, Archive, profile routes, season lens, dossier records, and relationship data remain available through progressive disclosure.
+- Desktop verification at `1280 × 720`: the constellation stage begins at the first content viewport, the rail is pinned to the viewport bottom (`bottom = 720`), the previous hero is `display: none`, and there is no document overflow. Orbit selection changed Jon Snow to Daenerys Targaryen; the central portrait opened and closed the preserved dossier modal; no browser warnings/errors were observed.
+- Mobile verification at `390 × 844`: the stage begins at the top of the route (`top = 59`), the old hero remains hidden, the bottom rail remains visible, and document width equals the viewport (`390px`).
+
+### final result: passed
+
 ## People constellation migration
 
 - The People route now leads with a relationship constellation: a portrait-led character focal point, six animated tie nodes, house-colored relation lines, a fan quote, and an explicit dossier action. The existing Spotlight and Archive modes remain available from the same command bar, with the season lens, comparison tray, profile links, and full dossier details preserved.
