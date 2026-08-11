@@ -788,25 +788,50 @@ function viewHouses(app) {
   setTitle("Houses");
   const houses = Object.keys(HOUSE_COLORS);
   app.innerHTML = `
-    <div class="page-wrap">
-      <div class="hero ambient-glow" style="padding-top:76px;padding-bottom:10px;">
-        <h1 class="display">The Great Houses</h1>
-        <p>Sigils, words, seats, and family trees for every house of Westeros — plus the Night's Watch and the Free Folk beyond the Wall.</p>
-      </div>
-      <div class="grid grid-narrow" id="house-grid"></div>
-    </div>
+    <section class="houses-page" aria-labelledby="houses-title">
+      <header class="houses-hero">
+        <div class="houses-hero__copy">
+          <p class="houses-eyebrow">The banners that outlived their kings</p>
+          <h1 id="houses-title">The realm<br><em>is inherited.</em></h1>
+          <p class="houses-hero__dek">Every sigil carries a promise. Every promise has a cost. Enter the houses as a living network of words, seats, bloodlines, and endings.</p>
+          <div class="houses-hero__actions">
+            <a class="houses-hero__cta" href="#/house/Stark">Open House Stark <span aria-hidden="true">↗</span></a>
+            <span class="houses-hero__hint">Choose a banner to begin</span>
+          </div>
+        </div>
+        <div class="houses-hero__sigils" aria-hidden="true">
+          ${houses.slice(0, 6).map((house, index) => `<span class="houses-hero__sigil houses-hero__sigil--${index + 1}" style="--house-accent:${HOUSE_COLORS[house]}">${sigilSVG(HOUSE_INFO[house].sigil, { size: 30 })}</span>`).join("")}
+        </div>
+        <dl class="houses-hero__facts" aria-label="House directory summary">
+          <div><dt>${houses.length}</dt><dd>banners</dd></div>
+          <div><dt>${characters.length}</dt><dd>people indexed</dd></div>
+          <div><dt>1</dt><dd>realm at stake</dd></div>
+        </dl>
+      </header>
+      <section class="houses-roster" aria-labelledby="houses-roster-title">
+        <div class="houses-roster__heading">
+          <div><p class="houses-eyebrow">Choose your allegiance</p><h2 id="houses-roster-title">Words before names.</h2></div>
+          <p>Open a banner to follow its family tree, history, members, and the shape it leaves on the realm.</p>
+        </div>
+        <div class="houses-grid" id="house-grid"></div>
+      </section>
+      <footer class="houses-footer"><span>Fan archive · TV canon · no official allegiance</span><a href="#/map">Trace the realm ↗</a></footer>
+    </section>
   `;
   document.getElementById("house-grid").innerHTML = houses.map(h => {
     const info = HOUSE_INFO[h];
     const color = HOUSE_COLORS[h];
     const count = charactersByHouse(h).length;
     return `
-    <a class="card house-card reveal" href="#/house/${encodeURIComponent(h)}" style="${cardAccentStyle(color)}">
-      <div class="house-sigil" style="border-color:${color};background:${color}1c;color:${color};">${sigilSVG(info.sigil, { size: 34 })}</div>
-      <h3 class="display" style="color:${color}">${h}</h3>
-      <div class="words">"${info.words}"</div>
-      <div class="seat">${info.seat}</div>
-      <div class="count">${count} character${count === 1 ? '' : 's'}</div>
+    <a class="houses-card reveal" href="#/house/${encodeURIComponent(h)}" style="--house-accent:${color}" data-house-card="${escapeHTML(h)}">
+      <span class="houses-card__wash" aria-hidden="true"></span>
+      <span class="houses-card__index" aria-hidden="true">${String(houses.indexOf(h) + 1).padStart(2, "0")}</span>
+      <span class="houses-card__sigil">${sigilSVG(info.sigil, { size: 44 })}</span>
+      <span class="houses-card__region">${escapeHTML(info.region)}</span>
+      <h3>${escapeHTML(h)}</h3>
+      <span class="houses-card__words">“${escapeHTML(info.words)}”</span>
+      <span class="houses-card__seat">${escapeHTML(info.seat)}</span>
+      <span class="houses-card__meta"><span>${count} record${count === 1 ? "" : "s"}</span><span>Open dossier <b aria-hidden="true">↗</b></span></span>
     </a>`;
   }).join("");
   observeReveals(app);
