@@ -11,7 +11,8 @@ const NAV_LINKS = [
   { href: "#/timeline", label: "Memory Wall", matches: ["#/timeline", "#/battles", "#/episode/"] },
   { href: "#/quotes", label: "Voices", matches: ["#/quotes"] },
   { href: "#/map", label: "World", matches: ["#/map", "#/houses", "#/house/"] },
-  { href: "#/lore", label: "Lore", matches: ["#/lore"] }
+  { href: "#/lore", label: "Lore", matches: ["#/lore"] },
+  { href: "#/what-if", label: "What If", matches: ["#/what-if"] }
 ];
 
 function renderNav() {

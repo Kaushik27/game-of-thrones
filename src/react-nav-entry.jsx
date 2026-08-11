@@ -10,6 +10,7 @@ const LINKS = [
   { href: "#/quotes", label: "Voices", matches: ["#/quotes"] },
   { href: "#/map", label: "World", matches: ["#/map", "#/houses", "#/house/"] },
   { href: "#/lore", label: "Lore", matches: ["#/lore"] }
+  , { href: "#/what-if", label: "What If", matches: ["#/what-if"] }
 ];
 
 function currentRoute() {

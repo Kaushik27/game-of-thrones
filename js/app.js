@@ -15,6 +15,7 @@ const APP_ROUTES = [
   { pattern: /^\/house\/([^/]+)$/, view: viewHouse },
   { pattern: /^\/map$/, view: viewMap },
   { pattern: /^\/chronicle$/, view: viewChronicle },
+  { pattern: /^\/what-if$/, view: viewWhatIf },
   { pattern: /^\/episode\/([^/]+)$/, view: viewTimeline },
   { pattern: /^\/timeline$/, view: viewTimeline },
   { pattern: /^\/battles$/, view: viewBattles },
@@ -1423,6 +1424,21 @@ function viewChronicle(app, params, query) {
   } catch (error) {
     console.error("The Realm Chronicle could not be mounted.", error);
     app.innerHTML = `<div class="page-wrap"><div class="empty-state">The chronicle is unavailable. <a href="#/">Return to the realm</a>.</div></div>`;
+  }
+}
+
+function viewWhatIf(app, params, query) {
+  setTitle("What If");
+  if (!window.WhatIfChamber) {
+    app.innerHTML = `<div class="page-wrap"><div class="empty-state">The counterfactual chamber is unavailable. <a href="#/chronicle">Return to the chronicle</a>.</div></div>`;
+    return;
+  }
+  app.innerHTML = `<div id="what-if-root" class="encyclopedia-feature-host"></div>`;
+  try {
+    registerActiveView(window.WhatIfChamber.mount(document.getElementById("what-if-root"), { initialId: query.get("branch") || "" }));
+  } catch (error) {
+    console.error("The counterfactual chamber could not be mounted.", error);
+    app.innerHTML = `<div class="page-wrap"><div class="empty-state">The branch collapsed. <a href="#/chronicle">Return to the known record</a>.</div></div>`;
   }
 }
 

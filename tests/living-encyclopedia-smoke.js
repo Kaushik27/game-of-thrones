@@ -10,7 +10,10 @@ const read = relativePath => fs.readFileSync(path.join(root, relativePath), "utf
 
 const context = { window: {} };
 vm.createContext(context);
-["js/data.js", "js/events.js", "js/episodes.js", "js/battles.js", "js/quotes.js", "js/quote-curation.js", "js/fan-moments.js", "js/lore-data.js", "js/chronicle-data.js"]
+[
+  "js/data.js", "js/events.js", "js/episodes.js", "js/battles.js", "js/quotes.js",
+  "js/quote-curation.js", "js/fan-moments.js", "js/lore-data.js", "js/chronicle-data.js", "js/what-if-data.js"
+]
   .forEach(relativePath => vm.runInContext(read(relativePath), context, { filename: relativePath }));
 
 const value = name => vm.runInContext(name, context);
@@ -24,6 +27,7 @@ const quoteCollections = value("window.QUOTE_COLLECTIONS");
 const loreEntries = value("LORE_ENTRIES");
 const fanMoments = value("window.FAN_MOMENTS");
 const chronicle = value("window.REALM_CHRONICLE");
+const whatIfs = value("window.WHAT_IFS");
 
 assert.equal(characters.length, 196, "character catalogue changed unexpectedly");
 assert.equal(episodes.length, 73, "episode catalogue must contain all 73 episodes");
@@ -36,6 +40,12 @@ assert.equal(loreEntries.length, 24, "lore library must retain all 24 dossiers")
 assert.equal(new Set(loreEntries.map(entry => entry.category)).size, 6, "lore library must retain six categories");
 assert.equal(fanMoments.length, 7, "fan memory reel must retain its seven editorial anchors");
 assert.equal(chronicle.length, 15, "realm chronicle must retain its fifteen illustrated moments");
+assert.equal(whatIfs.length, 6, "what-if chamber must retain its six fan branches");
+whatIfs.forEach(record => {
+  assert.ok(record.id && record.title && record.premise, "what-if branches need stable identity and premise");
+  assert.ok(record.branches.length >= 3, `${record.id} needs multiple consequences`);
+  record.relatedCharacters.forEach(characterId => assert.ok(characterIdsPlaceholder(characterId), `${record.id} references unknown character ${characterId}`));
+});
 assert.equal(new Set(chronicle.map(record => record.id)).size, chronicle.length, "chronicle IDs must be unique");
 chronicle.forEach(record => {
   assert.ok(record.title && record.period && record.image, "chronicle records need title, period, and image");
@@ -84,6 +94,8 @@ const atmosphereSource = read("js/global-atmosphere.js");
 const navSource = read("src/react-nav-entry.jsx");
 const archiveShellSource = read("css/archive-shell.css");
 const chronicleSource = read("js/chronicle-timeline.js");
+const compassSource = read("js/realm-compass.js");
+const whatIfSource = read("js/what-if.js");
 
 const contracts = [
   [appSource.includes('initialEventId: query.get("event") || ""'), "app must pass event deep links to StoryAtlas"],
@@ -121,6 +133,8 @@ const contracts = [
   , [archiveShellSource.includes("archive-horizon-drift") && archiveShellSource.includes("north-journey-bg.jpg") && archiveShellSource.includes("capital-journey-bg.jpg"), "Archive routes must share a fluid atmospheric backdrop"]
   , [peopleSource.includes("observeSpotlightCards") && peopleSource.includes("handleSpotlightPointerMove"), "People spotlight must provide scroll and pointer interaction"]
   , [appSource.includes("houses-page") && appSource.includes("data-house-card"), "Houses must use the cinematic banner directory"]
+  , [compassSource.includes("Spoiler lens") && compassSource.includes("randomDestination"), "archive must provide a persistent spoiler lens and daily raven"]
+  , [whatIfSource.includes("WhatIfChamber") && whatIfSource.includes("Fan speculation"), "archive must provide a clearly labeled counterfactual chamber"]
 ];
 contracts.forEach(([condition, message]) => assert.ok(condition, message));
 
@@ -151,6 +165,10 @@ assert.ok(scripts.indexOf("js/raven-wall.js") < scripts.indexOf("js/app.js"), "M
 assert.ok(scripts.indexOf("js/global-atmosphere.js") < scripts.indexOf("js/app.js"), "atmosphere must load before route rendering");
 assert.ok(indexSource.includes("css/archive-shell.css?v=archive-shell-3"), "shared archive shell must load in the static entrypoint");
 assert.ok(indexSource.includes("css/houses.css?v=houses-1"), "houses styling must load in the static entrypoint");
+assert.ok(indexSource.includes("css/realm-compass.css?v=realm-compass-1"), "compass styling must load in the static entrypoint");
+assert.ok(indexSource.includes("css/what-if.css?v=what-if-1"), "what-if styling must load in the static entrypoint");
+assert.ok(scripts.indexOf("js/what-if-data.js") < scripts.indexOf("js/what-if.js"), "what-if data must load before its module");
+assert.ok(scripts.indexOf("js/realm-compass.js") < scripts.indexOf("js/app.js"), "realm compass must load before the router");
 assert.ok(scripts.indexOf("js/quote-curation.js") < scripts.indexOf("js/app.js"), "quote curation must load before the router");
 assert.ok(scripts.indexOf("js/lore-data.js") < scripts.indexOf("js/lore-library.js"), "lore data must load before LoreLibrary");
 assert.ok(scripts.indexOf("js/story-atlas.js") < scripts.indexOf("js/app.js"), "feature modules must load before the router");
