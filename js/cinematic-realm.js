@@ -93,14 +93,6 @@
 
   function createShell(root) {
     const fanMoments = Array.isArray(global.FAN_MOMENTS) ? global.FAN_MOMENTS : [];
-    const fanQuotes = datasetQuotes();
-    const quoteSpeaker = quote => {
-      try {
-        const character = typeof getCharacter === "function" ? getCharacter(quote.characterId) : null;
-        return character ? character.name : quote.characterId;
-      } catch (error) { return quote.characterId; }
-    };
-    const momentQuote = moment => fanQuotes.find(quote => quote.id === moment.quoteId);
     root.innerHTML = `
       <section class="cinematic-prologue" id="cinematic-prologue" aria-labelledby="cinematic-prologue-title">
         <div class="cinematic-prologue__stage" data-cinematic-stage data-scene="border">
@@ -147,19 +139,29 @@
         </div>
         <a class="cinematic-handoff__link" href="#realm-journey-root">Open the season journey</a>
       </section>
-      <section class="cinematic-fan-shelf" aria-labelledby="cinematic-fan-shelf-title">
-        <div class="cinematic-fan-shelf__intro">
+      <section class="cinematic-memory-gallery" aria-labelledby="cinematic-memory-title">
+        <div class="cinematic-memory-gallery__intro">
           <p class="cinematic-handoff__eyebrow">A fan's memory reel</p>
-          <h2 id="cinematic-fan-shelf-title">The scenes we never quite left.</h2>
-          <p>Not a press kit. Not a plot summary. These are the doors, blades, fires, and last words that made the story personal.</p>
-          <a href="#/quotes" class="cinematic-fan-shelf__link">Open the full Voices archive</a>
+          <h2 id="cinematic-memory-title">The scenes we never quite left.</h2>
+          <p>Six fragments. One at a time. Let the image arrive before the archive opens.</p>
+          <a href="#/quotes" class="cinematic-memory-gallery__link">Open every voice <span aria-hidden="true">↗</span></a>
+          <p class="cinematic-memory-gallery__hint"><span aria-hidden="true">01</span> Choose a memory below</p>
         </div>
-        <div class="cinematic-fan-shelf__quotes">
-          ${fanMoments.slice(0, 6).map((moment, index) => {
-            const quote = momentQuote(moment);
-            const speaker = quote ? quoteSpeaker(quote) : "The realm";
-            return `<a class="cinematic-fan-shelf__quote cinematic-fan-shelf__quote--${index + 1}" href="#/quotes?quote=${escapeText(moment.quoteId)}" style="--memory-image:url('../${escapeText(moment.image)}')"><span class="cinematic-fan-shelf__image" aria-hidden="true"></span><span class="cinematic-fan-shelf__overlay" aria-hidden="true"></span><span class="cinematic-fan-shelf__kicker">${escapeText(moment.kicker)}</span><strong>${escapeText(moment.title)}</strong><blockquote>${escapeText(moment.line)}</blockquote><span class="cinematic-fan-shelf__speaker">${escapeText(speaker)} · ${escapeText(moment.location)}</span><small>${escapeText(moment.fanNote)}</small><span class="cinematic-fan-shelf__open">Remember this scene <span aria-hidden="true">↗</span></span></a>`;
-          }).join("")}
+        <div class="cinematic-memory-gallery__stage" data-cinematic-memory-stage tabindex="-1">
+          <div class="cinematic-memory-gallery__image" data-cinematic-memory-image aria-hidden="true"></div>
+          <div class="cinematic-memory-gallery__veil" aria-hidden="true"></div>
+          <div class="cinematic-memory-gallery__copy">
+            <p class="cinematic-memory-gallery__kicker" data-cinematic-memory-kicker></p>
+            <h3 data-cinematic-memory-title></h3>
+            <blockquote data-cinematic-memory-line></blockquote>
+            <p class="cinematic-memory-gallery__speaker" data-cinematic-memory-speaker></p>
+            <p class="cinematic-memory-gallery__note" data-cinematic-memory-note></p>
+            <a class="cinematic-memory-gallery__open" data-cinematic-memory-open href="#/quotes">Enter this moment <span aria-hidden="true">↗</span></a>
+          </div>
+          <span class="cinematic-memory-gallery__counter" data-cinematic-memory-counter>01 / 06</span>
+        </div>
+        <div class="cinematic-memory-gallery__rail" role="tablist" aria-label="Fan memories">
+          ${fanMoments.slice(0, 6).map((moment, index) => `<button class="cinematic-memory-gallery__thumb" type="button" role="tab" aria-selected="${index === 0 ? "true" : "false"}" data-cinematic-memory="${escapeText(moment.id)}" style="--memory-image:url('../${escapeText(moment.image)}')"><span class="cinematic-memory-gallery__thumb-image" aria-hidden="true"></span><span class="cinematic-memory-gallery__thumb-index">${String(index + 1).padStart(2, "0")}</span><span class="cinematic-memory-gallery__thumb-title">${escapeText(moment.title)}</span></button>`).join("")}
         </div>
       </section>
       <div id="realm-journey-root" class="realm-journey-host cinematic-realm__journey-host">
@@ -171,6 +173,14 @@
   function mount(root, options) {
     if (!root || mountedRoots.has(root)) return mountedRoots.get(root) || null;
     const config = options && typeof options === "object" ? options : {};
+    const fanMoments = Array.isArray(global.FAN_MOMENTS) ? global.FAN_MOMENTS.slice() : [];
+    const momentQuote = moment => datasetQuotes().find(quote => quote.id === moment.quoteId);
+    const speakerForQuote = quote => {
+      try {
+        const character = typeof getCharacter === "function" ? getCharacter(quote.characterId) : null;
+        return character ? character.name : quote.characterId;
+      } catch (error) { return quote.characterId; }
+    };
     const initialSeason = Number.isInteger(config.initialSeason) && config.initialSeason >= 1 && config.initialSeason <= 8
       ? config.initialSeason
       : 6;
@@ -193,6 +203,15 @@
     const counter = root.querySelector("[data-cinematic-counter]");
     const progress = root.querySelector("[data-cinematic-progress]");
     const status = root.querySelector("[data-cinematic-status]");
+    const memoryStage = root.querySelector("[data-cinematic-memory-stage]");
+    const memoryKicker = root.querySelector("[data-cinematic-memory-kicker]");
+    const memoryTitle = root.querySelector("[data-cinematic-memory-title]");
+    const memoryLine = root.querySelector("[data-cinematic-memory-line]");
+    const memorySpeaker = root.querySelector("[data-cinematic-memory-speaker]");
+    const memoryNote = root.querySelector("[data-cinematic-memory-note]");
+    const memoryOpen = root.querySelector("[data-cinematic-memory-open]");
+    const memoryCounter = root.querySelector("[data-cinematic-memory-counter]");
+    const memoryThumbs = [...root.querySelectorAll("[data-cinematic-memory]")];
     const reducedMotion = global.matchMedia && global.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let currentScene = 0;
     let frame = 0;
@@ -204,6 +223,7 @@
     let destroyed = false;
     let journeyHandle = null;
     let portalHandle = null;
+    let activeMemoryIndex = 0;
     const soundHandle = global.CinematicSound ? global.CinematicSound.mount(stage) : null;
     const journeyRoot = root.querySelector("#realm-journey-root");
     journeyRoot.setAttribute("tabindex", "-1");
@@ -255,6 +275,33 @@
         button.setAttribute("aria-current", active ? "true" : "false");
       });
       if (announce) status.textContent = `${scene.label} chapter`;
+    }
+
+    function renderMemory(index, announce) {
+      if (!memoryStage || !fanMoments.length) return;
+      const list = fanMoments.slice(0, 6);
+      activeMemoryIndex = (Number(index) + list.length) % list.length;
+      const moment = list[activeMemoryIndex];
+      const quote = momentQuote(moment);
+      const speaker = quote ? speakerForQuote(quote) : "The realm";
+      memoryStage.dataset.change = String(Date.now());
+      global.setTimeout(() => memoryStage.removeAttribute("data-change"), 900);
+      memoryStage.style.setProperty("--memory-image", `url('../${escapeText(moment.image)}')`);
+      memoryKicker.textContent = `${moment.kicker} · ${moment.location}`;
+      memoryTitle.textContent = moment.title;
+      memoryLine.textContent = `“${moment.line}”`;
+      memorySpeaker.textContent = `— ${speaker}`;
+      memoryNote.textContent = moment.fanNote;
+      memoryOpen.href = `#/quotes?quote=${encodeURIComponent(moment.quoteId)}`;
+      memoryCounter.textContent = `${String(activeMemoryIndex + 1).padStart(2, "0")} / ${String(list.length).padStart(2, "0")}`;
+      memoryThumbs.forEach((button, thumbIndex) => {
+        button.setAttribute("aria-selected", String(thumbIndex === activeMemoryIndex));
+        button.setAttribute("tabindex", thumbIndex === activeMemoryIndex ? "0" : "-1");
+      });
+      if (announce) {
+        status.textContent = `${moment.title} memory selected`;
+        memoryStage.focus({ preventScroll: true });
+      }
     }
 
     function update() {
@@ -336,6 +383,17 @@
     root.querySelectorAll("[data-cinematic-scene]").forEach((button, index) => {
       button.addEventListener("click", () => scrollToProgress(index / (scenes.length - 1)));
     });
+    memoryThumbs.forEach((button, index) => {
+      button.addEventListener("click", () => renderMemory(index, true));
+      button.addEventListener("keydown", event => {
+        if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+        event.preventDefault();
+        const delta = event.key === "ArrowRight" ? 1 : -1;
+        const next = (index + delta + memoryThumbs.length) % memoryThumbs.length;
+        renderMemory(next, true);
+        memoryThumbs[next].focus();
+      });
+    });
     root.querySelector("[data-cinematic-skip]").addEventListener("click", event => {
       event.preventDefault();
       event.stopPropagation();
@@ -364,6 +422,7 @@
       if (!pointerFrame && !reducedMotion) pointerFrame = global.requestAnimationFrame(updatePointer);
     }, { passive: true });
     setScene(0, false);
+    renderMemory(0, false);
     update();
 
     if (global.RealmJourney) {

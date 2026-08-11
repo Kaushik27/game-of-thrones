@@ -79,6 +79,12 @@ The focused reference/People comparison keeps both screens at 1265 × 712 and co
 
 ## Cinematic Explore prologue
 
+### Fan memory gallery pass
+
+- The Explore handoff now uses one cinematic memory stage instead of six simultaneous information cards. The selected fragment swaps image, title, quote, speaker, context, counter, and archive link in place; the six-item rail is the only visible index.
+- Browser verification: the mobile stage rendered at 390px with `body.scrollWidth === 390`; selecting the fourth memory changed the stage to “A queen walks into fire” and `#/quotes?quote=q8`; desktop capture showed the shared filmstrip-to-memory transition without clipping or horizontal overflow.
+- Keyboard behavior: memory rail buttons use `role="tab"`, `aria-selected`, roving `tabindex`, and ArrowLeft/ArrowRight navigation. Reduced motion disables the dissolve animation without removing the state change.
+
 - The Explore route now opens with a scroll-driven five-beat prologue: a border before the crown, First, the ice; Then, the fire; A story of power; and Enter the living realm. The first frame is intentionally near-black, with the navigation hidden until the visitor begins or scrolls. Existing local realm artwork supplies the atmosphere, while the current interactive Realm Journey remains the destination below the handoff.
 - Each act now carries a real local actor portrait, a canon quote, and three live story-moment links into the archive (episodes, battles, timelines, characters, and the map), so the opening behaves like an editorial index rather than a decorative hero. Pointer parallax adds a restrained depth cue on capable devices; reduced-motion keeps the same content without the motion.
 - The Explore CTA now performs a short ink-and-ember canvas crossing before landing in the existing Realm Journey. The effect is isolated from page content, uses a no-canvas fallback, and keeps the destination route unchanged (`#/`).
