@@ -243,7 +243,10 @@
     const initialSeason = normalizeSeason(options.initialSeason);
     const requestedMode = safeText(options.initialMode).toLowerCase();
     const state = {
-      mode: MODES.includes(requestedMode) ? requestedMode : "spotlight",
+      // The former constellation poster is retained as implementation history,
+      // but it is no longer a public entry mode. People opens in the living
+      // Spotlight experience; Archive remains available for full indexing.
+      mode: requestedMode === "archive" ? "archive" : "spotlight",
       season: initialSeason,
       archiveQuery: "",
       archiveHouse: "",
@@ -486,7 +489,6 @@
         <div class="pi-command-bar">
           <nav class="pi-mode-tabs" role="tablist" aria-label="People views">
             ${modeButtonMarkup("spotlight", "Spotlight", "Essential arcs")}
-            ${modeButtonMarkup("constellation", "Constellation", "Power and kinship")}
             ${modeButtonMarkup("archive", "Archive", "Every record")}
           </nav>
           <div class="pi-season-lens">
@@ -1252,6 +1254,32 @@
       updateBodyLock();
     }
 
+    // Character portraits and relationship nodes are the primary controls on
+    // this route. Capture them before nested image/card listeners so a click
+    // cannot be swallowed by a decorative layer or a stale delegated handler.
+    function handleInteractiveCapture(event) {
+      const target = event.target.closest("[data-pi-character], [data-pi-neighbor]");
+      if (!target || !root.contains(target)) return;
+      event.stopPropagation();
+      if (target.dataset.piNeighbor) {
+        const characterId = target.dataset.piNeighbor;
+        if (detailLayer.contains(target)) {
+          openCharacter(characterId, target, true);
+          announce(`Character intelligence updated to ${data.charactersById.get(characterId).name}.`);
+        } else if (state.mode === "constellation") {
+          state.selectedId = characterId;
+          renderConstellation();
+          const focus = panel.querySelector(".pi-constellation-hero__center [data-pi-character]");
+          if (focus) focus.focus({ preventScroll: true });
+        } else {
+          openCharacter(characterId, target);
+        }
+        return;
+      }
+      openCharacter(target.dataset.piCharacter, target);
+    }
+
+    listen(root, "click", handleInteractiveCapture, true);
     listen(root, "click", handleClick);
     listen(root, "input", handleInput);
     listen(root, "change", handleChange);

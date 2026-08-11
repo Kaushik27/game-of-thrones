@@ -239,7 +239,7 @@ function viewCharacters(app, params, query) {
   try {
     const handle = window.PeopleIntelligence.mount(root, {
       initialSeason: spoilerLimit(query, 6),
-      initialMode: query.get("mode") || "constellation",
+      initialMode: query.get("mode") || "spotlight",
       onNavigate: navigateFeatureTarget
     });
     registerActiveView(handle);

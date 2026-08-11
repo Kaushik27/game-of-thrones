@@ -170,12 +170,12 @@ The source visual uses an illustrated historical card with a prominent era/date,
 
 ### final result: passed
 
-## Constellation fidelity correction
+## Constellation fidelity correction (superseded)
 
-- The selected constellation reference is now the first-screen People composition rather than a secondary panel below the previous People hero. In Constellation mode, the old directory hero is hidden, the stage fills the viewport, the global route chrome is reduced to a brand mark, and the mode/season controls become a compact bottom rail.
+- The selected constellation reference was briefly promoted to the first-screen People composition, but review showed that it read as a static poster rather than a living fan archive. It is now removed from the public People entry flow; the route opens in interactive Spotlight mode and retains Archive for the complete index.
 - The hero now matches the reference hierarchy: atmospheric full-bleed realm image, central portrait, orbital relationship nodes, house-colored lines, centered character identity, quote, dossier action, and comparison action. Existing Spotlight, Archive, profile routes, season lens, dossier records, and relationship data remain available through progressive disclosure.
-- Desktop verification at `1280 × 720`: the constellation stage begins at the first content viewport, the rail is pinned to the viewport bottom (`bottom = 720`), the previous hero is `display: none`, and there is no document overflow. Orbit selection changed Jon Snow to Daenerys Targaryen; the central portrait opened and closed the preserved dossier modal; no browser warnings/errors were observed.
-- Mobile verification at `390 × 844`: the stage begins at the top of the route (`top = 59`), the old hero remains hidden, the bottom rail remains visible, and document width equals the viewport (`390px`).
+- Desktop verification at `1280 × 720`: Spotlight is the default mode, the full-card portrait target opens Jon Snow's dossier, and no document overflow is present. The old constellation poster is not rendered from the public route.
+- Interaction verification: portrait/card targets now use a capture-phase handler so decorative content cannot swallow clicks; Spotlight card clicks open the dossier, and archived relationship-node behavior remains covered by the same path.
 
 ### final result: passed
 
