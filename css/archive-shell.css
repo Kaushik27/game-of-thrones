@@ -22,18 +22,59 @@ body.archive-route #site-nav {
 body.archive-route #app {
   position: relative;
   isolation: isolate;
-  background: #050809;
+  background: transparent;
 }
 
 body.archive-route #app::before {
   position: absolute;
   z-index: -1;
-  inset: 0;
+  inset: -5%;
   background:
-    radial-gradient(circle at 8% 12%, rgba(87, 124, 142, .08), transparent 28rem),
-    radial-gradient(circle at 92% 62%, rgba(177, 107, 47, .06), transparent 32rem);
+    linear-gradient(90deg, rgba(3, 7, 9, .86), rgba(3, 7, 9, .48) 48%, rgba(3, 7, 9, .78)),
+    url("../assets/ui/north-journey-bg.jpg") center 42% / cover no-repeat;
   content: "";
   pointer-events: none;
+  filter: saturate(.62) contrast(1.08) brightness(.64);
+  transform: scale(1.08) translate3d(-1.2%, -.6%, 0);
+  animation: archive-horizon-drift 28s ease-in-out infinite alternate;
+}
+
+body.archive-route #app::after {
+  position: absolute;
+  z-index: -1;
+  inset: -5%;
+  background:
+    linear-gradient(90deg, rgba(9, 5, 4, .56), rgba(9, 5, 4, .12) 52%, rgba(3, 7, 9, .52)),
+    url("../assets/ui/capital-journey-bg.jpg") center 46% / cover no-repeat;
+  content: "";
+  opacity: .2;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: saturate(.58) contrast(1.08) brightness(.72);
+  transform: scale(1.06) translate3d(1%, .6%, 0);
+  animation: archive-horizon-breathe 22s ease-in-out infinite alternate;
+}
+
+body.archive-route #app > * { position: relative; z-index: 0; }
+
+body.archive-route .people-intelligence,
+body.archive-route .pi-shell,
+body.archive-route .world-atlas,
+body.archive-route .story-atlas,
+body.archive-route .lore-library,
+body.archive-route .raven-wall,
+body.archive-route .realm-chronicle {
+  background: rgba(6, 9, 10, .64);
+}
+
+@keyframes archive-horizon-drift {
+  from { transform: scale(1.08) translate3d(-1.2%, -.6%, 0); }
+  to { transform: scale(1.12) translate3d(1.2%, .8%, 0); }
+}
+
+@keyframes archive-horizon-breathe {
+  from { opacity: .12; transform: scale(1.06) translate3d(1%, .6%, 0); }
+  to { opacity: .28; transform: scale(1.1) translate3d(-1%, -.7%, 0); }
 }
 
 body.archive-route .people-intelligence,
@@ -132,5 +173,6 @@ body.archive-route .raven-wall__remember:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body.archive-route #app::before { display: none; }
+  body.archive-route #app::before,
+  body.archive-route #app::after { animation: none; }
 }

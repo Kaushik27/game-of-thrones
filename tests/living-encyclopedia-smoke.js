@@ -118,6 +118,7 @@ const contracts = [
   , [chronicleSource.includes("IntersectionObserver") && chronicleSource.includes("updateProgress"), "Chronicle must respond to scroll with reveal and progress states"]
   , [chronicleSource.includes("dustHTML") && chronicleSource.includes("onPointerMove"), "Chronicle must provide ambient and pointer-driven life"]
   , [chronicleSource.includes("function entryButton") && chronicleSource.includes("Open moment"), "Chronicle cards must expose a resilient click target and visible action cue"]
+  , [archiveShellSource.includes("archive-horizon-drift") && archiveShellSource.includes("north-journey-bg.jpg") && archiveShellSource.includes("capital-journey-bg.jpg"), "Archive routes must share a fluid atmospheric backdrop"]
 ];
 contracts.forEach(([condition, message]) => assert.ok(condition, message));
 
@@ -146,7 +147,7 @@ assert.ok(scripts.indexOf("js/quotes.js") < scripts.indexOf("js/quote-curation.j
 assert.ok(scripts.indexOf("js/fan-moments.js") < scripts.indexOf("js/app.js"), "fan moments must load before the router");
 assert.ok(scripts.indexOf("js/raven-wall.js") < scripts.indexOf("js/app.js"), "Memory Wall must load before the router");
 assert.ok(scripts.indexOf("js/global-atmosphere.js") < scripts.indexOf("js/app.js"), "atmosphere must load before route rendering");
-assert.ok(indexSource.includes("css/archive-shell.css?v=archive-shell-2"), "shared archive shell must load in the static entrypoint");
+assert.ok(indexSource.includes("css/archive-shell.css?v=archive-shell-3"), "shared archive shell must load in the static entrypoint");
 assert.ok(scripts.indexOf("js/quote-curation.js") < scripts.indexOf("js/app.js"), "quote curation must load before the router");
 assert.ok(scripts.indexOf("js/lore-data.js") < scripts.indexOf("js/lore-library.js"), "lore data must load before LoreLibrary");
 assert.ok(scripts.indexOf("js/story-atlas.js") < scripts.indexOf("js/app.js"), "feature modules must load before the router");
