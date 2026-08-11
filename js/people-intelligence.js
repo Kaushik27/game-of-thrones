@@ -225,6 +225,8 @@
     const seasonIndex = buildSeasonIndex(dependencies, data);
     const id = `people-intelligence-${++instanceCount}`;
     const cleanup = [];
+    document.body.classList.add("people-route");
+    cleanup.push(() => document.body.classList.remove("people-route"));
     const originalClass = root.getAttribute("class");
     const originalMarker = root.getAttribute("data-people-intelligence");
     const mobileSheet = typeof global.matchMedia === "function"
@@ -253,6 +255,7 @@
       compareIds: [],
       compareOpen: false
     };
+    if (state.mode === "constellation" && data.charactersById.has("jon-snow")) state.selectedId = "jon-snow";
 
     function escape(value) {
       if (dependencies.escapeHTML) {
@@ -430,6 +433,13 @@
     function fanMomentFor(characterId) {
       const moments = Array.isArray(global.FAN_MOMENTS) ? global.FAN_MOMENTS : [];
       return moments.find(moment => moment.characterId === characterId) || null;
+    }
+
+    function quoteFor(characterId) {
+      const moment = fanMomentFor(characterId);
+      if (moment && moment.line) return moment.line;
+      const quote = dependencies.quotes.find(item => item && item.characterId === characterId);
+      return quote && quote.text ? quote.text : "A life is measured by the choices it leaves behind.";
     }
 
     function modeButtonMarkup(mode, label, description) {
@@ -639,38 +649,55 @@
         .filter(entry => !state.constellationHouse || entry.other.house === state.constellationHouse)
         .slice(0, 12) : [];
 
+      const nodes = entries.slice(0, 6).map((entry, index) => {
+        const type = RELATION_TYPES.includes(entry.relation.type) ? entry.relation.type : "bond";
+        return `<li class="pi-constellation-node pi-constellation-node--${index + 1} pi-relation--${type}">
+          <span class="pi-constellation-node__line" aria-hidden="true"></span>
+          <button type="button" data-pi-neighbor="${escape(entry.other.id)}" aria-label="Focus ${escape(entry.other.name)}; ${escape(entry.relation.label || RELATION_LABELS[type])}">
+            <span class="pi-constellation-node__portrait">${portraitMarkup(entry.other, "node")}</span>
+            <span class="pi-constellation-node__label"><strong>${escape(entry.other.name)}</strong><small>${escape(entry.relation.label || RELATION_LABELS[type])}</small></span>
+          </button>
+        </li>`;
+      }).join("");
       panel.innerHTML = `
         <section class="pi-section pi-constellation" aria-labelledby="${id}-constellation-title">
-          <div class="pi-section-heading pi-section-heading--compact">
-            <div><p class="pi-eyebrow">Relationship intelligence</p><h2 id="${id}-constellation-title">Power is personal</h2></div>
-            <p>Select any record to redraw the documented ties around them.</p>
+          <div class="pi-constellation-intro">
+            <div><p class="pi-eyebrow">The living constellation</p><h2 id="${id}-constellation-title">Every choice leaves a tie.</h2></div>
+            <p>Choose a life and the realm redraws itself around the people who shaped it.</p>
           </div>
           ${constellationFiltersMarkup()}
-          ${selected ? `<div class="pi-constellation-layout">
-            <aside class="pi-focus-index" aria-label="Choose a focus character">
-              <label for="${id}-focus-select">Focus record</label>
-              <select id="${id}-focus-select" data-pi-focus-select>
-                ${candidates.map(character => `<option value="${escape(character.id)}"${character.id === selected.id ? " selected" : ""}>${escape(character.name)} · ${escape(character.house)}</option>`).join("")}
-              </select>
-              <div class="pi-focus-index__summary">
-                <span>${entries.length}</span>
-                <p>visible tie${entries.length === 1 ? "" : "s"} under the current lens</p>
+          ${selected ? `<div class="pi-constellation-hero ${houseClass(selected.house)}">
+            <div class="pi-constellation-hero__backdrop" aria-hidden="true"></div>
+            <div class="pi-constellation-hero__copy">
+              <p class="pi-card-kicker">${escape(selected.house)} · Season ${state.season || "all"}</p>
+              <h3>${escape(selected.name)}</h3>
+              <p class="pi-constellation-hero__role">${escape(selected.bio || "A life caught between loyalty, power, and consequence.")}</p>
+              <blockquote>“${escape(quoteFor(selected.id))}”</blockquote>
+              <div class="pi-constellation-hero__actions">
+                <a href="${profileHref(selected)}" data-pi-profile>Open dossier <span aria-hidden="true">↗</span></a>
+                ${compareButtonMarkup(selected, false)}
               </div>
-              <p class="pi-key-hint">Use arrow keys between relationship cards. Press Enter to refocus.</p>
-            </aside>
-            <div class="pi-constellation-stage">
-              <div class="pi-focus-person ${houseClass(selected.house)}">
+            </div>
+            <div class="pi-constellation-hero__stage" aria-label="${escape(selected.name)} relationship constellation">
+              <div class="pi-constellation-hero__rings" aria-hidden="true"></div>
+              <div class="pi-constellation-hero__center">
                 <button type="button" data-pi-character="${escape(selected.id)}" aria-label="Open intelligence for ${escape(selected.name)}">
-                  ${portraitMarkup(selected, "focus")}
-                  <span><small>${escape(selected.house)}</small><strong>${escape(selected.name)}</strong></span>
+                  ${portraitMarkup(selected, "constellation")}
+                  <span><small>The white wolf</small><strong>${escape(selected.name)}</strong></span>
                 </button>
               </div>
-              ${entries.length ? `<ol class="pi-orbit" aria-label="Relationships for ${escape(selected.name)}">${entries.map(constellationPersonMarkup).join("")}</ol>` : `
-                <div class="pi-empty pi-empty--constellation"><h3>No visible ties</h3><p>Broaden the house, season, or relationship filters.</p></div>`}
+              ${nodes ? `<ol class="pi-constellation-nodes" aria-label="Documented ties for ${escape(selected.name)}">${nodes}</ol>` : `<div class="pi-empty pi-empty--constellation"><h3>No visible ties</h3><p>Broaden the house, season, or relationship filters.</p></div>`}
+              <span class="pi-constellation-hero__count">${entries.length} documented tie${entries.length === 1 ? "" : "s"}</span>
             </div>
-            <aside class="pi-dossier pi-dossier--inline ${houseClass(selected.house)}" aria-label="Focused character details">
-              ${dossierMarkup(selected, false)}
+          </div>
+          <div class="pi-constellation-lower">
+            <aside class="pi-focus-index" aria-label="Choose a focus character">
+              <label for="${id}-focus-select">Focus record</label>
+              <select id="${id}-focus-select" data-pi-focus-select>${candidates.map(character => `<option value="${escape(character.id)}"${character.id === selected.id ? " selected" : ""}>${escape(character.name)} · ${escape(character.house)}</option>`).join("")}</select>
+              <div class="pi-focus-index__summary"><span>${entries.length}</span><p>visible tie${entries.length === 1 ? "" : "s"} under the current lens</p></div>
+              <p class="pi-key-hint">Select a node to make it the new center.</p>
             </aside>
+            <aside class="pi-dossier pi-dossier--inline ${houseClass(selected.house)}" aria-label="Focused character details">${dossierMarkup(selected, false)}</aside>
           </div>` : `<div class="pi-empty"><h3>No records under this lens</h3><p>Broaden the house or season filter.</p></div>`}
         </section>`;
     }
@@ -744,10 +771,25 @@
       renderArchiveResults();
     }
 
+    // Portraits are real buttons, not just delegated card decoration. Binding
+    // them directly keeps image clicks reliable across browser event targets
+    // while the surrounding click delegation continues to serve legacy links.
+    function bindCharacterButtons(scope) {
+      if (!scope || typeof scope.querySelectorAll !== "function") return;
+      scope.querySelectorAll("[data-pi-character]").forEach(button => {
+        button.addEventListener("click", event => {
+          event.preventDefault();
+          event.stopPropagation();
+          openCharacter(button.dataset.piCharacter, button);
+        });
+      });
+    }
+
     function renderMode() {
       if (state.mode === "constellation") renderConstellation();
       else if (state.mode === "archive") renderArchive();
       else renderSpotlight();
+      bindCharacterButtons(panel);
       updateModeTabs();
       updateCompareLayer();
       updateDetailLayer();
@@ -1007,7 +1049,7 @@
         state.selectedId = characterId;
         if (state.mode === "constellation") {
           renderConstellation();
-          const focus = panel.querySelector(".pi-focus-person [data-pi-character]");
+          const focus = panel.querySelector(".pi-constellation-hero__center [data-pi-character], .pi-focus-person [data-pi-character]");
           if (focus) focus.focus({ preventScroll: true });
         } else {
           openCharacter(characterId, neighbor);
@@ -1198,6 +1240,7 @@
 
     chooseSelectedCharacter();
     renderMode();
+    bindCharacterButtons(root);
 
     const handle = {
       destroy() {

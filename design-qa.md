@@ -169,3 +169,13 @@ The source visual uses an illustrated historical card with a prominent era/date,
 - Browser evidence: pointer variables changed on movement, progress reached `26.23%` during a desktop scroll, three cards entered the viewport, and the reading status advanced to “Chapter 04 of 15 · 1–2 AC”; the 390px mobile pass remained at 390px document width with no console warnings/errors.
 
 ### final result: passed
+
+## People constellation migration
+
+- The People route now leads with a relationship constellation: a portrait-led character focal point, six animated tie nodes, house-colored relation lines, a fan quote, and an explicit dossier action. The existing Spotlight and Archive modes remain available from the same command bar, with the season lens, comparison tray, profile links, and full dossier details preserved.
+- The visual migration uses only existing local actor portraits and realm artwork. No external image dependency or replacement of the existing character data was introduced.
+- Browser verification: desktop `1280 × 720` opened `#/characters` in Constellation mode with Jon Snow selected; selecting a relation node moved the center to Daenerys Targaryen; the center portrait opened the preserved dossier modal; Spotlight and Archive both rendered after switching modes; no browser console warnings/errors were observed.
+- Mobile verification: viewport `390 × 844` retained the constellation composition, stacked the lower focus/dossier area, opened the center dossier, and kept the document width at exactly `390px` with no horizontal page overflow.
+- Accessibility: center and relationship portraits remain semantic buttons, the stage rings and lines are decorative, and the existing focus-visible styling, live announcer, modal focus trap, relation filters, and keyboard mode/season controls remain active.
+
+### final result: passed
