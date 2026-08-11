@@ -121,6 +121,7 @@ const contracts = [
   [peopleSource.includes('detailLayer.toggleAttribute("inert", detailCoveredByComparison)'), "People must inert a dossier beneath comparison"],
   [ravenWallSource.includes("global.RavenWall") && ravenWallSource.includes("data-rw-remember"), "Memory Wall must expose a remembered fan-fragment interaction"],
   [ravenWallSource.includes("data-rw-share") && ravenWallSource.includes("data-rw-personal-note"), "Memory Wall must expose shareable fragments and private fan notes"],
+  [ravenWallSource.includes("data-rw-submit-form") && ravenWallSource.includes("pending-review"), "Memory Wall must expose a moderated fan fragment draft flow"],
   [atmosphereSource.includes("global.GotAtmosphere") && atmosphereSource.includes("AudioContext"), "Atmosphere must remain opt-in and locally synthesized"],
   [appSource.includes("got:route-change") && appSource.includes("route-enter"), "route changes must publish a shared cinematic transition state"],
   [navSource.includes("data-atmosphere-control") && navSource.includes("GotAtmosphere"), "React shell must own the persistent atmosphere control"],

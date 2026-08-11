@@ -63,6 +63,16 @@ body.raven-wall-route #site-footer { background: rgba(5,6,6,.94); }
 .raven-wall__personal-note textarea:focus-visible { outline: 2px solid #e3c276; outline-offset: 2px; border-color: #e3c276; }
 .raven-wall__share { min-height: 38px; padding: 9px 13px; border: 1px solid rgba(209,169,87,.54); background: rgba(4,7,7,.5); color: #cfc3aa; font-size: .62rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; cursor: pointer; }
 .raven-wall__share:hover { border-color: #e3c276; color: #f0e7d6; }
+.raven-wall__submission { display:grid; grid-template-columns:minmax(220px,.8fr) minmax(0,1.2fr); gap:34px; max-width:1020px; margin:34px auto 0; padding:28px 0 30px; border-bottom:1px solid rgba(209,169,87,.24); }
+.raven-wall__submission h2 { margin:9px 0 0; color:var(--rw-cream); font:italic 500 clamp(1.8rem,3vw,3rem)/.9 'Cormorant Garamond',Georgia,serif; }
+.raven-wall__submission p { margin:10px 0 0; color:#aaa59a; font:italic 1.08rem/1.15 'Cormorant Garamond',Georgia,serif; }
+.raven-wall__submission form { display:grid; gap:10px; }
+.raven-wall__submission label { display:grid; gap:6px; }
+.raven-wall__submission label>span { color:var(--rw-gold); font-size:.58rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; }
+.raven-wall__submission input,.raven-wall__submission textarea { width:100%; border:1px solid rgba(209,169,87,.28); background:rgba(3,6,6,.45); color:#e5ddcd; font:1rem/1.2 'Cormorant Garamond',Georgia,serif; padding:9px 10px; }
+.raven-wall__submission input:focus-visible,.raven-wall__submission textarea:focus-visible { outline:2px solid #e3c276; outline-offset:2px; border-color:#e3c276; }
+.raven-wall__submission-actions { display:flex; align-items:center; gap:14px; }
+.raven-wall__submission-actions [data-rw-submit-status] { color:var(--rw-gold); font-size:.65rem; }
 .raven-wall__footer { display: flex; align-items: center; justify-content: space-between; max-width: 1280px; margin: 28px auto 0; color: #8f8a80; font-size: .64rem; letter-spacing: .11em; text-transform: uppercase; }
 .raven-wall__footer div { display: flex; gap: 20px; }
 .raven-wall__footer a { color: var(--rw-gold); }
@@ -81,6 +91,7 @@ body.raven-wall-route #site-footer { background: rgba(5,6,6,.94); }
   .raven-wall__scrap--previous, .raven-wall__scrap--next { transform: none; }
   .raven-wall__note { transform: none; }
   .raven-wall__annotation { grid-template-columns: 1fr; gap: 18px; }
+  .raven-wall__submission { grid-template-columns: 1fr; gap:18px; }
   .raven-wall__footer { align-items: flex-start; flex-direction: column; gap: 18px; }
 }
 

@@ -65,6 +65,10 @@
         <div><span class="raven-wall__annotation-label">What changed</span><p data-rw-consequence></p></div>
         <label class="raven-wall__personal-note"><span class="raven-wall__annotation-label">What stayed with you</span><textarea data-rw-personal-note rows="2" maxlength="280" placeholder="Leave a private note for your next visit"></textarea></label>
       </section>
+      <section class="raven-wall__submission" aria-labelledby="raven-wall-submit-title">
+        <div><span class="raven-wall__annotation-label">Leave a trace</span><h2 id="raven-wall-submit-title">Add your own fan fragment.</h2><p>Saved on this device as a draft for the maesters. Nothing is published without review.</p></div>
+        <form data-rw-submit-form><label><span>Fragment title</span><input data-rw-submit-title maxlength="80" required placeholder="The scene I still carry"></label><label><span>Your note</span><textarea data-rw-submit-copy rows="3" maxlength="280" required placeholder="Why did this moment stay with you?"></textarea></label><div class="raven-wall__submission-actions"><button class="raven-wall__remember" type="submit">Offer this fragment</button><span data-rw-submit-status role="status" aria-live="polite"></span></div></form>
+      </section>
       <footer class="raven-wall__footer"><span data-rw-count></span><div><a href="#/quotes">Read every voice</a><a href="#/timeline?atlas=1">Open the episode atlas</a></div></footer>
     </main>`;
 
@@ -72,6 +76,10 @@
     const filters = root.querySelector("[data-rw-filters]");
     const backdrop = root.querySelector("[data-rw-backdrop]") || root.querySelector(".raven-wall__scene-backdrop");
     const personalNote = root.querySelector("[data-rw-personal-note]");
+    const submissionForm = root.querySelector("[data-rw-submit-form]");
+    const submissionTitle = root.querySelector("[data-rw-submit-title]");
+    const submissionCopy = root.querySelector("[data-rw-submit-copy]");
+    const submissionStatus = root.querySelector("[data-rw-submit-status]");
     const tags = ["all", ...new Set(moments.flatMap(moment => moment.tags).slice(0, 6))];
     filters.innerHTML = tags.map(tag => `<button type="button" data-rw-tag="${escape(tag)}" aria-pressed="${String(tag === activeTag)}">${escape(tag === "all" ? "All fragments" : tag.replace(/-/g, " "))}</button>`).join("");
 
@@ -147,6 +155,22 @@
         notes[moment.id] = personalNote.value.slice(0, 280);
         global.localStorage.setItem("got-fan-memory-notes", JSON.stringify(notes));
       } catch (error) { /* private enhancement; wall remains usable */ }
+    });
+    submissionForm && submissionForm.addEventListener("submit", event => {
+      event.preventDefault();
+      const title = String(submissionTitle?.value || "").trim();
+      const copy = String(submissionCopy?.value || "").trim();
+      if (!title || !copy) return;
+      try {
+        const submissions = JSON.parse(global.localStorage.getItem("got-fan-submissions") || "[]");
+        submissions.push({ id: `draft-${Date.now()}`, title: title.slice(0, 80), copy: copy.slice(0, 280), momentId: selectedMoment().id, status: "pending-review", createdAt: new Date().toISOString() });
+        global.localStorage.setItem("got-fan-submissions", JSON.stringify(submissions.slice(-20)));
+        submissionForm.reset();
+        if (submissionStatus) submissionStatus.textContent = "Saved as a draft for maester review.";
+        recordEngagement("fan_fragment_submitted", { momentId: selectedMoment().id });
+      } catch (_) {
+        if (submissionStatus) submissionStatus.textContent = "This device could not save the draft.";
+      }
     });
     root.addEventListener("keydown", event => {
       if (event.key === "ArrowLeft") { event.preventDefault(); move(-1); }
