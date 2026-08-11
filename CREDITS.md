@@ -4,6 +4,11 @@ This is an unofficial, non-commercial fan reference site for HBO's *Game of Thro
 
 ## Cinematic realm artwork and interface assets
 
+The Raven Wall observatory hero at `assets/generated/northern-guardian-observatory.png` is an
+original AI-generated in-world study created for this fan project. It is not a photograph of an
+actor, a production still, or an HBO asset. The house orbit uses the project's own line-art sigils;
+the archive continues to label verified actor portraits separately inside dossiers.
+
 The four realm backdrops in `assets/ui/` were generated specifically for this fan project, including
 the dedicated Border / Wall visual. They are original atmospheric illustrations, not HBO production
 stills or frames from the series.
