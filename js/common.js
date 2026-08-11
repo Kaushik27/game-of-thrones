@@ -33,6 +33,8 @@ function renderNav() {
     <button type="button" class="nav-search" data-raven-search-trigger aria-label="Search the realm">
       <span>Search</span><kbd>/</kbd>
     </button>
+    ${window.RealmCompass ? window.RealmCompass.navHTML() : ""}
+    <button type="button" class="nav-raven" data-realm-raven aria-label="Let the raven choose a fragment"><img src="assets/icons/compass.svg" alt=""><span class="nav-raven__label">Raven</span></button>
     <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-controls="nav-links" aria-expanded="false">
       <span class="nav-toggle-label">Menu</span>
     </button>
@@ -49,6 +51,9 @@ function renderNav() {
     toggle.setAttribute("aria-expanded", "false");
     toggle.setAttribute("aria-label", "Open navigation");
   }));
+  if (window.RealmCompass) window.RealmCompass.bind(mount);
+  const raven = mount.querySelector("[data-realm-raven]");
+  if (raven) raven.addEventListener("click", () => { window.location.hash = window.RealmCompass?.randomDestination?.() || "#/quotes"; });
 }
 
 function renderFooter() {

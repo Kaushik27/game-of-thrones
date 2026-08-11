@@ -105,6 +105,13 @@ function rememberLastRoute(key, value) {
   try { window.sessionStorage.setItem(`got-last-${key}`, String(value || "")); } catch (error) { /* optional */ }
 }
 
+function spoilerLimit(query, fallback) {
+  const requested = query && Number(query.get("season"));
+  if (Number.isInteger(requested) && requested >= 1 && requested <= 8) return requested;
+  if (window.RealmCompass && window.RealmCompass.current() !== "all") return window.RealmCompass.season();
+  return fallback;
+}
+
 function episodeForQuote(quote) {
   if (!quote || typeof EPISODES === "undefined" || !Array.isArray(EPISODES)) return null;
   return EPISODES.find(episode => Array.isArray(episode.quoteIds) && episode.quoteIds.includes(quote.id))
@@ -183,7 +190,7 @@ function viewHome(app, params, query) {
   try { rememberedSeason = Number(window.sessionStorage.getItem("got-last-season")) || 6; } catch (error) { /* optional */ }
   const initialSeason = Number.isInteger(requestedSeason) && requestedSeason >= 1 && requestedSeason <= 8
     ? requestedSeason
-    : (Number.isInteger(rememberedSeason) && rememberedSeason >= 1 && rememberedSeason <= 8 ? rememberedSeason : 6);
+    : (window.RealmCompass && window.RealmCompass.current() !== "all" ? window.RealmCompass.season() : (Number.isInteger(rememberedSeason) && rememberedSeason >= 1 && rememberedSeason <= 8 ? rememberedSeason : 6));
 
   app.innerHTML = `<div id="cinematic-realm-root" class="cinematic-realm"></div>`;
   const root = document.getElementById("cinematic-realm-root");
@@ -226,7 +233,7 @@ function viewCharacters(app, params, query) {
   const root = document.getElementById("people-intelligence-root");
   try {
     const handle = window.PeopleIntelligence.mount(root, {
-      initialSeason: Number(query.get("season")) || 6,
+      initialSeason: spoilerLimit(query, 6),
       onNavigate: navigateFeatureTarget
     });
     registerActiveView(handle);
@@ -1317,7 +1324,7 @@ function viewMap(app, params, query) {
   try { rememberedSeason = Number(window.sessionStorage.getItem("got-last-season")) || 1; } catch (error) { /* optional */ }
   try {
     const handle = window.WorldAtlas.mount(root, {
-      initialSeason: Number(query.get("season")) || (Number.isInteger(rememberedSeason) && rememberedSeason >= 1 && rememberedSeason <= 8 ? rememberedSeason : 1),
+      initialSeason: spoilerLimit(query, Number.isInteger(rememberedSeason) && rememberedSeason >= 1 && rememberedSeason <= 8 ? rememberedSeason : 1),
       initialMode: query.get("mode") || "atlas",
       onNavigate: navigateFeatureTarget
     });
@@ -1388,7 +1395,7 @@ function viewTimeline(app, params, query) {
   const root = document.getElementById("story-atlas-root");
   try {
     const handle = window.StoryAtlas.mount(root, {
-      initialSeason: Number(query.get("season")) || undefined,
+      initialSeason: query.get("season") ? Number(query.get("season")) : (window.RealmCompass && window.RealmCompass.current() !== "all" ? window.RealmCompass.season() : undefined),
       initialEpisodeId: params[0] || query.get("episode") || "",
       initialEventId: query.get("event") || "",
       initialMode: query.get("mode") || "",
@@ -1719,7 +1726,7 @@ function viewQuiz(app) {
 // ==========================================================================
 function viewQuotes(app, params, query) {
   setTitle("Voices of the Realm");
-  let activeQuery = "", activeHouse = "", activeSeason = "";
+  let activeQuery = "", activeHouse = "", activeSeason = (window.RealmCompass && window.RealmCompass.current() !== "all" && !query.get("season")) ? String(window.RealmCompass.season()) : (query.get("season") || "");
   let activeCollection = query.get("quote") ? "all" : "featured";
   let spotlightIndex = new Date().getDate();
   const requestedQuoteId = query.get("quote") || "";
@@ -1927,6 +1934,7 @@ function viewQuotes(app, params, query) {
     houseSel.appendChild(opt);
   });
   root.querySelector("#voices-search").addEventListener("input", e => { activeQuery = e.target.value; render(); });
+  root.querySelector("#voices-season").value = activeSeason;
   houseSel.addEventListener("change", e => { activeHouse = e.target.value; render(); });
   root.querySelector("#voices-season").addEventListener("change", e => { activeSeason = e.target.value; render(); });
   root.querySelector("#voices-collections").addEventListener("click", e => {

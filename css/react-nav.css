@@ -72,6 +72,23 @@
 .react-nav-shell .nav-atmosphere.is-on { border-color: rgba(212,175,55,.72); color: #e8d5a5; }
 .nav-atmosphere__dot { width: 6px; height: 6px; border: 1px solid currentColor; border-radius: 50%; }
 .nav-atmosphere.is-on .nav-atmosphere__dot { background: #d4af37; box-shadow: 0 0 12px #d4af37; }
+.react-nav-shell .nav-raven {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid rgba(212,175,55,.25);
+  background: rgba(7,10,12,.32);
+  color: #aaa69d;
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.react-nav-shell .nav-raven:hover { border-color: rgba(212,175,55,.72); color: #e8d5a5; }
+.nav-raven > img { width: 14px; height: 14px; object-fit: contain; filter: sepia(1) saturate(.7) brightness(1.15); }
 .react-nav-shell .react-nav-status {
   position: absolute;
   width: 1px;
@@ -97,6 +114,7 @@
   .react-nav-shell .nav-toggle { display: inline-block; margin-left: 0; }
   .react-nav-shell .nav-search { margin-left: auto; }
   .react-nav-shell .nav-atmosphere span:last-child { display: none; }
+  .react-nav-shell .nav-raven__label { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

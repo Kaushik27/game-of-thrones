@@ -1,0 +1,73 @@
+/* Persistent fan controls. The compass is intentionally compact so it feels
+   like a tool carried through the archive, not another navigation destination. */
+.realm-lens {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 6px 9px;
+  border: 1px solid rgba(212, 175, 55, .25);
+  background: rgba(7, 10, 12, .34);
+  color: #a8a79e;
+  font-size: .56rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.realm-lens__glyph { width: 13px; height: 13px; object-fit: contain; filter: sepia(1) saturate(.7) brightness(1.15); }
+.realm-lens select {
+  max-width: 126px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #eee7d8;
+  font: inherit;
+  letter-spacing: .06em;
+  cursor: pointer;
+}
+.realm-lens select option { color: #161614; background: #eee7d8; }
+.realm-lens:focus-within { border-color: var(--accent, #d4af37); box-shadow: 0 0 0 2px rgba(212,175,55,.14); }
+
+.nav-raven {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid rgba(212,175,55,.25);
+  background: rgba(7,10,12,.32);
+  color: #aaa69d;
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.nav-raven:hover { border-color: rgba(212,175,55,.72); color: #e8d5a5; }
+.nav-raven > img { width: 14px; height: 14px; object-fit: contain; filter: sepia(1) saturate(.7) brightness(1.15); }
+
+html[data-spoiler-lens]:not([data-spoiler-lens="all"])::after {
+  position: fixed;
+  z-index: 120;
+  right: 13px;
+  bottom: 13px;
+  padding: 5px 8px;
+  border: 1px solid rgba(212,175,55,.3);
+  background: rgba(4,7,8,.86);
+  color: #d4b36a;
+  content: "Spoilers through season " attr(data-spoiler-season);
+  font-size: .56rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  pointer-events: none;
+  text-transform: uppercase;
+}
+
+@media (max-width: 860px) {
+  .realm-lens { order: 3; margin-left: auto; }
+  .realm-lens__label { display: none; }
+}
+@media (max-width: 520px) {
+  .realm-lens { min-height: 32px; padding-inline: 7px; }
+  .realm-lens select { max-width: 106px; font-size: .53rem; }
+}
