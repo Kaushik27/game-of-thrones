@@ -96,6 +96,7 @@ const archiveShellSource = read("css/archive-shell.css");
 const chronicleSource = read("js/chronicle-timeline.js");
 const compassSource = read("js/realm-compass.js");
 const whatIfSource = read("js/what-if.js");
+const deskSource = read("js/maesters-desk.js");
 
 const contracts = [
   [appSource.includes('initialEventId: query.get("event") || ""'), "app must pass event deep links to StoryAtlas"],
@@ -135,6 +136,7 @@ const contracts = [
   , [appSource.includes("houses-page") && appSource.includes("data-house-card"), "Houses must use the cinematic banner directory"]
   , [compassSource.includes("Spoiler lens") && compassSource.includes("randomDestination"), "archive must provide a persistent spoiler lens and daily raven"]
   , [whatIfSource.includes("WhatIfChamber") && whatIfSource.includes("Fan speculation"), "archive must provide a clearly labeled counterfactual chamber"]
+  , [deskSource.includes("MaestersDesk") && deskSource.includes("Image provenance"), "archive must provide a source and provenance desk"]
 ];
 contracts.forEach(([condition, message]) => assert.ok(condition, message));
 
@@ -167,7 +169,9 @@ assert.ok(indexSource.includes("css/archive-shell.css?v=archive-shell-3"), "shar
 assert.ok(indexSource.includes("css/houses.css?v=houses-1"), "houses styling must load in the static entrypoint");
 assert.ok(indexSource.includes("css/realm-compass.css?v=realm-compass-1"), "compass styling must load in the static entrypoint");
 assert.ok(indexSource.includes("css/what-if.css?v=what-if-1"), "what-if styling must load in the static entrypoint");
+assert.ok(indexSource.includes("css/maesters-desk.css?v=maesters-desk-1"), "maesters desk styling must load in the static entrypoint");
 assert.ok(scripts.indexOf("js/what-if-data.js") < scripts.indexOf("js/what-if.js"), "what-if data must load before its module");
+assert.ok(scripts.indexOf("js/maesters-desk.js") < scripts.indexOf("js/app.js"), "maesters desk must load before the router");
 assert.ok(scripts.indexOf("js/realm-compass.js") < scripts.indexOf("js/app.js"), "realm compass must load before the router");
 assert.ok(scripts.indexOf("js/quote-curation.js") < scripts.indexOf("js/app.js"), "quote curation must load before the router");
 assert.ok(scripts.indexOf("js/lore-data.js") < scripts.indexOf("js/lore-library.js"), "lore data must load before LoreLibrary");

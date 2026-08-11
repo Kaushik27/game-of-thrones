@@ -16,6 +16,7 @@ const APP_ROUTES = [
   { pattern: /^\/map$/, view: viewMap },
   { pattern: /^\/chronicle$/, view: viewChronicle },
   { pattern: /^\/what-if$/, view: viewWhatIf },
+  { pattern: /^\/desk$/, view: viewMaestersDesk },
   { pattern: /^\/episode\/([^/]+)$/, view: viewTimeline },
   { pattern: /^\/timeline$/, view: viewTimeline },
   { pattern: /^\/battles$/, view: viewBattles },
@@ -1442,6 +1443,21 @@ function viewWhatIf(app, params, query) {
   }
 }
 
+function viewMaestersDesk(app) {
+  setTitle("Maesters' Desk");
+  if (!window.MaestersDesk) {
+    app.innerHTML = `<div class="page-wrap"><div class="empty-state">The source room is unavailable. <a href="#/credits">Open credits</a>.</div></div>`;
+    return;
+  }
+  app.innerHTML = `<div id="maesters-desk-root" class="encyclopedia-feature-host"></div>`;
+  try {
+    registerActiveView(window.MaestersDesk.mount(document.getElementById("maesters-desk-root")));
+  } catch (error) {
+    console.error("The Maesters' Desk could not be mounted.", error);
+    app.innerHTML = `<div class="page-wrap"><div class="empty-state">The source room is unavailable. <a href="#/credits">Open credits</a>.</div></div>`;
+  }
+}
+
 function viewTimelineLegacy(app) {
   setTitle("Timeline");
   const TYPE_COLOR = { battle: "#c23b3b", death: "#8a2f2f", wedding: "#d97ba0", coronation: "#d4af37", politics: "#4a90d9", birth: "#4c7a3f", other: "#8a8a93" };
@@ -1547,7 +1563,7 @@ function viewBattles(app, params, query) {
           return `
           <div class="card battle-card reveal" data-battle-id="${escapeHTML(b.id)}"${selected ? ` tabindex="-1"` : ""} style="padding:22px;${cardAccentStyle('#c23b3b')}${selected ? "border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);" : ""}">
             <h3 class="display" style="margin:0 0 4px;">${escapeHTML(b.name)}</h3>
-            <div class="text-dim" style="font-size:0.82rem;margin-bottom:12px;">${escapeHTML(b.season)} · ${escapeHTML(b.location)}</div>
+            <div class="text-dim" style="font-size:0.82rem;margin-bottom:12px;">${escapeHTML(b.season)} · ${escapeHTML(b.location)} ${archiveBadge("TV canon", "canon")}</div>
             ${b.combatants.map(c => `
               <div style="margin:10px 0;">
                 <div class="text-dim" style="font-size:0.8rem;margin-bottom:4px;">${escapeHTML(c.side)}</div>
@@ -1927,7 +1943,7 @@ function viewQuotes(app, params, query) {
       const memory = fanMomentForQuote(qt.id);
       return `
         <article class="voices-card${selected ? " is-selected" : ""}" data-quote-id="${escapeHTML(qt.id)}"${selected ? ` tabindex="-1"` : ""} style="${cardAccentStyle(c.sigilColor)}">
-          <div class="voices-card__top"><span class="voices-card__index">${String(qt.id).replace("q", "#")}</span><span class="voices-card__season">Season ${qt.season}</span></div>
+          <div class="voices-card__top"><span class="voices-card__index">${String(qt.id).replace("q", "#")}</span><span class="voices-card__season">Season ${qt.season}</span>${archiveBadge("TV canon", "canon")}</div>
           <blockquote class="voices-card__quote">“${escapeHTML(qt.text)}”</blockquote>
           <div class="voices-card__tags">${(featuredIds.has(qt.id) ? ["Featured", ...themes] : themes).slice(0, 2).map(theme => `<span>${escapeHTML(theme)}</span>`).join("")}${memory ? `<span class="voices-card__memory-tag">${escapeHTML(memory.title)}</span>` : ""}</div>
           <div class="voices-card__footer"><a class="voices-card__speaker" href="#/character/${c.id}">${avatarHTML(c, 38)}<span><strong>${escapeHTML(c.name)}</strong><small>${escapeHTML(c.house)}</small></span></a><div class="voices-card__actions"><button type="button" class="voices-copy" data-copy-quote="${escapeHTML(qt.id)}" aria-label="Copy quote by ${escapeHTML(c.name)}">Copy line</button><button type="button" class="voices-copy" data-save-card-quote="${escapeHTML(qt.id)}" aria-pressed="${String(savedQuoteIds.has(qt.id))}">${savedQuoteIds.has(qt.id) ? "Saved" : "Keep"}</button></div></div>

@@ -9,6 +9,24 @@
   --archive-surface: rgba(7, 10, 11, .78);
 }
 
+.archive-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 17px;
+  padding: 2px 6px;
+  border: 1px solid rgba(212, 179, 106, .34);
+  color: var(--archive-gold);
+  font-size: .52rem;
+  font-weight: 700;
+  letter-spacing: .09em;
+  line-height: 1;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+.archive-badge--fan { border-color: rgba(147, 174, 196, .38); color: #b8cedd; }
+.archive-badge--theory { border-color: rgba(197, 119, 146, .48); color: #e0a8bc; }
+.archive-badge--book { border-color: rgba(124, 176, 131, .45); color: #b7d7bc; }
+
 body.archive-route {
   background: #050809;
 }

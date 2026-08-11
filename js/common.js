@@ -12,7 +12,8 @@ const NAV_LINKS = [
   { href: "#/quotes", label: "Voices", matches: ["#/quotes"] },
   { href: "#/map", label: "World", matches: ["#/map", "#/houses", "#/house/"] },
   { href: "#/lore", label: "Lore", matches: ["#/lore"] },
-  { href: "#/what-if", label: "What If", matches: ["#/what-if"] }
+  { href: "#/what-if", label: "What If", matches: ["#/what-if"] },
+  { href: "#/desk", label: "Desk", matches: ["#/desk"] }
 ];
 
 function renderNav() {
@@ -176,6 +177,11 @@ function avatarHTML(character, size) {
 
 function cardAccentStyle(color) {
   return `--card-accent:${color}; --card-accent-shadow:${color}33;`;
+}
+
+function archiveBadge(label, tone) {
+  const safeTone = String(tone || "canon").replace(/[^a-z-]/g, "");
+  return `<span class="archive-badge archive-badge--${safeTone}">${escapeHTML(label)}</span>`;
 }
 
 function charactersByHouse(house) {

@@ -11,6 +11,7 @@ const LINKS = [
   { href: "#/map", label: "World", matches: ["#/map", "#/houses", "#/house/"] },
   { href: "#/lore", label: "Lore", matches: ["#/lore"] }
   , { href: "#/what-if", label: "What If", matches: ["#/what-if"] }
+  , { href: "#/desk", label: "Desk", matches: ["#/desk"] }
 ];
 
 function currentRoute() {
