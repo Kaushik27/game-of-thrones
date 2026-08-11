@@ -138,7 +138,7 @@ body.chronicle-route #app { background: #070a0b; }
 .realm-chronicle__item:nth-child(even) .realm-chronicle__node { right: auto; left: -51px; }
 .realm-chronicle__item.is-selected .realm-chronicle__node { border-color: var(--chronicle-paper); background: var(--chronicle-gold); color: #13100b; box-shadow: 0 0 0 7px rgba(211, 174, 97, .11), 0 0 30px rgba(211, 174, 97, .26); }
 
-.realm-chronicle__card { position: relative; display: grid; min-height: 230px; grid-template-columns: minmax(0, 1fr) 34%; padding: 0; overflow: hidden; border: 1px solid rgba(233, 223, 204, .24); border-radius: 0; background: var(--chronicle-paper); color: #171512; text-align: left; box-shadow: 0 22px 60px rgba(0, 0, 0, .28); transition: transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease; }
+.realm-chronicle__card { position: relative; display: grid; height: 252px; min-height: 252px; grid-template-columns: minmax(0, 1fr) 34%; padding: 0; overflow: hidden; border: 1px solid rgba(233, 223, 204, .24); border-radius: 0; background: var(--chronicle-paper); color: #171512; text-align: left; box-shadow: 0 22px 60px rgba(0, 0, 0, .28); transition: transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease; }
 .realm-chronicle__item:nth-child(even) .realm-chronicle__card { grid-template-columns: 34% minmax(0, 1fr); }
 .realm-chronicle__card:hover, .realm-chronicle__item.is-selected .realm-chronicle__card { border-color: var(--chronicle-gold); box-shadow: 0 25px 70px rgba(0, 0, 0, .4), 0 0 0 1px rgba(211, 174, 97, .2); transform: translateY(-4px); }
 .realm-chronicle__card-media { grid-column: 2; grid-row: 1; min-height: 230px; background: var(--chronicle-image) var(--chronicle-position) / cover no-repeat; filter: saturate(.75) contrast(1.08); transition: transform 900ms cubic-bezier(.16, 1, .3, 1), filter 500ms ease; }
@@ -146,14 +146,17 @@ body.chronicle-route #app { background: #070a0b; }
 .realm-chronicle__item:nth-child(even) .realm-chronicle__card-media { grid-column: 1; }
 .realm-chronicle__card-veil { position: absolute; inset: 0; background: linear-gradient(90deg, var(--chronicle-paper) 0%, rgba(233, 223, 204, .82) 49%, rgba(233, 223, 204, 0) 76%); pointer-events: none; }
 .realm-chronicle__item:nth-child(even) .realm-chronicle__card-veil { background: linear-gradient(270deg, var(--chronicle-paper) 0%, rgba(233, 223, 204, .82) 49%, rgba(233, 223, 204, 0) 76%); }
-.realm-chronicle__card-copy { position: relative; z-index: 1; display: flex; grid-column: 1; grid-row: 1; min-width: 0; flex-direction: column; align-items: flex-start; justify-content: center; padding: 25px 25px 24px; }
+.realm-chronicle__card-copy { position: relative; z-index: 1; display: flex; grid-column: 1; grid-row: 1; min-width: 0; overflow: hidden; flex-direction: column; align-items: flex-start; justify-content: center; padding: 25px 25px 24px; }
 .realm-chronicle__item:nth-child(even) .realm-chronicle__card-copy { grid-column: 2; }
 .realm-chronicle__period { color: var(--chronicle-rust); font-family: "Cinzel", Georgia, serif; font-size: .64rem; font-weight: 700; letter-spacing: .11em; }
-.realm-chronicle__card strong { max-width: 13ch; margin-top: 11px; color: #1b1916; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.9rem, 3vw, 2.9rem); font-style: italic; font-weight: 600; letter-spacing: -.035em; line-height: .87; }
+.realm-chronicle__card strong { max-width: 100%; margin-top: 11px; color: #1b1916; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.75rem, 2.45vw, 2.45rem); font-style: italic; font-weight: 600; letter-spacing: -.035em; line-height: .9; overflow-wrap: anywhere; text-wrap: balance; }
 .realm-chronicle__marker { margin-top: 10px; color: #6d665a; font-family: "Cormorant Garamond", Georgia, serif; font-size: .98rem; font-style: italic; }
 .realm-chronicle__bullets { display: grid; gap: 5px; margin-top: 15px; }
 .realm-chronicle__bullets span { display: flex; align-items: center; gap: 7px; color: #3e3a32; font-size: .63rem; line-height: 1.25; }
 .realm-chronicle__bullets img { width: 13px; height: 13px; opacity: .76; filter: sepia(1) saturate(.7); }
+.realm-chronicle__card-cta { display: inline-flex; align-items: center; gap: 7px; margin-top: auto; padding-top: 12px; color: #7a5c2b; font-size: .57rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; transition: color 180ms ease, transform 180ms ease; }
+.realm-chronicle__card-cta span { font-size: .88rem; line-height: 1; }
+.realm-chronicle__card:hover .realm-chronicle__card-cta, .realm-chronicle__card:focus-visible .realm-chronicle__card-cta { color: #3f2b12; transform: translateX(3px); }
 .realm-chronicle__card-index { position: absolute; z-index: 2; right: 12px; bottom: 9px; color: rgba(70, 56, 33, .48); font-family: "Cinzel", Georgia, serif; font-size: .62rem; }
 
 .realm-chronicle__detail { position: sticky; top: 92px; align-self: start; padding: clamp(25px, 3vw, 36px); border: 1px solid var(--chronicle-line); background: rgba(13, 17, 17, .9); box-shadow: 0 28px 70px rgba(0, 0, 0, .35); backdrop-filter: blur(13px); }
@@ -199,10 +202,10 @@ body.chronicle-route #app { background: #070a0b; }
   .realm-chronicle__timeline::after { left: 14px; }
   .realm-chronicle__item, .realm-chronicle__item:nth-child(even) { width: calc(100% - 32px); justify-self: end; }
   .realm-chronicle__node, .realm-chronicle__item:nth-child(even) .realm-chronicle__node { top: 22px; right: auto; left: -51px; }
-  .realm-chronicle__card, .realm-chronicle__item:nth-child(even) .realm-chronicle__card { min-height: 265px; grid-template-columns: 1fr 34%; }
+  .realm-chronicle__card, .realm-chronicle__item:nth-child(even) .realm-chronicle__card { height: 265px; min-height: 265px; grid-template-columns: 1fr 34%; }
   .realm-chronicle__card-media, .realm-chronicle__item:nth-child(even) .realm-chronicle__card-media { grid-column: 2; }
   .realm-chronicle__card-copy, .realm-chronicle__item:nth-child(even) .realm-chronicle__card-copy { grid-column: 1; padding: 22px 19px; }
-  .realm-chronicle__card strong { font-size: 2.2rem; }
+  .realm-chronicle__card strong { font-size: clamp(1.75rem, 8.4vw, 2.2rem); }
   .realm-chronicle__footer { display: block; }
   .realm-chronicle__footer button { display: block; margin-top: 15px; padding: 0; }
 }

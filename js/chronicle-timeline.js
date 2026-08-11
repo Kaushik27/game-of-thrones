@@ -88,6 +88,10 @@
       if (typeof config.onNavigate === "function") config.onNavigate(hash);
       else global.location.hash = hash;
     }
+    function entryButton(id) {
+      return [...root.querySelectorAll("[data-chronicle-entry]")]
+        .find(button => button.dataset.chronicleEntry === String(id));
+    }
     function cardHTML(record, index) {
       const selected = record.id === state.selectedId;
       const imageStyle = `--chronicle-image:url('../${escapeHTML(record.image)}');--chronicle-position:${escapeHTML(record.imagePosition || "center")}`;
@@ -102,6 +106,7 @@
               <strong>${escapeHTML(record.title)}</strong>
               <span class="realm-chronicle__marker">${escapeHTML(record.marker)}</span>
               <span class="realm-chronicle__bullets">${safeArray(record.bullets).map(bullet => `<span><img src="${iconFor(record)}" alt="">${escapeHTML(bullet)}</span>`).join("")}</span>
+              <span class="realm-chronicle__card-cta" aria-hidden="true">Open moment <span>↗</span></span>
             </span>
             <span class="realm-chronicle__card-index">${String(index + 1).padStart(2, "0")}</span>
           </button>
@@ -218,7 +223,7 @@
       if (!recordById.has(id)) return;
       state.selectedId = id;
       render();
-      const card = root.querySelector(`[data-chronicle-entry="${CSS.escape(id)}"]`);
+      const card = entryButton(id);
       if (card) {
         card.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "center" });
         if (focusCard) card.focus({ preventScroll: true });
