@@ -78,6 +78,9 @@ function router() {
 }
 
 window.addEventListener("hashchange", router);
+window.addEventListener("got:spoiler-lens", () => {
+  if (document.readyState !== "loading" && document.getElementById("app")) router();
+});
 document.addEventListener("DOMContentLoaded", () => {
   renderFooter();
   router();
