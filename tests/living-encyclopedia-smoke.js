@@ -115,6 +115,8 @@ const contracts = [
   [appSource.includes("window.RavenWall.mount") && appSource.includes("atlasRequested"), "Timeline must route plain navigation to the Memory Wall and preserve the Episode Atlas"]
   , [appSource.includes("viewChronicle") && appSource.includes("window.RealmChronicle.mount"), "Chronicle must have a dedicated route and mount"]
   , [chronicleSource.includes("data-chronicle-filter") && chronicleSource.includes("data-chronicle-random"), "Chronicle must expose filter and surprise interactions"]
+  , [chronicleSource.includes("IntersectionObserver") && chronicleSource.includes("updateProgress"), "Chronicle must respond to scroll with reveal and progress states"]
+  , [chronicleSource.includes("dustHTML") && chronicleSource.includes("onPointerMove"), "Chronicle must provide ambient and pointer-driven life"]
 ];
 contracts.forEach(([condition, message]) => assert.ok(condition, message));
 
@@ -149,7 +151,7 @@ assert.ok(scripts.indexOf("js/lore-data.js") < scripts.indexOf("js/lore-library.
 assert.ok(scripts.indexOf("js/story-atlas.js") < scripts.indexOf("js/app.js"), "feature modules must load before the router");
 assert.ok(scripts.indexOf("js/chronicle-data.js") < scripts.indexOf("js/chronicle-timeline.js"), "chronicle data must load before the module");
 assert.ok(scripts.indexOf("js/chronicle-timeline.js") < scripts.indexOf("js/app.js"), "chronicle module must load before the router");
-assert.ok(indexSource.includes("css/realm-chronicle.css?v=realm-chronicle-1"), "chronicle styling must load in the static entrypoint");
+assert.ok(indexSource.includes("css/realm-chronicle.css?v=realm-chronicle-2"), "chronicle styling must load in the static entrypoint");
 
 console.log(JSON.stringify({
   characters: characters.length,

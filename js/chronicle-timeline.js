@@ -58,6 +58,8 @@
     const recordById = new Map(records.map(record => [String(record.id), record]));
     const listeners = [];
     const reducedMotion = typeof global.matchMedia === "function" && global.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let revealObserver = null;
+    let readingObserver = null;
     let state = {
       filter: "all",
       selectedId: clean(config.initialEntryId, records[0].id)
@@ -105,6 +107,15 @@
           </button>
         </li>`;
     }
+    function dustHTML() {
+      return Array.from({ length: 18 }, (_, index) => {
+        const x = (index * 47) % 100;
+        const y = (index * 31) % 100;
+        const delay = (index % 6) * 1.4;
+        const duration = 10 + (index % 5) * 2;
+        return `<i style="--dust-x:${x}%;--dust-y:${y}%;--dust-delay:${delay}s;--dust-duration:${duration}s" aria-hidden="true"></i>`;
+      }).join("");
+    }
     function detailHTML(record) {
       return `
         <aside class="realm-chronicle__detail" aria-live="polite" aria-labelledby="chronicle-detail-title">
@@ -127,6 +138,9 @@
       root.innerHTML = `
         <section class="realm-chronicle${reducedMotion ? " realm-chronicle--reduced-motion" : ""}" aria-labelledby="chronicle-title">
           <header class="realm-chronicle__hero">
+            <span class="realm-chronicle__hero-art" aria-hidden="true"></span>
+            <span class="realm-chronicle__grain" aria-hidden="true"></span>
+            <span class="realm-chronicle__dust" aria-hidden="true">${dustHTML()}</span>
             <div class="realm-chronicle__hero-copy">
               <p class="realm-chronicle__eyebrow">A fan-made chronology · before and beyond the episodes</p>
               <h1 id="chronicle-title">The Realm<br><em>remembers.</em></h1>
@@ -136,19 +150,69 @@
             <dl class="realm-chronicle__facts" aria-label="Chronicle summary"><div><dt>${records.length}</dt><dd>kept moments</dd></div><div><dt>8k+</dt><dd>years of memory</dd></div><div><dt>1</dt><dd>realm in pieces</dd></div></dl>
           </header>
           <div class="realm-chronicle__toolbar" aria-label="Chronicle filters">
-            <div class="realm-chronicle__toolbar-label"><span>Read the long story</span><small>Filter by what moved the realm</small></div>
+            <div class="realm-chronicle__toolbar-label"><span>Read the long story</span><small data-chronicle-reading>Chapter ${String(Math.max(1, visible.findIndex(record => record.id === selected.id) + 1)).padStart(2, "0")} of ${records.length} · Scroll to travel</small></div>
             <div class="realm-chronicle__filters" role="group" aria-label="Chronicle eras">${FILTERS.map(filter => `<button type="button" data-chronicle-filter="${filter.id}" aria-pressed="${filter.id === state.filter}">${escapeHTML(filter.label)}</button>`).join("")}</div>
           </div>
           <div class="realm-chronicle__body">
             <div class="realm-chronicle__timeline-wrap">
               <div class="realm-chronicle__timeline-intro"><span>01 — 15</span><p>Moments fans carry<br><em>long after the credits.</em></p></div>
-              <ol class="realm-chronicle__timeline" aria-label="Chronological moments">${visible.map((record, index) => cardHTML(record, index)).join("")}</ol>
+              <ol class="realm-chronicle__timeline" aria-label="Chronological moments" style="--chronicle-progress:0%">${visible.map((record, index) => cardHTML(record, index)).join("")}</ol>
             </div>
             ${detailHTML(selected)}
           </div>
           <footer class="realm-chronicle__footer"><span>Not an official guide · built for the moments we refuse to forget</span><button type="button" data-chronicle-top>Return to the beginning <span aria-hidden="true">↑</span></button></footer>
         </section>`;
+      observeTimeline();
       updateHash(selected);
+    }
+    function updateProgress() {
+      const timeline = root.querySelector(".realm-chronicle__timeline");
+      if (!timeline || !global.innerHeight) return;
+      const bounds = timeline.getBoundingClientRect();
+      const start = global.innerHeight * .52;
+      const progress = Math.max(0, Math.min(1, (start - bounds.top) / Math.max(bounds.height, 1)));
+      timeline.style.setProperty("--chronicle-progress", `${(progress * 100).toFixed(2)}%`);
+    }
+    function observeTimeline() {
+      if (revealObserver) revealObserver.disconnect();
+      if (readingObserver) readingObserver.disconnect();
+      const items = [...root.querySelectorAll(".realm-chronicle__item")];
+      const timeline = root.querySelector(".realm-chronicle__timeline");
+      if (!items.length || !timeline) return;
+      if (typeof global.IntersectionObserver !== "function" || reducedMotion) {
+        items.forEach(item => item.classList.add("is-inview", "is-reading"));
+        updateProgress();
+        return;
+      }
+      revealObserver = new global.IntersectionObserver(entries => {
+        entries.forEach(entry => entry.target.classList.toggle("is-inview", entry.isIntersecting));
+      }, { threshold: .18, rootMargin: "0px 0px -8% 0px" });
+      readingObserver = new global.IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          items.forEach(item => item.classList.toggle("is-reading", item === entry.target));
+          const index = items.indexOf(entry.target);
+          const status = root.querySelector("[data-chronicle-reading]");
+          if (status && index >= 0) status.textContent = `Chapter ${String(index + 1).padStart(2, "0")} of ${records.length} · ${entry.target.querySelector(".realm-chronicle__period")?.textContent || "the realm"}`;
+        });
+      }, { threshold: .52, rootMargin: "-18% 0px -42% 0px" });
+      items.forEach(item => { revealObserver.observe(item); readingObserver.observe(item); });
+      updateProgress();
+    }
+    function onPointerMove(event) {
+      const hero = root.querySelector(".realm-chronicle__hero");
+      if (!hero || reducedMotion) return;
+      const bounds = hero.getBoundingClientRect();
+      const x = ((event.clientX - bounds.left) / Math.max(bounds.width, 1) - .5) * 10;
+      const y = ((event.clientY - bounds.top) / Math.max(bounds.height, 1) - .5) * 7;
+      hero.style.setProperty("--chronicle-pointer-x", `${x.toFixed(2)}px`);
+      hero.style.setProperty("--chronicle-pointer-y", `${y.toFixed(2)}px`);
+    }
+    function onPointerLeave() {
+      const hero = root.querySelector(".realm-chronicle__hero");
+      if (!hero) return;
+      hero.style.setProperty("--chronicle-pointer-x", "0px");
+      hero.style.setProperty("--chronicle-pointer-y", "0px");
     }
     function choose(id, focusCard) {
       if (!recordById.has(id)) return;
@@ -193,10 +257,13 @@
     document.body.classList.add("chronicle-route");
     listen(root, "click", onClick);
     listen(root, "keydown", onKeyDown);
+    listen(root, "pointermove", onPointerMove, { passive: true });
+    listen(root, "pointerleave", onPointerLeave, { passive: true });
+    listen(global, "scroll", updateProgress, { passive: true });
     render();
     return Object.freeze({
       setFilter(filter) { state.filter = FILTERS.some(item => item.id === filter) ? filter : "all"; render(); },
-      destroy() { listeners.splice(0).forEach(remove => remove()); document.body.classList.remove("chronicle-route"); root.replaceChildren(); }
+      destroy() { if (revealObserver) revealObserver.disconnect(); if (readingObserver) readingObserver.disconnect(); listeners.splice(0).forEach(remove => remove()); document.body.classList.remove("chronicle-route"); root.replaceChildren(); }
     });
   }
 

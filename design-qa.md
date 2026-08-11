@@ -154,5 +154,12 @@ The source visual uses an illustrated historical card with a prominent era/date,
 - No actionable P0/P1/P2 fidelity or interaction findings remain.
 - P3 follow-up: add optional fan-submitted annotations to cards after a moderation/data model is agreed.
 
-### final result: passed
+### Motion pass
 
+- Scroll progress: the Chronicle spine now fills with a gold playhead as the reader travels down the chronology.
+- Reveal rhythm: cards enter with a restrained side reveal and the active reading card gets a brighter image treatment.
+- Hero life: the background art and grain layer respond subtly to pointer position; deterministic dust particles keep the hero moving without requiring a click.
+- Accessibility: `prefers-reduced-motion` disables the animated reveal, particle drift, pointer parallax, and transitions while keeping all content and controls available.
+- Browser evidence: pointer variables changed on movement, progress reached `26.23%` during a desktop scroll, three cards entered the viewport, and the reading status advanced to “Chapter 04 of 15 · 1–2 AC”; the 390px mobile pass remained at 390px document width with no console warnings/errors.
+
+### final result: passed

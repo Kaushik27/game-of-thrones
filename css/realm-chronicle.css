@@ -38,11 +38,48 @@ body.chronicle-route #app { background: #070a0b; }
   gap: 42px;
   padding: clamp(130px, 14vw, 200px) clamp(22px, 7vw, 110px) clamp(60px, 7vw, 92px);
   isolation: isolate;
-  background:
-    linear-gradient(90deg, rgba(5, 8, 9, .96) 0%, rgba(5, 8, 9, .72) 48%, rgba(5, 8, 9, .34) 100%),
-    url("../assets/ui/capital-journey-bg.jpg") center 36% / cover;
+  overflow: hidden;
+  background: #080b0c;
   border-bottom: 1px solid var(--chronicle-line);
 }
+
+.realm-chronicle__hero-art,
+.realm-chronicle__grain,
+.realm-chronicle__dust {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.realm-chronicle__hero-art {
+  z-index: -3;
+  inset: -2.5%;
+  background: url("../assets/ui/capital-journey-bg.jpg") center 36% / cover no-repeat;
+  filter: saturate(.62) contrast(1.08) brightness(.68);
+  transform: translate3d(var(--chronicle-pointer-x, 0px), var(--chronicle-pointer-y, 0px), 0) scale(1.04);
+  transition: transform 900ms cubic-bezier(.16, 1, .3, 1), filter 900ms ease;
+}
+
+.realm-chronicle__hero::before {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(5, 8, 9, .96) 0%, rgba(5, 8, 9, .76) 48%, rgba(5, 8, 9, .38) 100%), linear-gradient(0deg, rgba(5, 8, 9, .72), transparent 58%);
+  content: "";
+}
+
+.realm-chronicle__grain {
+  z-index: -1;
+  opacity: .13;
+  background-image: url("../assets/ui/war-table-stone.jpg");
+  background-size: 480px auto;
+  mix-blend-mode: soft-light;
+  transform: translate3d(var(--chronicle-pointer-x, 0px), var(--chronicle-pointer-y, 0px), 0) scale(1.08);
+}
+
+.realm-chronicle__dust { z-index: 0; overflow: hidden; }
+.realm-chronicle__dust i { position: absolute; top: var(--dust-y); left: var(--dust-x); width: 2px; height: 2px; border-radius: 50%; background: rgba(233, 223, 204, .8); box-shadow: 0 0 12px rgba(233, 223, 204, .45); opacity: 0; animation: chronicle-dust var(--dust-duration) ease-in-out var(--dust-delay) infinite; }
+@keyframes chronicle-dust { 0%, 100% { opacity: 0; transform: translate3d(0, 18px, 0) scale(.7); } 35%, 70% { opacity: .42; } 50% { opacity: .7; transform: translate3d(24px, -46px, 0) scale(1.25); } }
 
 .realm-chronicle__hero::after {
   position: absolute;
@@ -90,7 +127,11 @@ body.chronicle-route #app { background: #070a0b; }
 
 .realm-chronicle__timeline { position: relative; display: grid; gap: 28px; margin: 0; padding: 0 0 20px; list-style: none; }
 .realm-chronicle__timeline::before { position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: linear-gradient(180deg, transparent, var(--chronicle-line) 5%, var(--chronicle-line) 95%, transparent); content: ""; }
+.realm-chronicle__timeline::after { position: absolute; z-index: 1; top: 0; left: calc(50% - 1px); width: 3px; height: var(--chronicle-progress, 0%); background: var(--chronicle-gold); box-shadow: 0 0 18px rgba(211, 174, 97, .55); content: ""; transition: height 180ms ease-out; }
 .realm-chronicle__item { position: relative; display: grid; width: calc(50% - 34px); min-height: 230px; }
+.realm-chronicle__item { opacity: 0; transform: translate3d(-18px, 18px, 0); transition: opacity 650ms ease, transform 650ms cubic-bezier(.16, 1, .3, 1); }
+.realm-chronicle__item:nth-child(even) { transform: translate3d(18px, 18px, 0); }
+.realm-chronicle__item.is-inview { opacity: 1; transform: translate3d(0, 0, 0); }
 .realm-chronicle__item:nth-child(odd) { justify-self: start; }
 .realm-chronicle__item:nth-child(even) { justify-self: end; }
 .realm-chronicle__node { position: absolute; z-index: 2; top: 25px; right: -51px; display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid rgba(211, 174, 97, .5); border-radius: 50%; background: #0b0e0f; color: var(--chronicle-gold); font-size: .55rem; font-weight: 700; letter-spacing: .08em; }
@@ -100,7 +141,8 @@ body.chronicle-route #app { background: #070a0b; }
 .realm-chronicle__card { position: relative; display: grid; min-height: 230px; grid-template-columns: minmax(0, 1fr) 34%; padding: 0; overflow: hidden; border: 1px solid rgba(233, 223, 204, .24); border-radius: 0; background: var(--chronicle-paper); color: #171512; text-align: left; box-shadow: 0 22px 60px rgba(0, 0, 0, .28); transition: transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease; }
 .realm-chronicle__item:nth-child(even) .realm-chronicle__card { grid-template-columns: 34% minmax(0, 1fr); }
 .realm-chronicle__card:hover, .realm-chronicle__item.is-selected .realm-chronicle__card { border-color: var(--chronicle-gold); box-shadow: 0 25px 70px rgba(0, 0, 0, .4), 0 0 0 1px rgba(211, 174, 97, .2); transform: translateY(-4px); }
-.realm-chronicle__card-media { grid-column: 2; grid-row: 1; min-height: 230px; background: var(--chronicle-image) var(--chronicle-position) / cover no-repeat; filter: saturate(.75) contrast(1.08); }
+.realm-chronicle__card-media { grid-column: 2; grid-row: 1; min-height: 230px; background: var(--chronicle-image) var(--chronicle-position) / cover no-repeat; filter: saturate(.75) contrast(1.08); transition: transform 900ms cubic-bezier(.16, 1, .3, 1), filter 500ms ease; }
+.realm-chronicle__item.is-reading .realm-chronicle__card-media, .realm-chronicle__card:hover .realm-chronicle__card-media { filter: saturate(1) contrast(1.1); transform: scale(1.06); }
 .realm-chronicle__item:nth-child(even) .realm-chronicle__card-media { grid-column: 1; }
 .realm-chronicle__card-veil { position: absolute; inset: 0; background: linear-gradient(90deg, var(--chronicle-paper) 0%, rgba(233, 223, 204, .82) 49%, rgba(233, 223, 204, 0) 76%); pointer-events: none; }
 .realm-chronicle__item:nth-child(even) .realm-chronicle__card-veil { background: linear-gradient(270deg, var(--chronicle-paper) 0%, rgba(233, 223, 204, .82) 49%, rgba(233, 223, 204, 0) 76%); }
@@ -154,6 +196,7 @@ body.chronicle-route #app { background: #070a0b; }
   .realm-chronicle__timeline-intro { display: block; }
   .realm-chronicle__timeline-intro p { margin-top: 14px; text-align: left; }
   .realm-chronicle__timeline::before { left: 15px; }
+  .realm-chronicle__timeline::after { left: 14px; }
   .realm-chronicle__item, .realm-chronicle__item:nth-child(even) { width: calc(100% - 32px); justify-self: end; }
   .realm-chronicle__node, .realm-chronicle__item:nth-child(even) .realm-chronicle__node { top: 22px; right: auto; left: -51px; }
   .realm-chronicle__card, .realm-chronicle__item:nth-child(even) .realm-chronicle__card { min-height: 265px; grid-template-columns: 1fr 34%; }
