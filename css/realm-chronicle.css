@@ -1,0 +1,169 @@
+/* ========================================================================== 
+   The Realm Chronicle — illustrated chronology, not a spreadsheet timeline
+   ========================================================================== */
+body.chronicle-route {
+  overflow-x: hidden;
+  background: #070a0b;
+}
+
+body.chronicle-route #app { background: #070a0b; }
+
+.realm-chronicle {
+  --chronicle-ink: #090b0b;
+  --chronicle-paper: #e9dfcc;
+  --chronicle-paper-dim: #bdb29e;
+  --chronicle-gold: #d3ae61;
+  --chronicle-rust: #873b2f;
+  --chronicle-line: rgba(211, 174, 97, .38);
+  --chronicle-muted: #92938c;
+  min-height: 100svh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 78% 8%, rgba(117, 58, 34, .15), transparent 27rem),
+    radial-gradient(circle at 12% 54%, rgba(55, 83, 92, .13), transparent 32rem),
+    var(--chronicle-ink);
+  color: var(--chronicle-paper);
+}
+
+.realm-chronicle [hidden] { display: none !important; }
+.realm-chronicle button { font-family: "Inter", system-ui, sans-serif; }
+.realm-chronicle button:focus-visible { outline: 2px solid var(--chronicle-gold); outline-offset: 4px; }
+
+.realm-chronicle__hero {
+  position: relative;
+  display: grid;
+  min-height: min(760px, 78svh);
+  grid-template-columns: minmax(0, 1fr) 260px;
+  align-items: end;
+  gap: 42px;
+  padding: clamp(130px, 14vw, 200px) clamp(22px, 7vw, 110px) clamp(60px, 7vw, 92px);
+  isolation: isolate;
+  background:
+    linear-gradient(90deg, rgba(5, 8, 9, .96) 0%, rgba(5, 8, 9, .72) 48%, rgba(5, 8, 9, .34) 100%),
+    url("../assets/ui/capital-journey-bg.jpg") center 36% / cover;
+  border-bottom: 1px solid var(--chronicle-line);
+}
+
+.realm-chronicle__hero::after {
+  position: absolute;
+  z-index: -1;
+  right: 9%;
+  bottom: 9%;
+  width: clamp(190px, 21vw, 330px);
+  height: clamp(190px, 21vw, 330px);
+  border: 1px solid rgba(233, 223, 204, .24);
+  border-radius: 50%;
+  box-shadow: 0 0 0 18px rgba(233, 223, 204, .025), 0 0 90px rgba(211, 174, 97, .1);
+  content: "";
+  opacity: .6;
+}
+
+.realm-chronicle__hero-copy { max-width: 850px; }
+.realm-chronicle__eyebrow { margin: 0 0 18px; color: var(--chronicle-gold); font-size: .66rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
+.realm-chronicle__hero h1 { margin: 0; color: var(--chronicle-paper); font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(4.1rem, 10vw, 10.5rem); font-style: italic; font-weight: 500; letter-spacing: -.065em; line-height: .76; }
+.realm-chronicle__hero h1 em { color: var(--chronicle-gold); font-style: italic; }
+.realm-chronicle__dek { max-width: 52ch; margin: 35px 0 0; color: #d5d0c4; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.2rem, 2vw, 1.65rem); font-style: italic; line-height: 1.42; }
+
+.realm-chronicle__hero-mark { display: grid; width: 210px; aspect-ratio: 1; place-items: center; align-content: center; justify-self: end; border: 1px solid rgba(211, 174, 97, .45); border-radius: 50%; background: rgba(8, 11, 12, .44); box-shadow: inset 0 0 0 12px rgba(8, 11, 12, .25); text-align: center; transform: rotate(-8deg); }
+.realm-chronicle__hero-mark span { color: var(--chronicle-gold); font-family: "Cinzel", Georgia, serif; font-size: 2.8rem; line-height: 1; }
+.realm-chronicle__hero-mark strong { margin-top: 9px; color: var(--chronicle-paper); font-family: "Cinzel", Georgia, serif; font-size: 1.35rem; font-weight: 400; }
+.realm-chronicle__hero-mark small { margin-top: 8px; color: var(--chronicle-muted); font-size: .56rem; letter-spacing: .18em; line-height: 1.35; text-transform: uppercase; }
+
+.realm-chronicle__facts { position: absolute; bottom: 0; left: clamp(22px, 7vw, 110px); display: flex; margin: 0; border-top: 1px solid var(--chronicle-line); }
+.realm-chronicle__facts div { min-width: 150px; padding: 16px 22px 17px; border-right: 1px solid var(--chronicle-line); background: rgba(5, 8, 9, .55); }
+.realm-chronicle__facts dt { color: var(--chronicle-paper); font-family: "Cinzel", Georgia, serif; font-size: 1.1rem; }
+.realm-chronicle__facts dd { margin: 5px 0 0; color: var(--chronicle-muted); font-size: .57rem; letter-spacing: .15em; text-transform: uppercase; }
+
+.realm-chronicle__toolbar { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px clamp(22px, 7vw, 110px); border-bottom: 1px solid var(--chronicle-line); background: rgba(9, 12, 13, .92); }
+.realm-chronicle__toolbar-label span { display: block; color: var(--chronicle-paper); font-family: "Cinzel", Georgia, serif; font-size: .92rem; letter-spacing: .08em; text-transform: uppercase; }
+.realm-chronicle__toolbar-label small { display: block; margin-top: 5px; color: var(--chronicle-muted); font-size: .67rem; }
+.realm-chronicle__filters { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 7px; }
+.realm-chronicle__filters button { min-height: 36px; padding: 8px 13px; border: 1px solid rgba(233, 223, 204, .2); border-radius: 0; background: transparent; color: var(--chronicle-muted); font-size: .61rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; transition: color 180ms ease, border-color 180ms ease, background 180ms ease; }
+.realm-chronicle__filters button:hover, .realm-chronicle__filters button[aria-pressed="true"] { border-color: var(--chronicle-gold); background: rgba(211, 174, 97, .12); color: var(--chronicle-paper); }
+
+.realm-chronicle__body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 390px); gap: clamp(34px, 6vw, 100px); width: min(1320px, 100%); margin: 0 auto; padding: clamp(54px, 8vw, 110px) clamp(22px, 4vw, 58px) 90px; }
+.realm-chronicle__timeline-wrap { min-width: 0; }
+.realm-chronicle__timeline-intro { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; margin-bottom: 45px; color: var(--chronicle-muted); }
+.realm-chronicle__timeline-intro span { color: var(--chronicle-gold); font-size: .62rem; font-weight: 700; letter-spacing: .17em; }
+.realm-chronicle__timeline-intro p { margin: 0; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.4rem, 2.2vw, 2rem); font-style: italic; line-height: 1; text-align: right; }
+.realm-chronicle__timeline-intro em { color: var(--chronicle-gold); }
+
+.realm-chronicle__timeline { position: relative; display: grid; gap: 28px; margin: 0; padding: 0 0 20px; list-style: none; }
+.realm-chronicle__timeline::before { position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: linear-gradient(180deg, transparent, var(--chronicle-line) 5%, var(--chronicle-line) 95%, transparent); content: ""; }
+.realm-chronicle__item { position: relative; display: grid; width: calc(50% - 34px); min-height: 230px; }
+.realm-chronicle__item:nth-child(odd) { justify-self: start; }
+.realm-chronicle__item:nth-child(even) { justify-self: end; }
+.realm-chronicle__node { position: absolute; z-index: 2; top: 25px; right: -51px; display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid rgba(211, 174, 97, .5); border-radius: 50%; background: #0b0e0f; color: var(--chronicle-gold); font-size: .55rem; font-weight: 700; letter-spacing: .08em; }
+.realm-chronicle__item:nth-child(even) .realm-chronicle__node { right: auto; left: -51px; }
+.realm-chronicle__item.is-selected .realm-chronicle__node { border-color: var(--chronicle-paper); background: var(--chronicle-gold); color: #13100b; box-shadow: 0 0 0 7px rgba(211, 174, 97, .11), 0 0 30px rgba(211, 174, 97, .26); }
+
+.realm-chronicle__card { position: relative; display: grid; min-height: 230px; grid-template-columns: minmax(0, 1fr) 34%; padding: 0; overflow: hidden; border: 1px solid rgba(233, 223, 204, .24); border-radius: 0; background: var(--chronicle-paper); color: #171512; text-align: left; box-shadow: 0 22px 60px rgba(0, 0, 0, .28); transition: transform 260ms ease, border-color 260ms ease, box-shadow 260ms ease; }
+.realm-chronicle__item:nth-child(even) .realm-chronicle__card { grid-template-columns: 34% minmax(0, 1fr); }
+.realm-chronicle__card:hover, .realm-chronicle__item.is-selected .realm-chronicle__card { border-color: var(--chronicle-gold); box-shadow: 0 25px 70px rgba(0, 0, 0, .4), 0 0 0 1px rgba(211, 174, 97, .2); transform: translateY(-4px); }
+.realm-chronicle__card-media { grid-column: 2; grid-row: 1; min-height: 230px; background: var(--chronicle-image) var(--chronicle-position) / cover no-repeat; filter: saturate(.75) contrast(1.08); }
+.realm-chronicle__item:nth-child(even) .realm-chronicle__card-media { grid-column: 1; }
+.realm-chronicle__card-veil { position: absolute; inset: 0; background: linear-gradient(90deg, var(--chronicle-paper) 0%, rgba(233, 223, 204, .82) 49%, rgba(233, 223, 204, 0) 76%); pointer-events: none; }
+.realm-chronicle__item:nth-child(even) .realm-chronicle__card-veil { background: linear-gradient(270deg, var(--chronicle-paper) 0%, rgba(233, 223, 204, .82) 49%, rgba(233, 223, 204, 0) 76%); }
+.realm-chronicle__card-copy { position: relative; z-index: 1; display: flex; grid-column: 1; grid-row: 1; min-width: 0; flex-direction: column; align-items: flex-start; justify-content: center; padding: 25px 25px 24px; }
+.realm-chronicle__item:nth-child(even) .realm-chronicle__card-copy { grid-column: 2; }
+.realm-chronicle__period { color: var(--chronicle-rust); font-family: "Cinzel", Georgia, serif; font-size: .64rem; font-weight: 700; letter-spacing: .11em; }
+.realm-chronicle__card strong { max-width: 13ch; margin-top: 11px; color: #1b1916; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.9rem, 3vw, 2.9rem); font-style: italic; font-weight: 600; letter-spacing: -.035em; line-height: .87; }
+.realm-chronicle__marker { margin-top: 10px; color: #6d665a; font-family: "Cormorant Garamond", Georgia, serif; font-size: .98rem; font-style: italic; }
+.realm-chronicle__bullets { display: grid; gap: 5px; margin-top: 15px; }
+.realm-chronicle__bullets span { display: flex; align-items: center; gap: 7px; color: #3e3a32; font-size: .63rem; line-height: 1.25; }
+.realm-chronicle__bullets img { width: 13px; height: 13px; opacity: .76; filter: sepia(1) saturate(.7); }
+.realm-chronicle__card-index { position: absolute; z-index: 2; right: 12px; bottom: 9px; color: rgba(70, 56, 33, .48); font-family: "Cinzel", Georgia, serif; font-size: .62rem; }
+
+.realm-chronicle__detail { position: sticky; top: 92px; align-self: start; padding: clamp(25px, 3vw, 36px); border: 1px solid var(--chronicle-line); background: rgba(13, 17, 17, .9); box-shadow: 0 28px 70px rgba(0, 0, 0, .35); backdrop-filter: blur(13px); }
+.realm-chronicle__detail-top { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid rgba(233, 223, 204, .16); color: var(--chronicle-muted); font-size: .57rem; letter-spacing: .13em; text-transform: uppercase; }
+.realm-chronicle__detail-kicker { margin: 28px 0 9px; color: var(--chronicle-gold); font-size: .62rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+.realm-chronicle__detail h2 { margin: 0; color: var(--chronicle-paper); font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(2.3rem, 3.4vw, 3.7rem); font-style: italic; font-weight: 500; letter-spacing: -.04em; line-height: .9; }
+.realm-chronicle__detail-summary { margin: 22px 0 0; color: #d0cbc0; font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.2rem; font-style: italic; line-height: 1.4; }
+.realm-chronicle__detail ul { display: grid; gap: 10px; margin: 24px 0 0; padding: 18px 0 0; border-top: 1px solid rgba(233, 223, 204, .16); list-style: none; }
+.realm-chronicle__detail li { display: flex; align-items: center; gap: 9px; color: var(--chronicle-paper-dim); font-size: .72rem; }
+.realm-chronicle__detail li img { width: 15px; height: 15px; filter: invert(78%) sepia(38%) saturate(540%) hue-rotate(359deg) brightness(90%); }
+.realm-chronicle__detail-actions { display: grid; gap: 8px; margin-top: 30px; }
+.realm-chronicle__detail-actions button { min-height: 43px; border: 1px solid rgba(211, 174, 97, .43); border-radius: 0; background: transparent; color: var(--chronicle-paper); font-size: .62rem; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
+.realm-chronicle__detail-actions button:hover:not(:disabled) { background: rgba(211, 174, 97, .12); border-color: var(--chronicle-gold); }
+.realm-chronicle__detail-actions button:disabled { cursor: not-allowed; opacity: .4; }
+.realm-chronicle__detail-note { margin: 22px 0 0; color: #777a74; font-size: .62rem; line-height: 1.45; }
+.realm-chronicle__footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 22px clamp(22px, 7vw, 110px); border-top: 1px solid var(--chronicle-line); color: var(--chronicle-muted); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; }
+.realm-chronicle__footer button { border: 0; background: none; color: var(--chronicle-gold); font-size: .62rem; letter-spacing: .11em; text-transform: uppercase; }
+
+@media (max-width: 920px) {
+  .realm-chronicle__hero { grid-template-columns: minmax(0, 1fr) 170px; }
+  .realm-chronicle__hero-mark { width: 150px; }
+  .realm-chronicle__body { grid-template-columns: minmax(0, 1fr); }
+  .realm-chronicle__detail { position: relative; top: auto; order: -1; }
+}
+
+@media (max-width: 680px) {
+  .realm-chronicle__hero { display: block; min-height: 630px; padding-top: 122px; }
+  .realm-chronicle__hero::after { right: -28px; bottom: 145px; width: 210px; height: 210px; }
+  .realm-chronicle__hero-mark { position: absolute; right: 26px; bottom: 166px; width: 115px; }
+  .realm-chronicle__hero-mark span { font-size: 1.7rem; }
+  .realm-chronicle__hero-mark strong { font-size: .92rem; }
+  .realm-chronicle__facts { right: 0; left: 0; width: 100%; }
+  .realm-chronicle__facts div { min-width: 0; flex: 1; padding: 13px 12px; }
+  .realm-chronicle__facts dt { font-size: .96rem; }
+  .realm-chronicle__facts dd { font-size: .5rem; letter-spacing: .08em; }
+  .realm-chronicle__toolbar { display: block; }
+  .realm-chronicle__filters { justify-content: flex-start; margin-top: 17px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+  .realm-chronicle__filters button { flex: 0 0 auto; }
+  .realm-chronicle__body { padding-top: 42px; }
+  .realm-chronicle__timeline-intro { display: block; }
+  .realm-chronicle__timeline-intro p { margin-top: 14px; text-align: left; }
+  .realm-chronicle__timeline::before { left: 15px; }
+  .realm-chronicle__item, .realm-chronicle__item:nth-child(even) { width: calc(100% - 32px); justify-self: end; }
+  .realm-chronicle__node, .realm-chronicle__item:nth-child(even) .realm-chronicle__node { top: 22px; right: auto; left: -51px; }
+  .realm-chronicle__card, .realm-chronicle__item:nth-child(even) .realm-chronicle__card { min-height: 265px; grid-template-columns: 1fr 34%; }
+  .realm-chronicle__card-media, .realm-chronicle__item:nth-child(even) .realm-chronicle__card-media { grid-column: 2; }
+  .realm-chronicle__card-copy, .realm-chronicle__item:nth-child(even) .realm-chronicle__card-copy { grid-column: 1; padding: 22px 19px; }
+  .realm-chronicle__card strong { font-size: 2.2rem; }
+  .realm-chronicle__footer { display: block; }
+  .realm-chronicle__footer button { display: block; margin-top: 15px; padding: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .realm-chronicle *, .realm-chronicle *::before, .realm-chronicle *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
