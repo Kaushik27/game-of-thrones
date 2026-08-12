@@ -2,7 +2,7 @@
 
 ## Architecture
 
-The enterprise edition is a modular monolith: React owns presentation, Spring Boot owns HTTP and application behavior, and H2 owns durable data. The legacy edition remains available as an independent static experience.
+The enterprise edition is a modular monolith: React owns the teaching application at `/app`, Spring Boot owns HTTP and application behavior, and H2 owns data. The cinematic root experience remains available from the same container as a static presentation surface.
 
 ```text
 Browser
@@ -68,7 +68,7 @@ npm run enterprise:web
 
 Open `http://localhost:5173`. Vite proxies `/api` and `/actuator` to port 8080.
 
-For the production-shaped version, run `docker compose up --build` and open `http://localhost:8080`. The container packages the React build inside the Spring Boot executable and persists H2 data in a named volume.
+For the production-shaped version, run `docker compose up --build` and open `http://localhost:8080` for the cinematic surface or `http://localhost:8080/app` for the React teaching application. The container packages both the cinematic assets and the React build inside the Spring Boot executable and persists H2 data in a named volume.
 
 ## Data lifecycle
 
@@ -91,7 +91,7 @@ PostgreSQL can later replace H2 through a production Spring profile without chan
 
 ## Zero-cost deployment
 
-GitHub Pages remains the static cinematic edition. [`render.yaml`](../render.yaml) defines a separate Docker deployment using Render's free web-service plan. It contains no paid disk or database. The production H2 file is intentionally ephemeral; Flyway recreates the read-only dataset whenever the instance filesystem is replaced.
+GitHub Pages and the Render service root serve the same cinematic edition. [`render.yaml`](../render.yaml) defines the Docker deployment using Render's free web-service plan; the same service exposes the React teaching application at `/app` and the API under `/api/v1`. It contains no paid disk or database. The production H2 file is intentionally ephemeral; Flyway recreates the read-only dataset whenever the instance filesystem is replaced.
 
 This is an enterprise-style demonstration, not high-availability production infrastructure. Free instances can sleep, cold starts are expected, and no SLA or durable runtime writes are promised.
 

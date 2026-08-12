@@ -10,6 +10,10 @@ FROM eclipse-temurin:21-jdk-alpine AS backend-build
 WORKDIR /workspace
 COPY backend ./backend
 COPY --from=frontend-build /workspace/frontend/dist ./frontend/dist
+COPY index.html ./index.html
+COPY css ./css
+COPY js ./js
+COPY vendor ./vendor
 RUN ./backend/gradlew -p backend clean bootJar --no-daemon
 
 FROM eclipse-temurin:25-jre-alpine

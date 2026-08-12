@@ -43,6 +43,21 @@ tasks.named('test') {
 
 tasks.named('processResources') {
 	from('../frontend/dist') {
+		into 'static/app'
+	}
+	from('../index.html') {
 		into 'static'
+	}
+	from('../css') {
+		into 'static/css'
+	}
+	from('../js') {
+		into 'static/js'
+	}
+	from('../assets') {
+		into 'static/assets'
+	}
+	from('../vendor') {
+		into 'static/vendor'
 	}
 }

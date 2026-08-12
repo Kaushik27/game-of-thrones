@@ -17,7 +17,8 @@ const navigation = [
 ];
 
 function App() {
-  return <BrowserRouter><ApplicationShell /></BrowserRouter>;
+  const basename = window.location.pathname.startsWith("/app") ? "/app" : undefined;
+  return <BrowserRouter basename={basename}><ApplicationShell /></BrowserRouter>;
 }
 
 function ApplicationShell() {

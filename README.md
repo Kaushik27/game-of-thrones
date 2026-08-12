@@ -31,7 +31,7 @@
 
 ## Enterprise edition
 
-The project now has a complete portfolio-ready modular-monolith edition while the original cinematic GitHub Pages experience remains available:
+The project now has a complete portfolio-ready modular-monolith edition while keeping the cinematic experience as the public home page:
 
 - a React 19 and TypeScript client in [`frontend/`](frontend/);
 - a Java 21 and Spring Boot 4.1 REST API in [`backend/`](backend/);
@@ -43,7 +43,7 @@ The project now has a complete portfolio-ready modular-monolith edition while th
 
 See the [enterprise architecture and local run guide](docs/enterprise-architecture.md) for the migration design.
 
-> Deployment truth: GitHub Pages hosts the cinematic static edition. The React + Spring Boot + H2 edition is packaged as a separate Docker service because GitHub Pages cannot run Java.
+> Deployment truth: GitHub Pages and the Render service root both host the same cinematic edition. The Render container also exposes the API-driven React teaching application at `/app`, alongside the Spring Boot + H2 APIs.
 
 ### Deploy the enterprise edition for $0
 
@@ -51,7 +51,7 @@ The checked-in [`render.yaml`](render.yaml) is constrained to Render's free web-
 
 [Deploy to Render](https://render.com/deploy?repo=https://github.com/Kaushik27/game-of-thrones)
 
-After creating the free service, use its `onrender.com` URL for the complete React → Spring Boot → H2 demonstration. Free instances sleep when idle, so the first request can take longer. Do not upgrade the instance or attach a persistent disk if the goal is a strict $0 deployment.
+After creating the free service, use its `onrender.com` URL for the cinematic site, or append `/app` for the React → Spring Boot → H2 demonstration. Free instances sleep when idle, so the first request can take longer. Do not upgrade the instance or attach a persistent disk if the goal is a strict $0 deployment.
 
 ## Start here
 
@@ -100,7 +100,7 @@ Deep links work directly on GitHub Pages, so a character, episode, battle, quote
 
 ## Two complete editions
 
-The root-level vanilla application remains the cinematic static edition deployed to GitHub Pages. The enterprise edition lives in `frontend/` and `backend/` and runs as one deployable container.
+The root-level application remains the cinematic edition deployed to GitHub Pages and the Render service root. The enterprise edition lives in `frontend/` and `backend/`; the same container serves it from `/app` and exposes the REST API under `/api/v1`.
 
 ```text
 index.html                 shared shell and entrypoint
@@ -134,7 +134,7 @@ In a second terminal:
 npm run enterprise:web
 ```
 
-Open <http://localhost:5173>, or run the integrated production container with `npm run enterprise:container` and open <http://localhost:8080>. Swagger UI is available from the backend at <http://localhost:8080/swagger-ui.html>. The Database Explorer uses allowlisted table metadata and paginated rows through `/api/v1/database/tables` without exposing SQL or credentials.
+Open <http://localhost:5173>, or run the integrated production container with `npm run enterprise:container` and open <http://localhost:8080> for the cinematic edition. Open <http://localhost:8080/app> for the React teaching application. Swagger UI is available from the backend at <http://localhost:8080/swagger-ui.html>. The Database Explorer uses allowlisted table metadata and paginated rows through `/api/v1/database/tables` without exposing SQL or credentials.
 
 When the React client is hosted separately, copy [`frontend/.env.example`](frontend/.env.example) to `frontend/.env.local` and set `VITE_API_BASE_URL` to the Spring Boot API origin. The client keeps filters, seasons, selected database tables, and pagination in the URL so views can be bookmarked and shared.
 
