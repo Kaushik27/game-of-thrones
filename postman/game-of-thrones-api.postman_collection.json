@@ -46,6 +46,14 @@
           "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/actuator/health/readiness", "host": ["{{baseUrl}}"], "path": ["actuator", "health", "readiness"] } }
         },
         {
+          "name": "Application info",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/actuator/info", "host": ["{{baseUrl}}"], "path": ["actuator", "info"] } }
+        },
+        {
+          "name": "JVM memory metric",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/actuator/metrics/jvm.memory.used", "host": ["{{baseUrl}}"], "path": ["actuator", "metrics", "jvm.memory.used"] } }
+        },
+        {
           "name": "OpenAPI document",
           "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/v3/api-docs", "host": ["{{baseUrl}}"], "path": ["v3-api-docs"] } }
         },
