@@ -15,7 +15,9 @@
 <p>
   <img src="https://img.shields.io/badge/fan--made-not%20official-d4b36a?style=flat-square" alt="Fan made, not official">
   <img src="https://img.shields.io/badge/TV%20canon-8%20seasons-8b9eac?style=flat-square" alt="Eight seasons of TV canon">
-  <img src="https://img.shields.io/badge/static%20deployment-GitHub%20Pages-11171a?style=flat-square&logo=github" alt="Deployed on GitHub Pages">
+  <img src="https://img.shields.io/badge/React-19-61dafb?style=flat-square&logo=react&logoColor=11171a" alt="React 19">
+  <img src="https://img.shields.io/badge/Spring%20Boot-4.1-6db33f?style=flat-square&logo=springboot&logoColor=white" alt="Spring Boot 4.1">
+  <img src="https://img.shields.io/badge/database-H2-1b75bb?style=flat-square" alt="H2 embedded database">
 </p>
 
 </div>
@@ -26,6 +28,20 @@
 </p>
 
 > Not an official guide. A fan archive for the moments we still carry after the credits.
+
+## Enterprise edition
+
+The archive now has a complete portfolio-ready modular-monolith edition while the original cinematic GitHub Pages experience remains available:
+
+- a React 19 and TypeScript client in [`frontend/`](frontend/);
+- a Java 21 and Spring Boot 4.1 REST API in [`backend/`](backend/);
+- file-backed H2 persistence with versioned Flyway migrations;
+- 805 persisted domain records seeded from the curated legacy datasets: characters, houses, relationships, episodes, quotes, battles, and events;
+- paginated and filterable `/api/v1` resources with character-to-relationship and quote-to-speaker joins;
+- an interactive request laboratory and live request trace for teaching how the frontend, backend, and database communicate;
+- RFC 9457 error responses, OpenAPI/Swagger documentation, boundary validation, CORS, health endpoints, integration tests, Docker, and CI.
+
+See the [enterprise architecture and local run guide](docs/enterprise-architecture.md) for the migration design.
 
 ## Start here
 
@@ -72,9 +88,9 @@ Deep links work directly on GitHub Pages, so a character, episode, battle, quote
 - Sound is optional, muted by default, and never required to understand a route.
 - Reduced-motion and no-WebGL fallbacks keep the experience usable on quieter or older devices.
 
-## Built as a living static application
+## Two complete editions
 
-The site is deliberately deployable without a backend. A hash router mounts route modules into [`#app`](index.html), while the datasets stay versioned, inspectable, and easy to extend.
+The root-level vanilla application remains the cinematic static edition deployed to GitHub Pages. The enterprise edition lives in `frontend/` and `backend/` and runs as one deployable container.
 
 ```text
 index.html                 shared shell and entrypoint
@@ -94,11 +110,29 @@ assets/                   local atmosphere, icons, and portraits
 
 ### Local development
 
+Enterprise edition:
+
+```bash
+npm install
+npm --prefix frontend install
+npm run enterprise:api
+```
+
+In a second terminal:
+
+```bash
+npm run enterprise:web
+```
+
+Open <http://localhost:5173>, or run the integrated production container with `npm run enterprise:container` and open <http://localhost:8080>. Swagger UI is available from the backend at <http://localhost:8080/swagger-ui.html>.
+
+Legacy static edition:
+
 ```bash
 python3 -m http.server 8000
 ```
 
-Open <http://localhost:8000/>. Hash routes need an HTTP server for consistent initial-load behavior; no application backend is required.
+Open <http://localhost:8000/>.
 
 To rebuild the checked-in React navigation island:
 

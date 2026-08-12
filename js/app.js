@@ -185,7 +185,7 @@ function replaceHashQuery(path, updates) {
 // HOME
 // ==========================================================================
 function viewHome(app, params, query) {
-  setTitle("Explore");
+  document.title = "Game of Thrones";
   const requestedSeason = Number(query.get("season"));
   let rememberedSeason = 6;
   try { rememberedSeason = Number(window.sessionStorage.getItem("got-last-season")) || 6; } catch (error) { /* optional */ }
