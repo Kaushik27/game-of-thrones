@@ -35,15 +35,15 @@
   });
 
   const REALM_VISUALS = Object.freeze({
-    Stark: "assets/generated/realms/stark-v2.png",
-    Lannister: "assets/generated/realms/lannister-v2.png",
-    Targaryen: "assets/generated/realms/targaryen-v2.png",
-    Baratheon: "assets/generated/realms/baratheon-v2.png",
-    Greyjoy: "assets/generated/realms/greyjoy-v2.png",
-    Tyrell: "assets/generated/realms/tyrell-v2.png",
-    Tully: "assets/generated/realms/tully-v2.png",
-    Martell: "assets/generated/realms/martell-v2.png",
-    Arryn: "assets/generated/realms/arryn-v2.png"
+    Stark: "assets/generated/realms/stark-scene-v1.png",
+    Lannister: "assets/generated/realms/lannister-scene-v1.png",
+    Targaryen: "assets/generated/realms/targaryen-scene-v1.png",
+    Baratheon: "assets/generated/realms/baratheon-scene-v1.png",
+    Greyjoy: "assets/generated/realms/greyjoy-scene-v1.png",
+    Tyrell: "assets/generated/realms/tyrell-scene-v1.png",
+    Tully: "assets/generated/realms/tully-scene-v1.png",
+    Martell: "assets/generated/realms/martell-scene-v1.png",
+    Arryn: "assets/generated/realms/arryn-scene-v1.png"
   });
 
   function safe(value) {
@@ -106,12 +106,14 @@
         <div class="mother-hero__rings" aria-hidden="true"><span></span><span></span><span></span></div>
         <div class="mother-hero__portrait" data-mother-portrait><img data-mother-realm-image src="${safe(initial.visual)}" alt="${safe(initial.house)} realm visual" width="1440" height="1024" fetchpriority="high" decoding="async"></div>
         <div class="mother-hero__orbit" aria-label="Choose a house">
+          <button type="button" class="mother-rail-arrow mother-rail-arrow--previous" data-mother-step="-1" aria-label="Previous house">‹</button>
           ${entries.map(entry => {
             const dx = entry.position.x - 50;
             const dy = entry.position.y - 50;
             return `<span class="mother-connector mother-connector--${entry.position.tone}" style="--line-length:${Math.hypot(dx, dy)}%;--line-angle:${Math.atan2(dy, dx) * 180 / Math.PI}deg" aria-hidden="true"></span>`;
           }).join("")}
           ${entries.map((entry, index) => `<button type="button" class="mother-orbit-node mother-orbit-node--${entry.position.tone}${index === 0 ? " is-active" : ""}" data-mother-house="${safe(entry.house)}" style="--node-x:${entry.position.x}%;--node-y:${entry.position.y}%;--house-accent:${safe(entry.color)}" aria-pressed="${index === 0}" aria-label="Select House ${safe(entry.house)}"><span class="mother-orbit-node__halo" aria-hidden="true"></span><span class="mother-orbit-node__sigil">${sigilFor(entry.house, 42)}</span><span class="mother-orbit-node__label">${safe(entry.house)}</span></button>`).join("")}
+          <button type="button" class="mother-rail-arrow mother-rail-arrow--next" data-mother-step="1" aria-label="Next house">›</button>
         </div>
         <div class="mother-hero__copy">
           <p class="mother-eyebrow">The Raven Wall · a fan-made realm</p>
@@ -159,7 +161,13 @@
 
     const onClick = event => {
       const button = event.target.closest("[data-mother-house]");
-      if (button) selectHouse(button.dataset.motherHouse);
+      if (button) return selectHouse(button.dataset.motherHouse);
+      const stepButton = event.target.closest("[data-mother-step]");
+      if (stepButton) {
+        const index = entries.indexOf(active.entry);
+        const step = Number(stepButton.dataset.motherStep) || 1;
+        selectHouse(entries[(index + step + entries.length) % entries.length].house);
+      }
     };
     root.addEventListener("click", onClick);
     root.querySelectorAll("[data-mother-house]").forEach(button => button.addEventListener("keydown", event => {

@@ -9,3 +9,7 @@ so the wallpaper never sacrifices keyboard access or navigation.
 
 The `*-v2.png` files are the current master plates. They share a locked
 1672x941 composition, nine-house rail order, arrow endpoints, and CTA bounds.
+
+The `*-scene-v1.png` files are the current scene-only plates. They contain no
+interface text or controls; the house rail, labels, glow, and CTA are rendered
+once as live HTML over the scene.
