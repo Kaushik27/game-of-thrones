@@ -842,7 +842,9 @@ function viewHouses(app) {
     const color = HOUSE_COLORS[h];
     const count = charactersByHouse(h).length;
     const representative = window.MotherTemplate?.houseEntries?.().find(entry => entry.house === h)?.character || charactersByHouse(h)[0] || null;
-    const representativeVisual = representative ? cinematicVisualFor(representative.id) : "";
+    const representativeVisual = representative
+      ? (window.MOTHER_VISUALS?.[representative.id] || cinematicVisualFor(representative.id))
+      : "";
     const representativeArt = representativeVisual
       ? `<span class="houses-card__portrait" style="--house-portrait:url('${escapeHTML(representativeVisual)}')" aria-hidden="true"></span>`
       : (representative && typeof generativeAvatarSVG === "function"
@@ -881,13 +883,17 @@ function viewHouse(app, params) {
 
   const members = charactersByHouse(houseName);
   const evs = eventsForHouse(houseName);
+  const representative = window.MotherTemplate?.houseEntries?.().find(entry => entry.house === houseName)?.character || members[0] || null;
+  const representativeVisual = representative ? (window.MOTHER_VISUALS?.[representative.id] || cinematicVisualFor(representative.id)) : "";
 
   app.innerHTML = `
     <div class="page-wrap">
-      <div id="house-header" class="hero illustrated ambient-glow" style="text-align:left;display:flex;gap:22px;align-items:center;padding:56px 0 26px;flex-wrap:wrap;--glow-color:${color};">
+      <div id="house-header" class="hero illustrated ambient-glow house-profile-hero" style="--glow-color:${color};">
         <div class="hero-scene">${houseSceneSVG(color, info.sigil)}</div>
+        ${representativeVisual ? `<div class="house-profile-hero__portrait" aria-hidden="true" style="--house-profile-portrait:url('${escapeHTML(representativeVisual)}')"></div>` : ""}
         <div id="house-sigil-big" style="width:92px;height:92px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid ${color};background:${color}1c;color:${color};flex-shrink:0;">${sigilSVG(info.sigil, { size: 46 })}</div>
         <div>
+          <p class="house-profile-hero__eyebrow">A banner, a bloodline, a cost</p>
           <h1 class="display" style="color:${color}">House ${escapeHTML(houseName)}</h1>
           <div class="script-accent" style="text-align:left;color:${color};">"${escapeHTML(info.words)}"</div>
           <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:10px;font-size:0.85rem;color:var(--text-dim);">
@@ -905,7 +911,7 @@ function viewHouse(app, params) {
       </div>
 
       <div class="tab-panel active" id="tab-tree">
-        <p class="text-dim">Solid gold lines = family. Dashed pink = marriage. Grey = allegiance. Dashed red = conflict. Dotted blue = bond. Scroll/drag to pan, pinch or wheel to zoom.</p>
+        <p class="text-dim house-tree-intro"><strong>Bloodline constellation</strong><span>Drag to explore · click a person to open their dossier · scroll to zoom</span></p>
         <div id="tree-host" style="width:100%;height:560px;background:var(--panel-bg);border:1px solid var(--panel-border);border-radius:var(--radius);overflow:hidden;"></div>
         <div id="tree-unlinked"></div>
       </div>
@@ -963,7 +969,7 @@ function buildFamilyHierarchy(house) {
   const roots = houseChars.filter(c => !childIds.has(c.id) && parentIds.has(c.id));
 
   function buildNode(char) {
-    const children = parentEdges.filter(e => e.source === char.id).map(e => getCharacter(e.target)).filter(Boolean);
+    const children = [...new Set(parentEdges.filter(e => e.source === char.id).map(e => e.target))].map(id => getCharacter(id)).filter(Boolean);
     return { ...char, children: children.map(buildNode) };
   }
 
@@ -1001,33 +1007,31 @@ function renderFamilyTree(houseName, color) {
   const zoomBehavior = d3.zoom().scaleExtent([0.3, 3]).on("zoom", e => zoomLayer.attr("transform", e.transform));
   svg.call(zoomBehavior);
 
-  // Fixed per-sibling / per-generation spacing (not scaled by total node
-  // count) so the layout doesn't balloon into a huge coordinate space —
-  // then fit-to-view zoom centers whatever the tree's real extent is.
-  d3.tree().nodeSize([34, 190])(root);
+  const radius = Math.max(170, Math.min(hostWidth, hostHeight) * .36);
+  d3.tree().size([Math.PI * 2, radius])(root);
+  const centerX = hostWidth / 2;
+  const centerY = hostHeight / 2;
+  const radialLayer = zoomLayer.append("g").attr("transform", `translate(${centerX},${centerY})`);
+  const radialLink = d3.linkRadial().angle(d => d.x).radius(d => d.y);
+  radialLayer.selectAll(".tree-link").data(root.links()).join("path")
+    .attr("class", "tree-link").attr("fill", "none").attr("stroke", d => d.target.data.sigilColor || color)
+    .attr("stroke-width", d => d.target.depth === 1 ? 2.2 : 1.35).attr("stroke-opacity", .62)
+    .attr("d", radialLink);
 
-  const xExtent = d3.extent(root.descendants(), d => d.x);
-  const yExtent = d3.extent(root.descendants(), d => d.y);
-  const treeW = (yExtent[1] - yExtent[0]) + 160;
-  const treeH = (xExtent[1] - xExtent[0]) + 60;
-  const scale = Math.min(1, hostWidth / treeW, hostHeight / treeH);
-  const tx = 70 - yExtent[0] * scale;
-  const ty = (hostHeight / 2) - ((xExtent[0] + xExtent[1]) / 2) * scale;
-  svg.call(zoomBehavior.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
-
-  zoomLayer.selectAll(".tree-link").data(root.links()).join("path")
-    .attr("fill", "none").attr("stroke", "var(--panel-border)").attr("stroke-width", 1.6)
-    .attr("d", d3.linkHorizontal().x(d => d.y).y(d => d.x));
-
-  const node = zoomLayer.selectAll(".tree-node").data(root.descendants()).join("g")
-    .attr("transform", d => `translate(${d.y},${d.x})`)
+  const nodes = radialLayer.selectAll(".tree-node").data(root.descendants()).join("g")
+    .attr("class", d => `tree-node${d.data.virtual ? " tree-node--root" : ""}`)
+    .attr("transform", d => `rotate(${(d.x * 180 / Math.PI) - 90}) translate(${d.y},0)`)
     .style("cursor", d => d.data.virtual ? "default" : "pointer");
-
-  node.append("circle").attr("r", d => d.data.virtual ? 7 : 9).attr("fill", d => d.data.sigilColor)
-    .attr("opacity", d => d.data.status === "dead" ? 0.45 : 1)
-    .attr("stroke", "#000");
-  node.append("text").attr("dy", 4).attr("x", 14).attr("fill", "var(--text)").style("font-size", "0.82rem").style("font-family", "Inter, sans-serif").text(d => d.data.name);
-  node.filter(d => !d.data.virtual).on("click", (e, d) => { window.location.hash = "#/character/" + d.data.id; });
+  nodes.append("circle").attr("class", "tree-node__halo").attr("r", d => d.data.virtual ? 34 : 21).attr("fill", "none").attr("stroke", d => d.data.sigilColor || color).attr("stroke-opacity", .22);
+  nodes.append("circle").attr("class", "tree-node__dot").attr("r", d => d.data.virtual ? 15 : 11).attr("fill", d => d.data.sigilColor || color).attr("fill-opacity", d => d.data.status === "dead" ? .42 : .92).attr("stroke", "#0a0f13").attr("stroke-width", 3);
+  nodes.append("circle").attr("class", "tree-node__core").attr("r", d => d.data.virtual ? 5 : 3.5).attr("fill", "#f1eadb").attr("fill-opacity", .8);
+  nodes.append("text").attr("class", "tree-node__label")
+    .attr("x", d => d.x < Math.PI ? 28 : -28).attr("dy", 4)
+    .attr("text-anchor", d => d.x < Math.PI ? "start" : "end")
+    .attr("transform", d => d.x >= Math.PI ? "rotate(180)" : null)
+    .text(d => d.data.name);
+  nodes.append("title").text(d => d.data.virtual ? `${houseName} bloodline` : `${d.data.name} — open dossier`);
+  nodes.filter(d => !d.data.virtual).on("click", (e, d) => { window.location.hash = "#/character/" + d.data.id; });
 
   const drawnIds = new Set(root.descendants().filter(d => !d.data.virtual).map(d => d.data.id));
   const posById = new Map(root.descendants().filter(d => !d.data.virtual).map(d => [d.data.id, d]));
@@ -1040,7 +1044,8 @@ function renderFamilyTree(houseName, color) {
     .attr("d", d => {
       const s = posById.get(d.source), t = posById.get(d.target);
       if (!s || !t) return "";
-      return `M${s.y},${s.x} Q${(s.y + t.y) / 2},${(s.x + t.x) / 2 - 30} ${t.y},${t.x}`;
+      const link = d3.linkRadial().angle(p => p.x).radius(p => p.y)({ source: s, target: t });
+      return link;
     })
     .append("title").text(d => d.label);
 }

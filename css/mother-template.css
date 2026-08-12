@@ -115,6 +115,27 @@ h1.display, .hero h1, .houses-hero h1, .voices-hero h1 { font-family: var(--moth
 .houses-card:hover .houses-card__portrait, .houses-card:focus-visible .houses-card__portrait { opacity: .55; transform: scale(1.05); }
 .houses-card:hover .houses-card__portrait--art, .houses-card:focus-visible .houses-card__portrait--art { opacity: .9; }
 .houses-card__representative { margin-top: 8px; color: rgba(241,237,227,.62); font-size: .57rem; letter-spacing: .08em; text-transform: uppercase; }
+.house-profile-hero { position: relative; display: grid !important; grid-template-columns: 108px minmax(0, 1fr); align-items: center; gap: 24px; min-height: 330px; padding: 52px clamp(24px, 5vw, 76px) 42px !important; overflow: hidden; isolation: isolate; background: radial-gradient(circle at 74% 42%, color-mix(in srgb, var(--glow-color) 18%, transparent), transparent 30%), linear-gradient(90deg, rgba(5,10,15,.96), rgba(5,10,15,.72) 58%, rgba(5,10,15,.4)), url('../assets/ui/capital-journey-bg.jpg') center / cover !important; border: 1px solid color-mix(in srgb, var(--glow-color) 36%, rgba(212,168,94,.24)); box-shadow: 0 26px 80px rgba(0,0,0,.34); }
+.house-profile-hero .hero-scene { position: absolute; inset: 0; z-index: -2; opacity: .18; filter: saturate(.7) contrast(1.1); }
+.house-profile-hero__portrait { position: absolute; z-index: -1; inset: 0 0 0 48%; background: linear-gradient(90deg, rgba(5,10,15,.98), rgba(5,10,15,.28)), var(--house-profile-portrait) 70% 28% / cover no-repeat; opacity: .75; mask-image: linear-gradient(90deg, transparent, #000 28%, #000 100%); }
+.house-profile-hero > #house-sigil-big, .house-profile-hero > div:last-child { position: relative; z-index: 2; }
+.house-profile-hero > #house-sigil-big { grid-column: 1; grid-row: 1; margin: 0 !important; }
+.house-profile-hero > div:last-child { grid-column: 2; grid-row: 1; }
+.house-profile-hero__eyebrow { margin: 0 0 8px; color: var(--mother-gold); font-size: .62rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+.house-profile-hero .display { margin: 0 !important; font-family: var(--mother-serif); font-size: clamp(3rem, 7vw, 7rem); line-height: .86; text-shadow: 0 8px 30px rgba(0,0,0,.65); }
+.house-profile-hero .script-accent { margin-top: 18px; font-family: var(--mother-serif); font-size: clamp(1.35rem, 2.3vw, 2rem); font-style: italic; }
+.house-tree-intro { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; margin: 24px 0 14px; color: var(--mother-muted) !important; }
+.house-tree-intro strong { color: var(--mother-gold-soft); font-family: var(--mother-serif); font-size: 1.42rem; font-weight: 500; }
+.house-tree-intro span { font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; }
+#tree-host { height: min(68svh, 660px) !important; min-height: 470px; background: radial-gradient(circle at 50% 50%, rgba(50,78,94,.18), transparent 52%), linear-gradient(145deg, rgba(8,17,24,.98), rgba(3,8,12,.98)) !important; border: 1px solid rgba(212,168,94,.32) !important; border-radius: 2px !important; box-shadow: inset 0 0 90px rgba(0,0,0,.42), 0 24px 70px rgba(0,0,0,.26); }
+#tree-host svg { overflow: visible; }
+#tree-host .tree-link { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--mother-gold) 30%, transparent)); transition: stroke-opacity 180ms ease; }
+#tree-host .tree-node__halo { stroke-dasharray: 2 6; animation: tree-orbit 16s linear infinite; transform-origin: center; }
+#tree-host .tree-node__dot { filter: drop-shadow(0 0 8px color-mix(in srgb, currentColor 38%, transparent)); }
+#tree-host .tree-node__label { fill: var(--mother-white); font: 500 .74rem Inter, system-ui, sans-serif; letter-spacing: .025em; paint-order: stroke; stroke: rgba(3,8,12,.9); stroke-width: 5px; stroke-linejoin: round; }
+#tree-host .tree-node--root .tree-node__label { fill: var(--mother-gold-soft); font-family: var(--mother-serif); font-size: 1.05rem; letter-spacing: .06em; }
+.tree-unlinked { margin-top: 16px; }
+@keyframes tree-orbit { to { transform: rotate(360deg); } }
 .people-intelligence, .pi-shell, .lore-library, .story-atlas, .world-atlas, .raven-wall-host, .realm-chronicle, .what-if, .maesters-desk { background: transparent !important; }
 .raven-wall { background: linear-gradient(180deg, rgba(4,10,15,.76), rgba(4,10,15,.94)), url("../assets/ui/war-table-stone.jpg") center / cover fixed !important; }
 .pi-hero, .lore-library__hero, .story-atlas__hero, .realm-chronicle__hero, .maesters-desk__hero { background: linear-gradient(90deg, rgba(4,12,18,.92), rgba(7,16,23,.66)), url("../assets/ui/north-journey-bg.jpg") center / cover no-repeat !important; }
@@ -207,6 +228,13 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
 @keyframes mother-portrait-arrive { from { opacity: .18; transform: translateY(18px) scale(1.025); filter: blur(8px); } to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
 
 @media (max-width: 860px) {
+  .house-profile-hero { grid-template-columns: 74px minmax(0, 1fr); min-height: 300px; padding: 38px 22px 32px !important; }
+  .house-profile-hero__portrait { inset: 0; opacity: .44; mask-image: linear-gradient(90deg, rgba(0,0,0,.2), #000 70%); }
+  .house-profile-hero > #house-sigil-big { width: 74px !important; height: 74px !important; }
+  .house-profile-hero .display { font-size: clamp(2.55rem, 11vw, 4.8rem); }
+  .house-tree-intro { display: block; }
+  .house-tree-intro span { display: block; margin-top: 8px; }
+  #tree-host { min-height: 420px; }
   .react-nav-shell { min-height: 70px; }
   .react-nav-shell .brand { min-width: 0; }
   .react-nav-shell .brand-title { font-size: 1rem; }
