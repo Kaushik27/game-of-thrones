@@ -6,7 +6,7 @@
   const esc = value => String(value == null ? "" : value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
 
   function visible(record) {
-    return !global.RealmCompass || global.RealmCompass.isVisible(record);
+    return Boolean(record);
   }
 
   function mount(root, options) {

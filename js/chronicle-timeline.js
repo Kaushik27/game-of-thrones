@@ -71,7 +71,7 @@
       listeners.push(() => target.removeEventListener(type, handler, listenerOptions));
     }
     function visibleRecords() {
-      const spoilerVisible = global.RealmCompass ? records.filter(record => global.RealmCompass.isVisible(record)) : records;
+      const spoilerVisible = records;
       return state.filter === "all" ? spoilerVisible : spoilerVisible.filter(record => record.type === state.filter);
     }
     function currentRecord() {

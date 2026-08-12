@@ -124,7 +124,7 @@ const contracts = [
   [ravenWallSource.includes("data-rw-submit-form") && ravenWallSource.includes("pending-review"), "Memory Wall must expose a moderated fan fragment draft flow"],
   [atmosphereSource.includes("global.GotAtmosphere") && atmosphereSource.includes("AudioContext"), "Atmosphere must remain opt-in and locally synthesized"],
   [appSource.includes("got:route-change") && appSource.includes("route-enter"), "route changes must publish a shared cinematic transition state"],
-  [appSource.includes("got:spoiler-lens") && appSource.includes("router()"), "spoiler lens changes must refresh the current route"],
+  [!appSource.includes("RealmCompass") && !navSource.includes("realm-lens"), "the retired spoiler lens must not remain in the active shell"],
   [navSource.includes("data-atmosphere-control") && navSource.includes("GotAtmosphere"), "React shell must own the persistent atmosphere control"],
   [archiveShellSource.includes("body.archive-route") && archiveShellSource.includes("--archive-gold"), "archive routes must share a visual shell token system"],
   [appSource.includes("window.RavenWall.mount") && appSource.includes("atlasRequested"), "Timeline must route plain navigation to the Memory Wall and preserve the Episode Atlas"]
@@ -132,12 +132,12 @@ const contracts = [
   , [chronicleSource.includes("data-chronicle-filter") && chronicleSource.includes("data-chronicle-random"), "Chronicle must expose filter and surprise interactions"]
   , [chronicleSource.includes("IntersectionObserver") && chronicleSource.includes("updateProgress"), "Chronicle must respond to scroll with reveal and progress states"]
   , [chronicleSource.includes("dustHTML") && chronicleSource.includes("onPointerMove"), "Chronicle must provide ambient and pointer-driven life"]
-  , [chronicleSource.includes("RealmCompass") && chronicleSource.includes("spoilerVisible"), "Chronicle must respect the shared spoiler lens"]
+  , [chronicleSource.includes("const spoilerVisible = records"), "Chronicle must show the complete fan archive"]
   , [chronicleSource.includes("function entryButton") && chronicleSource.includes("Open moment"), "Chronicle cards must expose a resilient click target and visible action cue"]
   , [archiveShellSource.includes("archive-horizon-drift") && archiveShellSource.includes("north-journey-bg.jpg") && archiveShellSource.includes("capital-journey-bg.jpg"), "Archive routes must share a fluid atmospheric backdrop"]
   , [peopleSource.includes("observeSpotlightCards") && peopleSource.includes("handleSpotlightPointerMove"), "People spotlight must provide scroll and pointer interaction"]
   , [appSource.includes("houses-page") && appSource.includes("data-house-card"), "Houses must use the cinematic banner directory"]
-  , [compassSource.includes("Spoiler lens") && compassSource.includes("randomDestination"), "archive must provide a persistent spoiler lens and daily raven"]
+  , [compassSource.includes("randomDestination"), "the archive compass module remains available for legacy imports"]
   , [ravenSource.includes('key: "what-if"') && ravenSource.includes("getWhatIfs"), "global search must index fan counterfactual branches"]
   , [whatIfSource.includes("WhatIfChamber") && whatIfSource.includes("Fan speculation"), "archive must provide a clearly labeled counterfactual chamber"]
   , [deskSource.includes("MaestersDesk") && deskSource.includes("Image provenance"), "archive must provide a source and provenance desk"]
@@ -171,12 +171,10 @@ assert.ok(scripts.indexOf("js/raven-wall.js") < scripts.indexOf("js/app.js"), "M
 assert.ok(scripts.indexOf("js/global-atmosphere.js") < scripts.indexOf("js/app.js"), "atmosphere must load before route rendering");
 assert.ok(indexSource.includes("css/archive-shell.css?v=archive-shell-3"), "shared archive shell must load in the static entrypoint");
 assert.ok(indexSource.includes("css/houses.css?v=houses-1"), "houses styling must load in the static entrypoint");
-assert.ok(indexSource.includes("css/realm-compass.css?v=realm-compass-1"), "compass styling must load in the static entrypoint");
 assert.ok(indexSource.includes("css/what-if.css?v=what-if-1"), "what-if styling must load in the static entrypoint");
 assert.ok(indexSource.includes("css/maesters-desk.css?v=maesters-desk-1"), "maesters desk styling must load in the static entrypoint");
 assert.ok(scripts.indexOf("js/what-if-data.js") < scripts.indexOf("js/what-if.js"), "what-if data must load before its module");
 assert.ok(scripts.indexOf("js/maesters-desk.js") < scripts.indexOf("js/app.js"), "maesters desk must load before the router");
-assert.ok(scripts.indexOf("js/realm-compass.js") < scripts.indexOf("js/app.js"), "realm compass must load before the router");
 assert.ok(scripts.indexOf("js/quote-curation.js") < scripts.indexOf("js/app.js"), "quote curation must load before the router");
 assert.ok(scripts.indexOf("js/lore-data.js") < scripts.indexOf("js/lore-library.js"), "lore data must load before LoreLibrary");
 assert.ok(scripts.indexOf("js/story-atlas.js") < scripts.indexOf("js/app.js"), "feature modules must load before the router");

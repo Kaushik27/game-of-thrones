@@ -26,7 +26,6 @@ function ReactNav() {
   const [route, setRoute] = useState(currentRoute);
   const [open, setOpen] = useState(false);
   const [atmosphere, setAtmosphere] = useState(() => Boolean(window.GotAtmosphere?.isEnabled?.()));
-  const [spoilerLens, setSpoilerLens] = useState(() => window.RealmCompass?.current?.() || "all");
 
   useEffect(() => {
     const onHashChange = () => {
@@ -40,11 +39,6 @@ function ReactNav() {
   useEffect(() => {
     if (!window.GotAtmosphere?.subscribe) return undefined;
     return window.GotAtmosphere.subscribe(setAtmosphere);
-  }, []);
-
-  useEffect(() => {
-    if (!window.RealmCompass?.subscribe) return undefined;
-    return window.RealmCompass.subscribe(setSpoilerLens);
   }, []);
 
   const activeLabel = useMemo(() => LINKS.find((link) => isActive(link, route))?.label || "Explore", [route]);
@@ -104,28 +98,12 @@ function ReactNav() {
       React.createElement("span", null, atmosphere ? "Atmosphere on" : "Sound off")
     ),
     React.createElement(
-      "label",
-      { className: "realm-lens", title: "Hide spoilers beyond your current season" },
-      React.createElement("img", { className: "realm-lens__glyph", src: "assets/icons/snowflake.svg", alt: "" }),
-      React.createElement("span", { className: "realm-lens__label" }, "Spoiler lens"),
-      React.createElement(
-        "select",
-        {
-          "data-realm-lens": "true",
-          "aria-label": "Spoiler lens",
-          value: spoilerLens,
-          onChange: (event) => window.RealmCompass?.set?.(event.target.value)
-        },
-        (window.RealmCompass?.options || [{ value: "all", label: "Full realm" }]).map((option) => React.createElement("option", { value: option.value, key: option.value }, option.label))
-      )
-    ),
-    React.createElement(
       "button",
       {
         type: "button",
         className: "nav-raven",
         "aria-label": "Let the raven choose a fragment",
-        onClick: () => { window.location.hash = window.RealmCompass?.randomDestination?.() || "#/quotes"; }
+        onClick: () => { window.location.hash = "#/quotes"; }
       },
       React.createElement("img", { src: "assets/icons/compass.svg", alt: "" }),
       React.createElement("span", { className: "nav-raven__label" }, "Raven")

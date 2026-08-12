@@ -78,9 +78,6 @@ function router() {
 }
 
 window.addEventListener("hashchange", router);
-window.addEventListener("got:spoiler-lens", () => {
-  if (document.readyState !== "loading" && document.getElementById("app")) router();
-});
 document.addEventListener("DOMContentLoaded", () => {
   renderFooter();
   router();
@@ -113,7 +110,6 @@ function rememberLastRoute(key, value) {
 function spoilerLimit(query, fallback) {
   const requested = query && Number(query.get("season"));
   if (Number.isInteger(requested) && requested >= 1 && requested <= 8) return requested;
-  if (window.RealmCompass && window.RealmCompass.current() !== "all") return window.RealmCompass.season();
   return fallback;
 }
 
@@ -195,7 +191,7 @@ function viewHome(app, params, query) {
   try { rememberedSeason = Number(window.sessionStorage.getItem("got-last-season")) || 6; } catch (error) { /* optional */ }
   const initialSeason = Number.isInteger(requestedSeason) && requestedSeason >= 1 && requestedSeason <= 8
     ? requestedSeason
-    : (window.RealmCompass && window.RealmCompass.current() !== "all" ? window.RealmCompass.season() : (Number.isInteger(rememberedSeason) && rememberedSeason >= 1 && rememberedSeason <= 8 ? rememberedSeason : 6));
+    : (Number.isInteger(rememberedSeason) && rememberedSeason >= 1 && rememberedSeason <= 8 ? rememberedSeason : 6);
 
   app.innerHTML = `<div id="cinematic-realm-root" class="cinematic-realm"></div>`;
   const root = document.getElementById("cinematic-realm-root");
@@ -847,10 +843,15 @@ function viewHouses(app) {
     const count = charactersByHouse(h).length;
     const representative = window.MotherTemplate?.houseEntries?.().find(entry => entry.house === h)?.character || charactersByHouse(h)[0] || null;
     const representativeVisual = representative ? cinematicVisualFor(representative.id) : "";
+    const representativeArt = representativeVisual
+      ? `<span class="houses-card__portrait" style="--house-portrait:url('${escapeHTML(representativeVisual)}')" aria-hidden="true"></span>`
+      : (representative && typeof generativeAvatarSVG === "function"
+        ? `<span class="houses-card__portrait houses-card__portrait--art" aria-hidden="true">${generativeAvatarSVG(representative)}</span>`
+        : "");
     return `
     <a class="houses-card reveal" href="#/house/${encodeURIComponent(h)}" style="--house-accent:${color}" data-house-card="${escapeHTML(h)}">
       <span class="houses-card__wash" aria-hidden="true"></span>
-      ${representativeVisual ? `<span class="houses-card__portrait" style="--house-portrait:url('${escapeHTML(representativeVisual)}')" aria-hidden="true"></span>` : ""}
+      ${representativeArt}
       <span class="houses-card__index" aria-hidden="true">${String(houses.indexOf(h) + 1).padStart(2, "0")}</span>
       <span class="houses-card__sigil">${sigilSVG(info.sigil, { size: 44 })}</span>
       <span class="houses-card__region">${escapeHTML(info.region)}</span>
@@ -1415,7 +1416,7 @@ function viewTimeline(app, params, query) {
   const root = document.getElementById("story-atlas-root");
   try {
     const handle = window.StoryAtlas.mount(root, {
-      initialSeason: query.get("season") ? Number(query.get("season")) : (window.RealmCompass && window.RealmCompass.current() !== "all" ? window.RealmCompass.season() : undefined),
+      initialSeason: query.get("season") ? Number(query.get("season")) : undefined,
       initialEpisodeId: params[0] || query.get("episode") || "",
       initialEventId: query.get("event") || "",
       initialMode: query.get("mode") || "",
@@ -1776,7 +1777,7 @@ function viewQuiz(app) {
 // ==========================================================================
 function viewQuotes(app, params, query) {
   setTitle("Voices of the Realm");
-  let activeQuery = "", activeHouse = "", activeSeason = (window.RealmCompass && window.RealmCompass.current() !== "all" && !query.get("season")) ? String(window.RealmCompass.season()) : (query.get("season") || "");
+  let activeQuery = "", activeHouse = "", activeSeason = query.get("season") || "";
   let activeCollection = query.get("quote") ? "all" : "featured";
   let spotlightIndex = new Date().getDate();
   const requestedQuoteId = query.get("quote") || "";

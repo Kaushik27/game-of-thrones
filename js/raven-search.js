@@ -176,7 +176,6 @@
     });
 
     getEpisodes().forEach((episode) => {
-      if (window.RealmCompass && !window.RealmCompass.isVisible(episode)) return;
       const season = Number(episode.season) || 0;
       const number = Number(episode.episode) || 0;
       const code = season && number ? `S${season}E${String(number).padStart(2, "0")}` : "Episode";
@@ -204,7 +203,6 @@
     });
 
     getWhatIfs().forEach((record) => {
-      if (window.RealmCompass && !window.RealmCompass.isVisible(record)) return;
       items.push(makeItem(
         "what-if",
         record.id,
@@ -229,7 +227,6 @@
     });
 
     getEvents().forEach((event) => {
-      if (window.RealmCompass && !window.RealmCompass.isVisible(event)) return;
       const eventQuery = new URLSearchParams({
         mode: "consequences",
         event: String(event.id || "")
@@ -248,7 +245,6 @@
     });
 
     getBattles().forEach((battle) => {
-      if (window.RealmCompass && !window.RealmCompass.isVisible(battle)) return;
       const combatants = (battle.combatants || []).reduce((parts, side) => {
         return parts.concat(side.side || "", side.houses || [], characterNames(side.characters));
       }, []);
@@ -264,7 +260,6 @@
     });
 
     getQuotes().forEach((quote) => {
-      if (window.RealmCompass && !window.RealmCompass.isVisible(quote)) return;
       const character = charactersById.get(quote.characterId);
       const speaker = character ? character.name : quote.characterId;
       const season = quote.season ? "Season " + quote.season : "";
