@@ -279,7 +279,7 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
 .mother-rail-arrow--next { left: 96%; }
 .mother-rail-arrow:hover, .mother-rail-arrow:focus-visible { background: rgba(212,168,94,.16); box-shadow: 0 0 0 4px rgba(212,168,94,.1), 0 0 24px rgba(212,168,94,.2); transform: translate(-50%, -50%) scale(1.08); }
 .mother-rail-arrow:focus-visible { outline: 2px solid var(--mother-gold-soft); outline-offset: 4px; }
-.mother-orbit-node { width: clamp(72px, 8.8vw, 150px); height: clamp(72px, 8.8vw, 150px); border-color: rgba(212,168,94,.58); background: radial-gradient(circle, rgba(7,15,22,.74) 0 51%, rgba(7,15,22,.3) 52% 68%, transparent 69%); box-shadow: 0 0 0 1px rgba(212,168,94,.08); }
+.mother-orbit-node { appearance: none; -webkit-appearance: none; width: clamp(72px, 8.8vw, 150px); height: clamp(72px, 8.8vw, 150px); border: 1px solid rgba(212,168,94,.58) !important; border-radius: 50% !important; background: radial-gradient(circle, rgba(7,15,22,.74) 0 51%, rgba(7,15,22,.3) 52% 68%, transparent 69%); box-shadow: 0 0 0 1px rgba(212,168,94,.08); }
 .mother-orbit-node::before, .mother-orbit-node::after { opacity: .4; }
 .mother-orbit-node__halo { opacity: 0; }
 .mother-orbit-node__sigil, .mother-orbit-node__label { opacity: .9; }
