@@ -3,7 +3,7 @@
  *
  * This is intentionally a small, dependency-free visual shell. It owns the
  * observatory home composition and the shared lower realm rail while the
- * existing archive modules continue to own their domain interactions.
+ * existing realm modules continue to own their domain interactions.
  */
 (function installMotherTemplate(global, document) {
   "use strict";
@@ -17,19 +17,28 @@
     Tyrell: "margaery-tyrell",
     Martell: "doran-martell",
     Tully: "edmure-tully",
-    Arryn: "robin-arryn",
-    "Night's Watch": "samwell-tarly",
-    "Free Folk": "tormund-giantsbane"
+    Arryn: "robin-arryn"
   });
 
   const ORBIT_POSITIONS = [
-    { x: 17, y: 25, tone: "frost" },
-    { x: 83, y: 25, tone: "ember" },
-    { x: 12, y: 58, tone: "gold" },
-    { x: 88, y: 58, tone: "gold" },
-    { x: 22, y: 83, tone: "ember" },
-    { x: 78, y: 83, tone: "frost" }
+    { x: 14, y: 23, tone: "frost" }, { x: 86, y: 23, tone: "ember" },
+    { x: 10, y: 53, tone: "gold" }, { x: 90, y: 53, tone: "gold" },
+    { x: 17, y: 83, tone: "ember" }, { x: 83, y: 83, tone: "frost" },
+    { x: 34, y: 91, tone: "gold" }, { x: 66, y: 91, tone: "ember" },
+    { x: 50, y: 12, tone: "frost" }
   ];
+
+  const REALM_VISUALS = Object.freeze({
+    Stark: "assets/generated/realms/stark.png",
+    Lannister: "assets/generated/realms/lannister.png",
+    Targaryen: "assets/generated/realms/targaryen.png",
+    Baratheon: "assets/generated/realms/baratheon.png",
+    Greyjoy: "assets/generated/realms/greyjoy.png",
+    Tyrell: "assets/generated/realms/tyrell.png",
+    Tully: "assets/generated/realms/tully.png",
+    Martell: "assets/generated/realms/martell.png",
+    Arryn: "assets/generated/realms/arryn.png"
+  });
 
   function safe(value) {
     return typeof global.escapeHTML === "function"
@@ -48,9 +57,10 @@
         info: info[house],
         color: colors[house],
         character: people.find(person => person.id === HOUSE_REPRESENTATIVES[house]) || null,
+        visual: REALM_VISUALS[house],
         position: ORBIT_POSITIONS[index] || ORBIT_POSITIONS[0]
       }))
-      .slice(0, ORBIT_POSITIONS.length);
+      .filter(entry => entry.visual);
   }
 
   function portraitFor(character) {
@@ -88,29 +98,22 @@
       <section class="mother-hero" aria-labelledby="mother-title">
         <div class="mother-hero__ambient" aria-hidden="true"></div>
         <div class="mother-hero__rings" aria-hidden="true"><span></span><span></span><span></span></div>
-        <div class="mother-hero__portrait" data-mother-portrait>${portraitFor(initial.character)}</div>
-        <div class="mother-hero__orbit" aria-label="Houses and allegiances">
-          ${entries.map(entry => {
-            const dx = entry.position.x - 50;
-            const dy = entry.position.y - 50;
-            return `<span class="mother-connector mother-connector--${entry.position.tone}" style="--line-length:${Math.hypot(dx, dy)}%;--line-angle:${Math.atan2(dy, dx) * 180 / Math.PI}deg" aria-hidden="true"></span>`;
-          }).join("")}
-          ${entries.map((entry, index) => `
-            <button class="mother-orbit-node mother-orbit-node--${entry.position.tone}${index === 0 ? " is-active" : ""}" type="button" data-mother-house="${safe(entry.house)}" style="--node-x:${entry.position.x}%;--node-y:${entry.position.y}%;--house-accent:${safe(entry.color)}" aria-pressed="${index === 0}">
-              <span class="mother-orbit-node__halo" aria-hidden="true"></span>
-              <span class="mother-orbit-node__sigil">${sigilFor(entry.house, 48)}</span>
-              <span class="mother-orbit-node__label">${safe(entry.house)}</span>
-            </button>`).join("")}
-        </div>
+        <div class="mother-hero__portrait" data-mother-portrait><img data-mother-realm-image src="${safe(initial.visual)}" alt="${safe(initial.house)} realm visual" width="1440" height="1024" fetchpriority="high" decoding="async"></div>
+        <nav class="mother-realm-rail" aria-label="Choose a realm">
+          <span class="mother-realm-rail__label">Choose a realm</span>
+          <div class="mother-realm-rail__items">
+            ${entries.map((entry, index) => `<button type="button" class="mother-realm-rail__item${index === 0 ? " is-active" : ""}" data-mother-house="${safe(entry.house)}" aria-pressed="${index === 0}" style="--house-accent:${safe(entry.color)}"><span class="mother-realm-rail__sigil">${sigilFor(entry.house, 22)}</span><span>${safe(entry.house)}</span></button>`).join("")}
+          </div>
+        </nav>
         <div class="mother-hero__copy">
-          <p class="mother-eyebrow">The Raven Wall · a fan-made archive</p>
+          <p class="mother-eyebrow">The Raven Wall · a fan-made realm</p>
           <p class="mother-kicker" data-mother-kicker>The realm observatory</p>
           <h1 id="mother-title" data-mother-title>The North<br><em>remembers.</em></h1>
           <p class="mother-hero__quote" data-mother-quote>“${safe(quoteFor(initial.character))}”</p>
           <p class="mother-hero__summary" data-mother-summary>${safe(initial.character?.bio || "Follow the people, houses, and choices that left a mark on the realm.")}</p>
-          <a class="mother-hero__cta" data-mother-cta href="#/character/${safe(initial.character?.id || "jon-snow")}"><span>Open the archive</span><b aria-hidden="true">↗</b></a>
+          <a class="mother-hero__cta" data-mother-cta href="#/character/${safe(initial.character?.id || "jon-snow")}"><span>Open the realm</span><b aria-hidden="true">↗</b></a>
         </div>
-        <div class="mother-hero__meta" aria-label="Archive facts">
+        <div class="mother-hero__meta" aria-label="realm facts">
           <span><strong>196</strong> people</span><span><strong>12</strong> banners</span><span><strong>8</strong> seasons</span>
         </div>
       </section>
@@ -122,6 +125,7 @@
     const kicker = root.querySelector("[data-mother-kicker]");
     const cta = root.querySelector("[data-mother-cta]");
     const portrait = root.querySelector("[data-mother-portrait]");
+    const realmImage = root.querySelector("[data-mother-realm-image]");
 
     function selectHouse(house) {
       const next = entries.find(entry => entry.house === house) || initial;
@@ -134,7 +138,8 @@
       portrait.classList.remove("is-arriving");
       void portrait.offsetWidth;
       portrait.classList.add("is-arriving");
-      portrait.innerHTML = portraitFor(next.character);
+      realmImage.src = next.visual;
+      realmImage.alt = `${next.house} realm visual`;
       kicker.textContent = `${next.house} · ${next.info.region}`;
       title.innerHTML = `${safe(next.house)}<br><em>${safe(next.info.words).replace(/!$/, ".")}</em>`;
       quote.textContent = `“${quoteFor(next.character)}”`;
@@ -164,8 +169,8 @@
     const footer = document.getElementById("site-footer");
     if (!footer || footer.querySelector(".mother-rail")) return;
     footer.insertAdjacentHTML("afterbegin", `
-      <div class="mother-rail" aria-label="Archive shortcuts">
-        <a class="mother-rail__brand" href="#/" aria-label="Return to the Realm Observatory"><span class="mother-rail__raven">✦</span><span><b>The Raven Wall</b><small>fan-made archive</small></span></a>
+      <div class="mother-rail" aria-label="realm shortcuts">
+        <a class="mother-rail__brand" href="#/" aria-label="Return to the Realm Observatory"><span class="mother-rail__raven">✦</span><span><b>The Raven Wall</b><small>fan-made realm</small></span></a>
         <div class="mother-rail__links">
           <a href="#/houses">Houses</a><a href="#/characters">People</a><a href="#/quotes">Voices</a><a href="#/map">Maps</a><a href="#/lore">Lore</a>
         </div>
