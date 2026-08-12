@@ -287,7 +287,7 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
 .mother-orbit-node__sigil .sigil-icon { width: 100%; height: 100%; }
 .mother-orbit-node__label { position: absolute; top: calc(100% + 12px); min-width: 100px; color: rgba(241,237,227,.78); font-size: .55rem; letter-spacing: .16em; text-transform: uppercase; white-space: nowrap; }
 .mother-orbit-node:hover, .mother-orbit-node:focus-visible, .mother-orbit-node.is-active { border-color: color-mix(in srgb, var(--house-accent) 88%, white); background: radial-gradient(circle, color-mix(in srgb, var(--house-accent) 12%, transparent), transparent 64%); box-shadow: 0 0 0 3px color-mix(in srgb, var(--house-accent) 18%, transparent), 0 0 28px color-mix(in srgb, var(--house-accent) 42%, transparent); }
-.mother-orbit-node:focus-visible { outline: 2px solid var(--mother-gold-soft); outline-offset: 5px; }
+.mother-orbit-node:focus-visible { outline: none !important; outline-offset: 0; box-shadow: 0 0 0 3px var(--mother-gold-soft), 0 0 0 8px rgba(212,168,94,.2), 0 0 30px color-mix(in srgb, var(--house-accent) 56%, transparent); }
 .mother-orbit-node:focus-visible { outline: none !important; outline-offset: 0; box-shadow: 0 0 0 3px var(--mother-gold-soft), 0 0 0 8px rgba(212,168,94,.2), 0 0 30px color-mix(in srgb, var(--house-accent) 56%, transparent); }
 .mother-hero__copy { display: block; padding: 0; pointer-events: none; }
 .mother-hero__copy > :not(.mother-hero__cta):not(.mother-hero__summary) { position: absolute; left: 50%; width: min(90vw, 760px); height: auto; overflow: visible; clip: auto; clip-path: none; white-space: normal; transform: translateX(-50%); }
