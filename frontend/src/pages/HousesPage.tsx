@@ -1,0 +1,6 @@
+import { Link } from "react-router-dom";
+import { getHouses } from "../api";
+import PageState from "../components/PageState";
+import { useResource } from "../hooks/useResource";
+
+export default function HousesPage(){const {data,loading,error}=useResource(s=>getHouses(s),[]);return <main className="page"><div className="page-hero"><p className="eyebrow">HOUSE AGGREGATE</p><h1>The great houses</h1><p>House metadata lives in its own database table. Character counts are calculated through a separate query and composed by the service layer.</p></div><PageState loading={loading} error={error}/><div className="house-grid">{data?.items.map(house=><article key={house.name} style={{"--house-color":house.sigilColor} as React.CSSProperties}><div className="house-sigil">{house.name[0]}</div><p className="eyebrow">{house.region}</p><h2>House {house.name}</h2><blockquote>“{house.words}”</blockquote><dl><div><dt>Seat</dt><dd>{house.seat}</dd></div><div><dt>Sigil</dt><dd>{house.animal}</dd></div><div><dt>People</dt><dd>{house.charactersCount}</dd></div></dl><p>{house.rulerEnd}</p><Link to={`/people?house=${encodeURIComponent(house.name)}`}>View house members →</Link></article>)}</div></main>}
