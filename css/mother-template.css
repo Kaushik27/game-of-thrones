@@ -161,7 +161,7 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
 
 /* Realm Observatory home ----------------------------------------------- */
 .mother-observatory { width: 100%; min-height: calc(100svh - 82px); overflow: hidden; }
-.mother-hero { position: relative; min-height: calc(100svh - 82px); isolation: isolate; overflow: hidden; background: radial-gradient(circle at 50% 45%, rgba(56, 84, 103, .18), transparent 38%), linear-gradient(180deg, rgba(4,10,15,.2), rgba(3,8,12,.95)); }
+.mother-hero { position: relative; min-height: calc(100svh - 82px); isolation: isolate; overflow: clip; background: radial-gradient(circle at 50% 45%, rgba(56, 84, 103, .18), transparent 38%), linear-gradient(180deg, rgba(4,10,15,.2), rgba(3,8,12,.95)); }
 .mother-hero__ambient { position: absolute; inset: 0; z-index: -2; background: linear-gradient(90deg, rgba(3,8,12,.9), transparent 29%, transparent 70%, rgba(3,8,12,.9)), linear-gradient(0deg, rgba(3,8,12,.88), transparent 38%, rgba(3,8,12,.32)), url("../assets/ui/north-journey-bg.jpg") center / cover no-repeat; opacity: .8; filter: saturate(.8) contrast(1.08); transform: scale(1.03); animation: mother-breathe 18s ease-in-out infinite alternate; }
 .mother-hero__ambient::after { position: absolute; inset: 0; content: ""; background: radial-gradient(circle at 50% 47%, transparent 0 30%, rgba(0,0,0,.44) 78%), linear-gradient(90deg, rgba(6,16,26,.7), transparent 34%, transparent 68%, rgba(16,9,5,.58)); }
 .mother-hero__rings { position: absolute; z-index: -1; width: min(70vw, 900px); aspect-ratio: 1; left: 50%; top: 47%; transform: translate(-50%, -50%); border: 1px solid rgba(212,168,94,.17); border-radius: 50%; pointer-events: none; }
