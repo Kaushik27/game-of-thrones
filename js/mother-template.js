@@ -49,7 +49,8 @@
         color: colors[house],
         character: people.find(person => person.id === HOUSE_REPRESENTATIVES[house]) || null,
         position: ORBIT_POSITIONS[index] || ORBIT_POSITIONS[0]
-      }));
+      }))
+      .slice(0, ORBIT_POSITIONS.length);
   }
 
   function portraitFor(character) {
