@@ -178,15 +178,15 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
 .mother-hero__portrait .mother-avatar-art { display: block; width: 100%; height: 100%; }
 .mother-hero__portrait .generative-avatar { display: block; width: 100%; height: 100%; filter: contrast(1.08) saturate(.92) drop-shadow(0 22px 50px rgba(0,0,0,.44)); }
 .mother-hero__portrait.is-arriving { animation: mother-portrait-arrive 680ms cubic-bezier(.16,1,.3,1) both; }
-.mother-hero__copy { position: relative; z-index: 2; width: min(580px, 86vw); min-height: 0; margin-inline: auto; padding: clamp(118px, 15vh, 152px) 20px 24px; text-align: center; background: radial-gradient(ellipse at 50% 48%, rgba(3,8,12,.88) 0%, rgba(3,8,12,.62) 36%, transparent 74%); opacity: 0; pointer-events: none; }
+.mother-hero__copy { position: relative; z-index: 2; width: min(580px, 86vw); min-height: 0; margin-inline: auto; padding: clamp(118px, 15vh, 152px) 20px 24px; text-align: center; background: radial-gradient(ellipse at 50% 48%, rgba(3,8,12,.78) 0%, rgba(3,8,12,.45) 36%, transparent 74%); }
 .mother-kicker { margin: 0 0 10px; color: var(--mother-gold); font-size: .68rem; letter-spacing: .32em; text-transform: uppercase; }
 .mother-hero h1 { margin: 0; color: var(--mother-white); font-family: var(--mother-serif); font-size: clamp(3.1rem, 7vw, 6.6rem); line-height: .84; font-weight: 500; letter-spacing: .035em; text-shadow: 0 5px 30px rgba(0,0,0,.8); text-transform: uppercase; }
 .mother-hero h1 em { color: var(--mother-gold-soft); font-style: normal; }
 .mother-hero__quote { margin: 20px auto 10px; max-width: 490px; font-family: var(--mother-serif); font-size: clamp(1.08rem, 1.7vw, 1.46rem); font-style: italic; color: rgba(241,237,227,.92); }
 .mother-hero__summary { max-width: 540px; margin: 0 auto 22px; color: rgba(241,237,227,.66); font-size: .86rem; }
-.mother-hero__cta { position: fixed; z-index: 6; left: 50%; top: 61vh; display: inline-flex; width: min(300px, 28vw); height: 68px; transform: translate(-50%, -50%); gap: 22px; align-items: center; justify-content: center; padding: 14px 28px; border: 1px solid transparent; color: transparent; background: transparent; box-shadow: none; transition: transform 240ms var(--ease-out), background 240ms var(--ease-out), box-shadow 240ms var(--ease-out); pointer-events: auto; }
-.mother-hero__cta:focus-visible { border-color: var(--mother-gold-soft); outline: 2px solid var(--mother-gold-soft); outline-offset: 4px; background: rgba(6, 11, 16, .28); color: var(--mother-gold-soft); }
-.mother-hero__cta:hover { color: var(--mother-white); background: rgba(212,168,94,.13); text-decoration: none; transform: translateY(-3px); box-shadow: 0 0 0 5px rgba(212,168,94,.11), 0 0 45px rgba(212,168,94,.2); }
+.mother-hero__cta { position: relative; z-index: 4; display: inline-flex; gap: 22px; align-items: center; justify-content: center; min-width: 260px; padding: 14px 28px; border: 1px solid var(--mother-gold); color: var(--mother-gold-soft); background: rgba(6, 11, 16, .78); box-shadow: 0 0 0 4px rgba(212,168,94,.08), 0 0 35px rgba(212,168,94,.12); transition: transform 240ms var(--ease-out), background 240ms var(--ease-out), box-shadow 240ms var(--ease-out); pointer-events: auto; }
+.mother-hero__cta:focus-visible { outline: 2px solid var(--mother-gold-soft); outline-offset: 4px; }
+.mother-hero__cta:hover { color: var(--mother-white); background: rgba(212,168,94,.2); text-decoration: none; transform: translateY(-3px); box-shadow: 0 0 0 5px rgba(212,168,94,.11), 0 0 45px rgba(212,168,94,.2); }
 .mother-hero__cta b { font-size: 1.2rem; font-weight: 400; }
 .mother-hero__meta { position: absolute; z-index: 2; left: clamp(18px, 4vw, 58px); bottom: 36px; display: none; gap: 22px; color: rgba(241,237,227,.5); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; }
 .mother-hero__meta strong { margin-right: 5px; color: var(--mother-gold-soft); font-size: .9rem; font-family: var(--mother-serif); font-weight: 500; letter-spacing: .04em; }
@@ -213,7 +213,7 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
 /* The generated plates include the same house rail as the reference. This
    DOM rail sits above it, keeping every icon and transition keyboard/click
    reachable while the artwork remains the cinematic surface. */
-.mother-realm-rail { position: absolute; z-index: 4; left: 50%; bottom: 0; display: flex; align-items: stretch; gap: 18px; width: min(1160px, calc(100% - 48px)); transform: translateX(-50%); padding: 10px 14px; border-top: 1px solid rgba(212,168,94,.35); background: linear-gradient(180deg, rgba(3,8,12,.08), rgba(3,8,12,.84)); backdrop-filter: blur(8px); }
+.mother-realm-rail { display: none; }
 .mother-realm-rail__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
 .mother-realm-rail__items { display: flex; align-items: center; justify-content: space-between; gap: 5px; width: 100%; overflow-x: auto; scrollbar-width: none; }
 .mother-realm-rail__items::-webkit-scrollbar { display: none; }
@@ -223,6 +223,26 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
 .mother-realm-rail__item.is-active { box-shadow: none; }
 .mother-realm-rail__sigil { display: grid; place-items: center; color: var(--house-accent); opacity: .88; }
 .mother-realm-rail__sigil .sigil-icon { width: 22px; height: 22px; }
+
+/* Circular house controls are the primary interaction. Their positions align
+   with the generated artwork's sigil constellation, but the controls remain
+   independent DOM buttons so hover, focus, keyboard, and selection work. */
+.mother-hero__orbit { position: absolute; inset: 104px 0 100px; z-index: 3; pointer-events: none; }
+.mother-connector { position: absolute; left: 50%; top: 50%; width: var(--line-length); height: 1px; transform-origin: 0 50%; transform: rotate(var(--line-angle)); background: linear-gradient(90deg, rgba(212,168,94,.16), currentColor 82%, transparent); opacity: .32; }
+.mother-connector--frost { color: var(--mother-frost); }
+.mother-connector--ember { color: var(--mother-ember); }
+.mother-connector--gold { color: var(--mother-gold-soft); }
+.mother-orbit-node { position: absolute; left: var(--node-x); top: var(--node-y); display: grid; place-items: center; width: 74px; height: 74px; transform: translate(-50%, -50%); border: 1px solid color-mix(in srgb, var(--house-accent) 75%, transparent); border-radius: 50%; color: var(--house-accent); background: radial-gradient(circle, rgba(7,15,22,.94) 0 45%, rgba(7,15,22,.62) 46% 68%, transparent 69%); cursor: pointer; pointer-events: auto; transition: transform 260ms var(--ease-out), border-color 260ms var(--ease-out), box-shadow 260ms var(--ease-out); }
+.mother-orbit-node::before, .mother-orbit-node::after { position: absolute; content: ""; border: 1px solid currentColor; border-radius: 50%; opacity: .38; pointer-events: none; }
+.mother-orbit-node::before { inset: -7px; }
+.mother-orbit-node::after { inset: -13px; opacity: .2; border-style: dashed; }
+.mother-orbit-node__halo { position: absolute; inset: 10px; border-radius: 50%; box-shadow: 0 0 24px currentColor; opacity: 0; transition: opacity 260ms var(--ease-out); }
+.mother-orbit-node__sigil { display: grid; place-items: center; width: 42px; height: 42px; color: currentColor; }
+.mother-orbit-node__sigil .sigil-icon { width: 42px; height: 42px; }
+.mother-orbit-node__label { position: absolute; top: calc(100% + 13px); color: rgba(241,237,227,.84); font-size: .55rem; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
+.mother-orbit-node:hover, .mother-orbit-node:focus-visible, .mother-orbit-node.is-active { transform: translate(-50%, -50%) scale(1.12); border-color: currentColor; box-shadow: 0 0 0 6px rgba(212,168,94,.08), 0 0 34px color-mix(in srgb, currentColor 55%, transparent); outline: none; }
+.mother-orbit-node:focus-visible { outline: 2px solid var(--mother-gold-soft); outline-offset: 5px; }
+.mother-orbit-node.is-active .mother-orbit-node__halo { opacity: .6; }
 
 /* Persistent rail ------------------------------------------------------- */
 #site-footer { margin-top: 0; padding: 0; border-top: 1px solid rgba(212,168,94,.22); background: rgba(3,8,12,.94); color: rgba(241,237,227,.42); }
@@ -263,10 +283,11 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
   .mother-hero__ambient { background-position: 58% 28%; }
   .mother-hero__portrait { inset: 0; width: 100%; height: 100%; }
   .mother-hero__copy { width: min(580px, 86vw); padding-top: 118px; }
-  .mother-hero__cta { top: 59vh; width: min(270px, 58vw); height: 60px; }
-  .mother-realm-rail { left: 12px; right: 12px; bottom: 12px; width: auto; transform: none; display: block; padding: 8px 10px; }
-  .mother-realm-rail__label { display: block; margin: 0 0 5px 4px; }
-  .mother-realm-rail__items { justify-content: flex-start; }
+  .mother-hero__cta { min-width: 220px; }
+  .mother-hero__orbit { inset: 100px 0 115px; }
+  .mother-orbit-node { width: 58px; height: 58px; }
+  .mother-orbit-node__sigil, .mother-orbit-node__sigil .sigil-icon { width: 32px; height: 32px; }
+  .mother-orbit-node__label { top: calc(100% + 8px); font-size: .43rem; }
   .mother-hero__meta { left: 50%; bottom: 28px; transform: translateX(-50%); width: max-content; gap: 12px; }
   .mother-orbit-node { width: 76px; height: 76px; }
   .mother-orbit-node__sigil, .mother-orbit-node__sigil .sigil-icon { width: 34px; height: 34px; }

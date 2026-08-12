@@ -99,19 +99,21 @@
         <div class="mother-hero__ambient" aria-hidden="true"></div>
         <div class="mother-hero__rings" aria-hidden="true"><span></span><span></span><span></span></div>
         <div class="mother-hero__portrait" data-mother-portrait><img data-mother-realm-image src="${safe(initial.visual)}" alt="${safe(initial.house)} realm visual" width="1440" height="1024" fetchpriority="high" decoding="async"></div>
-        <nav class="mother-realm-rail" aria-label="Choose a realm">
-          <span class="mother-realm-rail__label">Choose a realm</span>
-          <div class="mother-realm-rail__items">
-            ${entries.map((entry, index) => `<button type="button" class="mother-realm-rail__item${index === 0 ? " is-active" : ""}" data-mother-house="${safe(entry.house)}" aria-pressed="${index === 0}" style="--house-accent:${safe(entry.color)}"><span class="mother-realm-rail__sigil">${sigilFor(entry.house, 22)}</span><span>${safe(entry.house)}</span></button>`).join("")}
-          </div>
-        </nav>
+        <div class="mother-hero__orbit" aria-label="Choose a house">
+          ${entries.map(entry => {
+            const dx = entry.position.x - 50;
+            const dy = entry.position.y - 50;
+            return `<span class="mother-connector mother-connector--${entry.position.tone}" style="--line-length:${Math.hypot(dx, dy)}%;--line-angle:${Math.atan2(dy, dx) * 180 / Math.PI}deg" aria-hidden="true"></span>`;
+          }).join("")}
+          ${entries.map((entry, index) => `<button type="button" class="mother-orbit-node mother-orbit-node--${entry.position.tone}${index === 0 ? " is-active" : ""}" data-mother-house="${safe(entry.house)}" style="--node-x:${entry.position.x}%;--node-y:${entry.position.y}%;--house-accent:${safe(entry.color)}" aria-pressed="${index === 0}" aria-label="Select House ${safe(entry.house)}"><span class="mother-orbit-node__halo" aria-hidden="true"></span><span class="mother-orbit-node__sigil">${sigilFor(entry.house, 42)}</span><span class="mother-orbit-node__label">${safe(entry.house)}</span></button>`).join("")}
+        </div>
         <div class="mother-hero__copy">
           <p class="mother-eyebrow">The Raven Wall · a fan-made realm</p>
           <p class="mother-kicker" data-mother-kicker>The realm observatory</p>
           <h1 id="mother-title" data-mother-title>The North<br><em>remembers.</em></h1>
           <p class="mother-hero__quote" data-mother-quote>“${safe(quoteFor(initial.character))}”</p>
           <p class="mother-hero__summary" data-mother-summary>${safe(initial.character?.bio || "Follow the people, houses, and choices that left a mark on the realm.")}</p>
-          <a class="mother-hero__cta" data-mother-cta href="#/character/${safe(initial.character?.id || "jon-snow")}"><span>Open the realm</span><b aria-hidden="true">↗</b></a>
+          <a class="mother-hero__cta" data-mother-cta href="#/house/${safe(initial.house)}"><span>Enter the realm</span><b aria-hidden="true">↗</b></a>
         </div>
         <div class="mother-hero__meta" aria-label="realm facts">
           <span><strong>196</strong> people</span><span><strong>12</strong> banners</span><span><strong>8</strong> seasons</span>
