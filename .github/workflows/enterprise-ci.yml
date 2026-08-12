@@ -53,7 +53,7 @@ jobs:
             if [ "$attempt" = 30 ]; then docker logs realm; exit 1; fi
             sleep 2
           done
-          curl --fail --silent http://127.0.0.1:8080/ | grep 'The Raven Wall'
+          curl --fail --silent http://127.0.0.1:8080/ | grep 'id="site-nav"'
           curl --fail --silent http://127.0.0.1:8080/app/ | grep '/app/assets/'
           curl --fail --silent http://127.0.0.1:8080/css/theme.css | grep -- '--accent'
           curl --fail --silent http://127.0.0.1:8080/api/v1/statistics | grep '"characters":196'
