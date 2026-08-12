@@ -176,10 +176,10 @@
   global.MOTHER_VISUALS = Object.freeze({
     "jon-snow": "assets/generated/northern-guardian-wide.png",
     "tyrion-lannister": "assets/generated/tyrion-lannister-wide.png",
-    "daenerys-targaryen": "assets/characters/daenerys-visual.png",
-    "theon-greyjoy": "assets/generated/houses/greyjoy-realm-wide.png",
+    "daenerys-targaryen": "assets/generated/targaryen-realm-wide-v2.png",
+    "theon-greyjoy": "assets/generated/greyjoy-realm-wide-v2.png",
     "gendry-baratheon": "assets/generated/baratheon-realm-wide-v2.png",
-    "margaery-tyrell": "assets/generated/houses/tyrell-realm-wide.png"
+    "margaery-tyrell": "assets/generated/tyrell-realm-wide-v2.png"
   });
   global.MotherTemplate = Object.freeze({ mountHome, installRail, houseEntries });
 })(window, document);
