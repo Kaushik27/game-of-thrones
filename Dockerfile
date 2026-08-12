@@ -12,7 +12,7 @@ COPY backend ./backend
 COPY --from=frontend-build /workspace/frontend/dist ./frontend/dist
 RUN ./backend/gradlew -p backend clean bootJar --no-daemon
 
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:25-jre-alpine
 WORKDIR /app
 RUN addgroup -S archive && adduser -S archive -G archive && mkdir -p /app/data && chown -R archive:archive /app
 COPY --from=backend-build /workspace/backend/build/libs/*.jar /app/application.jar
