@@ -1,0 +1,175 @@
+{
+  "info": {
+    "_postman_id": "c0f2b1d3-7f1e-4e92-9f33-5b1a62cf8b11",
+    "name": "Game of Thrones Archive API",
+    "description": "A ready-to-run collection for the Game of Thrones Archive API. Start the Spring Boot service on http://localhost:8080 (or set the collection/environment baseUrl), then run the folders in order. The Database Explorer requests are intentionally read-only and use the application's allowlisted tables; the API does not expose arbitrary SQL or database credentials.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('HTTP status is successful', function () {",
+          "    pm.expect(pm.response.code).to.be.within(200, 299);",
+          "});",
+          "pm.test('response is JSON', function () {",
+          "    pm.expect(pm.response.headers.get('Content-Type') || '').to.include('json');",
+          "});"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "characterId", "value": "jon-snow" },
+    { "key": "houseName", "value": "Stark" },
+    { "key": "episodeId", "value": "s08e06" },
+    { "key": "battleId", "value": "battle-bastards" },
+    { "key": "tableName", "value": "character_records" },
+    { "key": "page", "value": "0" },
+    { "key": "pageSize", "value": "20" },
+    { "key": "season", "value": "6" }
+  ],
+  "item": [
+    {
+      "name": "Health & discovery",
+      "description": "Confirm the service, database readiness, OpenAPI contract, and archive counts before exploring records.",
+      "item": [
+        {
+          "name": "Health",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/actuator/health", "host": ["{{baseUrl}}"], "path": ["actuator", "health"] } }
+        },
+        {
+          "name": "Readiness",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/actuator/health/readiness", "host": ["{{baseUrl}}"], "path": ["actuator", "health", "readiness"] } }
+        },
+        {
+          "name": "OpenAPI document",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/v3/api-docs", "host": ["{{baseUrl}}"], "path": ["v3-api-docs"] } }
+        },
+        {
+          "name": "Archive statistics",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/statistics", "host": ["{{baseUrl}}"], "path": ["api", "v1", "statistics"] } }
+        }
+      ]
+    },
+    {
+      "name": "Archive API",
+      "description": "The read-only archive resources used by the React application.",
+      "item": [
+        {
+          "name": "List characters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/characters?page={{page}}&pageSize=24", "host": ["{{baseUrl}}"], "path": ["api", "v1", "characters"], "query": [{ "key": "page", "value": "{{page}}" }, { "key": "pageSize", "value": "24" }] }
+          }
+        },
+        {
+          "name": "Search characters by house",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/characters?house={{houseName}}&status=ALIVE&query=snow", "host": ["{{baseUrl}}"], "path": ["api", "v1", "characters"], "query": [{ "key": "house", "value": "{{houseName}}" }, { "key": "status", "value": "ALIVE" }, { "key": "query", "value": "snow" }] }
+          }
+        },
+        {
+          "name": "Get character",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/characters/{{characterId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "characters", "{{characterId}}"] } }
+        },
+        {
+          "name": "Get character relationships",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/characters/{{characterId}}/relationships", "host": ["{{baseUrl}}"], "path": ["api", "v1", "characters", "{{characterId}}", "relationships"] } }
+        },
+        {
+          "name": "List houses",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/houses", "host": ["{{baseUrl}}"], "path": ["api", "v1", "houses"] } }
+        },
+        {
+          "name": "Get house",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/houses/{{houseName}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "houses", "{{houseName}}"] } }
+        },
+        {
+          "name": "List episodes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/episodes?page={{page}}&pageSize=20&season={{season}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "episodes"], "query": [{ "key": "page", "value": "{{page}}" }, { "key": "pageSize", "value": "20" }, { "key": "season", "value": "{{season}}" }] }
+          }
+        },
+        {
+          "name": "Get episode",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/episodes/{{episodeId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "episodes", "{{episodeId}}"] } }
+        },
+        {
+          "name": "List battles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/battles?season={{season}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "battles"], "query": [{ "key": "season", "value": "{{season}}" }] }
+          }
+        },
+        {
+          "name": "Get battle",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/battles/{{battleId}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "battles", "{{battleId}}"] } }
+        },
+        {
+          "name": "List quotes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/quotes?page={{page}}&pageSize=20&season={{season}}&house={{houseName}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "quotes"], "query": [{ "key": "page", "value": "{{page}}" }, { "key": "pageSize", "value": "20" }, { "key": "season", "value": "{{season}}" }, { "key": "house", "value": "{{houseName}}" }] }
+          }
+        },
+        {
+          "name": "List story events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/v1/events?season={{season}}&type=battle", "host": ["{{baseUrl}}"], "path": ["api", "v1", "events"], "query": [{ "key": "season", "value": "{{season}}" }, { "key": "type", "value": "battle" }] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Database Explorer (read-only)",
+      "description": "These requests expose only the allowlisted H2 tables through the application's paginated database explorer. They are safe GET requests; there is deliberately no arbitrary SQL, write, or credential endpoint.",
+      "item": [
+        {
+          "name": "List allowlisted tables",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/database/tables", "host": ["{{baseUrl}}"], "path": ["api", "v1", "database", "tables"] } }
+        },
+        {
+          "name": "Read characters table",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/database/tables/character_records/records?page={{page}}&pageSize=10", "host": ["{{baseUrl}}"], "path": ["api", "v1", "database", "tables", "character_records", "records"], "query": [{ "key": "page", "value": "{{page}}" }, { "key": "pageSize", "value": "10" }] } }
+        },
+        {
+          "name": "Read houses table",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/database/tables/houses/records?page={{page}}&pageSize=10", "host": ["{{baseUrl}}"], "path": ["api", "v1", "database", "tables", "houses", "records"], "query": [{ "key": "page", "value": "{{page}}" }, { "key": "pageSize", "value": "10" }] } }
+        },
+        {
+          "name": "Read relationships table",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/database/tables/relationships/records?page={{page}}&pageSize=10", "host": ["{{baseUrl}}"], "path": ["api", "v1", "database", "tables", "relationships", "records"], "query": [{ "key": "page", "value": "{{page}}" }, { "key": "pageSize", "value": "10" }] } }
+        },
+        {
+          "name": "Read episodes table",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/database/tables/episodes/records?page={{page}}&pageSize=10", "host": ["{{baseUrl}}"], "path": ["api", "v1", "database", "tables", "episodes", "records"], "query": [{ "key": "page", "value": "{{page}}" }, { "key": "pageSize", "value": "10" }] } }
+        },
+        {
+          "name": "Read quotes table",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/database/tables/quotes/records?page={{page}}&pageSize=10", "host": ["{{baseUrl}}"], "path": ["api", "v1", "database", "tables", "quotes", "records"], "query": [{ "key": "page", "value": "{{page}}" }, { "key": "pageSize", "value": "10" }] } }
+        },
+        {
+          "name": "Read battles table",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/database/tables/battles/records?page={{page}}&pageSize=10", "host": ["{{baseUrl}}"], "path": ["api", "v1", "database", "tables", "battles", "records"], "query": [{ "key": "page", "value": "{{page}}" }, { "key": "pageSize", "value": "10" }] } }
+        },
+        {
+          "name": "Read story events table",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/database/tables/story_events/records?page={{page}}&pageSize=10", "host": ["{{baseUrl}}"], "path": ["api", "v1", "database", "tables", "story_events", "records"], "query": [{ "key": "page", "value": "{{page}}" }, { "key": "pageSize", "value": "10" }] } }
+        }
+      ]
+    }
+  ]
+}
