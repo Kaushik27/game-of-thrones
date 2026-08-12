@@ -20,24 +20,30 @@
     Arryn: "robin-arryn"
   });
 
-  const ORBIT_POSITIONS = [
-    { x: 14, y: 23, tone: "frost" }, { x: 86, y: 23, tone: "ember" },
-    { x: 10, y: 53, tone: "gold" }, { x: 90, y: 53, tone: "gold" },
-    { x: 17, y: 83, tone: "ember" }, { x: 83, y: 83, tone: "frost" },
-    { x: 34, y: 91, tone: "gold" }, { x: 66, y: 91, tone: "ember" },
-    { x: 50, y: 12, tone: "frost" }
-  ];
+  // The artwork is the visual source of truth. These hotspots line up with
+  // the nine medallions baked into every master plate, in rail order.
+  const RAIL_POSITIONS = Object.freeze({
+    Stark: { x: 13, y: 84, tone: "frost" },
+    Lannister: { x: 23, y: 84, tone: "ember" },
+    Targaryen: { x: 33, y: 84, tone: "ember" },
+    Greyjoy: { x: 43, y: 84, tone: "frost" },
+    Tyrell: { x: 53, y: 84, tone: "gold" },
+    Tully: { x: 63, y: 84, tone: "frost" },
+    Baratheon: { x: 73, y: 84, tone: "gold" },
+    Martell: { x: 83, y: 84, tone: "ember" },
+    Arryn: { x: 93, y: 84, tone: "frost" }
+  });
 
   const REALM_VISUALS = Object.freeze({
-    Stark: "assets/generated/realms/stark.png",
-    Lannister: "assets/generated/realms/lannister.png",
-    Targaryen: "assets/generated/realms/targaryen.png",
-    Baratheon: "assets/generated/realms/baratheon.png",
-    Greyjoy: "assets/generated/realms/greyjoy.png",
-    Tyrell: "assets/generated/realms/tyrell.png",
-    Tully: "assets/generated/realms/tully.png",
-    Martell: "assets/generated/realms/martell.png",
-    Arryn: "assets/generated/realms/arryn.png"
+    Stark: "assets/generated/realms/stark-v2.png",
+    Lannister: "assets/generated/realms/lannister-v2.png",
+    Targaryen: "assets/generated/realms/targaryen-v2.png",
+    Baratheon: "assets/generated/realms/baratheon-v2.png",
+    Greyjoy: "assets/generated/realms/greyjoy-v2.png",
+    Tyrell: "assets/generated/realms/tyrell-v2.png",
+    Tully: "assets/generated/realms/tully-v2.png",
+    Martell: "assets/generated/realms/martell-v2.png",
+    Arryn: "assets/generated/realms/arryn-v2.png"
   });
 
   function safe(value) {
@@ -58,7 +64,7 @@
         color: colors[house],
         character: people.find(person => person.id === HOUSE_REPRESENTATIVES[house]) || null,
         visual: REALM_VISUALS[house],
-        position: ORBIT_POSITIONS[index] || ORBIT_POSITIONS[0]
+        position: RAIL_POSITIONS[house] || RAIL_POSITIONS.Stark
       }))
       .filter(entry => entry.visual);
   }

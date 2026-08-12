@@ -268,6 +268,23 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
 @keyframes mother-orbit-spin { to { transform: rotate(384deg) skew(4deg); } }
 @keyframes mother-portrait-arrive { from { opacity: .18; filter: blur(8px); } to { opacity: 1; filter: blur(0); } }
 
+/* Master-plate interaction layer ----------------------------------------
+   Every realm wallpaper carries the same rail and CTA. Keep the controls as
+   real, accessible DOM targets, but make them transparent hotspots over the
+   matching baked artwork so the image never looks like a pasted-on widget. */
+.mother-hero__orbit { inset: 0; z-index: 5; }
+.mother-connector { display: none; }
+.mother-orbit-node { width: clamp(66px, 7vw, 108px); height: clamp(66px, 7vw, 108px); border-color: transparent; background: transparent; box-shadow: none; }
+.mother-orbit-node::before, .mother-orbit-node::after,
+.mother-orbit-node__halo, .mother-orbit-node__sigil, .mother-orbit-node__label { opacity: 0; }
+.mother-orbit-node:hover, .mother-orbit-node:focus-visible, .mother-orbit-node.is-active { border-color: color-mix(in srgb, var(--house-accent) 88%, white); background: radial-gradient(circle, color-mix(in srgb, var(--house-accent) 22%, transparent), transparent 64%); box-shadow: 0 0 0 5px color-mix(in srgb, var(--house-accent) 18%, transparent), 0 0 28px color-mix(in srgb, var(--house-accent) 52%, transparent); }
+.mother-orbit-node:focus-visible { outline: 2px solid var(--mother-gold-soft); outline-offset: 5px; }
+.mother-hero__copy { display: block; padding: 0; pointer-events: none; }
+.mother-hero__cta { position: absolute; left: 50%; top: 57%; width: min(31vw, 390px); min-width: 0; height: clamp(62px, 6vw, 84px); padding: 0; transform: translate(-50%, -50%); border-color: transparent; color: transparent; background: transparent; box-shadow: none; pointer-events: auto; }
+.mother-hero__cta span, .mother-hero__cta b { opacity: 0; }
+.mother-hero__cta:hover { transform: translate(-50%, -50%); border-color: rgba(238,217,169,.8); background: rgba(212,168,94,.08); box-shadow: 0 0 0 4px rgba(212,168,94,.08), 0 0 34px rgba(212,168,94,.22); }
+.mother-hero__cta:focus-visible { outline: 2px solid var(--mother-gold-soft); outline-offset: 5px; }
+
 @media (max-width: 860px) {
   .house-profile-hero { grid-template-columns: 74px minmax(0, 1fr); min-height: 300px; padding: 38px 22px 32px !important; }
   .house-profile-hero__portrait { inset: 0; opacity: .44; mask-image: linear-gradient(90deg, rgba(0,0,0,.2), #000 70%); }
@@ -285,10 +302,9 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
   .mother-hero__portrait { inset: 0; width: 100%; height: 100%; }
   .mother-hero__copy { padding-top: 27vh; }
   .mother-hero__cta { min-width: 220px; }
-  .mother-hero__orbit { inset: 100px 0 115px; }
-  .mother-orbit-node { width: 58px; height: 58px; }
-  .mother-orbit-node__sigil, .mother-orbit-node__sigil .sigil-icon { width: 32px; height: 32px; }
-  .mother-orbit-node__label { top: calc(100% + 8px); font-size: .43rem; }
+  .mother-hero__orbit { inset: 0; }
+  .mother-orbit-node { width: 62px; height: 62px; }
+  .mother-hero__cta { top: 57%; width: min(70vw, 340px); height: 62px; }
   .mother-hero__meta { left: 50%; bottom: 28px; transform: translateX(-50%); width: max-content; gap: 12px; }
   .mother-orbit-node { width: 76px; height: 76px; }
   .mother-orbit-node__sigil, .mother-orbit-node__sigil .sigil-icon { width: 34px; height: 34px; }
