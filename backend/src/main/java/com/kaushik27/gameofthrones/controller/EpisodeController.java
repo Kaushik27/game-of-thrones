@@ -11,6 +11,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 import org.springframework.validation.annotation.Validated;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,13 +30,15 @@ public class EpisodeController {
     }
 
     @GetMapping
-    EpisodePageResponse findAll(
-            @RequestParam(defaultValue = "0") @Min(0) int page,
+    ResponseEntity<EpisodePageResponse> findAll(
+            @RequestParam(defaultValue = "0") @Min(0) @Max(100_000) int page,
             @RequestParam(defaultValue = "20") @Min(1) @Max(100) int pageSize,
             @RequestParam(required = false) @Min(1) @Max(8) Integer season,
             @RequestParam(required = false) @Size(max = 100) String query) {
         EpisodePageResponse response = service.findAll(page, pageSize, season, query);
-        return response.withLinks(pageLinksFactory.create(response.page(), response.pagesCount()));
+        response = response.withLinks(pageLinksFactory.create(response.page(), response.pagesCount()));
+        return ResponseEntity.ok().header("Link", pageLinksFactory.toHeader(response.links()))
+                .header("Cache-Control", "public, max-age=60, stale-while-revalidate=30").body(response);
     }
 
     @GetMapping("/{episodeId}")

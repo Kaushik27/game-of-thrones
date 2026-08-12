@@ -9,6 +9,9 @@ import com.kaushik27.gameofthrones.entity.BattleRecord;
 import com.kaushik27.gameofthrones.exception.BattleNotFoundException;
 import com.kaushik27.gameofthrones.repository.BattleRepository;
 import com.kaushik27.gameofthrones.util.JsonCollections;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tools.jackson.core.type.TypeReference;
@@ -25,11 +28,13 @@ public class BattleService {
         this.json = json;
     }
 
-    public BattlesResponse findAll(Integer season) {
-        List<BattleResponse> items = (season == null
-                ? repository.findAllByOrderBySeasonAscNameAsc()
-                : repository.findBySeasonOrderByName(season)).stream().map(this::toResponse).toList();
-        return new BattlesResponse(items, items.size());
+    public BattlesResponse findAll(int page, int pageSize, Integer season) {
+        var pageable = PageRequest.of(page, pageSize, Sort.by("season", "name"));
+        Page<BattleRecord> result = season == null
+                ? repository.findAllByOrderBySeasonAscNameAsc(pageable)
+                : repository.findBySeason(season, pageable);
+        return new BattlesResponse(result.getContent().stream().map(this::toResponse).toList(),
+                result.getTotalElements(), result.getNumber(), result.getSize(), result.getTotalPages(), null);
     }
 
     public BattleResponse findById(String battleId) {

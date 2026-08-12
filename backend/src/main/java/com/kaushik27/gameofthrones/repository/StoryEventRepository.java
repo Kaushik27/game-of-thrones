@@ -1,12 +1,13 @@
 package com.kaushik27.gameofthrones.repository;
 
-import java.util.List;
 import com.kaushik27.gameofthrones.entity.StoryEventRecord;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StoryEventRepository extends JpaRepository<StoryEventRecord, String> {
-    List<StoryEventRecord> findAllByOrderBySeasonAscTitleAsc();
-    List<StoryEventRecord> findBySeasonOrderByTitle(int season);
-    List<StoryEventRecord> findByTypeIgnoreCaseOrderBySeasonAsc(String type);
-    List<StoryEventRecord> findBySeasonAndTypeIgnoreCaseOrderByTitle(int season, String type);
+    Page<StoryEventRecord> findAllByOrderBySeasonAscTitleAsc(Pageable pageable);
+    Page<StoryEventRecord> findBySeasonOrderByTitle(int season, Pageable pageable);
+    Page<StoryEventRecord> findByTypeIgnoreCaseOrderBySeasonAsc(String type, Pageable pageable);
+    Page<StoryEventRecord> findBySeasonAndTypeIgnoreCaseOrderByTitle(int season, String type, Pageable pageable);
 }

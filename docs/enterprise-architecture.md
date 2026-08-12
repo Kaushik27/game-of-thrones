@@ -48,6 +48,8 @@ Controllers depend on services, never repositories or `EntityManager`. Services 
 - API validation and RFC 9457 Problem Details protect the HTTP boundary.
 - springdoc publishes the OpenAPI contract and Swagger UI at `/swagger-ui.html`.
 - the read-only Database Explorer exposes allowlisted table metadata and paginated rows through `/api/v1/database/tables`, keeping SQL and credentials behind the repository/service boundary.
+- collection endpoints use bounded page sizes, response `Link` headers, explicit SQL columns, and stable Problem Details errors.
+- frontend routes are lazy-loaded, request state is abortable and retryable, and filters/table selections are URL-addressable.
 - Every API response includes `Archive-Data-Source` and `Server-Timing` headers used by the teaching UI.
 
 ## Local development

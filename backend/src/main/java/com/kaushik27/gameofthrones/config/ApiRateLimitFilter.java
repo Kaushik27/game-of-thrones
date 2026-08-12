@@ -11,12 +11,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
+import tools.jackson.databind.ObjectMapper;
 
 @Component
 class ApiRateLimitFilter extends OncePerRequestFilter {
     private static final int REQUESTS_PER_MINUTE = 120;
     private final ConcurrentHashMap<String, Window> windows = new ConcurrentHashMap<>();
     private final Clock clock = Clock.systemUTC();
+    private final ObjectMapper objectMapper;
+
+    ApiRateLimitFilter(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
@@ -40,7 +48,14 @@ class ApiRateLimitFilter extends OncePerRequestFilter {
             response.setStatus(429);
             response.setHeader("Retry-After", "60");
             response.setContentType("application/problem+json");
-            response.getWriter().write("{\"title\":\"Too many requests\",\"status\":429,\"errorCode\":\"RATE_LIMITED\"}");
+            ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.TOO_MANY_REQUESTS,
+                    "The request rate limit was exceeded. Retry after 60 seconds.");
+            problem.setType(java.net.URI.create("https://kaushik27.github.io/game-of-thrones/problems/rate-limited"));
+            problem.setTitle("Too many requests");
+            problem.setProperty("errorCode", "RATE_LIMITED");
+            problem.setProperty("requestId", request.getAttribute("requestId"));
+            problem.setInstance(java.net.URI.create(request.getRequestURI()));
+            objectMapper.writeValue(response.getWriter(), problem);
             return;
         }
         chain.doFilter(request, response);

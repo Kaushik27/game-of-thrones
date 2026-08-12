@@ -136,6 +136,8 @@ npm run enterprise:web
 
 Open <http://localhost:5173>, or run the integrated production container with `npm run enterprise:container` and open <http://localhost:8080>. Swagger UI is available from the backend at <http://localhost:8080/swagger-ui.html>. The Database Explorer uses allowlisted table metadata and paginated rows through `/api/v1/database/tables` without exposing SQL or credentials.
 
+When the React client is hosted separately, copy [`frontend/.env.example`](frontend/.env.example) to `frontend/.env.local` and set `VITE_API_BASE_URL` to the Spring Boot API origin. The client keeps filters, seasons, selected database tables, and pagination in the URL so views can be bookmarked and shared.
+
 Legacy static edition:
 
 ```bash

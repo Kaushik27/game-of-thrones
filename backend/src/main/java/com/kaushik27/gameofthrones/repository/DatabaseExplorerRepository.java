@@ -3,6 +3,7 @@ package com.kaushik27.gameofthrones.repository;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -16,20 +17,21 @@ public class DatabaseExplorerRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<DatabaseTableDefinition> findTables() {
+    public List<DatabaseTableMetadata> findTables() {
         return tables.values().stream()
-                .map(spec -> new DatabaseTableDefinition(spec.name(), spec.displayName(), count(spec), spec.columns()))
+                .map(spec -> new DatabaseTableMetadata(spec.name(), spec.displayName(), count(spec), spec.columns()))
                 .toList();
     }
 
-    public DatabaseTableDefinition findTable(String table) {
+    public DatabaseTableMetadata findTable(String table) {
         TableSpec spec = tables.get(table.toLowerCase());
-        return spec == null ? null : new DatabaseTableDefinition(spec.name(), spec.displayName(), count(spec), spec.columns());
+        return spec == null ? null : new DatabaseTableMetadata(spec.name(), spec.displayName(), count(spec), spec.columns());
     }
 
     public List<Map<String, Object>> findRecords(String table, int page, int pageSize) {
         TableSpec spec = tableSpec(table);
-        return jdbcTemplate.queryForList(spec.selectSql() + " LIMIT ? OFFSET ?", pageSize, page * pageSize).stream()
+        int offset = Math.multiplyExact(page, pageSize);
+        return jdbcTemplate.queryForList(spec.selectSql() + " LIMIT ? OFFSET ?", pageSize, offset).stream()
                 .map(this::lowerCaseKeys)
                 .toList();
     }
@@ -70,14 +72,18 @@ public class DatabaseExplorerRepository {
         return specs;
     }
 
-    private static List<DatabaseColumnDefinition> columns(String... values) {
-        var columns = new java.util.ArrayList<DatabaseColumnDefinition>();
-        for (int index = 0; index < values.length; index += 2) columns.add(new DatabaseColumnDefinition(values[index], values[index + 1]));
+    private static List<DatabaseColumnMetadata> columns(String... values) {
+        var columns = new java.util.ArrayList<DatabaseColumnMetadata>();
+        for (int index = 0; index < values.length; index += 2) columns.add(new DatabaseColumnMetadata(values[index], values[index + 1]));
         return List.copyOf(columns);
     }
 
-    private record TableSpec(String name, String displayName, String sqlTable, List<DatabaseColumnDefinition> columns) {
+    private record TableSpec(String name, String displayName, String sqlTable, List<DatabaseColumnMetadata> columns) {
         String countSql() { return "SELECT COUNT(*) FROM " + sqlTable; }
-        String selectSql() { return "SELECT * FROM " + sqlTable + " ORDER BY 1"; }
+        String selectSql() {
+            String columnList = columns.stream().map(DatabaseColumnMetadata::name).collect(Collectors.joining(", "));
+            String orderColumn = columns.get(0).name();
+            return "SELECT " + columnList + " FROM " + sqlTable + " ORDER BY " + orderColumn;
+        }
     }
 }

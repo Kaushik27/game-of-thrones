@@ -13,6 +13,13 @@ public class PageLinksFactory {
         return new PageLinks(self, next, prev);
     }
 
+    public String toHeader(PageLinks links) {
+        StringBuilder value = new StringBuilder("<").append(links.self()).append(">; rel=\"self\"");
+        if (links.next() != null) value.append(", <").append(links.next()).append(">; rel=\"next\"");
+        if (links.prev() != null) value.append(", <").append(links.prev()).append(">; rel=\"prev\"");
+        return value.toString();
+    }
+
     private String link(int page) {
         return ServletUriComponentsBuilder.fromCurrentRequest()
                 .replaceQueryParam("page", page)

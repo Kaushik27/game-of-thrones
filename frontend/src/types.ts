@@ -61,10 +61,10 @@ export interface QuotePage { items: Quote[]; itemsCount: number; page: number; p
 
 export interface Combatant { side: string; houses: string[]; characters: string[]; }
 export interface Battle { id: string; name: string; season: number; location: string; combatants: Combatant[]; outcome: string; casualties: string; linkedCharacterIds: string[]; linkedEventIds: string[]; }
-export interface BattlesResponse { items: Battle[]; itemsCount: number; }
+export interface BattlesResponse { items: Battle[]; itemsCount: number; page: number; pageSize: number; pagesCount: number; links: PageLinks; }
 
 export interface StoryEvent { id: string; season: number; title: string; date: string; type: string; houses: string[]; characterIds: string[]; summary: string; }
-export interface EventsResponse { items: StoryEvent[]; itemsCount: number; }
+export interface EventsResponse { items: StoryEvent[]; itemsCount: number; page: number; pageSize: number; pagesCount: number; links: PageLinks; }
 
 export interface Statistics { characters: number; houses: number; relationships: number; episodes: number; quotes: number; battles: number; events: number; database: string; generatedAt: string; }
 

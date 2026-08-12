@@ -34,7 +34,7 @@ public class CharacterController {
 
     @GetMapping
     ResponseEntity<CharacterPageResponse> findAll(
-            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "0") @Min(0) @Max(100_000) int page,
             @RequestParam(defaultValue = "24") @Min(1) @Max(100) int pageSize,
             @RequestParam(required = false) @Size(max = 100) String house,
             @RequestParam(required = false) CharacterStatusFilter status,
@@ -42,7 +42,8 @@ public class CharacterController {
         CharacterPageResponse response = service.findAll(page, pageSize, house, status, query);
         response = response.withLinks(pageLinksFactory.create(response.page(), response.pagesCount()));
         return ResponseEntity.ok()
-                .header("Link", linkHeader(response))
+                .header("Link", pageLinksFactory.toHeader(response.links()))
+                .header("Cache-Control", "public, max-age=60, stale-while-revalidate=30")
                 .body(response);
     }
 
@@ -52,11 +53,4 @@ public class CharacterController {
         return service.findById(characterId);
     }
 
-    private String linkHeader(CharacterPageResponse response) {
-        var links = response.links();
-        StringBuilder value = new StringBuilder("<").append(links.self()).append(">; rel=\"self\"");
-        if (links.next() != null) value.append(", <").append(links.next()).append(">; rel=\"next\"");
-        if (links.prev() != null) value.append(", <").append(links.prev()).append(">; rel=\"prev\"");
-        return value.toString();
-    }
 }

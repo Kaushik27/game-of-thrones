@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { getDatabaseTables, getStatistics } from "./api";
+import { getBattles, getDatabaseTables, getStatistics } from "./api";
 import type { ApiTrace, Statistics } from "./types";
 
 describe("API client", () => {
@@ -30,5 +30,12 @@ describe("API client", () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(JSON.stringify(payload), { status: 200 })));
     await expect(getDatabaseTables()).resolves.toEqual(payload);
     expect(fetch).toHaveBeenCalledWith("/api/v1/database/tables", expect.objectContaining({ headers: { Accept: "application/json" } }));
+  });
+
+  it("uses bounded pagination parameters for collection requests", async () => {
+    const payload = { items: [], itemsCount: 9, page: 2, pageSize: 1, pagesCount: 9, links: { self: "/api/v1/battles?page=2" } };
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(JSON.stringify(payload), { status: 200 })));
+    await expect(getBattles(6, 2, 1)).resolves.toEqual(payload);
+    expect(fetch).toHaveBeenCalledWith("/api/v1/battles?page=2&pageSize=1&season=6", expect.objectContaining({ headers: { Accept: "application/json" } }));
   });
 });

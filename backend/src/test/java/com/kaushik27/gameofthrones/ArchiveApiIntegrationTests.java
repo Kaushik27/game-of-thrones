@@ -11,6 +11,7 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(properties = "spring.datasource.url=jdbc:h2:mem:complete-archive;DB_CLOSE_DELAY=-1")
@@ -62,8 +63,14 @@ class ArchiveApiIntegrationTests {
         mockMvc.perform(get("/api/v1/battles").param("season", "6"))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.items", hasSize(2)))
                 .andExpect(jsonPath("$.items[0].combatants").isArray());
+        mockMvc.perform(get("/api/v1/battles").param("pageSize", "1"))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.pagesCount").value(9))
+                .andExpect(header().string("Link", org.hamcrest.Matchers.containsString("rel=\"next\"")));
         mockMvc.perform(get("/api/v1/events").param("season", "8"))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.items", hasSize(5)));
+        mockMvc.perform(get("/api/v1/events").param("pageSize", "2"))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.pagesCount").value(17))
+                .andExpect(header().string("Link", org.hamcrest.Matchers.containsString("rel=\"next\"")));
         mockMvc.perform(get("/api/v1/characters/jon-snow/relationships"))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.itemsCount").isNumber())
                 .andExpect(jsonPath("$.items[0].relatedCharacterName").isNotEmpty());
