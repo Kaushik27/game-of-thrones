@@ -155,7 +155,7 @@
       quote.textContent = `“${quoteFor(next.character)}”`;
       summary.textContent = next.character?.bio || `${next.info.seat} · ${next.info.rulerEnd}`;
       cta.href = `#/house/${encodeURIComponent(next.house)}`;
-      cta.querySelector("span").textContent = `Enter House ${next.house}`;
+      cta.querySelector("span").textContent = "Enter the realm";
       if (typeof recordEngagement === "function") recordEngagement("mother_house_select", { house: next.house });
     }
 
