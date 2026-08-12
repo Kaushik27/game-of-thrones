@@ -1012,7 +1012,10 @@ function renderFamilyTree(houseName, color) {
   // The previous radial layout rotated labels upside-down and left most of the
   // panel empty on small houses. A compact horizontal tree keeps the drama in
   // the curves while preserving the familiar genealogy reading order.
-  d3.tree().nodeSize([74, 210])(root);
+  // Give the genealogy a deliberate left-to-right reading order. The node
+  // spacing is intentionally generous because each person now carries a
+  // small portrait card rather than a dot-and-label pair.
+  d3.tree().nodeSize([92, 238])(root);
   const laidOut = root.descendants();
   const xExtent = d3.extent(laidOut, d => d.x);
   const yExtent = d3.extent(laidOut, d => d.y);
@@ -1030,15 +1033,50 @@ function renderFamilyTree(houseName, color) {
   const nodes = treeLayer.selectAll(".tree-node").data(root.descendants()).join("g")
     .attr("class", d => `tree-node${d.data.virtual ? " tree-node--root" : ""}`)
     .attr("transform", d => `translate(${d.y},${d.x})`)
+    .attr("role", d => d.data.virtual ? "img" : "link")
+    .attr("tabindex", d => d.data.virtual ? null : 0)
+    .attr("aria-label", d => d.data.virtual ? `${houseName} bloodline` : `Open dossier for ${d.data.name}`)
     .style("cursor", d => d.data.virtual ? "default" : "pointer");
-  nodes.append("circle").attr("class", "tree-node__halo").attr("r", d => d.data.virtual ? 34 : 21).attr("fill", "none").attr("stroke", d => d.data.sigilColor || color).attr("stroke-opacity", .22);
-  nodes.append("circle").attr("class", "tree-node__dot").attr("r", d => d.data.virtual ? 15 : 11).attr("fill", d => d.data.sigilColor || color).attr("fill-opacity", d => d.data.status === "dead" ? .42 : .92).attr("stroke", "#0a0f13").attr("stroke-width", 3);
+  nodes.append("rect").attr("class", "tree-node__card")
+    .attr("x", d => d.data.virtual ? -58 : 28).attr("y", -27)
+    .attr("width", d => d.data.virtual ? 116 : 194).attr("height", 54)
+    .attr("rx", 7).attr("fill", "rgba(7,15,22,.82)")
+    .attr("stroke", d => d.data.sigilColor || color).attr("stroke-opacity", d => d.data.virtual ? .65 : .28);
+  nodes.append("circle").attr("class", "tree-node__halo").attr("r", d => d.data.virtual ? 34 : 27).attr("fill", "none").attr("stroke", d => d.data.sigilColor || color).attr("stroke-opacity", .34);
+  nodes.append("circle").attr("class", "tree-node__dot").attr("r", d => d.data.virtual ? 15 : 25).attr("fill", d => d.data.sigilColor || color).attr("fill-opacity", d => d.data.status === "dead" ? .42 : .92).attr("stroke", "#0a0f13").attr("stroke-width", 3);
   nodes.append("circle").attr("class", "tree-node__core").attr("r", d => d.data.virtual ? 5 : 3.5).attr("fill", "#f1eadb").attr("fill-opacity", .8);
+
+  const portraitUrlFor = character => {
+    if (!character || character.virtual) return "";
+    const cinematic = typeof cinematicVisualFor === "function" ? cinematicVisualFor(character.id) : "";
+    if (cinematic) return cinematic;
+    const photo = typeof actorPhotoFor === "function" ? actorPhotoFor(character.id) : null;
+    return photo && typeof photo === "object" ? (photo.file || photo.url || "") : (photo || "");
+  };
+  const defs = svg.append("defs");
+  nodes.filter(d => !d.data.virtual && portraitUrlFor(d.data)).each(function(d, i) {
+    const clipId = `tree-portrait-${String(i)}`;
+    defs.append("clipPath").attr("id", clipId).append("circle").attr("cx", 0).attr("cy", 0).attr("r", 22);
+    d3.select(this).append("image").attr("class", "tree-node__portrait")
+      .attr("x", -22).attr("y", -22).attr("width", 44).attr("height", 44)
+      .attr("preserveAspectRatio", "xMidYMid slice")
+      .attr("clip-path", `url(#${clipId})`).attr("href", portraitUrlFor(d.data));
+  });
   nodes.append("text").attr("class", "tree-node__label")
-    .attr("x", 28).attr("dy", 4).attr("text-anchor", "start")
+    .attr("x", d => d.data.virtual ? 0 : 62).attr("dy", -2).attr("text-anchor", d => d.data.virtual ? "middle" : "start")
     .text(d => d.data.name);
+  nodes.filter(d => !d.data.virtual).append("text").attr("class", "tree-node__subline")
+    .attr("x", 62).attr("dy", 16).attr("text-anchor", "start")
+    .text(d => d.data.status === "dead" ? "fallen" : (d.data.house || houseName));
   nodes.append("title").text(d => d.data.virtual ? `${houseName} bloodline` : `${d.data.name} — open dossier`);
-  nodes.filter(d => !d.data.virtual).on("click", (e, d) => { window.location.hash = "#/character/" + d.data.id; });
+  nodes.filter(d => !d.data.virtual)
+    .on("click", (e, d) => { window.location.hash = "#/character/" + d.data.id; })
+    .on("keydown", (e, d) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        window.location.hash = "#/character/" + d.data.id;
+      }
+    });
 
   const drawnIds = new Set(root.descendants().filter(d => !d.data.virtual).map(d => d.data.id));
   const posById = new Map(root.descendants().filter(d => !d.data.virtual).map(d => [d.data.id, d]));

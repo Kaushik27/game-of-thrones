@@ -336,3 +336,92 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
   .mother-hero__ambient, .mother-hero__rings span:nth-child(3) { animation: none; }
   .mother-hero__portrait.is-arriving { animation: none; }
 }
+
+/* ------------------------------------------------------------------------
+   Final observatory polish
+   Keep the homepage navigation in the image plane instead of presenting it
+   as a separate black slab. The feathered gradient protects legibility while
+   allowing the wallpaper to continue behind the brand and links.
+   ------------------------------------------------------------------------ */
+body:has(.mother-observatory) .react-nav-shell {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 30;
+  min-height: 82px;
+  background: linear-gradient(180deg, rgba(3, 8, 12, .88) 0%, rgba(3, 8, 12, .58) 58%, rgba(3, 8, 12, 0) 100%);
+  border-bottom-color: rgba(212, 168, 94, .18);
+  box-shadow: none;
+  backdrop-filter: blur(5px) saturate(1.05);
+}
+body:has(.mother-observatory) #app { min-height: 100svh; }
+
+/* Forged-gate CTA: the chevron shoulders and inset hairline make it read as
+   a control from the world, not a generic rectangular web button. */
+body:has(.mother-observatory) .mother-hero__cta {
+  border: 1px solid rgba(238, 217, 169, .8);
+  clip-path: polygon(16px 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 16px 100%, 0 50%);
+  background: linear-gradient(180deg, rgba(20, 21, 21, .64), rgba(4, 10, 15, .52));
+  box-shadow: 0 0 0 1px rgba(212, 168, 94, .2), 0 0 36px rgba(212, 168, 94, .17), inset 0 0 26px rgba(212, 168, 94, .08);
+  letter-spacing: .24em;
+}
+body:has(.mother-observatory) .mother-hero__cta::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(212, 168, 94, .42);
+  clip-path: inherit;
+  pointer-events: none;
+}
+body:has(.mother-observatory) .mother-hero__cta::after {
+  content: "◆";
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  transform: translateX(-50%);
+  padding: 0 6px;
+  color: var(--mother-gold-soft);
+  background: rgba(4, 10, 15, .78);
+  font-size: .5rem;
+  line-height: 1;
+}
+body:has(.mother-observatory) .mother-hero__cta:hover {
+  background: linear-gradient(180deg, rgba(212, 168, 94, .24), rgba(8, 14, 18, .55));
+  box-shadow: 0 0 0 1px rgba(238, 217, 169, .34), 0 0 50px rgba(212, 168, 94, .3), inset 0 0 30px rgba(212, 168, 94, .12);
+}
+
+/* Family tree: portraits sit in a horizontal bloodline card. Curves remain
+   the primary visual relationship, while the image chip gives each person a
+   human anchor and keeps the diagram scannable at a glance. */
+#tree-host {
+  overflow: hidden !important;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(91, 129, 154, .14), transparent 38%),
+    radial-gradient(ellipse at 86% 32%, rgba(212, 168, 94, .1), transparent 34%),
+    linear-gradient(145deg, rgba(8, 17, 24, .96), rgba(3, 8, 12, .98)) !important;
+}
+#tree-host .tree-node { outline: none; }
+#tree-host .tree-node:focus-visible .tree-node__card { stroke: var(--mother-gold-soft); stroke-width: 2.5px; filter: drop-shadow(0 0 10px rgba(238, 217, 169, .35)); }
+#tree-host .tree-node__card { transition: fill 180ms ease, stroke 180ms ease, filter 180ms ease; }
+#tree-host .tree-node:hover .tree-node__card,
+#tree-host .tree-node:focus-visible .tree-node__card { fill: rgba(21, 35, 44, .94); stroke-opacity: .7; }
+#tree-host .tree-node__portrait { filter: saturate(.82) contrast(1.08); }
+#tree-host .tree-node__dot { filter: drop-shadow(0 0 10px currentColor); }
+#tree-host .tree-node__subline { fill: rgba(241, 237, 227, .54); font: 600 .5rem Inter, system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; pointer-events: none; }
+#tree-host .tree-node--root .tree-node__card { fill: rgba(212, 168, 94, .08); }
+#tree-host .tree-node--root .tree-node__label { paint-order: normal; stroke: none; }
+
+/* Turn the spare line-art sigils into engraved, war-room emblems. */
+body:has(.mother-observatory) .mother-orbit-node__sigil .sigil-icon {
+  filter: drop-shadow(0 0 4px currentColor) drop-shadow(0 2px 2px rgba(0, 0, 0, .9));
+}
+body:has(.mother-observatory) .mother-orbit-node__sigil .sigil-icon path,
+body:has(.mother-observatory) .mother-orbit-node__sigil .sigil-icon circle,
+body:has(.mother-observatory) .mother-orbit-node__sigil .sigil-icon g {
+  stroke-width: 4px;
+}
+body:has(.mother-observatory) .mother-orbit-node__label { color: rgba(241, 237, 227, .9); text-shadow: 0 2px 8px rgba(0, 0, 0, .9); }
+
+@media (max-width: 860px) {
+  body:has(.mother-observatory) .react-nav-shell { position: absolute; min-height: 70px; }
+  #tree-host { min-height: 460px; }
+}
