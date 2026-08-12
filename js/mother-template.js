@@ -177,9 +177,9 @@
     "jon-snow": "assets/generated/northern-guardian-observatory.png",
     "tyrion-lannister": "assets/characters/tyrion-visual.png",
     "daenerys-targaryen": "assets/characters/daenerys-visual.png",
-    "theon-greyjoy": "assets/generated/houses/greyjoy-warden.png",
-    "gendry-baratheon": "assets/generated/houses/baratheon-warden.png",
-    "margaery-tyrell": "assets/generated/houses/tyrell-warden.png"
+    "theon-greyjoy": "assets/generated/houses/greyjoy-realm-wide.png",
+    "gendry-baratheon": "assets/generated/houses/baratheon-realm-wide.png",
+    "margaery-tyrell": "assets/generated/houses/tyrell-realm-wide.png"
   });
   global.MotherTemplate = Object.freeze({ mountHome, installRail, houseEntries });
 })(window, document);
