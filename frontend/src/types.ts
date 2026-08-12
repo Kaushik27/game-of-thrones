@@ -68,4 +68,9 @@ export interface EventsResponse { items: StoryEvent[]; itemsCount: number; }
 
 export interface Statistics { characters: number; houses: number; relationships: number; episodes: number; quotes: number; battles: number; events: number; database: string; generatedAt: string; }
 
+export interface DatabaseColumn { name: string; type: string; }
+export interface DatabaseTable { name: string; displayName: string; recordCount: number; columns: DatabaseColumn[]; }
+export interface DatabaseTablesResponse { items: DatabaseTable[]; itemsCount: number; }
+export interface DatabaseRecordPage { table: string; items: Record<string, unknown>[]; itemsCount: number; page: number; pageSize: number; pagesCount: number; links: PageLinks; }
+
 export interface ApiTrace { method: string; path: string; status?: number; durationMs?: number; database?: string; state: "loading" | "complete" | "error"; at: number; }

@@ -38,7 +38,7 @@ The archive now has a complete portfolio-ready modular-monolith edition while th
 - file-backed H2 persistence with versioned Flyway migrations;
 - 805 persisted domain records seeded from the curated legacy datasets: characters, houses, relationships, episodes, quotes, battles, and events;
 - paginated and filterable `/api/v1` resources with character-to-relationship and quote-to-speaker joins;
-- an interactive request laboratory and live request trace for teaching how the frontend, backend, and database communicate;
+- an interactive request laboratory, live request trace, and read-only Database Explorer at `/database` for teaching how the frontend, backend, and database communicate;
 - RFC 9457 error responses, OpenAPI/Swagger documentation, boundary validation, CORS, health endpoints, integration tests, Docker, and CI.
 
 See the [enterprise architecture and local run guide](docs/enterprise-architecture.md) for the migration design.
@@ -134,7 +134,7 @@ In a second terminal:
 npm run enterprise:web
 ```
 
-Open <http://localhost:5173>, or run the integrated production container with `npm run enterprise:container` and open <http://localhost:8080>. Swagger UI is available from the backend at <http://localhost:8080/swagger-ui.html>.
+Open <http://localhost:5173>, or run the integrated production container with `npm run enterprise:container` and open <http://localhost:8080>. Swagger UI is available from the backend at <http://localhost:8080/swagger-ui.html>. The Database Explorer uses allowlisted table metadata and paginated rows through `/api/v1/database/tables` without exposing SQL or credentials.
 
 Legacy static edition:
 

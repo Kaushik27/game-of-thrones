@@ -32,6 +32,12 @@ class ApiExceptionHandler {
                 ApiErrorCode.RESOURCE_NOT_FOUND, request);
     }
 
+    @ExceptionHandler(DatabaseTableNotFoundException.class)
+    ProblemDetail handleDatabaseTableNotFound(DatabaseTableNotFoundException exception, HttpServletRequest request) {
+        return problem(HttpStatus.NOT_FOUND, "Database table not found", exception.getMessage(),
+                ApiErrorCode.RESOURCE_NOT_FOUND, request);
+    }
+
     @ExceptionHandler({ConstraintViolationException.class, IllegalArgumentException.class,
             MethodArgumentTypeMismatchException.class, HttpMessageNotReadableException.class})
     ProblemDetail handleBadRequest(Exception exception, HttpServletRequest request) {

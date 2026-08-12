@@ -29,6 +29,22 @@ class ArchiveApiIntegrationTests {
                 .andExpect(jsonPath("$.events").value(34));
     }
 
+    @Test void exposesControlledDatabaseMetadataAndRecords() throws Exception {
+        mockMvc.perform(get("/api/v1/database/tables"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.itemsCount").value(7))
+                .andExpect(jsonPath("$.items[0].name").value("character_records"))
+                .andExpect(jsonPath("$.items[0].columns[0].name").value("id"));
+        mockMvc.perform(get("/api/v1/database/tables/characters/records").param("pageSize", "3"))
+                .andExpect(status().isNotFound());
+        mockMvc.perform(get("/api/v1/database/tables/character_records/records").param("pageSize", "3"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.items", hasSize(3)))
+                .andExpect(jsonPath("$.itemsCount").value(196))
+                .andExpect(jsonPath("$.items[0].id").isNotEmpty())
+                .andExpect(jsonPath("$.links.next").isNotEmpty());
+    }
+
     @Test void filtersEpisodesAndReturnsTypedCollections() throws Exception {
         mockMvc.perform(get("/api/v1/episodes").param("season", "8").param("pageSize", "100"))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.items", hasSize(6)))

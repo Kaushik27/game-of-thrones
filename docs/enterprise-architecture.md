@@ -47,6 +47,7 @@ Controllers depend on services, never repositories or `EntityManager`. Services 
 - Actuator exposes `/actuator/health` and `/actuator/info`; only those endpoints are exposed.
 - API validation and RFC 9457 Problem Details protect the HTTP boundary.
 - springdoc publishes the OpenAPI contract and Swagger UI at `/swagger-ui.html`.
+- the read-only Database Explorer exposes allowlisted table metadata and paginated rows through `/api/v1/database/tables`, keeping SQL and credentials behind the repository/service boundary.
 - Every API response includes `Archive-Data-Source` and `Server-Timing` headers used by the teaching UI.
 
 ## Local development

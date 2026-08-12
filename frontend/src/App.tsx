@@ -9,10 +9,11 @@ import HousesPage from "./pages/HousesPage";
 import PeoplePage from "./pages/PeoplePage";
 import QuotesPage from "./pages/QuotesPage";
 import StoriesPage from "./pages/StoriesPage";
+import DatabaseExplorerPage from "./pages/DatabaseExplorerPage";
 
 const navigation = [
   ["/", "Overview"], ["/people", "People"], ["/houses", "Houses"], ["/stories", "Stories"],
-  ["/battles", "Battles"], ["/quotes", "Voices"], ["/architecture", "How it works"]
+  ["/battles", "Battles"], ["/quotes", "Voices"], ["/database", "Database"], ["/architecture", "How it works"]
 ];
 
 function App() {
@@ -37,6 +38,7 @@ function ApplicationShell() {
       <Route path="/stories" element={<StoriesPage />} />
       <Route path="/battles" element={<BattlesPage />} />
       <Route path="/quotes" element={<QuotesPage />} />
+      <Route path="/database" element={<DatabaseExplorerPage />} />
       <Route path="/architecture" element={<ArchitecturePage />} />
       <Route path="*" element={<main className="page"><p className="eyebrow">404</p><h1>The raven lost this path.</h1><NavLink to="/">Return to the archive</NavLink></main>} />
     </Routes>

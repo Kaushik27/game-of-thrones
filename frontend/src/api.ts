@@ -1,4 +1,4 @@
-import type { ApiTrace, BattlesResponse, Character, CharacterPage, CharacterStatus, EpisodePage, EventsResponse, HousesResponse, QuotePage, RelationshipsResponse, Statistics } from "./types";
+import type { ApiTrace, BattlesResponse, Character, CharacterPage, CharacterStatus, DatabaseRecordPage, DatabaseTablesResponse, EpisodePage, EventsResponse, HousesResponse, QuotePage, RelationshipsResponse, Statistics } from "./types";
 
 export interface CharacterFilters {
   page: number;
@@ -54,4 +54,8 @@ export function getQuotes(season?: number, signal?: AbortSignal): Promise<QuoteP
 export function getBattles(season?: number, signal?: AbortSignal): Promise<BattlesResponse> { return getJson(`/api/v1/battles${season ? `?season=${season}` : ""}`, signal); }
 export function getEvents(season?: number, signal?: AbortSignal): Promise<EventsResponse> { return getJson(`/api/v1/events${season ? `?season=${season}` : ""}`, signal); }
 export function getStatistics(signal?: AbortSignal): Promise<Statistics> { return getJson("/api/v1/statistics", signal); }
+export function getDatabaseTables(signal?: AbortSignal): Promise<DatabaseTablesResponse> { return getJson("/api/v1/database/tables", signal); }
+export function getDatabaseRecords(table: string, page: number, pageSize: number, signal?: AbortSignal): Promise<DatabaseRecordPage> {
+  return getJson(`/api/v1/database/tables/${encodeURIComponent(table)}/records?page=${page}&pageSize=${pageSize}`, signal);
+}
 export { getJson };

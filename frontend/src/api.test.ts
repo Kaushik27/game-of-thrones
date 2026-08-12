@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { getStatistics } from "./api";
+import { getDatabaseTables, getStatistics } from "./api";
 import type { ApiTrace, Statistics } from "./types";
 
 describe("API client", () => {
@@ -23,5 +23,12 @@ describe("API client", () => {
   it("turns an unsuccessful HTTP response into a readable error", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response("", { status: 500 })));
     await expect(getStatistics()).rejects.toThrow("The archive request failed (500).");
+  });
+
+  it("loads the allowlisted database catalog through the API", async () => {
+    const payload = { items: [{ name: "character_records", displayName: "Characters", recordCount: 196, columns: [{ name: "id", type: "VARCHAR" }] }], itemsCount: 1 };
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(JSON.stringify(payload), { status: 200 })));
+    await expect(getDatabaseTables()).resolves.toEqual(payload);
+    expect(fetch).toHaveBeenCalledWith("/api/v1/database/tables", expect.objectContaining({ headers: { Accept: "application/json" } }));
   });
 });
