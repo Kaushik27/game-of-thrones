@@ -163,7 +163,7 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
 .mother-hero__cta b { font-size: 1.2rem; font-weight: 400; }
 .mother-hero__meta { position: absolute; z-index: 2; left: clamp(18px, 4vw, 58px); bottom: 36px; display: flex; gap: 22px; color: rgba(241,237,227,.5); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; }
 .mother-hero__meta strong { margin-right: 5px; color: var(--mother-gold-soft); font-size: .9rem; font-family: var(--mother-serif); font-weight: 500; letter-spacing: .04em; }
-.mother-hero__orbit { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.mother-hero__orbit { position: absolute; inset: clamp(78px, 7vw, 88px) 0 0; z-index: 3; pointer-events: none; }
 .mother-connector { position: absolute; left: 50%; top: 50%; width: var(--line-length); height: 1px; transform-origin: 0 50%; transform: rotate(var(--line-angle)); background: linear-gradient(90deg, rgba(212,168,94,.22), currentColor 82%, transparent); opacity: .55; }
 .mother-connector::after { position: absolute; right: 10%; top: 50%; width: 5px; height: 5px; content: ""; transform: translateY(-50%); border-radius: 50%; background: currentColor; box-shadow: 0 0 12px currentColor; }
 .mother-connector--frost { color: var(--mother-frost); }
