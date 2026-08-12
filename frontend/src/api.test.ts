@@ -9,7 +9,7 @@ describe("API client", () => {
     const payload: Statistics = { characters: 196, houses: 12, relationships: 437, episodes: 73,
       quotes: 44, battles: 9, events: 34, database: "H2", generatedAt: "2026-08-12T00:00:00Z" };
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(JSON.stringify(payload), {
-      status: 200, headers: { "Content-Type": "application/json", "Archive-Data-Source": "H2" }
+      status: 200, headers: { "Content-Type": "application/json", "Grainger-Archive-Data-Source": "H2" }
     })));
     const traces: ApiTrace[] = [];
     window.addEventListener("archive:api-trace", event => traces.push((event as CustomEvent<ApiTrace>).detail));

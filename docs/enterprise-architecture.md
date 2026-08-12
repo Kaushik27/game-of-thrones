@@ -24,6 +24,22 @@ Browser
 
 ## Runtime choices
 
+### Backend package conventions
+
+```text
+com.kaushik27.gameofthrones
+├── controller   HTTP routing and boundary validation
+├── service      use cases and transaction boundaries
+├── repository   Spring Data persistence ports
+├── entity       JPA entities and database enums
+├── dto          immutable REST response contracts
+├── exception    domain exceptions and RFC 9457 mapping
+├── config       framework and HTTP configuration
+└── util         shared infrastructure utilities
+```
+
+Controllers depend on services, never repositories or `EntityManager`. Services own orchestration and read-only transactions, repositories isolate persistence, and REST endpoints return DTOs rather than JPA entities. Automated architecture tests protect these boundaries.
+
 - Java 21 and Spring Boot 4.1 provide the deployable backend baseline.
 - H2 runs in file mode at `backend/data/game-of-thrones` by default, so records survive restarts.
 - Flyway creates and seeds the schema. Generated migrations preserve 196 characters, 12 houses, 437 relationships, 73 episodes, 44 quotes, 9 battles, and 34 events.
@@ -31,7 +47,7 @@ Browser
 - Actuator exposes `/actuator/health` and `/actuator/info`; only those endpoints are exposed.
 - API validation and RFC 9457 Problem Details protect the HTTP boundary.
 - springdoc publishes the OpenAPI contract and Swagger UI at `/swagger-ui.html`.
-- Every API response includes `Archive-Data-Source` and `Server-Timing` headers used by the teaching UI.
+- Every API response includes `Grainger-Archive-Data-Source` and `Server-Timing` headers used by the teaching UI.
 
 ## Local development
 
