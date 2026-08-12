@@ -56,7 +56,8 @@
   function portraitFor(character) {
     if (!character) return "";
     const originalVisuals = global.MOTHER_VISUALS || {};
-    const visual = originalVisuals[character.id];
+    const visual = originalVisuals[character.id]
+      || (typeof cinematicVisualFor === "function" ? cinematicVisualFor(character.id) : "");
     if (visual) {
       return `<img src="${safe(visual)}" alt="Original in-world study of ${safe(character.name)}" loading="eager" decoding="async">`;
     }
@@ -172,6 +173,10 @@
       </div>`);
   }
 
-  global.MOTHER_VISUALS = Object.freeze({ "jon-snow": "assets/generated/northern-guardian-observatory.png" });
+  global.MOTHER_VISUALS = Object.freeze({
+    "jon-snow": "assets/generated/northern-guardian-observatory.png",
+    "tyrion-lannister": "assets/characters/tyrion-visual.png",
+    "daenerys-targaryen": "assets/characters/daenerys-visual.png"
+  });
   global.MotherTemplate = Object.freeze({ mountHome, installRail, houseEntries });
 })(window, document);

@@ -110,7 +110,10 @@ h1.display, .hero h1, .houses-hero h1, .voices-hero h1 { font-family: var(--moth
 .houses-roster { background: linear-gradient(180deg, rgba(3,8,12,.3), rgba(3,8,12,.7)); }
 .houses-card { min-height: 330px; background: linear-gradient(145deg, rgba(9,18,26,.82), rgba(4,9,14,.93)); }
 .houses-card__portrait { position: absolute; z-index: -2; inset: 0 0 0 42%; background: var(--house-portrait) center / cover no-repeat; opacity: .28; filter: saturate(.62) contrast(1.12); mask-image: linear-gradient(90deg, transparent, #000 38%); transition: opacity 300ms var(--ease-out), transform 600ms var(--ease-out); }
+.houses-card__portrait--art { display: grid; place-items: end center; inset: 0 0 0 42%; background: radial-gradient(circle at 58% 42%, color-mix(in srgb, var(--house-accent) 30%, transparent), transparent 58%), linear-gradient(90deg, rgba(5,10,14,.04), rgba(5,10,14,.56)); opacity: .74; mask-image: linear-gradient(90deg, transparent, #000 24%); }
+.houses-card__portrait--art .generative-avatar { width: 92%; height: 92%; opacity: .82; filter: drop-shadow(0 20px 28px rgba(0,0,0,.55)); }
 .houses-card:hover .houses-card__portrait, .houses-card:focus-visible .houses-card__portrait { opacity: .55; transform: scale(1.05); }
+.houses-card:hover .houses-card__portrait--art, .houses-card:focus-visible .houses-card__portrait--art { opacity: .9; }
 .houses-card__representative { margin-top: 8px; color: rgba(241,237,227,.62); font-size: .57rem; letter-spacing: .08em; text-transform: uppercase; }
 .people-intelligence, .pi-shell, .lore-library, .story-atlas, .world-atlas, .raven-wall-host, .realm-chronicle, .what-if, .maesters-desk { background: transparent !important; }
 .raven-wall { background: linear-gradient(180deg, rgba(4,10,15,.76), rgba(4,10,15,.94)), url("../assets/ui/war-table-stone.jpg") center / cover fixed !important; }
@@ -119,6 +122,9 @@ h1.display, .hero h1, .houses-hero h1, .voices-hero h1 { font-family: var(--moth
 .tl-event:hover, .battle-card:hover, .quote-card:hover, .timeline-item:hover { border-color: rgba(212,168,94,.52); }
 .voices-film__backdrop, .voices-archive { filter: saturate(.92); }
 body.raven-wall-route #site-nav { display: block; }
+body.archive-route #site-nav,
+body.archive-route #site-nav:has(.react-nav-shell),
+body #site-nav:has(.react-nav-shell) { display: block !important; visibility: visible; opacity: 1; transform: none; position: sticky; top: 0; z-index: 1000; }
 .people-intelligence, .lore-library-host, .story-atlas-host, .world-atlas-host, .raven-wall-host, .realm-chronicle-host, .what-if-host, .maesters-desk-host { min-height: calc(100svh - 82px); }
 .pi-hero, .lore-library__hero, .story-atlas__hero, .realm-chronicle__hero, .maesters-desk__hero { background-color: rgba(6,14,21,.74) !important; border-color: rgba(212,168,94,.24) !important; }
 .pi-toolbar, .lore-library__toolbar, .story-atlas__toolbar, .realm-chronicle__toolbar, .maesters-desk__toolbar { border-color: rgba(212,168,94,.24) !important; background: rgba(4,10,15,.6) !important; }
