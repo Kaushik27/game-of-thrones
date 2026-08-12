@@ -213,15 +213,15 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
 /* The generated plates include the same house rail as the reference. This
    DOM rail sits above it, keeping every icon and transition keyboard/click
    reachable while the artwork remains the cinematic surface. */
-.mother-realm-rail { position: absolute; z-index: 4; left: 50%; bottom: 0; display: flex; align-items: stretch; gap: 18px; width: min(1160px, calc(100% - 48px)); transform: translateX(-50%); padding: 10px 14px; border: 0; background: transparent; }
+.mother-realm-rail { position: absolute; z-index: 4; left: 50%; bottom: 0; display: flex; align-items: stretch; gap: 18px; width: min(1160px, calc(100% - 48px)); transform: translateX(-50%); padding: 10px 14px; border-top: 1px solid rgba(212,168,94,.35); background: linear-gradient(180deg, rgba(3,8,12,.08), rgba(3,8,12,.84)); backdrop-filter: blur(8px); }
 .mother-realm-rail__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
 .mother-realm-rail__items { display: flex; align-items: center; justify-content: space-between; gap: 5px; width: 100%; overflow-x: auto; scrollbar-width: none; }
 .mother-realm-rail__items::-webkit-scrollbar { display: none; }
-.mother-realm-rail__item { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 54px; flex: 1; padding: 5px 10px; border: 1px solid transparent; background: transparent; color: transparent; font-size: .54rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; cursor: pointer; transition: color 220ms ease, border-color 220ms ease, background 220ms ease, transform 220ms ease; }
-.mother-realm-rail__item:hover, .mother-realm-rail__item:focus-visible, .mother-realm-rail__item.is-active { border-color: transparent; background: transparent; color: transparent; transform: translateY(-2px); }
+.mother-realm-rail__item { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 54px; flex: 1; padding: 5px 10px; border: 1px solid transparent; background: transparent; color: rgba(241,237,227,.72); font-size: .54rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; cursor: pointer; transition: color 220ms ease, border-color 220ms ease, background 220ms ease, transform 220ms ease; }
+.mother-realm-rail__item:hover, .mother-realm-rail__item:focus-visible, .mother-realm-rail__item.is-active { border-color: color-mix(in srgb, var(--house-accent) 65%, transparent); background: color-mix(in srgb, var(--house-accent) 12%, transparent); color: var(--mother-white); transform: translateY(-2px); }
 .mother-realm-rail__item:focus-visible { outline: 2px solid var(--mother-gold-soft); outline-offset: 3px; }
 .mother-realm-rail__item.is-active { box-shadow: none; }
-.mother-realm-rail__sigil { display: grid; place-items: center; color: transparent; opacity: 0; }
+.mother-realm-rail__sigil { display: grid; place-items: center; color: var(--house-accent); opacity: .88; }
 .mother-realm-rail__sigil .sigil-icon { width: 22px; height: 22px; }
 
 /* Persistent rail ------------------------------------------------------- */
