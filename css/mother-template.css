@@ -242,7 +242,7 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
 .mother-orbit-node__sigil .sigil-icon { width: 42px; height: 42px; }
 .mother-orbit-node__label { position: absolute; top: calc(100% + 13px); color: rgba(241,237,227,.84); font-size: .55rem; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
 .mother-orbit-node:hover, .mother-orbit-node:focus-visible, .mother-orbit-node.is-active { transform: translate(-50%, -50%) scale(1.12); border-color: currentColor; box-shadow: 0 0 0 6px rgba(212,168,94,.08), 0 0 34px color-mix(in srgb, currentColor 55%, transparent); outline: none; }
-.mother-orbit-node:focus-visible { outline: 2px solid var(--mother-gold-soft); outline-offset: 5px; }
+.mother-orbit-node:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--mother-gold-soft), 0 0 0 8px rgba(212,168,94,.2), 0 0 30px color-mix(in srgb, var(--house-accent) 56%, transparent); }
 .mother-orbit-node.is-active .mother-orbit-node__halo { opacity: .6; }
 
 /* Persistent rail ------------------------------------------------------- */
