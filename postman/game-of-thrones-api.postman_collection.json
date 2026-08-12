@@ -142,7 +142,11 @@
           "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/database/tables", "host": ["{{baseUrl}}"], "path": ["api", "v1", "database", "tables"] } }
         },
         {
-          "name": "Read characters table",
+          "name": "Read selected table",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/database/tables/{{tableName}}/records?page={{page}}&pageSize={{pageSize}}", "host": ["{{baseUrl}}"], "path": ["api", "v1", "database", "tables", "{{tableName}}", "records"], "query": [{ "key": "page", "value": "{{page}}" }, { "key": "pageSize", "value": "{{pageSize}}" }] } }
+        },
+        {
+          "name": "Read characters table (example)",
           "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/database/tables/character_records/records?page={{page}}&pageSize=10", "host": ["{{baseUrl}}"], "path": ["api", "v1", "database", "tables", "character_records", "records"], "query": [{ "key": "page", "value": "{{page}}" }, { "key": "pageSize", "value": "10" }] } }
         },
         {
