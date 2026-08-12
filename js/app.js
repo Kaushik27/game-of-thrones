@@ -846,7 +846,7 @@ function viewHouses(app) {
       ? (window.MOTHER_VISUALS?.[representative.id] || cinematicVisualFor(representative.id))
       : "";
     const representativeArt = representativeVisual
-      ? `<span class="houses-card__portrait" style="--house-portrait:url('${escapeHTML(representativeVisual)}')" aria-hidden="true"></span>`
+      ? `<span class="houses-card__portrait" style="background-image:url('${escapeHTML(representativeVisual)}')" aria-hidden="true"></span>`
       : (representative && typeof generativeAvatarSVG === "function"
         ? `<span class="houses-card__portrait houses-card__portrait--art" aria-hidden="true">${generativeAvatarSVG(representative)}</span>`
         : "");
@@ -890,7 +890,7 @@ function viewHouse(app, params) {
     <div class="page-wrap">
       <div id="house-header" class="hero illustrated ambient-glow house-profile-hero" style="--glow-color:${color};">
         <div class="hero-scene">${houseSceneSVG(color, info.sigil)}</div>
-        ${representativeVisual ? `<div class="house-profile-hero__portrait" aria-hidden="true" style="--house-profile-portrait:url('${escapeHTML(representativeVisual)}')"></div>` : ""}
+        ${representativeVisual ? `<div class="house-profile-hero__portrait" aria-hidden="true" style="background-image:linear-gradient(90deg, rgba(5,10,15,.98), rgba(5,10,15,.28)),url('${escapeHTML(representativeVisual)}')"></div>` : ""}
         <div id="house-sigil-big" style="width:92px;height:92px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid ${color};background:${color}1c;color:${color};flex-shrink:0;">${sigilSVG(info.sigil, { size: 46 })}</div>
         <div>
           <p class="house-profile-hero__eyebrow">A banner, a bloodline, a cost</p>
@@ -1028,7 +1028,10 @@ function renderFamilyTree(houseName, color) {
   nodes.append("text").attr("class", "tree-node__label")
     .attr("x", d => d.x < Math.PI ? 28 : -28).attr("dy", 4)
     .attr("text-anchor", d => d.x < Math.PI ? "start" : "end")
-    .attr("transform", d => d.x >= Math.PI ? "rotate(180)" : null)
+    .attr("transform", d => {
+      const angle = (d.x * 180 / Math.PI) - 90;
+      return `rotate(${d.x < Math.PI ? -angle : 180 - angle})`;
+    })
     .text(d => d.data.name);
   nodes.append("title").text(d => d.data.virtual ? `${houseName} bloodline` : `${d.data.name} — open dossier`);
   nodes.filter(d => !d.data.virtual).on("click", (e, d) => { window.location.hash = "#/character/" + d.data.id; });
