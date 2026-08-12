@@ -37,7 +37,7 @@
       <div class="raven-wall__scene-backdrop" aria-hidden="true"></div>
       <div class="raven-wall__texture" aria-hidden="true"></div>
       <header class="raven-wall__masthead">
-        <div><p class="raven-wall__brand">The Raven Wall</p><span>A fan archive · not an official guide</span></div>
+        <div><p class="raven-wall__brand">The Raven Wall</p><span>A fan realm · not an official guide</span></div>
         <p class="raven-wall__date">A wall of scenes we carried home</p>
         <button class="raven-wall__raven" type="button" data-rw-surprise aria-label="Let the raven choose a memory"><img src="assets/icons/compass.svg" alt=""></button>
       </header>

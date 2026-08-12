@@ -1,4 +1,4 @@
-// Curated editorial metadata for the Voices of the Realm archive.
+// Curated editorial metadata for the Voices of the Realm realm.
 // The quote text itself remains canonical in js/quotes.js; this file only
 // decides which lines to spotlight and how to group them for discovery.
 (function exposeQuoteCuration(global) {

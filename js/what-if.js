@@ -1,5 +1,5 @@
 // A focused, non-canon counterfactual chamber. It gives fan theories a home
-// without mixing speculation into the canon archive.
+// without mixing speculation into the canon realm.
 (function installWhatIf(global, document) {
   "use strict";
   const instances = new WeakMap();

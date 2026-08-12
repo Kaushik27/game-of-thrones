@@ -1,4 +1,4 @@
-// The emotional index of the archive: scenes fans remember before they
+// The emotional index of the realm: scenes fans remember before they
 // remember the episode number. These are editorial anchors, not a replacement
 // for the source records in events.js / episodes.js.
 (function installFanMoments(global) {

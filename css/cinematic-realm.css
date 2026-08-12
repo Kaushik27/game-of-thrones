@@ -130,7 +130,7 @@ html.cinematic-portal-jump body { scroll-behavior: auto !important; }
 
 /* The memory gallery is intentionally quieter than the opening: one image,
    one line, one decision. The rail changes the stage in place so the visitor
-   feels a scene before they read an archive. */
+   feels a scene before they read an realm. */
 .cinematic-memory-gallery { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(220px, .55fr) minmax(0, 1.45fr); gap: clamp(24px, 5vw, 76px); padding: clamp(72px, 9vw, 132px) clamp(22px, 8vw, 132px) clamp(82px, 10vw, 150px); overflow: hidden; background: #080d10; color: #eee8da; }
 .cinematic-memory-gallery::before { position: absolute; inset: 0; background: url('../assets/ui/war-table-stone.jpg') center / cover; opacity: .18; content: ""; pointer-events: none; }
 .cinematic-memory-gallery__intro, .cinematic-memory-gallery__stage, .cinematic-memory-gallery__rail { position: relative; z-index: 1; }

@@ -22,7 +22,7 @@ h1 { margin: 22px 0; font-size: clamp(45px,6.2vw,94px); line-height: .98; letter
 .hero-stats { display: flex; gap: 38px; margin-top: 55px; }.hero-stats span { color: #7e8683; font-size: 11px; text-transform: uppercase; letter-spacing: .12em; }.hero-stats strong { color: #e8e3d9; font-family: Cinzel; font-size: 22px; margin-right: 5px; }
 .hero-art { min-height: 600px; display: flex; align-items: end; justify-content: center; padding: 50px; background: linear-gradient(180deg,transparent 48%,#05090c), linear-gradient(90deg,#05090c22,#05090c00), url("/ui/north-journey-bg.jpg") center/cover; }
 .hero-art span { font-family: Cinzel; font-size: 10px; letter-spacing: .4em; }
-.archive { padding: 100px clamp(20px,5vw,80px); border-top: 1px solid var(--line); }
+.realm { padding: 100px clamp(20px,5vw,80px); border-top: 1px solid var(--line); }
 .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 30px; }.section-heading h2,.architecture h2 { font-size: clamp(32px,4vw,58px); margin: 12px 0 0; }.section-heading>p { color: #7f8784; font-size: 12px; }
 .filters { margin: 44px 0; padding: 20px; display: grid; grid-template-columns: 1.4fr 1fr .8fr auto; gap: 12px; background: #0a1013; border: 1px solid var(--line); }
 .filters label span { display: block; color: #7c8481; font-size: 9px; letter-spacing: .18em; text-transform: uppercase; margin: 0 0 8px; }.filters input,.filters select { width: 100%; padding: 12px; color: #e9e5dc; background: #070b0e; border: 1px solid var(--line); }.filters button,.pagination button { align-self: end; padding: 13px 20px; color: #101415; background: var(--gold); border: 0; cursor: pointer; }

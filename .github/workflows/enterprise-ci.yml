@@ -34,7 +34,7 @@ jobs:
         run: npm --prefix frontend run test
       - name: Test backend
         run: ./backend/gradlew -p backend test
-      - name: Verify legacy archive
+      - name: Verify legacy realm
         run: npm ci && npm run check
 
   container:
@@ -43,25 +43,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Build deployable container
-        run: docker build --tag game-of-thrones-archive:test .
+        run: docker build --tag game-of-thrones-realm:test .
       - name: Start deployable container
-        run: docker run --detach --name archive --publish 8080:8080 --env SPRING_PROFILES_ACTIVE=prod game-of-thrones-archive:test
+        run: docker run --detach --name realm --publish 8080:8080 --env SPRING_PROFILES_ACTIVE=prod game-of-thrones-realm:test
       - name: Verify container readiness and API
         run: |
           for attempt in {1..30}; do
             if curl --fail --silent http://127.0.0.1:8080/actuator/health/readiness; then break; fi
-            if [ "$attempt" = 30 ]; then docker logs archive; exit 1; fi
+            if [ "$attempt" = 30 ]; then docker logs realm; exit 1; fi
             sleep 2
           done
           curl --fail --silent http://127.0.0.1:8080/api/v1/statistics | grep '"characters":196'
-          curl --fail --silent http://127.0.0.1:8080/v3/api-docs | grep 'Game of Thrones Archive API'
-          docker restart archive
+          curl --fail --silent http://127.0.0.1:8080/v3/api-docs | grep 'Game of Thrones realm API'
+          docker restart realm
           for attempt in {1..30}; do
             if curl --fail --silent http://127.0.0.1:8080/actuator/health/readiness; then break; fi
-            if [ "$attempt" = 30 ]; then docker logs archive; exit 1; fi
+            if [ "$attempt" = 30 ]; then docker logs realm; exit 1; fi
             sleep 2
           done
           curl --fail --silent http://127.0.0.1:8080/api/v1/statistics | grep '"characters":196'
       - name: Stop deployable container
         if: always()
-        run: docker rm --force archive
+        run: docker rm --force realm

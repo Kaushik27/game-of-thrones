@@ -205,7 +205,7 @@
             <img src="assets/icons/compass.svg" alt="">
           </div>
           <div class="lore-library__hero-copy">
-            <p class="lore-library__eyebrow">The living archive</p>
+            <p class="lore-library__eyebrow">The living realm</p>
             <h1 id="${instanceId}-title">Lore of the Realm</h1>
             <p>Trace the beliefs, bloodlines, weapons, and remembered truths that move the story beneath every battle.</p>
           </div>
@@ -219,7 +219,7 @@
         <div class="lore-library__body">
           <div class="lore-library__toolbar">
             <label class="lore-library__search" for="${instanceId}-search">
-              <span class="lore-library__search-label">Search the archives</span>
+              <span class="lore-library__search-label">Search the realms</span>
               <span class="lore-library__search-field">
                 <img src="assets/icons/compass.svg" alt="">
                 <input id="${instanceId}-search" type="search" autocomplete="off" spellcheck="false" placeholder="A house, prophecy, person, or relic" value="${escapeMarkup(state.query)}">
@@ -247,20 +247,20 @@
             <div class="lore-featured__grid"></div>
           </section>
 
-          <section class="lore-archive" aria-labelledby="${instanceId}-archive-title">
-            <div class="lore-section-heading lore-section-heading--archive">
+          <section class="lore-realm" aria-labelledby="${instanceId}-realm-title">
+            <div class="lore-section-heading lore-section-heading--realm">
               <div>
                 <p class="lore-library__eyebrow">Indexed knowledge</p>
-                <h2 id="${instanceId}-archive-title">Complete archive</h2>
+                <h2 id="${instanceId}-realm-title">Complete realm</h2>
               </div>
-              <p class="lore-archive__status" aria-live="polite" aria-atomic="true"></p>
+              <p class="lore-realm__status" aria-live="polite" aria-atomic="true"></p>
             </div>
-            <div class="lore-archive__grid"></div>
-            <div class="lore-archive__empty" hidden>
+            <div class="lore-realm__grid"></div>
+            <div class="lore-realm__empty" hidden>
               <img src="assets/icons/compass.svg" alt="">
               <h3>No matching record</h3>
               <p>Try another name, object, house, or season.</p>
-              <button type="button" data-lore-reset>Reset the archive</button>
+              <button type="button" data-lore-reset>Reset the realm</button>
             </div>
           </section>
         </div>
@@ -278,10 +278,10 @@
     const categoryNav = root.querySelector(".lore-library__categories");
     const featuredSection = root.querySelector(".lore-featured");
     const featuredGrid = root.querySelector(".lore-featured__grid");
-    const archiveTitle = root.querySelector(`#${instanceId}-archive-title`);
-    const archiveStatus = root.querySelector(".lore-archive__status");
-    const archiveGrid = root.querySelector(".lore-archive__grid");
-    const archiveEmpty = root.querySelector(".lore-archive__empty");
+    const realmTitle = root.querySelector(`#${instanceId}-realm-title`);
+    const realmStatus = root.querySelector(".lore-realm__status");
+    const realmGrid = root.querySelector(".lore-realm__grid");
+    const realmEmpty = root.querySelector(".lore-realm__empty");
     const drawer = root.querySelector(".lore-drawer");
     const drawerPanel = root.querySelector(".lore-drawer__panel");
     const drawerContent = root.querySelector(".lore-drawer__content");
@@ -350,16 +350,16 @@
       featuredSection.hidden = featuredEntries.length === 0 || state.category !== "all" || Boolean(state.query);
     }
 
-    function renderArchive() {
+    function renderrealm() {
       const results = filteredEntries();
       const selectedCategory = categoryById.get(state.category);
-      archiveTitle.textContent = state.query
+      realmTitle.textContent = state.query
         ? "Search results"
-        : selectedCategory ? selectedCategory.label : "Complete archive";
-      archiveStatus.textContent = `${results.length} ${results.length === 1 ? "dossier" : "dossiers"}`;
-      archiveGrid.innerHTML = results.map((entry) => cardMarkup(entry, false)).join("");
-      archiveGrid.hidden = results.length === 0;
-      archiveEmpty.hidden = results.length !== 0;
+        : selectedCategory ? selectedCategory.label : "Complete realm";
+      realmStatus.textContent = `${results.length} ${results.length === 1 ? "dossier" : "dossiers"}`;
+      realmGrid.innerHTML = results.map((entry) => cardMarkup(entry, false)).join("");
+      realmGrid.hidden = results.length === 0;
+      realmEmpty.hidden = results.length !== 0;
       searchClear.hidden = !state.query;
       root.querySelectorAll("[data-lore-category]").forEach((button) => {
         const selected = button.dataset.loreCategory === state.category;
@@ -512,7 +512,7 @@
       state.category = "all";
       state.query = "";
       searchInput.value = "";
-      renderArchive();
+      renderrealm();
       notifyCategoryChange(previousCategory);
       searchInput.focus();
     }
@@ -522,7 +522,7 @@
       if (categoryButton && root.contains(categoryButton)) {
         const previousCategory = state.category;
         state.category = categoryButton.dataset.loreCategory;
-        renderArchive();
+        renderrealm();
         notifyCategoryChange(previousCategory);
         return;
       }
@@ -551,7 +551,7 @@
       if (event.target.closest("[data-lore-clear]")) {
         state.query = "";
         searchInput.value = "";
-        renderArchive();
+        renderrealm();
         searchInput.focus();
         return;
       }
@@ -561,7 +561,7 @@
 
     searchInput.addEventListener("input", () => {
       state.query = searchInput.value.trim();
-      renderArchive();
+      renderrealm();
     }, { signal: abortController.signal });
 
     searchInput.addEventListener("keydown", (event) => {
@@ -569,10 +569,10 @@
         event.preventDefault();
         state.query = "";
         searchInput.value = "";
-        renderArchive();
+        renderrealm();
       }
       if (event.key === "ArrowDown") {
-        const firstResult = archiveGrid.querySelector("[data-lore-open]");
+        const firstResult = realmGrid.querySelector("[data-lore-open]");
         if (firstResult) {
           event.preventDefault();
           firstResult.focus();
@@ -622,7 +622,7 @@
       }
     }, { signal: abortController.signal });
 
-    renderArchive();
+    renderrealm();
 
     if (settings.initialEntryId && entryById.has(settings.initialEntryId)) {
       // A deep link has no clicked card to return to. Use the persistent search

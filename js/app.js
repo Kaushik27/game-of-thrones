@@ -55,12 +55,12 @@ function router() {
   app.classList.remove("route-enter");
   void app.offsetWidth;
   app.classList.add("route-enter");
-  document.body.classList.toggle("archive-route", path !== "/");
+  document.body.classList.toggle("realm-route", path !== "/");
   document.body.classList.toggle("realm-journey-route", path === "/");
   document.body.classList.toggle("character-cinematic-route", /^\/character\//.test(path));
   document.body.classList.toggle("voices-route", path === "/quotes");
   document.body.classList.toggle("raven-wall-route", path === "/timeline" && !window.location.hash.includes("atlas=1") && !window.location.hash.includes("season=") && !window.location.hash.includes("mode=") && !window.location.hash.includes("event=") && !window.location.hash.includes("episode="));
-  document.body.classList.remove("character-cinematic-route--archive");
+  document.body.classList.remove("character-cinematic-route--realm");
   for (const route of APP_ROUTES) {
     const m = path.match(route.pattern);
     if (m) {
@@ -122,7 +122,7 @@ function episodeForQuote(quote) {
 }
 
 // The Explore prologue uses original in-world visual studies. Dossiers and
-// quote archives intentionally keep the verified character portraits so the
+// quote realms intentionally keep the verified character portraits so the
 // story remains grounded in the people who played these roles.
 const CINEMATIC_VISUALS = Object.freeze({
   "jon-snow": "assets/characters/jon-snow-visual.png",
@@ -217,7 +217,7 @@ function viewHome(app, params, query) {
   }
 
   if (!window.CinematicRealm) {
-    root.innerHTML = `<div class="realm-journey-loading realm-journey-loading--error" role="alert"><span>The road is blocked for now.</span><a href="#/timeline">Open the season archive</a></div>`;
+    root.innerHTML = `<div class="realm-journey-loading realm-journey-loading--error" role="alert"><span>The road is blocked for now.</span><a href="#/timeline">Open the season realm</a></div>`;
     return;
   }
 
@@ -226,7 +226,7 @@ function viewHome(app, params, query) {
     registerActiveView(cinematicHandle);
   } catch (error) {
     console.error("The cinematic realm could not be mounted.", error);
-    root.innerHTML = `<div class="realm-journey-loading realm-journey-loading--error" role="alert"><span>The road is blocked for now.</span><a href="#/timeline">Open the season archive</a></div>`;
+    root.innerHTML = `<div class="realm-journey-loading realm-journey-loading--error" role="alert"><span>The road is blocked for now.</span><a href="#/timeline">Open the season realm</a></div>`;
   }
 }
 
@@ -545,7 +545,7 @@ function viewCharacter(app, params, query) {
       : "assets/ui/capital-journey-bg.jpg";
   const cinematicQuote = cq[0] || { text: "The story remembers.", speaker: c.name };
   const fanMoment = (Array.isArray(window.FAN_MOMENTS) ? window.FAN_MOMENTS : []).find(moment => moment.characterId === c.id) || null;
-  const requestedChapter = query && ["title", "quote", "turn", "archive"].includes(query.get("chapter")) ? query.get("chapter") : "";
+  const requestedChapter = query && ["title", "quote", "turn", "realm"].includes(query.get("chapter")) ? query.get("chapter") : "";
   rememberLastRoute("character", c.id);
   recordEngagement("character_open", { characterId: c.id });
 
@@ -581,7 +581,7 @@ function viewCharacter(app, params, query) {
             <p>${escapeHTML((evs[0] && evs[0].summary) || c.bio)}</p>
             ${evs[0] ? `<a class="character-film__event-link" href="#/timeline?season=${encodeURIComponent(evs[0].season)}&mode=consequences&event=${encodeURIComponent(evs[0].id)}">Follow this moment <span aria-hidden="true">↗</span></a>` : ""}
           </div>
-          <div class="character-film__scene character-film__scene--archive" data-film-scene="archive" aria-hidden="true">
+          <div class="character-film__scene character-film__scene--realm" data-film-scene="realm" aria-hidden="true">
             <p class="character-film__chapter">Chapter 04 <span aria-hidden="true">/</span> The living dossier</p>
             <h2>${escapeHTML(c.name)}</h2>
             <p>${escapeHTML(c.bio)}</p>
@@ -595,7 +595,7 @@ function viewCharacter(app, params, query) {
             <button type="button" data-film-jump="title" aria-current="true"><span>01</span> Entrance</button>
             <button type="button" data-film-jump="quote" aria-current="false"><span>02</span> Voice</button>
             <button type="button" data-film-jump="turn" aria-current="false"><span>03</span> Turning point</button>
-            <button type="button" data-film-jump="archive" aria-current="false"><span>04</span> Dossier</button>
+            <button type="button" data-film-jump="realm" aria-current="false"><span>04</span> Dossier</button>
           </nav>
           <div class="character-film__progress" aria-hidden="true"><span data-film-progress></span></div>
           <p class="character-film__scroll" aria-hidden="true"><span></span> Scroll to play the story</p>
@@ -633,7 +633,7 @@ function viewCharacter(app, params, query) {
               <span class="character-profile__relation-copy"><strong>${escapeHTML(r.other.name)}</strong><small>${TYPE_ICON[r.rel.type]} ${escapeHTML(r.rel.label)}</small></span>
               <span class="character-profile__relation-arrow" aria-hidden="true">↗</span>
             </a>`).join("") : `<div class="character-profile__empty">No recorded relations.</div>`}</div>
-          ${cq.length ? `<section class="character-profile__quotes"><div class="character-profile__section-head"><div><span class="character-profile__eyebrow">In their own words</span><h2>Quotes</h2></div><a href="#/quotes?quote=${encodeURIComponent(cq[0].id)}">Open quote archive <span aria-hidden="true">↗</span></a></div>${cq.map(q => `<a class="character-profile__quote" href="#/quotes?quote=${encodeURIComponent(q.id)}"><span aria-hidden="true">“</span><span>${escapeHTML(q.text)}</span><small>Season ${q.season} · Open line ↗</small></a>`).join("")}</section>` : ""}
+          ${cq.length ? `<section class="character-profile__quotes"><div class="character-profile__section-head"><div><span class="character-profile__eyebrow">In their own words</span><h2>Quotes</h2></div><a href="#/quotes?quote=${encodeURIComponent(cq[0].id)}">Open quote realm <span aria-hidden="true">↗</span></a></div>${cq.map(q => `<a class="character-profile__quote" href="#/quotes?quote=${encodeURIComponent(q.id)}"><span aria-hidden="true">“</span><span>${escapeHTML(q.text)}</span><small>Season ${q.season} · Open line ↗</small></a>`).join("")}</section>` : ""}
         </div>
 
         <div class="tab-panel character-profile__panel" id="tab-graph">
@@ -666,7 +666,7 @@ function viewCharacter(app, params, query) {
   const profileHeader = app.querySelector("#profile-header");
   let filmFrame = 0;
   let filmDestroyed = false;
-  const filmOrder = ["title", "quote", "turn", "archive"];
+  const filmOrder = ["title", "quote", "turn", "realm"];
   let previousFilmScene = "title";
   const updateFilm = () => {
     filmFrame = 0;
@@ -706,7 +706,7 @@ function viewCharacter(app, params, query) {
   if (requestedChapter) window.setTimeout(() => jumpToFilmScene(requestedChapter), 80);
   if (cinematicEnter && profileHeader) {
     cinematicEnter.addEventListener("click", () => {
-      jumpToFilmScene("archive");
+      jumpToFilmScene("realm");
       if (filmStatus) filmStatus.textContent = "Dossier chapter selected";
       window.setTimeout(() => profileHeader.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" }), 500);
     });
@@ -715,7 +715,7 @@ function viewCharacter(app, params, query) {
     const chromeObserver = new IntersectionObserver(entries => {
       const entry = entries[0];
       if (!document.body.contains(film)) { chromeObserver.disconnect(); filmDestroyed = true; filmFx?.destroy(); filmSound?.destroy(); return; }
-      document.body.classList.toggle("character-cinematic-route--archive", !entry.isIntersecting || entry.boundingClientRect.top < 0);
+      document.body.classList.toggle("character-cinematic-route--realm", !entry.isIntersecting || entry.boundingClientRect.top < 0);
     }, { threshold: 0.08 });
     chromeObserver.observe(film);
     film.addEventListener("pointermove", event => {
@@ -834,7 +834,7 @@ function viewHouses(app) {
         </div>
         <div class="houses-grid" id="house-grid"></div>
       </section>
-      <footer class="houses-footer"><span>Fan archive · TV canon · no official allegiance</span><a href="#/map">Trace the realm ↗</a></footer>
+      <footer class="houses-footer"><span>Fan realm · TV canon · no official allegiance</span><a href="#/map">Trace the realm ↗</a></footer>
     </section>
   `;
   document.getElementById("house-grid").innerHTML = houses.map(h => {
@@ -1594,7 +1594,7 @@ function viewBattles(app, params, query) {
           return `
           <div class="card battle-card reveal" data-battle-id="${escapeHTML(b.id)}"${selected ? ` tabindex="-1"` : ""} style="padding:22px;${cardAccentStyle('#c23b3b')}${selected ? "border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);" : ""}">
             <h3 class="display" style="margin:0 0 4px;">${escapeHTML(b.name)}</h3>
-            <div class="text-dim" style="font-size:0.82rem;margin-bottom:12px;">${escapeHTML(b.season)} · ${escapeHTML(b.location)} ${archiveBadge("TV canon", "canon")}</div>
+            <div class="text-dim" style="font-size:0.82rem;margin-bottom:12px;">${escapeHTML(b.season)} · ${escapeHTML(b.location)} ${realmBadge("TV canon", "canon")}</div>
             ${b.combatants.map(c => `
               <div style="margin:10px 0;">
                 <div class="text-dim" style="font-size:0.8rem;margin-bottom:4px;">${escapeHTML(c.side)}</div>
@@ -1824,12 +1824,12 @@ function viewQuotes(app, params, query) {
         <div class="voices-film__controls"><button type="button" class="voices-button voices-button--ghost" data-voices-prev aria-label="Previous quote">← Previous</button><div class="voices-film__dots" role="tablist" aria-label="Featured quote interludes"></div><button type="button" class="voices-button voices-button--ghost" data-voices-next aria-label="Next quote">Next →</button></div>
       </div>
     </section>
-    <div class="voices-archive" id="voices-archive">
+    <div class="voices-realm" id="voices-realm">
       <div class="voices-hero">
         <div class="voices-hero__eyebrow"><span class="voices-hero__rule"></span>Words carry farther than ravens</div>
         <h1 class="voices-hero__title">Voices of the Realm</h1>
         <p class="voices-hero__dek">A fan-curated wall of promises, threats, jokes, and last words. Find the line you came for, then follow the speaker, the house, and the moment that made it stick.</p>
-        <div class="voices-hero__stats" aria-label="Quote archive statistics">
+        <div class="voices-hero__stats" aria-label="Quote realm statistics">
           <span><strong>${quotes.length}</strong> recorded lines</span>
           <span><strong>8</strong> seasons</span>
           <span><strong>${featuredIds.size || 10}</strong> featured voices</span>
@@ -1846,11 +1846,11 @@ function viewQuotes(app, params, query) {
         <div class="voices-spotlight__body" id="voices-spotlight-body"></div>
       </section>
 
-      <div class="voices-archive__layout">
-        <aside class="voices-sidebar" aria-label="Quote archive filters">
+      <div class="voices-realm__layout">
+        <aside class="voices-sidebar" aria-label="Quote realm filters">
           <div class="voices-sidebar__label">Browse by mood</div>
           <div class="voices-collections" id="voices-collections" role="group" aria-label="Quote collections"></div>
-          <div class="voices-sidebar__label voices-sidebar__label--filters">Refine the archive</div>
+          <div class="voices-sidebar__label voices-sidebar__label--filters">Refine the realm</div>
           <label class="voices-field"><span>Search the words</span><input type="search" id="voices-search" placeholder="Try “winter” or “ladder”" autocomplete="off"></label>
           <label class="voices-field"><span>House</span><select id="voices-house"><option value="">All houses</option></select></label>
           <label class="voices-field"><span>Season</span><select id="voices-season"><option value="">All seasons</option>${Array.from({ length: 8 }, (_, i) => `<option value="${i + 1}">Season ${i + 1}</option>`).join("")}</select></label>
@@ -1859,7 +1859,7 @@ function viewQuotes(app, params, query) {
 
         <section class="voices-results" aria-labelledby="voices-results-title">
           <div class="voices-results__head">
-            <div><span class="voices-kicker">The archive</span><h2 id="voices-results-title">Every word leaves a mark</h2></div>
+            <div><span class="voices-kicker">The realm</span><h2 id="voices-results-title">Every word leaves a mark</h2></div>
             <div id="voices-count" class="voices-count" aria-live="polite"></div>
           </div>
           <div class="voices-grid" id="voices-grid"></div>
@@ -1869,7 +1869,7 @@ function viewQuotes(app, params, query) {
     </div>
   `;
 
-  const root = document.getElementById("voices-archive");
+  const root = document.getElementById("voices-realm");
   const spotlightBody = root.querySelector("#voices-spotlight-body");
   const quoteGrid = root.querySelector("#voices-grid");
   const count = root.querySelector("#voices-count");
@@ -1974,12 +1974,12 @@ function viewQuotes(app, params, query) {
       const memory = fanMomentForQuote(qt.id);
       return `
         <article class="voices-card${selected ? " is-selected" : ""}" data-quote-id="${escapeHTML(qt.id)}"${selected ? ` tabindex="-1"` : ""} style="${cardAccentStyle(c.sigilColor)}">
-          <div class="voices-card__top"><span class="voices-card__index">${String(qt.id).replace("q", "#")}</span><span class="voices-card__season">Season ${qt.season}</span>${archiveBadge("TV canon", "canon")}</div>
+          <div class="voices-card__top"><span class="voices-card__index">${String(qt.id).replace("q", "#")}</span><span class="voices-card__season">Season ${qt.season}</span>${realmBadge("TV canon", "canon")}</div>
           <blockquote class="voices-card__quote">“${escapeHTML(qt.text)}”</blockquote>
           <div class="voices-card__tags">${(featuredIds.has(qt.id) ? ["Featured", ...themes] : themes).slice(0, 2).map(theme => `<span>${escapeHTML(theme)}</span>`).join("")}${memory ? `<span class="voices-card__memory-tag">${escapeHTML(memory.title)}</span>` : ""}</div>
           <div class="voices-card__footer"><a class="voices-card__speaker" href="#/character/${c.id}">${avatarHTML(c, 38)}<span><strong>${escapeHTML(c.name)}</strong><small>${escapeHTML(c.house)}</small></span></a><div class="voices-card__actions"><button type="button" class="voices-copy" data-copy-quote="${escapeHTML(qt.id)}" aria-label="Copy quote by ${escapeHTML(c.name)}">Copy line</button><button type="button" class="voices-copy" data-save-card-quote="${escapeHTML(qt.id)}" aria-pressed="${String(savedQuoteIds.has(qt.id))}">${savedQuoteIds.has(qt.id) ? "Saved" : "Keep"}</button></div></div>
         </article>`;
-    }).join("") || `<div class="voices-empty"><strong>The archive is quiet.</strong><span>No lines match these filters. Clear one and try again.</span></div>`;
+    }).join("") || `<div class="voices-empty"><strong>The realm is quiet.</strong><span>No lines match these filters. Clear one and try again.</span></div>`;
     observeReveals(quoteGrid);
   }
 
@@ -2061,7 +2061,7 @@ function viewLore(app, params, query) {
   app.innerHTML = `<div id="lore-library-root" class="encyclopedia-feature-host"></div>`;
   const root = document.getElementById("lore-library-root");
   if (!window.LoreLibrary) {
-    root.innerHTML = `<div class="page-wrap"><div class="empty-state">The archives are unavailable. <a href="#/timeline">Open the story atlas</a>.</div></div>`;
+    root.innerHTML = `<div class="page-wrap"><div class="empty-state">The realms are unavailable. <a href="#/timeline">Open the story atlas</a>.</div></div>`;
     return;
   }
 
@@ -2076,7 +2076,7 @@ function viewLore(app, params, query) {
     registerActiveView(handle);
   } catch (error) {
     console.error("The Lore library could not be mounted.", error);
-    root.innerHTML = `<div class="page-wrap"><div class="empty-state">The archives are unavailable. <a href="#/timeline">Open the story atlas</a>.</div></div>`;
+    root.innerHTML = `<div class="page-wrap"><div class="empty-state">The realms are unavailable. <a href="#/timeline">Open the story atlas</a>.</div></div>`;
   }
 }
 

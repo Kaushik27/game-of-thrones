@@ -1,4 +1,4 @@
-# ADR 004: Keep the archive public and read-only
+# ADR 004: Keep the realm public and read-only
 
 - Status: Accepted
 - Context: Authentication would add complexity without protecting user data or write operations.

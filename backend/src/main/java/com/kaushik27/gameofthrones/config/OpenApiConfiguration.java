@@ -10,9 +10,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfiguration {
     @Bean
-    OpenAPI archiveOpenApi() {
+    OpenAPI realmOpenApi() {
         return new OpenAPI().info(new Info()
-                .title("Game of Thrones Archive API")
+                .title("Game of Thrones realm API")
                 .version("v1")
                 .description("Read-only REST API demonstrating React, Spring Boot, Flyway, and H2 integration.")
                 .contact(new Contact().name("Kaushik27").url("https://github.com/Kaushik27/game-of-thrones"))

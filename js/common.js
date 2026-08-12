@@ -27,7 +27,7 @@ function renderNav() {
     : activePath === match || activePath.startsWith(match));
   mount.innerHTML = `
     <a class="brand" href="#/" aria-label="Game of Thrones home">
-      <span class="brand-title">GAME <small>OF</small> <strong>THRONES</strong><small class="brand-note">A fan archive</small></span>
+      <span class="brand-title">GAME <small>OF</small> <strong>THRONES</strong><small class="brand-note">A fan realm</small></span>
     </a>
     <nav class="nav-links" id="nav-links" aria-label="Primary navigation">
       ${NAV_LINKS.map(l => `<a href="${l.href}" class="${isActive(l) ? 'active' : ''}"${isActive(l) ? ' aria-current="page"' : ''}>${l.label}</a>`).join("")}
@@ -178,9 +178,9 @@ function cardAccentStyle(color) {
   return `--card-accent:${color}; --card-accent-shadow:${color}33;`;
 }
 
-function archiveBadge(label, tone) {
+function realmBadge(label, tone) {
   const safeTone = String(tone || "canon").replace(/[^a-z-]/g, "");
-  return `<span class="archive-badge archive-badge--${safeTone}">${escapeHTML(label)}</span>`;
+  return `<span class="realm-badge realm-badge--${safeTone}">${escapeHTML(label)}</span>`;
 }
 
 function charactersByHouse(house) {

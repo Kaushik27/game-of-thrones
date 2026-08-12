@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.kaushik27'
 version = '0.0.1-SNAPSHOT'
-description = 'Enterprise API for the Game of Thrones archive'
+description = 'Enterprise API for the Game of Thrones project'
 
 java {
 	toolchain {

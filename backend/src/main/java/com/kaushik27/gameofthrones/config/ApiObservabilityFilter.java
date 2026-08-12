@@ -23,8 +23,8 @@ class ApiObservabilityFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         long started = System.nanoTime();
-        response.setHeader("Archive-Data-Source", "H2");
-        response.setHeader("Archive-Api-Version", "v1");
+        response.setHeader("Realm-Data-Source", "H2");
+        response.setHeader("Realm-Api-Version", "v1");
         try {
             filterChain.doFilter(request, response);
         } finally {

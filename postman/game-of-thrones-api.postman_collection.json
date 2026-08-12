@@ -1,8 +1,8 @@
 {
   "info": {
     "_postman_id": "c0f2b1d3-7f1e-4e92-9f33-5b1a62cf8b11",
-    "name": "Game of Thrones Archive API",
-    "description": "A ready-to-run collection for the Game of Thrones Archive API. Start the Spring Boot service on http://localhost:8080 (or set the collection/environment baseUrl), then run the folders in order. The Database Explorer requests are intentionally read-only and use the application's allowlisted tables; the API does not expose arbitrary SQL or database credentials.",
+    "name": "Game of Thrones realm API",
+    "description": "A ready-to-run collection for the Game of Thrones realm API. Start the Spring Boot service on http://localhost:8080 (or set the collection/environment baseUrl), then run the folders in order. The Database Explorer requests are intentionally read-only and use the application's allowlisted tables; the API does not expose arbitrary SQL or database credentials.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "event": [
@@ -35,7 +35,7 @@
   "item": [
     {
       "name": "Health & discovery",
-      "description": "Confirm the service, database readiness, OpenAPI contract, and archive counts before exploring records.",
+      "description": "Confirm the service, database readiness, OpenAPI contract, and realm counts before exploring records.",
       "item": [
         {
           "name": "Health",
@@ -58,14 +58,14 @@
           "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/v3/api-docs", "host": ["{{baseUrl}}"], "path": ["v3-api-docs"] } }
         },
         {
-          "name": "Archive statistics",
+          "name": "realm statistics",
           "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/v1/statistics", "host": ["{{baseUrl}}"], "path": ["api", "v1", "statistics"] } }
         }
       ]
     },
     {
-      "name": "Archive API",
-      "description": "The read-only archive resources used by the React application.",
+      "name": "realm API",
+      "description": "The read-only realm resources used by the React application.",
       "item": [
         {
           "name": "List characters",

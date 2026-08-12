@@ -3,7 +3,7 @@
    ======================================================================== */
 
 /* ------------------------------------------------------------------------
-   Cinematic character entrance — a single authored beat before the archive
+   Cinematic character entrance — a single authored beat before the realm
    ------------------------------------------------------------------------ */
 .character-cinematic {
   --cinematic-pointer-x: 0;
@@ -118,11 +118,11 @@
 .character-film__stage[data-scene="title"] .character-film__scene--title,
 .character-film__stage[data-scene="quote"] .character-film__scene--quote,
 .character-film__stage[data-scene="turn"] .character-film__scene--turn,
-.character-film__stage[data-scene="archive"] .character-film__scene--archive { opacity: 1; pointer-events: auto; transform: translate3d(0, -50%, 0); }
+.character-film__stage[data-scene="realm"] .character-film__scene--realm { opacity: 1; pointer-events: auto; transform: translate3d(0, -50%, 0); }
 .character-film__scene--title { top: 48%; }
 .character-film__scene--quote { left: 50%; width: min(720px, 72vw); text-align: center; transform: translate3d(-50%, 24px, 0); }
 .character-film__stage[data-scene="quote"] .character-film__scene--quote { transform: translate3d(-50%, -50%, 0); }
-.character-film__scene--turn, .character-film__scene--archive { width: min(560px, 48vw); }
+.character-film__scene--turn, .character-film__scene--realm { width: min(560px, 48vw); }
 .character-film__eyebrow, .character-film__chapter { margin: 0; color: #d4b36a; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; }
 .character-film__eyebrow { display: flex; align-items: center; gap: 10px; }
 .character-film__chapter { color: #a5a39b; font-size: 0.59rem; letter-spacing: 0.17em; }
@@ -137,7 +137,7 @@
 .character-film__scene blockquote cite { display: block; margin-top: 21px; color: #aaa9a2; font-size: 0.65rem; font-style: normal; font-weight: 700; letter-spacing: 0.17em; text-transform: uppercase; }
 .character-film__season { margin: 23px 0 9px; color: #d4b36a; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
 .character-film h2 { margin: 0; color: #eee7d8; font-family: "Cinzel", Georgia, serif; font-size: clamp(2rem, 4vw, 4.4rem); font-weight: 400; letter-spacing: -0.04em; line-height: 1; }
-.character-film__scene--turn > p:not(.character-film__chapter):not(.character-film__season), .character-film__scene--archive > p:not(.character-film__chapter) { max-width: 48ch; margin: 20px 0 0; color: #b9bbb6; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.12rem, 1.8vw, 1.45rem); line-height: 1.42; }
+.character-film__scene--turn > p:not(.character-film__chapter):not(.character-film__season), .character-film__scene--realm > p:not(.character-film__chapter) { max-width: 48ch; margin: 20px 0 0; color: #b9bbb6; font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(1.12rem, 1.8vw, 1.45rem); line-height: 1.42; }
 .character-film__event-link { display: inline-flex; align-items: center; gap: 18px; margin-top: 26px; color: #e4cd91; font-size: 0.67rem; font-weight: 700; letter-spacing: 0.15em; text-decoration: none; text-transform: uppercase; }
 .character-film__event-link:hover { color: #fff0c8; text-decoration: none; }
 .character-film__enter { display: inline-flex; align-items: center; gap: 18px; min-height: 48px; margin-top: 28px; padding: 10px 17px; border: 1px solid rgba(212, 179, 106, 0.7); background: rgba(4, 8, 10, 0.6); color: #f0e3c5; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: background 180ms ease, border-color 180ms ease, transform 180ms ease; }
@@ -164,14 +164,14 @@
 body.character-cinematic-route #site-nav { position: fixed; top: 0; right: 0; left: 0; z-index: 100; background: transparent; border-bottom-color: transparent; pointer-events: none; }
 body.character-cinematic-route #site-nav .brand { pointer-events: auto; }
 body.character-cinematic-route #site-nav .nav-links, body.character-cinematic-route #site-nav .nav-search, body.character-cinematic-route #site-nav .nav-toggle { display: none; }
-body.character-cinematic-route--archive #site-nav { position: sticky; background: rgba(13, 13, 15, 0.92); border-bottom-color: var(--panel-border); pointer-events: auto; }
-body.character-cinematic-route--archive #site-nav .nav-links { display: flex; }
-body.character-cinematic-route--archive #site-nav .nav-search { display: inline-flex; }
+body.character-cinematic-route--realm #site-nav { position: sticky; background: rgba(13, 13, 15, 0.92); border-bottom-color: var(--panel-border); pointer-events: auto; }
+body.character-cinematic-route--realm #site-nav .nav-links { display: flex; }
+body.character-cinematic-route--realm #site-nav .nav-search { display: inline-flex; }
 
 @media (max-width: 760px) {
   .character-film { height: 360svh; }
   .character-film__stage { min-height: 680px; }
-  .character-film__scene, .character-film__scene--turn, .character-film__scene--archive { top: 40%; left: 20px; width: calc(100% - 40px); }
+  .character-film__scene, .character-film__scene--turn, .character-film__scene--realm { top: 40%; left: 20px; width: calc(100% - 40px); }
   .character-film__scene--quote { left: 50%; width: calc(100% - 36px); }
   .character-film h1 { font-size: clamp(3.5rem, 17vw, 6rem); }
   .character-film__tagline { margin-top: 19px; font-size: 1.45rem; }

@@ -1,11 +1,11 @@
 // Cinematic People experience: spotlight portraits, relationship intelligence,
-// and a searchable cast archive. Browser-global, dependency-free, and safe to
+// and a searchable cast realm. Browser-global, dependency-free, and safe to
 // mount repeatedly inside the hash-routed application.
 (function exposePeopleIntelligence(global) {
   "use strict";
 
   const mountedRoots = new WeakMap();
-  const MODES = ["spotlight", "constellation", "archive"];
+  const MODES = ["spotlight", "constellation", "realm"];
   const RELATION_TYPES = ["family", "marriage", "allegiance", "conflict", "bond"];
   const RELATION_LABELS = {
     family: "Family",
@@ -17,7 +17,7 @@
   const ICONS = {
     spotlight: "assets/icons/person.svg",
     constellation: "assets/icons/compass.svg",
-    archive: "assets/icons/castle.svg"
+    realm: "assets/icons/castle.svg"
   };
   const SPOTLIGHT_IDS = [
     "jon-snow",
@@ -239,19 +239,19 @@
     let lastFocus = null;
     let spotlightObserver = null;
     let pointerCard = null;
-    let archiveLimit = 48;
+    let realmLimit = 48;
     const initialSeason = normalizeSeason(options.initialSeason);
     const requestedMode = safeText(options.initialMode).toLowerCase();
     const state = {
       // The former constellation poster is retained as implementation history,
       // but it is no longer a public entry mode. People opens in the living
-      // Spotlight experience; Archive remains available for full indexing.
-      mode: requestedMode === "archive" ? "archive" : "spotlight",
+      // Spotlight experience; realm remains available for full indexing.
+      mode: requestedMode === "realm" ? "realm" : "spotlight",
       season: initialSeason,
-      archiveQuery: "",
-      archiveHouse: "",
-      archiveStatus: "",
-      archivePortrait: "",
+      realmQuery: "",
+      realmHouse: "",
+      realmStatus: "",
+      realmPortrait: "",
       constellationHouse: "",
       constellationTypes: new Set(RELATION_TYPES),
       selectedId: null,
@@ -478,7 +478,7 @@
             <h1 id="${id}-title">Lives in the fire.</h1>
             <p class="pi-hero__lede">Open the scene you return to, the choice that changed them, and the people they loved, betrayed, lost, or became.</p>
             ${heroMemory ? `<div class="pi-hero__pulse"><span>One line to carry</span><blockquote>“${escape(heroMemory.line)}”</blockquote><a href="#/quotes?quote=${encodeURIComponent(heroMemory.quoteId)}">Enter Arya's memory <span aria-hidden="true">↗</span></a></div>` : ""}
-            <dl class="pi-hero__stats" aria-label="Archive coverage">
+            <dl class="pi-hero__stats" aria-label="realm coverage">
               <div><dt>${data.characters.length}</dt><dd>People</dd></div>
               <div><dt>${data.relations.length}</dt><dd>Documented ties</dd></div>
               <div><dt>${houses().length}</dt><dd>Allegiances</dd></div>
@@ -489,7 +489,7 @@
         <div class="pi-command-bar">
           <nav class="pi-mode-tabs" role="tablist" aria-label="People views">
             ${modeButtonMarkup("spotlight", "Spotlight", "Essential arcs")}
-            ${modeButtonMarkup("archive", "Archive", "Every record")}
+            ${modeButtonMarkup("realm", "realm", "Every record")}
           </nav>
           <div class="pi-season-lens">
             <div class="pi-season-lens__copy">
@@ -707,73 +707,73 @@
         </section>`;
     }
 
-    function archiveCardMarkup(character) {
+    function realmCardMarkup(character) {
       const seasons = documentedSeasons(character);
-      return `<article class="pi-archive-card ${houseClass(character.house)}">
-        <button class="pi-archive-card__open" type="button" data-pi-character="${escape(character.id)}" aria-label="Open intelligence for ${escape(character.name)}">
-          ${portraitMarkup(character, "archive")}
-          <span class="pi-archive-card__identity">
+      return `<article class="pi-realm-card ${houseClass(character.house)}">
+        <button class="pi-realm-card__open" type="button" data-pi-character="${escape(character.id)}" aria-label="Open intelligence for ${escape(character.name)}">
+          ${portraitMarkup(character, "realm")}
+          <span class="pi-realm-card__identity">
             <span class="pi-card-kicker">${escape(character.house)}</span>
             <strong>${escape(character.name)}</strong>
             <small>${character.actor && !/^actor unknown$/i.test(character.actor) ? escape(character.actor) : "Cast credit not recorded"}</small>
           </span>
         </button>
-        <div class="pi-archive-card__meta">
+        <div class="pi-realm-card__meta">
           <span>${escape(statusLabel(character))}</span>
           <span>${relationCount(character.id)} ties</span>
           <span>${state.season ? `Season ${state.season}` : (seasons.length ? `Seasons ${seasons.join(", ")}` : "Series record")}</span>
         </div>
-        <div class="pi-archive-card__actions">
+        <div class="pi-realm-card__actions">
           ${compareButtonMarkup(character, true)}
           <a href="${profileHref(character)}" data-pi-profile>Profile</a>
         </div>
       </article>`;
     }
 
-    function filteredArchiveCharacters() {
-      const query = state.archiveQuery.trim().toLocaleLowerCase();
+    function filteredrealmCharacters() {
+      const query = state.realmQuery.trim().toLocaleLowerCase();
       return data.characters.filter(character => {
         const matchesQuery = !query || [character.name, character.actor, character.house, character.bio]
           .some(value => safeText(value).toLocaleLowerCase().includes(query));
-        const matchesHouse = !state.archiveHouse || character.house === state.archiveHouse;
-        const matchesStatus = !state.archiveStatus || character.status === state.archiveStatus;
+        const matchesHouse = !state.realmHouse || character.house === state.realmHouse;
+        const matchesStatus = !state.realmStatus || character.status === state.realmStatus;
         const hasPhoto = Boolean(photoFor(character));
-        const matchesPortrait = !state.archivePortrait ||
-          (state.archivePortrait === "photo" ? hasPhoto : !hasPhoto);
+        const matchesPortrait = !state.realmPortrait ||
+          (state.realmPortrait === "photo" ? hasPhoto : !hasPhoto);
         return matchesQuery && matchesHouse && matchesStatus && matchesPortrait && hasSeason(character, state.season);
       }).sort((a, b) => a.name.localeCompare(b.name));
     }
 
-    function renderArchiveResults() {
-      const results = panel.querySelector("[data-pi-archive-results]");
+    function renderrealmResults() {
+      const results = panel.querySelector("[data-pi-realm-results]");
       const count = panel.querySelector("[data-pi-result-count]");
       if (!results || !count) return;
-      const filtered = filteredArchiveCharacters();
-      const visible = filtered.slice(0, archiveLimit);
+      const filtered = filteredrealmCharacters();
+      const visible = filtered.slice(0, realmLimit);
       count.textContent = `${filtered.length} record${filtered.length === 1 ? "" : "s"}`;
       results.innerHTML = visible.length ? `
-        <div class="pi-archive-grid">${visible.map(archiveCardMarkup).join("")}</div>
+        <div class="pi-realm-grid">${visible.map(realmCardMarkup).join("")}</div>
         ${visible.length < filtered.length ? `<button class="pi-load-more" type="button" data-pi-load-more>Show ${Math.min(48, filtered.length - visible.length)} more records</button>` : ""}` : `
-        <div class="pi-empty"><h3>No matching people</h3><p>Clear a filter or choose another season.</p><button type="button" data-pi-clear-archive>Clear archive filters</button></div>`;
+        <div class="pi-empty"><h3>No matching people</h3><p>Clear a filter or choose another season.</p><button type="button" data-pi-clear-realm>Clear realm filters</button></div>`;
     }
 
-    function renderArchive() {
+    function renderrealm() {
       panel.innerHTML = `
-        <section class="pi-section pi-archive" aria-labelledby="${id}-archive-title">
+        <section class="pi-section pi-realm" aria-labelledby="${id}-realm-title">
           <div class="pi-section-heading pi-section-heading--compact">
-            <div><p class="pi-eyebrow">The complete index</p><h2 id="${id}-archive-title">The cast archive</h2></div>
+            <div><p class="pi-eyebrow">The complete index</p><h2 id="${id}-realm-title">The cast realm</h2></div>
             <p>Search every person, actor credit, allegiance, and documented connection.</p>
           </div>
-          <div class="pi-archive-controls">
-            <label class="pi-search-field"><span>Search people</span><input type="search" value="${escape(state.archiveQuery)}" placeholder="Name, actor, house, or biography" autocomplete="off" data-pi-archive-query></label>
-            <label><span>House</span><select data-pi-archive-house><option value="">All allegiances</option>${houses().map(house => `<option value="${escape(house)}"${house === state.archiveHouse ? " selected" : ""}>${escape(house)}</option>`).join("")}</select></label>
-            <label><span>Fate</span><select data-pi-archive-status><option value="">All end states</option><option value="alive"${state.archiveStatus === "alive" ? " selected" : ""}>Alive</option><option value="dead"${state.archiveStatus === "dead" ? " selected" : ""}>Dead</option></select></label>
-            <label><span>Portrait</span><select data-pi-archive-portrait><option value="">All portraits</option><option value="photo"${state.archivePortrait === "photo" ? " selected" : ""}>Actor photos</option><option value="fallback"${state.archivePortrait === "fallback" ? " selected" : ""}>Archive initials</option></select></label>
+          <div class="pi-realm-controls">
+            <label class="pi-search-field"><span>Search people</span><input type="search" value="${escape(state.realmQuery)}" placeholder="Name, actor, house, or biography" autocomplete="off" data-pi-realm-query></label>
+            <label><span>House</span><select data-pi-realm-house><option value="">All allegiances</option>${houses().map(house => `<option value="${escape(house)}"${house === state.realmHouse ? " selected" : ""}>${escape(house)}</option>`).join("")}</select></label>
+            <label><span>Fate</span><select data-pi-realm-status><option value="">All end states</option><option value="alive"${state.realmStatus === "alive" ? " selected" : ""}>Alive</option><option value="dead"${state.realmStatus === "dead" ? " selected" : ""}>Dead</option></select></label>
+            <label><span>Portrait</span><select data-pi-realm-portrait><option value="">All portraits</option><option value="photo"${state.realmPortrait === "photo" ? " selected" : ""}>Actor photos</option><option value="fallback"${state.realmPortrait === "fallback" ? " selected" : ""}>realm initials</option></select></label>
           </div>
           <div class="pi-results-heading"><p data-pi-result-count aria-live="polite"></p><p>Season lens uses documented records, not a full appearance ledger.</p></div>
-          <div data-pi-archive-results></div>
+          <div data-pi-realm-results></div>
         </section>`;
-      renderArchiveResults();
+      renderrealmResults();
     }
 
     // Portraits are real buttons, not just delegated card decoration. Binding
@@ -811,7 +811,7 @@
 
     function renderMode() {
       if (state.mode === "constellation") renderConstellation();
-      else if (state.mode === "archive") renderArchive();
+      else if (state.mode === "realm") renderrealm();
       else renderSpotlight();
       bindCharacterButtons(panel);
       bindNeighborButtons(panel);
@@ -986,7 +986,7 @@
       const normalized = season === 0 ? 0 : normalizeSeason(season);
       if (normalized === state.season) return;
       state.season = normalized;
-      archiveLimit = 48;
+      realmLimit = 48;
       chooseSelectedCharacter();
       updateSeasonButtons();
       renderMode();
@@ -1038,14 +1038,14 @@
       if (restoreFocus && lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
     }
 
-    function clearArchiveFilters() {
-      state.archiveQuery = "";
-      state.archiveHouse = "";
-      state.archiveStatus = "";
-      state.archivePortrait = "";
-      archiveLimit = 48;
-      renderArchive();
-      const search = panel.querySelector("[data-pi-archive-query]");
+    function clearrealmFilters() {
+      state.realmQuery = "";
+      state.realmHouse = "";
+      state.realmStatus = "";
+      state.realmPortrait = "";
+      realmLimit = 48;
+      renderrealm();
+      const search = panel.querySelector("[data-pi-realm-query]");
       if (search) search.focus();
     }
 
@@ -1143,14 +1143,14 @@
         return;
       }
       if (event.target.closest("[data-pi-load-more]")) {
-        archiveLimit += 48;
-        renderArchiveResults();
-        const cards = panel.querySelectorAll(".pi-archive-card__open");
-        if (cards.length) cards[Math.min(archiveLimit - 48, cards.length - 1)].focus({ preventScroll: true });
+        realmLimit += 48;
+        renderrealmResults();
+        const cards = panel.querySelectorAll(".pi-realm-card__open");
+        if (cards.length) cards[Math.min(realmLimit - 48, cards.length - 1)].focus({ preventScroll: true });
         return;
       }
-      if (event.target.closest("[data-pi-clear-archive]")) {
-        clearArchiveFilters();
+      if (event.target.closest("[data-pi-clear-realm]")) {
+        clearrealmFilters();
         return;
       }
       const profileLink = event.target.closest("[data-pi-profile]");
@@ -1161,16 +1161,16 @@
     }
 
     function handleInput(event) {
-      if (!event.target.matches("[data-pi-archive-query]")) return;
-      state.archiveQuery = event.target.value;
-      archiveLimit = 48;
-      renderArchiveResults();
+      if (!event.target.matches("[data-pi-realm-query]")) return;
+      state.realmQuery = event.target.value;
+      realmLimit = 48;
+      renderrealmResults();
     }
 
     function handleChange(event) {
-      if (event.target.matches("[data-pi-archive-house]")) state.archiveHouse = event.target.value;
-      else if (event.target.matches("[data-pi-archive-status]")) state.archiveStatus = event.target.value;
-      else if (event.target.matches("[data-pi-archive-portrait]")) state.archivePortrait = event.target.value;
+      if (event.target.matches("[data-pi-realm-house]")) state.realmHouse = event.target.value;
+      else if (event.target.matches("[data-pi-realm-status]")) state.realmStatus = event.target.value;
+      else if (event.target.matches("[data-pi-realm-portrait]")) state.realmPortrait = event.target.value;
       else if (event.target.matches("[data-pi-constellation-house]")) {
         state.constellationHouse = event.target.value;
         chooseSelectedCharacter();
@@ -1185,8 +1185,8 @@
         if (replacement) replacement.focus();
         return;
       } else return;
-      archiveLimit = 48;
-      renderArchiveResults();
+      realmLimit = 48;
+      renderrealmResults();
     }
 
     function cycleFocus(elements, current, direction) {

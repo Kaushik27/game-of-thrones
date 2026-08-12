@@ -92,7 +92,7 @@ const peopleSource = read("js/people-intelligence.js");
 const ravenWallSource = read("js/raven-wall.js");
 const atmosphereSource = read("js/global-atmosphere.js");
 const navSource = read("src/react-nav-entry.jsx");
-const archiveShellSource = read("css/archive-shell.css");
+const realmShellSource = read("css/realm-shell.css");
 const chronicleSource = read("js/chronicle-timeline.js");
 const compassSource = read("js/realm-compass.js");
 const whatIfSource = read("js/what-if.js");
@@ -108,7 +108,7 @@ const contracts = [
   [cinematicSource.includes("cinematic-prologue") && cinematicSource.includes("scrollToProgress"), "Cinematic Explore must expose a scroll-driven prologue"],
   [cinematicSource.includes("data-cinematic-focus-image") && cinematicSource.includes("data-cinematic-moments"), "Cinematic Explore must expose a focal character and story moments"],
   [cinematicSource.includes("data-cinematic-quote-text") && cinematicSource.includes("quoteId"), "Cinematic Explore must surface a featured quote per chapter"],
-  [cinematicSource.includes("data-cinematic-navigate") && cinematicSource.includes("#/battles?battle=red-wedding"), "Cinematic moments must link into living archive routes"],
+  [cinematicSource.includes("data-cinematic-navigate") && cinematicSource.includes("#/battles?battle=red-wedding"), "Cinematic moments must link into living realm routes"],
   [cinematicSource.includes("global.RealmJourney.mount"), "Cinematic Explore must hand off to RealmJourney"],
   [appSource.includes("onEntryChange: entry => replaceHashQuery"), "Lore entry state must stay in the URL"],
   [appSource.includes("onCategoryChange: category => replaceHashQuery"), "Lore category state must stay in the URL"],
@@ -126,32 +126,32 @@ const contracts = [
   [appSource.includes("got:route-change") && appSource.includes("route-enter"), "route changes must publish a shared cinematic transition state"],
   [!appSource.includes("RealmCompass") && !navSource.includes("realm-lens"), "the retired spoiler lens must not remain in the active shell"],
   [navSource.includes("data-atmosphere-control") && navSource.includes("GotAtmosphere"), "React shell must own the persistent atmosphere control"],
-  [archiveShellSource.includes("body.archive-route") && archiveShellSource.includes("--archive-gold"), "archive routes must share a visual shell token system"],
+  [realmShellSource.includes("body.realm-route") && realmShellSource.includes("--realm-gold"), "realm routes must share a visual shell token system"],
   [appSource.includes("window.RavenWall.mount") && appSource.includes("atlasRequested"), "Timeline must route plain navigation to the Memory Wall and preserve the Episode Atlas"]
   , [appSource.includes("viewChronicle") && appSource.includes("window.RealmChronicle.mount"), "Chronicle must have a dedicated route and mount"]
   , [chronicleSource.includes("data-chronicle-filter") && chronicleSource.includes("data-chronicle-random"), "Chronicle must expose filter and surprise interactions"]
   , [chronicleSource.includes("IntersectionObserver") && chronicleSource.includes("updateProgress"), "Chronicle must respond to scroll with reveal and progress states"]
   , [chronicleSource.includes("dustHTML") && chronicleSource.includes("onPointerMove"), "Chronicle must provide ambient and pointer-driven life"]
-  , [chronicleSource.includes("const spoilerVisible = records"), "Chronicle must show the complete fan archive"]
+  , [chronicleSource.includes("const spoilerVisible = records"), "Chronicle must show the complete fan realm"]
   , [chronicleSource.includes("function entryButton") && chronicleSource.includes("Open moment"), "Chronicle cards must expose a resilient click target and visible action cue"]
-  , [archiveShellSource.includes("archive-horizon-drift") && archiveShellSource.includes("north-journey-bg.jpg") && archiveShellSource.includes("capital-journey-bg.jpg"), "Archive routes must share a fluid atmospheric backdrop"]
-  , [archiveShellSource.includes("overflow: clip") && archiveShellSource.includes("body.archive-route #app"), "Archive atmosphere must stay inside the page frame"]
+  , [realmShellSource.includes("realm-horizon-drift") && realmShellSource.includes("north-journey-bg.jpg") && realmShellSource.includes("capital-journey-bg.jpg"), "realm routes must share a fluid atmospheric backdrop"]
+  , [realmShellSource.includes("overflow: clip") && realmShellSource.includes("body.realm-route #app"), "realm atmosphere must stay inside the page frame"]
   , [peopleSource.includes("observeSpotlightCards") && peopleSource.includes("handleSpotlightPointerMove"), "People spotlight must provide scroll and pointer interaction"]
   , [appSource.includes("houses-page") && appSource.includes("data-house-card"), "Houses must use the cinematic banner directory"]
-  , [compassSource.includes("randomDestination"), "the archive compass module remains available for legacy imports"]
+  , [compassSource.includes("randomDestination"), "the realm compass module remains available for legacy imports"]
   , [ravenSource.includes('key: "what-if"') && ravenSource.includes("getWhatIfs"), "global search must index fan counterfactual branches"]
-  , [whatIfSource.includes("WhatIfChamber") && whatIfSource.includes("Fan speculation"), "archive must provide a clearly labeled counterfactual chamber"]
-  , [deskSource.includes("MaestersDesk") && deskSource.includes("Image provenance"), "archive must provide a source and provenance desk"]
+  , [whatIfSource.includes("WhatIfChamber") && whatIfSource.includes("Fan speculation"), "realm must provide a clearly labeled counterfactual chamber"]
+  , [deskSource.includes("MaestersDesk") && deskSource.includes("Image provenance"), "realm must provide a source and provenance desk"]
 ];
 contracts.forEach(([condition, message]) => assert.ok(condition, message));
 
 assert.equal(new Set(battles.map(battle => battle.id)).size, battles.length, "exact battle destinations require unique IDs");
 assert.equal(new Set(quotes.map(quote => quote.id)).size, quotes.length, "exact quote destinations require unique IDs");
 const quoteIds = new Set(quotes.map(quote => quote.id));
-assert.ok(featuredQuoteIds.length >= 8, "the Voices archive must keep a meaningful featured set");
+assert.ok(featuredQuoteIds.length >= 8, "the Voices realm must keep a meaningful featured set");
 assert.ok(Object.isFrozen(featuredQuoteIds), "featured quote IDs must remain immutable");
 featuredQuoteIds.forEach(quoteId => assert.ok(quoteIds.has(quoteId), `featured quote ${quoteId} must exist in quotes.js`));
-assert.ok(quoteCollections.length >= 4, "the Voices archive must keep multiple editorial collections");
+assert.ok(quoteCollections.length >= 4, "the Voices realm must keep multiple editorial collections");
 assert.ok(Object.isFrozen(quoteCollections), "quote collections must remain immutable");
 quoteCollections.forEach(collection => {
   assert.ok(collection.id && collection.label, "quote collections need stable IDs and labels");
@@ -170,7 +170,7 @@ assert.ok(scripts.indexOf("js/quotes.js") < scripts.indexOf("js/quote-curation.j
 assert.ok(scripts.indexOf("js/fan-moments.js") < scripts.indexOf("js/app.js"), "fan moments must load before the router");
 assert.ok(scripts.indexOf("js/raven-wall.js") < scripts.indexOf("js/app.js"), "Memory Wall must load before the router");
 assert.ok(scripts.indexOf("js/global-atmosphere.js") < scripts.indexOf("js/app.js"), "atmosphere must load before route rendering");
-assert.ok(indexSource.includes("css/archive-shell.css?v=archive-shell-4"), "shared archive shell must load in the static entrypoint");
+assert.ok(indexSource.includes("css/realm-shell.css?v=realm-shell-4"), "shared realm shell must load in the static entrypoint");
 assert.ok(indexSource.includes("css/houses.css?v=houses-1"), "houses styling must load in the static entrypoint");
 assert.ok(indexSource.includes("css/what-if.css?v=what-if-1"), "what-if styling must load in the static entrypoint");
 assert.ok(indexSource.includes("css/maesters-desk.css?v=maesters-desk-1"), "maesters desk styling must load in the static entrypoint");

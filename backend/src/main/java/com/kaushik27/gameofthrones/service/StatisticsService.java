@@ -3,16 +3,16 @@ package com.kaushik27.gameofthrones.service;
 import java.time.Instant;
 
 import com.kaushik27.gameofthrones.dto.StatisticsResponse;
-import com.kaushik27.gameofthrones.repository.ArchiveStatisticsRepository;
+import com.kaushik27.gameofthrones.repository.RealmStatisticsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)
 public class StatisticsService {
-    private final ArchiveStatisticsRepository repository;
+    private final RealmStatisticsRepository repository;
 
-    public StatisticsService(ArchiveStatisticsRepository repository) {
+    public StatisticsService(RealmStatisticsRepository repository) {
         this.repository = repository;
     }
 

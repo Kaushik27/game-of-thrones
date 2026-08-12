@@ -77,7 +77,7 @@ context.seedEvents.forEach((event) => {
   ].join(", ")});`);
 });
 
-const domainDestination = new URL("../backend/src/main/resources/db/migration/V4__seed_archive_domains.sql", import.meta.url);
+const domainDestination = new URL("../backend/src/main/resources/db/migration/V4__seed_realm_domains.sql", import.meta.url);
 fs.writeFileSync(domainDestination, `-- Generated from the curated legacy JavaScript datasets.\n${domainRows.join("\n")}\n`);
 
 console.log(`Generated ${rows.length} characters, ${Object.keys(context.seedHouseInfo).length} houses, ${context.seedRelations.length} relationships, ${context.seedEpisodes.length} episodes, ${context.seedQuotes.length} quotes, ${context.seedBattles.length} battles, and ${context.seedEvents.length} events.`);

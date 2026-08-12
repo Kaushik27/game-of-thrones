@@ -372,7 +372,7 @@
         </div>
         <div class="wa-hero__aside">
           <p class="wa-hero__aside-note">A living atlas of the places where people made irreversible choices.</p>
-          <dl class="wa-hero__facts" aria-label="World archive inventory">
+          <dl class="wa-hero__facts" aria-label="World realm inventory">
             <div><dt>${runtime.regions.length}</dt><dd>charted regions</dd></div>
             <div><dt>${runtime.settlements.length}</dt><dd>mapped places</dd></div>
             <div><dt>${runtime.battles.length}</dt><dd>conflict records</dd></div>
@@ -561,7 +561,7 @@
         return `<aside class="wa-journey-detail" aria-label="Journey detail">
           <p class="wa-eyebrow">No grounded stop yet</p>
           <h3>${escapeMarkup(person.label)}</h3>
-          <p>The current archive has no location-backed step for this character through Season ${currentSeason}.</p>
+          <p>The current realm has no location-backed step for this character through Season ${currentSeason}.</p>
           ${first ? `<p class="wa-detail-note">The first available stop appears in Season ${first.season}: ${escapeMarkup(first.title)}.</p>` : ""}
           ${sourceLink(`#/character/${encodeURIComponent(person.id)}`, "Open character dossier")}
         </aside>`;

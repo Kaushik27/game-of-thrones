@@ -1,4 +1,4 @@
-// Clearly non-canon counterfactuals for the fan archive. These are prompts
+// Clearly non-canon counterfactuals for the fan realm. These are prompts
 // for discussion, not claims about the books or television series.
 (function installWhatIfData(global) {
   const records = [

@@ -29,18 +29,18 @@ async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
       signal: timeoutController.signal
     });
     const trace: ApiTrace = { method: "GET", path, status: response.status, durationMs: Math.round(performance.now() - started),
-      database: response.headers.get("Archive-Data-Source") || undefined, state: response.ok ? "complete" : "error", at: Date.now() };
+      database: response.headers.get("Realm-Data-Source") || undefined, state: response.ok ? "complete" : "error", at: Date.now() };
     publish(trace);
     tracePublished = true;
     if (!response.ok) {
       const problem = await response.json().catch(() => undefined) as { detail?: string } | undefined;
       throw new Error(problem?.detail || (response.status === 503
-        ? "The archive service is temporarily unavailable."
-        : `The archive request failed (${response.status}).`));
+        ? "The project service is temporarily unavailable."
+        : `The project request failed (${response.status}).`));
     }
     return response.json() as Promise<T>;
   } catch (error) {
-    if (timedOut) throw new Error("The archive request timed out. Try again.");
+    if (timedOut) throw new Error("The project request timed out. Try again.");
     if ((error as Error).name !== "AbortError" && !tracePublished) {
       publish({ method: "GET", path, durationMs: Math.round(performance.now() - started), state: "error", at: Date.now() });
     }
@@ -51,7 +51,7 @@ async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
   }
 }
 
-function publish(trace: ApiTrace) { window.dispatchEvent(new CustomEvent<ApiTrace>("archive:api-trace", { detail: trace })); }
+function publish(trace: ApiTrace) { window.dispatchEvent(new CustomEvent<ApiTrace>("realm:api-trace", { detail: trace })); }
 
 export function getCharacters(filters: CharacterFilters, signal?: AbortSignal): Promise<CharacterPage> {
   const parameters = new URLSearchParams({

@@ -446,7 +446,7 @@
         <section class="story-atlas story-atlas--empty" role="alert">
           <img src="${ICONS.compass}" alt="">
           <p class="story-atlas__eyebrow">The Episode Atlas</p>
-          <h1>The archive is not loaded</h1>
+          <h1>The realm is not loaded</h1>
           <p>Episode records are required before this story can be opened.</p>
         </section>`;
       return Object.freeze({

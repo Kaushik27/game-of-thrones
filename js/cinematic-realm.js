@@ -18,7 +18,7 @@
       moments: [
         { eyebrow: "The Wall", title: "A border before a crown", text: "Begin at the place where the story first looks back at us.", href: "#/map?season=1" },
         { eyebrow: "A warning", title: "The night is listening", text: "Every legend begins as a voice no one wants to hear.", href: "#/quotes?quote=q21" },
-        { eyebrow: "Cross the line", title: "Enter the living realm", text: "Scroll once. The archive will open around you.", href: "#realm-journey-root" }
+        { eyebrow: "Cross the line", title: "Enter the living realm", text: "Scroll once. The realm will open around you.", href: "#realm-journey-root" }
       ]
     },
     {
@@ -72,7 +72,7 @@
       focus: { name: "Arya Stark", role: "No one. Everyone.", image: "assets/characters/arya-visual.png", characterId: "arya-stark" },
       quote: { text: "What do we say to the god of death? Not today.", speaker: "Arya Stark", quoteId: "q10" },
       moments: [
-        { eyebrow: "The living archive", title: "73 episodes", text: "Trace every turning point from the first raven to the last crown.", href: "#/timeline" },
+        { eyebrow: "The living realm", title: "73 episodes", text: "Trace every turning point from the first raven to the last crown.", href: "#/timeline" },
         { eyebrow: "The war table", title: "9 battles", text: "See the collisions that changed the fate of the realm.", href: "#/battles" },
         { eyebrow: "The people", title: "196 lives", text: "Open a dossier and follow the ties beneath the story.", href: "#/characters" }
       ]
@@ -143,7 +143,7 @@
         <div class="cinematic-memory-gallery__intro">
           <p class="cinematic-handoff__eyebrow">A fan's memory reel</p>
           <h2 id="cinematic-memory-title">The scenes we never quite left.</h2>
-          <p>Six fragments. One at a time. Let the image arrive before the archive opens.</p>
+          <p>Six fragments. One at a time. Let the image arrive before the realm opens.</p>
           <a href="#/quotes" class="cinematic-memory-gallery__link">Open every voice <span aria-hidden="true">↗</span></a>
           <p class="cinematic-memory-gallery__hint"><span aria-hidden="true">01</span> Choose a memory below</p>
         </div>
@@ -431,7 +431,7 @@
         onNavigate: config.onNavigate
       });
     } else {
-      journeyRoot.innerHTML = `<div class="realm-journey-loading realm-journey-loading--error" role="alert"><span>The road is blocked for now.</span><a href="#/timeline">Open the season archive</a></div>`;
+      journeyRoot.innerHTML = `<div class="realm-journey-loading realm-journey-loading--error" role="alert"><span>The road is blocked for now.</span><a href="#/timeline">Open the season realm</a></div>`;
     }
 
     const handle = {

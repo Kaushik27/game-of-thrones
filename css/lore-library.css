@@ -1,6 +1,6 @@
 /* ===========================================================================
    Living Lore Library
-   A cinematic, local-only archive that shares the Explore page's depth,
+   A cinematic, local-only realm that shares the Explore page's depth,
    restrained gold, large display type, and tactile layered surfaces.
    ========================================================================== */
 
@@ -121,7 +121,7 @@ body.lore-library-drawer-open { overflow: hidden; }
 .lore-feature-card__top img,
 .lore-library__search-field img,
 .lore-category img,
-.lore-archive__empty img,
+.lore-realm__empty img,
 .lore-drawer__related img {
   filter: invert(77%) sepia(31%) saturate(741%) hue-rotate(2deg) brightness(89%);
 }
@@ -436,13 +436,13 @@ body.lore-library-drawer-open { overflow: hidden; }
 
 .lore-card__action { margin-left: auto; color: var(--lore-gold); }
 
-.lore-archive__grid {
+.lore-realm__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 
-.lore-archive__status {
+.lore-realm__status {
   min-width: 9ch;
   color: var(--lore-gold) !important;
   font-family: 'Inter', sans-serif !important;
@@ -453,7 +453,7 @@ body.lore-library-drawer-open { overflow: hidden; }
   text-transform: uppercase;
 }
 
-.lore-archive__empty {
+.lore-realm__empty {
   min-height: 370px;
   padding: 70px 24px;
   border: 1px solid rgba(238, 235, 226, 0.08);
@@ -461,10 +461,10 @@ body.lore-library-drawer-open { overflow: hidden; }
   text-align: center;
 }
 
-.lore-archive__empty img { width: 26px; height: 26px; opacity: 0.62; }
-.lore-archive__empty h3 { margin: 20px 0 7px; font-size: 1.5rem; font-weight: 400; }
-.lore-archive__empty p { margin: 0; color: #777c7b; }
-.lore-archive__empty button { margin-top: 24px; border-color: var(--lore-line-strong); border-radius: 0; background: transparent; color: var(--lore-gold); }
+.lore-realm__empty img { width: 26px; height: 26px; opacity: 0.62; }
+.lore-realm__empty h3 { margin: 20px 0 7px; font-size: 1.5rem; font-weight: 400; }
+.lore-realm__empty p { margin: 0; color: #777c7b; }
+.lore-realm__empty button { margin-top: 24px; border-color: var(--lore-line-strong); border-radius: 0; background: transparent; color: var(--lore-gold); }
 
 .lore-drawer {
   position: fixed;
@@ -653,7 +653,7 @@ body.lore-library-drawer-open { overflow: hidden; }
   .lore-featured__grid { grid-template-columns: 1fr 1fr; }
   .lore-feature-card:first-child { grid-column: 1 / -1; }
   .lore-feature-card__open { min-height: 370px; }
-  .lore-archive__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lore-realm__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 720px) {
@@ -673,7 +673,7 @@ body.lore-library-drawer-open { overflow: hidden; }
   .lore-section-heading > p { max-width: 100%; text-align: left; }
   .lore-featured { margin-bottom: 72px; }
   .lore-featured__grid,
-  .lore-archive__grid { grid-template-columns: 1fr; }
+  .lore-realm__grid { grid-template-columns: 1fr; }
   .lore-feature-card:first-child { grid-column: auto; }
   .lore-feature-card__open { min-height: 360px; }
   .lore-card__open { min-height: 300px; }

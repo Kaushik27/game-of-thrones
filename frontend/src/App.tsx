@@ -26,11 +26,11 @@ function ApplicationShell() {
   useEffect(() => setMenuOpen(false), [location.pathname]);
   return <div className="app-shell">
     <header className="site-header">
-      <NavLink className="brand" to="/" aria-label="Game of Thrones archive home"><span className="brand-mark">✦</span><span><strong>THE RAVEN WALL</strong><small>FULL-STACK TEACHING ARCHIVE</small></span></NavLink>
+      <NavLink className="brand" to="/" aria-label="Game of Thrones project home"><span className="brand-mark">✦</span><span><strong>THE RAVEN WALL</strong><small>FULL-STACK TEACHING PROJECT</small></span></NavLink>
       <nav className={menuOpen ? "open" : ""} aria-label="Primary navigation">{navigation.map(([to, label]) => <NavLink onClick={()=>setMenuOpen(false)} key={to} to={to} end={to === "/"}>{label}</NavLink>)}</nav>
       <button className="mobile-menu" aria-label={menuOpen?"Close navigation":"Open navigation"} aria-expanded={menuOpen} onClick={()=>setMenuOpen(value=>!value)}>{menuOpen?"Close":"Menu"}</button>
     </header>
-    <Suspense fallback={<main className="page"><div className="notice" role="status">Loading archive view…</div></main>}><Routes>
+      <Suspense fallback={<main className="page"><div className="notice" role="status">Loading project view…</div></main>}><Routes>
       <Route path="/" element={<DashboardPage />} />
       <Route path="/people" element={<PeoplePage />} />
       <Route path="/people/:characterId" element={<CharacterPage />} />
@@ -40,7 +40,7 @@ function ApplicationShell() {
       <Route path="/quotes" element={<QuotesPage />} />
       <Route path="/database" element={<DatabaseExplorerPage />} />
       <Route path="/architecture" element={<ArchitecturePage />} />
-      <Route path="*" element={<main className="page"><p className="eyebrow">404</p><h1>The raven lost this path.</h1><NavLink to="/">Return to the archive</NavLink></main>} />
+      <Route path="*" element={<main className="page"><p className="eyebrow">404</p><h1>The raven lost this path.</h1><NavLink to="/">Return to the project</NavLink></main>} />
     </Routes></Suspense>
     <ApiJourney />
     <footer>React frontend · Spring Boot REST API · Spring Data JPA · Flyway · H2 database</footer>

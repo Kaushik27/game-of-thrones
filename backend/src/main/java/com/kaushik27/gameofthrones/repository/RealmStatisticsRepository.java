@@ -4,10 +4,10 @@ import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ArchiveStatisticsRepository {
+public class RealmStatisticsRepository {
     private final EntityManager entityManager;
 
-    public ArchiveStatisticsRepository(EntityManager entityManager) {
+    public RealmStatisticsRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

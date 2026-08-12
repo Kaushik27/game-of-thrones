@@ -1,5 +1,5 @@
 /* ========================================================================
-   Voices of the Realm — quote archive
+   Voices of the Realm — quote realm
    ======================================================================== */
 
 body.voices-route {
@@ -45,7 +45,7 @@ body.voices-route::before {
 .voices-sound-toggle:hover, .voices-sound-toggle[aria-pressed="true"] { border-color: var(--voices-gold); color: #f0d58d; }
 @keyframes voices-interlude-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 
-.voices-archive {
+.voices-realm {
   --voices-ink: #f1eee7;
   --voices-muted: #aaa69d;
   --voices-faint: #898780;
@@ -143,7 +143,7 @@ body.voices-route::before {
 .voices-button--solid { background: var(--voices-gold); color: #17130a; }
 .voices-button--solid:hover { background: #e9c979; }
 
-.voices-archive__layout { display: grid; grid-template-columns: minmax(190px, 0.28fr) minmax(0, 1fr); gap: clamp(26px, 5vw, 72px); align-items: start; }
+.voices-realm__layout { display: grid; grid-template-columns: minmax(190px, 0.28fr) minmax(0, 1fr); gap: clamp(26px, 5vw, 72px); align-items: start; }
 .voices-sidebar { position: sticky; top: 94px; }
 .voices-sidebar__label { padding-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
 .voices-sidebar__label--filters { margin-top: 30px; }
@@ -195,7 +195,7 @@ body.voices-route::before {
 @media (max-width: 900px) {
   body.voices-route { background-attachment: scroll; }
   .voices-hero::after { right: -60px; opacity: 0.55; }
-  .voices-archive__layout { grid-template-columns: 1fr; }
+  .voices-realm__layout { grid-template-columns: 1fr; }
   .voices-sidebar { position: static; display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
   .voices-sidebar__label, .voices-collections { grid-column: 1 / -1; }
   .voices-sidebar__label--filters { margin-top: 24px; }
@@ -212,7 +212,7 @@ body.voices-route::before {
   .voices-film__quote blockquote { font-size: clamp(2.15rem, 12vw, 4.1rem); }
   .voices-film__controls { gap: 9px; justify-content: space-between; }
   .voices-film__dot { width: 26px; }
-  .voices-archive { padding-top: 34px; }
+  .voices-realm { padding-top: 34px; }
   .voices-hero__title { font-size: clamp(2.7rem, 15vw, 4.7rem); }
   .voices-hero__stats { gap: 13px 18px; }
   .voices-spotlight__body { grid-template-columns: 1fr; gap: 24px; min-height: 0; }

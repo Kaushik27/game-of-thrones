@@ -7,8 +7,8 @@ export default function ApiJourney() {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const listener = (event: Event) => setTrace((event as CustomEvent<ApiTrace>).detail);
-    window.addEventListener("archive:api-trace", listener);
-    return () => window.removeEventListener("archive:api-trace", listener);
+    window.addEventListener("realm:api-trace", listener);
+    return () => window.removeEventListener("realm:api-trace", listener);
   }, []);
   return <aside className={`api-journey${open ? " open" : ""}`} aria-label="Live request journey">
     <button className="api-journey-toggle" onClick={() => setOpen(value => !value)} aria-expanded={open}>

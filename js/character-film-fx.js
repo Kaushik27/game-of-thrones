@@ -43,7 +43,7 @@
       if (destroyed) return;
       context.clearRect(0, 0, width, height);
       const scene = stage.dataset.scene || "title";
-      const warm = scene === "turn" || scene === "archive";
+      const warm = scene === "turn" || scene === "realm";
       particles.forEach(particle => {
         particle.y += particle.speed;
         particle.x += particle.drift;

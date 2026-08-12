@@ -14,9 +14,9 @@ RUN ./backend/gradlew -p backend clean bootJar --no-daemon
 
 FROM eclipse-temurin:25-jre-alpine
 WORKDIR /app
-RUN addgroup -S archive && adduser -S archive -G archive && mkdir -p /app/data && chown -R archive:archive /app
+RUN addgroup -S realm && adduser -S realm -G realm && mkdir -p /app/data && chown -R realm:realm /app
 COPY --from=backend-build /workspace/backend/build/libs/*.jar /app/application.jar
-USER archive
+USER realm
 EXPOSE 8080
 ENV DATABASE_URL=jdbc:h2:file:/app/data/game-of-thrones
 HEALTHCHECK --interval=30s --timeout=3s --start-period=20s --retries=3 CMD wget -q -O /dev/null http://127.0.0.1:8080/actuator/health || exit 1

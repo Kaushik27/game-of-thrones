@@ -589,7 +589,7 @@
       <div class="raven-search__dialog" role="dialog" aria-modal="true" aria-labelledby="${TITLE_ID}">
         <div class="raven-search__header">
           <div>
-            <div class="raven-search__eyebrow">The archives of Westeros</div>
+            <div class="raven-search__eyebrow">The realms of Westeros</div>
             <h2 class="raven-search__title" id="${TITLE_ID}">Search the Seven Kingdoms</h2>
           </div>
           <button class="raven-search__close" type="button" data-raven-search-close aria-label="Close search">

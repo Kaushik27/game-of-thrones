@@ -27,8 +27,8 @@ class ApiExceptionHandler {
     }
 
     @ExceptionHandler({HouseNotFoundException.class, EpisodeNotFoundException.class, BattleNotFoundException.class})
-    ProblemDetail handleArchiveRecordNotFound(RuntimeException exception, HttpServletRequest request) {
-        return problem(HttpStatus.NOT_FOUND, "Archive record not found", exception.getMessage(),
+    ProblemDetail handleRealmRecordNotFound(RuntimeException exception, HttpServletRequest request) {
+        return problem(HttpStatus.NOT_FOUND, "realm record not found", exception.getMessage(),
                 ApiErrorCode.RESOURCE_NOT_FOUND, request);
     }
 

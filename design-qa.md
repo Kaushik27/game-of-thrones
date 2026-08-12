@@ -22,13 +22,13 @@ No actionable P0, P1, or P2 visual, responsive, interaction, or accessibility fi
 - Focused reference/People evidence: `/Users/xkxm377/.codex/visualizations/2026/08/07/019fda86-75c3-7fd2-9104-0907288582b3/living-encyclopedia-qa/reference-people-focused-normalized.png`
 - Intended browser viewport: 1280 × 720 CSS pixels, dark theme.
 - Source pixels: 1280 × 720. Browser implementation captures: 1265 × 712 because the in-app capture excludes its scrollbar gutter. The source was downsampled to 1265 × 712 for equal-pixel comparison; no implementation capture was enlarged for the normalized evidence.
-- States: Explore Season 6 reference; People Spotlight with Season 6 lens; Stories Season 1 Episodes mode; World Season 1 Atlas mode; Lore all-categories archive. These are different product states by design, so the comparison judges the shared visual system and visible interaction hierarchy rather than claiming identical content geometry.
+- States: Explore Season 6 reference; People Spotlight with Season 6 lens; Stories Season 1 Episodes mode; World Season 1 Atlas mode; Lore all-categories realm. These are different product states by design, so the comparison judges the shared visual system and visible interaction hierarchy rather than claiming identical content geometry.
 
 ## Full-view and focused evidence
 
 The normalized contact sheet compares the source and all four routes in one visual input. It verifies common navigation, type hierarchy, frame proportions, gold/ink palette, square control surfaces, and the handoff from editorial hero to visible interactive controls.
 
-The focused reference/People comparison keeps both screens at 1265 × 712 and confirms readable display type, consistent navigation density, fine-rule treatment, stats alignment, and the now-visible Spotlight/Constellation/Archive command surface. No additional micro-crop was required because all relevant typography, navigation, hero imagery, statistics, and primary controls remain legible at normalized 1:1 dimensions.
+The focused reference/People comparison keeps both screens at 1265 × 712 and confirms readable display type, consistent navigation density, fine-rule treatment, stats alignment, and the now-visible Spotlight/Constellation/realm command surface. No additional micro-crop was required because all relevant typography, navigation, hero imagery, statistics, and primary controls remain legible at normalized 1:1 dimensions.
 
 ## Comparison history
 
@@ -52,10 +52,10 @@ The focused reference/People comparison keeps both screens at 1265 × 712 and co
 
 ## Browser and interaction checks
 
-- People: Spotlight, Constellation, Archive search/filtering, dossiers, two-person comparison, season lens, character navigation, keyboard focus, and mobile bottom-sheet behavior.
+- People: Spotlight, Constellation, realm search/filtering, dossiers, two-person comparison, season lens, character navigation, keyboard focus, and mobile bottom-sheet behavior.
 - Stories: 73 episode records; `10/10/10/10/10/10/7/6` season counts; Episodes, Themes, and Consequences modes; direct links; filtered chapter navigation; search; season/theme rails; source links; focus restoration.
 - World: Atlas, Journeys, Power, and Lore modes; all eight seasons; map hotspots; region and journey details; mobile controls; lifecycle cleanup.
-- Lore: all six categories, search, featured and archive cards, deep-linked drawers, related dossiers, character/house links, focus trap, Escape restoration, mobile drawer.
+- Lore: all six categories, search, featured and realm cards, deep-linked drawers, related dossiers, character/house links, focus trap, Escape restoration, mobile drawer.
 - Global search: grouped results include characters, episodes, lore, houses, events, battles, and quotes; “iron throne” returned episode and lore matches.
 - Exact record routing: Raven's Red Wedding event opens `s03e09`; Story and World battle/quote/event actions focus their requested destination; Lore category and drawer state remain shareable in the hash.
 - Modal lifecycle: focus returns correctly after People dossiers/comparisons and Lore drawers; when Raven opens above Lore, the first Escape closes only Raven and the second closes Lore.
@@ -81,12 +81,12 @@ The focused reference/People comparison keeps both screens at 1265 × 712 and co
 
 ### Fan memory gallery pass
 
-- The Explore handoff now uses one cinematic memory stage instead of six simultaneous information cards. The selected fragment swaps image, title, quote, speaker, context, counter, and archive link in place; the six-item rail is the only visible index.
+- The Explore handoff now uses one cinematic memory stage instead of six simultaneous information cards. The selected fragment swaps image, title, quote, speaker, context, counter, and realm link in place; the six-item rail is the only visible index.
 - Browser verification: the mobile stage rendered at 390px with `body.scrollWidth === 390`; selecting the fourth memory changed the stage to “A queen walks into fire” and `#/quotes?quote=q8`; desktop capture showed the shared filmstrip-to-memory transition without clipping or horizontal overflow.
 - Keyboard behavior: memory rail buttons use `role="tab"`, `aria-selected`, roving `tabindex`, and ArrowLeft/ArrowRight navigation. Reduced motion disables the dissolve animation without removing the state change.
 
 - The Explore route now opens with a scroll-driven five-beat prologue: a border before the crown, First, the ice; Then, the fire; A story of power; and Enter the living realm. The first frame is intentionally near-black, with the navigation hidden until the visitor begins or scrolls. Existing local realm artwork supplies the atmosphere, while the current interactive Realm Journey remains the destination below the handoff.
-- Each act now carries a real local actor portrait, a canon quote, and three live story-moment links into the archive (episodes, battles, timelines, characters, and the map), so the opening behaves like an editorial index rather than a decorative hero. Pointer parallax adds a restrained depth cue on capable devices; reduced-motion keeps the same content without the motion.
+- Each act now carries a real local actor portrait, a canon quote, and three live story-moment links into the realm (episodes, battles, timelines, characters, and the map), so the opening behaves like an editorial index rather than a decorative hero. Pointer parallax adds a restrained depth cue on capable devices; reduced-motion keeps the same content without the motion.
 - The Explore CTA now performs a short ink-and-ember canvas crossing before landing in the existing Realm Journey. The effect is isolated from page content, uses a no-canvas fallback, and keeps the destination route unchanged (`#/`).
 - Atmospheric sound is opt-in and local: a low synthesized wind layer starts only after the visitor presses Sound off, remains muted by default, and is skipped for reduced-motion users.
 - Browser verification: desktop 1280 × 720 and mobile 390 × 844 both render the opening without horizontal overflow. Scroll progress updates the active act/title, chapter buttons jump to the correct progress, the entry CTA reaches the handoff, and the season journey link lands on the existing 3D route.
@@ -96,7 +96,7 @@ The focused reference/People comparison keeps both screens at 1265 × 712 and co
 
 - The character route now behaves like a four-beat scroll film rather than a dossier with a decorative header: title card, quote card, canon turning point, then the living dossier handoff.
 - The stage is sticky while the surrounding runway becomes the playhead. The chapter rail, progress line, portrait, and local realm artwork stay in the same visual frame while scene copy crossfades in sequence.
-- Browser verification: `#/character/jon-snow` rendered the title scene, `Voice` selected the quote scene with `I know nothing, Jon Snow.`, `Turning point` selected `Jon Snow and Ygritte` with the exact event destination, and `Dossier` selected the archive scene. The open-dossier action landed on `#profile-header` and restored the full navigation chrome after the film. No broken cinematic images were found.
+- Browser verification: `#/character/jon-snow` rendered the title scene, `Voice` selected the quote scene with `I know nothing, Jon Snow.`, `Turning point` selected `Jon Snow and Ygritte` with the exact event destination, and `Dossier` selected the realm scene. The open-dossier action landed on `#profile-header` and restored the full navigation chrome after the film. No broken cinematic images were found.
 - Pointer parallax is disabled under reduced motion; the mobile breakpoint changes the chapter rail to a horizontal control row and keeps the scene composition within the viewport.
 - Published verification: GitHub Pages serves the refreshed character film assets; the live title scene and `Voice` chapter both render with zero browser warnings/errors.
 - The film also exposes the same opt-in Sound off control; enabling it updates `aria-pressed` without introducing console warnings or an external audio request.
@@ -105,7 +105,7 @@ The focused reference/People comparison keeps both screens at 1265 × 712 and co
 
 ## Quote interludes and World camera journey
 
-- Voices now opens with “Words That Moved the Realm”: one featured quote at a time, speaker portrait, house, season/episode context, editorial context, previous/next controls, exact archive links, and an opt-in sound control. The searchable quote archive remains below the interlude.
+- Voices now opens with “Words That Moved the Realm”: one featured quote at a time, speaker portrait, house, season/episode context, editorial context, previous/next controls, exact realm links, and an opt-in sound control. The searchable quote realm remains below the interlude.
 - World now opens with a five-stop camera journey—Winterfell, the Wall, King's Landing, Meereen, and beyond the Wall. Scroll progress changes the backdrop, quote, story copy, and destination action; the existing Atlas, Journeys, Power, and Lore views remain available below the film.
 - Browser verification: quote interlude controls changed the featured line from “When you play the game of thrones…” to “Chaos isn't a pit. Chaos is a ladder.”; World stop selection set Meereen as the active stop and rendered its destination story; both routes produced zero warning/error logs.
 
@@ -129,15 +129,15 @@ final result: passed
 
 ### Comparison
 
-The source visual uses an illustrated historical card with a prominent era/date, a short title, two concise beats, and a strong image. The implementation adapts that visual language into a fan archive experience: a cinematic realm hero, an alternating chronological spine, parchment-style illustrated cards, a selected-moment detail panel, era filters, and deep links into the existing archive. The implementation is intentionally not a pixel clone of Instagram or the source artwork.
+The source visual uses an illustrated historical card with a prominent era/date, a short title, two concise beats, and a strong image. The implementation adapts that visual language into a fan realm experience: a cinematic realm hero, an alternating chronological spine, parchment-style illustrated cards, a selected-moment detail panel, era filters, and deep links into the existing realm. The implementation is intentionally not a pixel clone of Instagram or the source artwork.
 
 ### Required fidelity surfaces
 
-- Typography: Cormorant Garamond carries the editorial titles and italic emotional copy; Cinzel/Inter handle labels and controls. The display hierarchy is consistent with the existing archive shell and preserves the source’s poster-like title/date contrast.
+- Typography: Cormorant Garamond carries the editorial titles and italic emotional copy; Cinzel/Inter handle labels and controls. The display hierarchy is consistent with the existing realm shell and preserves the source’s poster-like title/date contrast.
 - Spacing and layout: the desktop timeline alternates cards around a central spine; the selected detail remains readable in a sticky side panel. At 390px the spine becomes a single readable column, controls become horizontally scrollable, and the page remains exactly 390px wide with no horizontal overflow.
-- Colors and tokens: the source’s parchment, rust, charcoal, and muted gold are represented by `--chronicle-paper`, `--chronicle-rust`, `--chronicle-ink`, and `--chronicle-gold`. Selected states use the same gold outline language as the archive shell.
+- Colors and tokens: the source’s parchment, rust, charcoal, and muted gold are represented by `--chronicle-paper`, `--chronicle-rust`, `--chronicle-ink`, and `--chronicle-gold`. Selected states use the same gold outline language as the realm shell.
 - Image quality and assets: cards use existing local realm/memory imagery and existing icon assets; no remote image dependency or placeholder art was introduced. Images are cropped with explicit focal positions so the cards keep a visible location or moment at both breakpoints.
-- Copy and content: the chronology is fan-curated and explicitly labels approximate dates, avoiding false precision where canon is intentionally unresolved. Each card has a title, period, emotional marker, two beats, a longer context line, and an optional archive destination.
+- Copy and content: the chronology is fan-curated and explicitly labels approximate dates, avoiding false precision where canon is intentionally unresolved. Each card has a title, period, emotional marker, two beats, a longer context line, and an optional realm destination.
 
 ### Primary interactions tested
 
@@ -172,18 +172,18 @@ The source visual uses an illustrated historical card with a prominent era/date,
 
 ## Constellation fidelity correction (superseded)
 
-- The selected constellation reference was briefly promoted to the first-screen People composition, but review showed that it read as a static poster rather than a living fan archive. It is now removed from the public People entry flow; the route opens in interactive Spotlight mode and retains Archive for the complete index.
-- The hero now matches the reference hierarchy: atmospheric full-bleed realm image, central portrait, orbital relationship nodes, house-colored lines, centered character identity, quote, dossier action, and comparison action. Existing Spotlight, Archive, profile routes, season lens, dossier records, and relationship data remain available through progressive disclosure.
+- The selected constellation reference was briefly promoted to the first-screen People composition, but review showed that it read as a static poster rather than a living fan realm. It is now removed from the public People entry flow; the route opens in interactive Spotlight mode and retains realm for the complete index.
+- The hero now matches the reference hierarchy: atmospheric full-bleed realm image, central portrait, orbital relationship nodes, house-colored lines, centered character identity, quote, dossier action, and comparison action. Existing Spotlight, realm, profile routes, season lens, dossier records, and relationship data remain available through progressive disclosure.
 - Desktop verification at `1280 × 720`: Spotlight is the default mode, the full-card portrait target opens Jon Snow's dossier, and no document overflow is present. The old constellation poster is not rendered from the public route.
-- Interaction verification: portrait/card targets now use a capture-phase handler so decorative content cannot swallow clicks; Spotlight card clicks open the dossier, and archived relationship-node behavior remains covered by the same path.
+- Interaction verification: portrait/card targets now use a capture-phase handler so decorative content cannot swallow clicks; Spotlight card clicks open the dossier, and realmd relationship-node behavior remains covered by the same path.
 
 ### final result: passed
 
 ## People constellation migration
 
-- The People route now leads with a relationship constellation: a portrait-led character focal point, six animated tie nodes, house-colored relation lines, a fan quote, and an explicit dossier action. The existing Spotlight and Archive modes remain available from the same command bar, with the season lens, comparison tray, profile links, and full dossier details preserved.
+- The People route now leads with a relationship constellation: a portrait-led character focal point, six animated tie nodes, house-colored relation lines, a fan quote, and an explicit dossier action. The existing Spotlight and realm modes remain available from the same command bar, with the season lens, comparison tray, profile links, and full dossier details preserved.
 - The visual migration uses only existing local actor portraits and realm artwork. No external image dependency or replacement of the existing character data was introduced.
-- Browser verification: desktop `1280 × 720` opened `#/characters` in Constellation mode with Jon Snow selected; selecting a relation node moved the center to Daenerys Targaryen; the center portrait opened the preserved dossier modal; Spotlight and Archive both rendered after switching modes; no browser console warnings/errors were observed.
+- Browser verification: desktop `1280 × 720` opened `#/characters` in Constellation mode with Jon Snow selected; selecting a relation node moved the center to Daenerys Targaryen; the center portrait opened the preserved dossier modal; Spotlight and realm both rendered after switching modes; no browser console warnings/errors were observed.
 - Mobile verification: viewport `390 × 844` retained the constellation composition, stacked the lower focus/dossier area, opened the center dossier, and kept the document width at exactly `390px` with no horizontal page overflow.
 - Accessibility: center and relationship portraits remain semantic buttons, the stage rings and lines are decorative, and the existing focus-visible styling, live announcer, modal focus trap, relation filters, and keyboard mode/season controls remain active.
 

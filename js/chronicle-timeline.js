@@ -103,7 +103,7 @@
             <span class="realm-chronicle__card-media" style="${imageStyle}" aria-hidden="true"></span>
             <span class="realm-chronicle__card-veil" aria-hidden="true"></span>
             <span class="realm-chronicle__card-copy">
-              <span class="realm-chronicle__period">${escapeHTML(record.period)} <span class="archive-badge archive-badge--fan">Fan chronology</span></span>
+              <span class="realm-chronicle__period">${escapeHTML(record.period)} <span class="realm-badge realm-badge--fan">Fan chronology</span></span>
               <strong>${escapeHTML(record.title)}</strong>
               <span class="realm-chronicle__marker">${escapeHTML(record.marker)}</span>
               <span class="realm-chronicle__bullets">${safeArray(record.bullets).map(bullet => `<span><img src="${iconFor(record)}" alt="">${escapeHTML(bullet)}</span>`).join("")}</span>
@@ -125,7 +125,7 @@
     function detailHTML(record) {
       return `
         <aside class="realm-chronicle__detail" aria-live="polite" aria-labelledby="chronicle-detail-title">
-          <div class="realm-chronicle__detail-top"><span>${escapeHTML(record.era)}</span><span>${escapeHTML(record.period)} <span class="archive-badge archive-badge--fan">Fan chronology</span></span></div>
+          <div class="realm-chronicle__detail-top"><span>${escapeHTML(record.era)}</span><span>${escapeHTML(record.period)} <span class="realm-badge realm-badge--fan">Fan chronology</span></span></div>
           <p class="realm-chronicle__detail-kicker">${escapeHTML(record.marker)}</p>
           <h2 id="chronicle-detail-title">${escapeHTML(record.title)}</h2>
           <p class="realm-chronicle__detail-summary">${escapeHTML(record.summary)}</p>

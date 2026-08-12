@@ -14,8 +14,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(properties = "spring.datasource.url=jdbc:h2:mem:complete-archive;DB_CLOSE_DELAY=-1")
-class ArchiveApiIntegrationTests {
+@SpringBootTest(properties = "spring.datasource.url=jdbc:h2:mem:complete-realm;DB_CLOSE_DELAY=-1")
+class RealmApiIntegrationTests {
     @Autowired private WebApplicationContext context;
     private MockMvc mockMvc;
 
@@ -84,7 +84,7 @@ class ArchiveApiIntegrationTests {
     @Test void publishesOpenApiAndOperationalEndpoints() throws Exception {
         mockMvc.perform(get("/v3/api-docs"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.info.title").value("Game of Thrones Archive API"))
+                .andExpect(jsonPath("$.info.title").value("Game of Thrones realm API"))
                 .andExpect(jsonPath("$.paths['/api/v1/characters']").exists());
         mockMvc.perform(get("/actuator/health/readiness"))
                 .andExpect(status().isOk())

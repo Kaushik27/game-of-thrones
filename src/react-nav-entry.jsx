@@ -52,12 +52,12 @@ function ReactNav() {
       React.createElement("span", { className: "brand-mark", "aria-hidden": "true" }, "✦"),
       React.createElement("span", { className: "brand-title" },
         React.createElement("strong", null, "THE RAVEN WALL"),
-        React.createElement("small", { className: "brand-note" }, "A GAME OF THRONES ARCHIVE")
+        React.createElement("small", { className: "brand-note" }, "A GAME OF THRONES PROJECT")
       )
     ),
     React.createElement(
       "nav",
-      { className: `nav-links${open ? " open" : ""}`, id: "react-nav-links", "aria-label": "Archive sections" },
+      { className: `nav-links${open ? " open" : ""}`, id: "react-nav-links", "aria-label": "Project sections" },
       LINKS.map((link) => {
         const active = isActive(link, route);
         return React.createElement(

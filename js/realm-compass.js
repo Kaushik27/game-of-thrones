@@ -1,5 +1,5 @@
 // Cross-route fan controls: one spoiler lens, one daily raven, and one place
-// for the archive to publish the user's current reading/watching boundary.
+// for the realm to publish the user's current reading/watching boundary.
 (function installRealmCompass(global, document) {
   "use strict";
 

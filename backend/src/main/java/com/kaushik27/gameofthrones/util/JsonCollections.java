@@ -25,7 +25,7 @@ public class JsonCollections {
         try {
             return List.copyOf(objectMapper.readValue(value, type));
         } catch (JacksonException exception) {
-            throw new IllegalStateException("Persisted archive JSON is invalid", exception);
+            throw new IllegalStateException("Persisted realm JSON is invalid", exception);
         }
     }
 }
