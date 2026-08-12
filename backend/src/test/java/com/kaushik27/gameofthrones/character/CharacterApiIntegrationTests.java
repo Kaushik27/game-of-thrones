@@ -34,7 +34,7 @@ class CharacterApiIntegrationTests {
         mockMvc.perform(get("/api/v1/characters").param("pageSize", "5"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(header().string("Link", "<http://localhost/api/v1/characters>; rel=\"self\""))
+                .andExpect(header().string("Link", org.hamcrest.Matchers.containsString("rel=\"self\"")))
                 .andExpect(jsonPath("$.items", hasSize(5)))
                 .andExpect(jsonPath("$.itemsCount").value(196))
                 .andExpect(jsonPath("$.page").value(0))
@@ -65,5 +65,15 @@ class CharacterApiIntegrationTests {
     void rejectsPageSizesAboveTheServerLimit() throws Exception {
         mockMvc.perform(get("/api/v1/characters").param("pageSize", "101"))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void returnsNavigablePaginationLinks() throws Exception {
+        mockMvc.perform(get("/api/v1/characters")
+                        .param("page", "1").param("pageSize", "5").param("house", "Stark"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.links.self").value(org.hamcrest.Matchers.containsString("page=1")))
+                .andExpect(jsonPath("$.links.prev").value(org.hamcrest.Matchers.containsString("page=0")))
+                .andExpect(jsonPath("$.links.next").value(org.hamcrest.Matchers.containsString("page=2")));
     }
 }

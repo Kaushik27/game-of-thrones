@@ -3,27 +3,22 @@ package com.kaushik27.gameofthrones.service;
 import java.time.Instant;
 
 import com.kaushik27.gameofthrones.dto.StatisticsResponse;
-import jakarta.persistence.EntityManager;
+import com.kaushik27.gameofthrones.repository.ArchiveStatisticsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)
 public class StatisticsService {
-    private final EntityManager entityManager;
+    private final ArchiveStatisticsRepository repository;
 
-    public StatisticsService(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public StatisticsService(ArchiveStatisticsRepository repository) {
+        this.repository = repository;
     }
 
     public StatisticsResponse getStatistics() {
-        return new StatisticsResponse(count("CharacterRecord"), count("HouseRecord"), count("RelationshipRecord"),
-                count("EpisodeRecord"), count("QuoteRecord"), count("BattleRecord"), count("StoryEventRecord"),
+        long[] counts = repository.countAllDomains();
+        return new StatisticsResponse(counts[0], counts[1], counts[2], counts[3], counts[4], counts[5], counts[6],
                 "H2", Instant.now());
-    }
-
-    private long count(String entity) {
-        return entityManager.createQuery("select count(record) from " + entity + " record", Long.class)
-                .getSingleResult();
     }
 }

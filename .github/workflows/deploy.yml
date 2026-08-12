@@ -22,12 +22,17 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
+
+      - name: Assemble static site
+        run: |
+          mkdir public-site
+          rsync -a --exclude='.git' --exclude='.github' --exclude='.codex' --exclude='.agents' --exclude='.playwright-mcp' --exclude='audit' --exclude='backend' --exclude='frontend' --exclude='node_modules' --exclude='docs' --exclude='tools' --exclude='tests' --exclude='public-site' ./ public-site/
 
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: public-site
 
       - name: Deploy
         id: deployment

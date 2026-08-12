@@ -2,6 +2,7 @@ package com.kaushik27.gameofthrones.service;
 
 import com.kaushik27.gameofthrones.dto.CharacterPageResponse;
 import com.kaushik27.gameofthrones.dto.CharacterResponse;
+import com.kaushik27.gameofthrones.dto.CharacterStatusFilter;
 import com.kaushik27.gameofthrones.entity.CharacterRecord;
 import com.kaushik27.gameofthrones.entity.CharacterStatus;
 import com.kaushik27.gameofthrones.exception.CharacterNotFoundException;
@@ -24,7 +25,8 @@ public class CharacterService {
         this.repository = repository;
     }
 
-    public CharacterPageResponse findAll(int page, int pageSize, String house, CharacterStatus status, String query) {
+    public CharacterPageResponse findAll(int page, int pageSize, String house, CharacterStatusFilter statusFilter, String query) {
+        CharacterStatus status = statusFilter == null ? null : statusFilter.toEntityValue();
         Pageable pageable = PageRequest.of(page, pageSize, Sort.by("name").ascending());
         boolean hasHouse = house != null && !house.isBlank();
         boolean hasQuery = query != null && !query.isBlank();

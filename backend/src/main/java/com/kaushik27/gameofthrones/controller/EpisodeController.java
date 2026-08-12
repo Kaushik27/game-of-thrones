@@ -3,6 +3,7 @@ package com.kaushik27.gameofthrones.controller;
 import com.kaushik27.gameofthrones.dto.EpisodePageResponse;
 import com.kaushik27.gameofthrones.dto.EpisodeResponse;
 import com.kaushik27.gameofthrones.service.EpisodeService;
+import com.kaushik27.gameofthrones.util.PageLinksFactory;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -21,7 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/episodes")
 public class EpisodeController {
     private final EpisodeService service;
-    public EpisodeController(EpisodeService service) { this.service = service; }
+    private final PageLinksFactory pageLinksFactory;
+    public EpisodeController(EpisodeService service, PageLinksFactory pageLinksFactory) {
+        this.service = service;
+        this.pageLinksFactory = pageLinksFactory;
+    }
 
     @GetMapping
     EpisodePageResponse findAll(
@@ -29,7 +34,8 @@ public class EpisodeController {
             @RequestParam(defaultValue = "20") @Min(1) @Max(100) int pageSize,
             @RequestParam(required = false) @Min(1) @Max(8) Integer season,
             @RequestParam(required = false) @Size(max = 100) String query) {
-        return service.findAll(page, pageSize, season, query);
+        EpisodePageResponse response = service.findAll(page, pageSize, season, query);
+        return response.withLinks(pageLinksFactory.create(response.page(), response.pagesCount()));
     }
 
     @GetMapping("/{episodeId}")

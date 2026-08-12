@@ -14,7 +14,7 @@ async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
   try {
     const response = await fetch(path, { headers: { Accept: "application/json" }, signal });
     const trace: ApiTrace = { method: "GET", path, status: response.status, durationMs: Math.round(performance.now() - started),
-      database: response.headers.get("Grainger-Archive-Data-Source") || undefined, state: response.ok ? "complete" : "error", at: Date.now() };
+      database: response.headers.get("Archive-Data-Source") || undefined, state: response.ok ? "complete" : "error", at: Date.now() };
     publish(trace);
     if (!response.ok) {
       throw new Error(response.status === 503

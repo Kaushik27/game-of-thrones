@@ -4,7 +4,7 @@ import { getCharacters, getHouses } from "../api";
 import PageState from "../components/PageState";
 import type { CharacterPage, CharacterStatus, House } from "../types";
 
-const EMPTY: CharacterPage = { items: [], itemsCount: 0, page: 0, pageSize: 24, pagesCount: 0 };
+const EMPTY: CharacterPage = { items: [], itemsCount: 0, page: 0, pageSize: 24, pagesCount: 0, links: { self: "/api/v1/characters" } };
 export default function PeoplePage() {
   const [searchParameters] = useSearchParams();
   const [result,setResult]=useState(EMPTY); const [houses,setHouses]=useState<House[]>([]); const [page,setPage]=useState(0);

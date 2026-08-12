@@ -47,7 +47,7 @@ Controllers depend on services, never repositories or `EntityManager`. Services 
 - Actuator exposes `/actuator/health` and `/actuator/info`; only those endpoints are exposed.
 - API validation and RFC 9457 Problem Details protect the HTTP boundary.
 - springdoc publishes the OpenAPI contract and Swagger UI at `/swagger-ui.html`.
-- Every API response includes `Grainger-Archive-Data-Source` and `Server-Timing` headers used by the teaching UI.
+- Every API response includes `Archive-Data-Source` and `Server-Timing` headers used by the teaching UI.
 
 ## Local development
 
@@ -76,3 +76,20 @@ node tools/generate-h2-character-seed.mjs
 ```
 
 PostgreSQL can later replace H2 through a production Spring profile without changing controller contracts. H2 is intentionally retained here because the project is designed to demonstrate all three application tiers without requiring external infrastructure.
+
+## Operational baseline
+
+- `local` enables the H2 console and detailed health information; both are disabled by default and in `prod`.
+- Every request receives a `Request-Id`, security headers, and safe RFC 9457 failures with stable error codes.
+- Public API reads are limited per client and return `429` with `Retry-After` when the limit is exceeded.
+- Actuator publishes health, readiness, liveness, application information, and Micrometer metrics without paid infrastructure.
+- CI starts the production container and verifies readiness, statistics, and OpenAPI rather than stopping at image compilation.
+- CodeQL provides free static security analysis for this public repository.
+
+## Zero-cost deployment
+
+GitHub Pages remains the static cinematic edition. [`render.yaml`](../render.yaml) defines a separate Docker deployment using Render's free web-service plan. It contains no paid disk or database. The production H2 file is intentionally ephemeral; Flyway recreates the read-only dataset whenever the instance filesystem is replaced.
+
+This is an enterprise-style demonstration, not high-availability production infrastructure. Free instances can sleep, cold starts are expected, and no SLA or durable runtime writes are promised.
+
+Architecture decisions are recorded under [`docs/adr`](adr/).

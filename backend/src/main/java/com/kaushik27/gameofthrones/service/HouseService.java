@@ -4,11 +4,8 @@ import java.util.List;
 
 import com.kaushik27.gameofthrones.dto.HouseResponse;
 import com.kaushik27.gameofthrones.dto.HousesResponse;
-import com.kaushik27.gameofthrones.entity.HouseRecord;
 import com.kaushik27.gameofthrones.exception.HouseNotFoundException;
 import com.kaushik27.gameofthrones.repository.HouseRepository;
-
-import jakarta.persistence.EntityManager;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,31 +15,25 @@ import org.springframework.transaction.annotation.Transactional;
 public class HouseService {
 
     private final HouseRepository repository;
-    private final EntityManager entityManager;
 
-    public HouseService(HouseRepository repository, EntityManager entityManager) {
+    public HouseService(HouseRepository repository) {
         this.repository = repository;
-        this.entityManager = entityManager;
     }
 
     public HousesResponse findAll() {
-        List<HouseResponse> items = repository.findAll().stream()
-                .sorted(java.util.Comparator.comparing(HouseRecord::getName))
-                .map(house -> HouseResponse.from(house, characterCount(house.getName())))
+        List<HouseResponse> items = repository.findAllSummaries().stream()
+                .map(house -> new HouseResponse(house.getName(), house.getWords(), house.getSeat(), house.getRegion(),
+                        house.getSigil(), house.getAnimal(), house.getRulerEnd(), house.getSigilColor(), house.getCharactersCount()))
                 .toList();
         return new HousesResponse(items, items.size());
     }
 
     public HouseResponse findByName(String name) {
-        HouseRecord house = repository.findById(name)
+        return repository.findAllSummaries().stream().filter(summary -> summary.getName().equals(name))
+                .findFirst()
+                .map(summary -> new HouseResponse(summary.getName(), summary.getWords(), summary.getSeat(), summary.getRegion(),
+                        summary.getSigil(), summary.getAnimal(), summary.getRulerEnd(), summary.getSigilColor(), summary.getCharactersCount()))
                 .orElseThrow(() -> new HouseNotFoundException(name));
-        return HouseResponse.from(house, characterCount(name));
-    }
-
-    private long characterCount(String house) {
-        return entityManager.createQuery("select count(character) from CharacterRecord character where character.house = :house", Long.class)
-                .setParameter("house", house)
-                .getSingleResult();
     }
 
 }

@@ -17,7 +17,10 @@ export interface CharacterPage {
   page: number;
   pageSize: number;
   pagesCount: number;
+  links: PageLinks;
 }
+
+export interface PageLinks { self: string; next?: string; prev?: string; }
 
 export interface HousesResponse {
   items: House[];
@@ -51,10 +54,10 @@ export interface Episode {
   id: string; season: number; episode: number; title: string; airDate: string; runtimeMinutes: number;
   director: string; writers: string[]; summary: string; themes: string[]; characterIds: string[]; eventIds: string[];
 }
-export interface EpisodePage { items: Episode[]; itemsCount: number; page: number; pageSize: number; pagesCount: number; }
+export interface EpisodePage { items: Episode[]; itemsCount: number; page: number; pageSize: number; pagesCount: number; links: PageLinks; }
 
 export interface Quote { id: string; characterId: string; characterName: string; house: string; text: string; season: number; }
-export interface QuotePage { items: Quote[]; itemsCount: number; page: number; pageSize: number; pagesCount: number; }
+export interface QuotePage { items: Quote[]; itemsCount: number; page: number; pageSize: number; pagesCount: number; links: PageLinks; }
 
 export interface Combatant { side: string; houses: string[]; characters: string[]; }
 export interface Battle { id: string; name: string; season: number; location: string; combatants: Combatant[]; outcome: string; casualties: string; linkedCharacterIds: string[]; linkedEventIds: string[]; }

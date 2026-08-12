@@ -1,54 +1,37 @@
 package com.kaushik27.gameofthrones;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
-
+import com.tngtech.archunit.core.domain.JavaClasses;
+import com.tngtech.archunit.core.importer.ClassFileImporter;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
+import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 class ArchitectureConventionTests {
-    private static final Path SOURCE_ROOT = sourceRoot();
+    private static final JavaClasses APPLICATION_CLASSES = new ClassFileImporter()
+            .importPackages("com.kaushik27.gameofthrones");
 
     @Test
-    void usesConventionalLayerPackages() {
-        assertThat(List.of("controller", "service", "repository", "entity", "dto", "exception", "config", "util"))
-                .allSatisfy(layer -> assertThat(SOURCE_ROOT.resolve(layer)).isDirectory());
-    }
-
-    @Test
-    void controllersDependOnServicesInsteadOfPersistence() throws IOException {
-        try (var files = Files.list(SOURCE_ROOT.resolve("controller"))) {
-            files.filter(path -> path.toString().endsWith("Controller.java"))
-                    .forEach(path -> assertThat(read(path))
-                            .doesNotContain(".repository.", "EntityManager", "@Transactional"));
-        }
+    void controllersDoNotAccessPersistence() {
+        noClasses().that().resideInAPackage("..controller..")
+                .should().dependOnClassesThat().resideInAnyPackage("..repository..", "..entity..")
+                .check(APPLICATION_CLASSES);
     }
 
     @Test
-    void responseRecordsLiveOutsideControllersAndServices() throws IOException {
-        for (String layer : List.of("controller", "service")) {
-            try (var files = Files.list(SOURCE_ROOT.resolve(layer))) {
-                files.filter(path -> path.toString().endsWith(".java"))
-                        .forEach(path -> assertThat(read(path)).doesNotContainPattern("\\brecord\\s+[A-Z]"));
-            }
-        }
+    void repositoriesOnlyExposeEntitiesAndProjections() {
+        classes().that().resideInAPackage("..repository..")
+                .should().onlyDependOnClassesThat().resideInAnyPackage(
+                        "java..", "jakarta.persistence..", "org.springframework..",
+                        "com.kaushik27.gameofthrones.entity..",
+                        "com.kaushik27.gameofthrones.repository..")
+                .check(APPLICATION_CLASSES);
     }
 
-    private static String read(Path path) {
-        try {
-            return Files.readString(path);
-        } catch (IOException exception) {
-            throw new IllegalStateException("Unable to inspect " + path, exception);
-        }
-    }
-
-    private static Path sourceRoot() {
-        Path projectRelative = Path.of("src/main/java/com/kaushik27/gameofthrones");
-        return Files.isDirectory(projectRelative)
-                ? projectRelative
-                : Path.of("backend").resolve(projectRelative);
+    @Test
+    void entitiesRemainIndependentFromWebAndApplicationLayers() {
+        noClasses().that().resideInAPackage("..entity..")
+                .should().dependOnClassesThat().resideInAnyPackage("..controller..", "..service..", "..dto..")
+                .check(APPLICATION_CLASSES);
     }
 }

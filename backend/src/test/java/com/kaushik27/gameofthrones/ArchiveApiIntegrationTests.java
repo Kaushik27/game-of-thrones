@@ -57,4 +57,29 @@ class ArchiveApiIntegrationTests {
         mockMvc.perform(get("/api/v1/episodes").param("season", "9"))
                 .andExpect(status().isBadRequest());
     }
+
+    @Test void publishesOpenApiAndOperationalEndpoints() throws Exception {
+        mockMvc.perform(get("/v3/api-docs"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.info.title").value("Game of Thrones Archive API"))
+                .andExpect(jsonPath("$.paths['/api/v1/characters']").exists());
+        mockMvc.perform(get("/actuator/health/readiness"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("UP"));
+        mockMvc.perform(get("/actuator/metrics/jvm.memory.used"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("jvm.memory.used"));
+    }
+
+    @Test void returnsStableProblemDetailsForInvalidTypes() throws Exception {
+        mockMvc.perform(get("/api/v1/characters").param("status", "MISSING"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.errorCode").value("INVALID_REQUEST"));
+    }
+
+    @Test void keepsProductionOnlyResourcesUnavailable() throws Exception {
+        mockMvc.perform(get("/h2-console"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.errorCode").value("RESOURCE_NOT_FOUND"));
+    }
 }

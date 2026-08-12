@@ -32,6 +32,6 @@ public class QuoteService {
         List<QuoteResponse> items = result.getContent().stream().map(quote -> new QuoteResponse(
                 quote.getId(), quote.getCharacterId(), quote.getCharacter().getName(), quote.getCharacter().getHouse(),
                 quote.getText(), quote.getSeason())).toList();
-        return new QuotePageResponse(items, result.getTotalElements(), result.getNumber(), result.getSize(), result.getTotalPages());
+        return new QuotePageResponse(items, result.getTotalElements(), result.getNumber(), result.getSize(), result.getTotalPages(), null);
     }
 }

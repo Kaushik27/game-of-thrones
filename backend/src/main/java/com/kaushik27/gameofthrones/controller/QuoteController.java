@@ -2,6 +2,7 @@ package com.kaushik27.gameofthrones.controller;
 
 import com.kaushik27.gameofthrones.dto.QuotePageResponse;
 import com.kaushik27.gameofthrones.service.QuoteService;
+import com.kaushik27.gameofthrones.util.PageLinksFactory;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/quotes")
 public class QuoteController {
     private final QuoteService service;
+    private final PageLinksFactory pageLinksFactory;
 
-    public QuoteController(QuoteService service) {
+    public QuoteController(QuoteService service, PageLinksFactory pageLinksFactory) {
         this.service = service;
+        this.pageLinksFactory = pageLinksFactory;
     }
 
     @GetMapping
@@ -27,6 +30,7 @@ public class QuoteController {
             @RequestParam(defaultValue = "20") @Min(1) @Max(100) int pageSize,
             @RequestParam(required = false) @Min(1) @Max(8) Integer season,
             @RequestParam(required = false) @Size(max = 100) String house) {
-        return service.findAll(page, pageSize, season, house);
+        QuotePageResponse response = service.findAll(page, pageSize, season, house);
+        return response.withLinks(pageLinksFactory.create(response.page(), response.pagesCount()));
     }
 }

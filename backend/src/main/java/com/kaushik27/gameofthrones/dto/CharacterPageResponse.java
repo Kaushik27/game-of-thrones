@@ -11,7 +11,8 @@ public record CharacterPageResponse(
         long itemsCount,
         int page,
         int pageSize,
-        int pagesCount) {
+        int pagesCount,
+        PageLinks links) {
 
     public static CharacterPageResponse from(Page<CharacterRecord> result) {
         return new CharacterPageResponse(
@@ -19,6 +20,10 @@ public record CharacterPageResponse(
                 result.getTotalElements(),
                 result.getNumber(),
                 result.getSize(),
-                result.getTotalPages());
+                result.getTotalPages(), null);
+    }
+
+    public CharacterPageResponse withLinks(PageLinks links) {
+        return new CharacterPageResponse(items, itemsCount, page, pageSize, pagesCount, links);
     }
 }

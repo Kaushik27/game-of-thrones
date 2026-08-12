@@ -43,6 +43,16 @@ The archive now has a complete portfolio-ready modular-monolith edition while th
 
 See the [enterprise architecture and local run guide](docs/enterprise-architecture.md) for the migration design.
 
+> Deployment truth: GitHub Pages hosts the cinematic static edition. The React + Spring Boot + H2 edition is packaged as a separate Docker service because GitHub Pages cannot run Java.
+
+### Deploy the enterprise edition for $0
+
+The checked-in [`render.yaml`](render.yaml) is constrained to Render's free web-service plan and intentionally adds no paid disk or database. Flyway reconstructs the read-only H2 dataset whenever ephemeral storage is replaced.
+
+[Deploy to Render](https://render.com/deploy?repo=https://github.com/Kaushik27/game-of-thrones)
+
+After creating the free service, use its `onrender.com` URL for the complete React → Spring Boot → H2 demonstration. Free instances sleep when idle, so the first request can take longer. Do not upgrade the instance or attach a persistent disk if the goal is a strict $0 deployment.
+
 ## Start here
 
 Open the [live archive](https://kaushik27.github.io/game-of-thrones/) and let the opening sequence carry you from the border to the realm. From there, the site becomes a set of connected ways to remember the story:
@@ -150,6 +160,8 @@ node tests/living-encyclopedia-smoke.js
 ## Deployment
 
 Every push to `master` deploys the static site through [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). The current build has no bundling step for route modules; the generated React navigation bundle is checked in for the same reason.
+
+The enterprise pipeline additionally runs frontend tests, backend integration and architecture tests, builds the production container, starts it, waits for readiness, and calls live API/OpenAPI endpoints. CodeQL scans Java and TypeScript. The Render Blueprint deploys only after GitHub checks pass once the free service has been activated in Render.
 
 ## Fan archive notes
 

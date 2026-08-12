@@ -11,3 +11,4 @@ frontend/vite.config.d.ts
 backend/.gradle/
 backend/build/
 backend/data/
+/data/

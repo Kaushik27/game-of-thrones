@@ -32,7 +32,7 @@ public class EpisodeService {
                 : hasQuery ? repository.findByTitleContainingIgnoreCase(query, pageable)
                 : repository.findAll(pageable);
         return new EpisodePageResponse(result.getContent().stream().map(this::response).toList(),
-                result.getTotalElements(), result.getNumber(), result.getSize(), result.getTotalPages());
+                result.getTotalElements(), result.getNumber(), result.getSize(), result.getTotalPages(), null);
     }
 
     public EpisodeResponse findById(String id) {

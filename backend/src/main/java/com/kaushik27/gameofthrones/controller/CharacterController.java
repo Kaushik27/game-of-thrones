@@ -2,8 +2,9 @@ package com.kaushik27.gameofthrones.controller;
 
 import com.kaushik27.gameofthrones.dto.CharacterPageResponse;
 import com.kaushik27.gameofthrones.dto.CharacterResponse;
-import com.kaushik27.gameofthrones.entity.CharacterStatus;
+import com.kaushik27.gameofthrones.dto.CharacterStatusFilter;
 import com.kaushik27.gameofthrones.service.CharacterService;
+import com.kaushik27.gameofthrones.util.PageLinksFactory;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Validated
 @RestController
@@ -25,9 +25,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class CharacterController {
 
     private final CharacterService service;
+    private final PageLinksFactory pageLinksFactory;
 
-    public CharacterController(CharacterService service) {
+    public CharacterController(CharacterService service, PageLinksFactory pageLinksFactory) {
         this.service = service;
+        this.pageLinksFactory = pageLinksFactory;
     }
 
     @GetMapping
@@ -35,11 +37,12 @@ public class CharacterController {
             @RequestParam(defaultValue = "0") @Min(0) int page,
             @RequestParam(defaultValue = "24") @Min(1) @Max(100) int pageSize,
             @RequestParam(required = false) @Size(max = 100) String house,
-            @RequestParam(required = false) CharacterStatus status,
+            @RequestParam(required = false) CharacterStatusFilter status,
             @RequestParam(required = false) @Size(max = 100) String query) {
         CharacterPageResponse response = service.findAll(page, pageSize, house, status, query);
+        response = response.withLinks(pageLinksFactory.create(response.page(), response.pagesCount()));
         return ResponseEntity.ok()
-                .header("Link", selfLink())
+                .header("Link", linkHeader(response))
                 .body(response);
     }
 
@@ -49,7 +52,11 @@ public class CharacterController {
         return service.findById(characterId);
     }
 
-    private String selfLink() {
-        return "<" + ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString() + ">; rel=\"self\"";
+    private String linkHeader(CharacterPageResponse response) {
+        var links = response.links();
+        StringBuilder value = new StringBuilder("<").append(links.self()).append(">; rel=\"self\"");
+        if (links.next() != null) value.append(", <").append(links.next()).append(">; rel=\"next\"");
+        if (links.prev() != null) value.append(", <").append(links.prev()).append(">; rel=\"prev\"");
+        return value.toString();
     }
 }
