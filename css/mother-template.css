@@ -169,7 +169,7 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
 .mother-hero__rings span:nth-child(2) { inset: 18%; transform: rotate(-19deg) skew(-8deg); border-color: rgba(169,201,232,.18); }
 .mother-hero__rings span:nth-child(3) { inset: 31%; border-style: dashed; border-color: rgba(212,168,94,.18); animation: mother-orbit-spin 34s linear infinite; }
 .mother-hero__portrait { position: absolute; left: 50%; top: 5%; z-index: 1; width: min(74vw, 980px); height: 82%; transform: translateX(-50%); pointer-events: none; mask-image: radial-gradient(ellipse at center, #000 42%, transparent 83%); }
-.mother-hero__portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 56% 34%; filter: contrast(1.08) saturate(.88); }
+.mother-hero__portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 56% 34%; filter: contrast(1.08) saturate(.88); }
 .mother-hero__portrait img[src*="houses/"] { width: min(52vw, 640px); margin-inline: auto; object-fit: contain; object-position: center 12%; filter: contrast(1.08) saturate(.9) drop-shadow(0 24px 38px rgba(0,0,0,.5)); }
 .mother-hero__portrait .mother-avatar-art { display: block; width: 100%; height: 100%; }
 .mother-hero__portrait .generative-avatar { display: block; width: 100%; height: 100%; filter: contrast(1.08) saturate(.92) drop-shadow(0 22px 50px rgba(0,0,0,.44)); }
@@ -226,7 +226,7 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
 
 @keyframes mother-breathe { from { transform: scale(1.03) translate3d(-.5%, -.3%, 0); } to { transform: scale(1.07) translate3d(.5%, .3%, 0); } }
 @keyframes mother-orbit-spin { to { transform: rotate(384deg) skew(4deg); } }
-@keyframes mother-portrait-arrive { from { opacity: .18; transform: translateX(-50%) translateY(18px) scale(1.025); filter: blur(8px); } to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); filter: blur(0); } }
+@keyframes mother-portrait-arrive { from { opacity: .18; filter: blur(8px); } to { opacity: 1; filter: blur(0); } }
 
 @media (max-width: 860px) {
   .house-profile-hero { grid-template-columns: 74px minmax(0, 1fr); min-height: 300px; padding: 38px 22px 32px !important; }
@@ -243,6 +243,7 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
   .mother-hero { min-height: 780px; }
   .mother-hero__ambient { background-position: 58% 28%; }
   .mother-hero__portrait { top: 2%; width: 115vw; height: 69%; }
+  .mother-hero__portrait img[src*="houses/"] { width: min(82vw, 520px); }
   .mother-hero__copy { bottom: 10%; }
   .mother-hero__meta { left: 50%; bottom: 28px; transform: translateX(-50%); width: max-content; gap: 12px; }
   .mother-orbit-node { width: 76px; height: 76px; }
