@@ -38,15 +38,16 @@
   }
 
   function houseEntries() {
-    const colors = global.HOUSE_COLORS || {};
-    const info = global.HOUSE_INFO || {};
+    const colors = typeof HOUSE_COLORS !== "undefined" ? HOUSE_COLORS : {};
+    const info = typeof HOUSE_INFO !== "undefined" ? HOUSE_INFO : {};
+    const people = typeof characters !== "undefined" && Array.isArray(characters) ? characters : [];
     return Object.keys(HOUSE_REPRESENTATIVES)
       .filter(house => info[house] && colors[house])
       .map((house, index) => ({
         house,
         info: info[house],
         color: colors[house],
-        character: (global.characters || []).find(person => person.id === HOUSE_REPRESENTATIVES[house]) || null,
+        character: people.find(person => person.id === HOUSE_REPRESENTATIVES[house]) || null,
         position: ORBIT_POSITIONS[index] || ORBIT_POSITIONS[0]
       }));
   }
@@ -58,20 +59,20 @@
     if (visual) {
       return `<img src="${safe(visual)}" alt="Original in-world study of ${safe(character.name)}" loading="eager" decoding="async">`;
     }
-    if (typeof global.generativeAvatarSVG === "function") {
-      return `<span class="mother-avatar-art" aria-hidden="true">${global.generativeAvatarSVG(character)}</span>`;
+    if (typeof generativeAvatarSVG === "function") {
+      return `<span class="mother-avatar-art" aria-hidden="true">${generativeAvatarSVG(character)}</span>`;
     }
     return "";
   }
 
   function sigilFor(house, size) {
-    const info = global.HOUSE_INFO?.[house];
-    return typeof global.sigilSVG === "function" ? global.sigilSVG(info?.sigil || "none", { size: size || 52 }) : "";
+    const info = typeof HOUSE_INFO !== "undefined" ? HOUSE_INFO[house] : null;
+    return typeof sigilSVG === "function" ? sigilSVG(info?.sigil || "none", { size: size || 52 }) : "";
   }
 
   function quoteFor(character) {
-    const quotes = Array.isArray(global.quotes) ? global.quotes : [];
-    const match = quotes.find(quote => quote.characterId === character?.id) || quotes.find(quote => /shield that guards/i.test(quote.text || ""));
+    const quoteData = typeof quotes !== "undefined" && Array.isArray(quotes) ? quotes : [];
+    const match = quoteData.find(quote => quote.characterId === character?.id) || quoteData.find(quote => /shield that guards/i.test(quote.text || ""));
     return match?.text || "The things we do for love.";
   }
 
@@ -138,7 +139,7 @@
       summary.textContent = next.character?.bio || `${next.info.seat} · ${next.info.rulerEnd}`;
       cta.href = `#/house/${encodeURIComponent(next.house)}`;
       cta.querySelector("span").textContent = `Enter House ${next.house}`;
-      global.recordEngagement?.("mother_house_select", { house: next.house });
+      if (typeof recordEngagement === "function") recordEngagement("mother_house_select", { house: next.house });
     }
 
     const onClick = event => {
