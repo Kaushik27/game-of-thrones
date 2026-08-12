@@ -174,7 +174,7 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
 .mother-hero__portrait .mother-avatar-art { display: block; width: 100%; height: 100%; }
 .mother-hero__portrait .generative-avatar { display: block; width: 100%; height: 100%; filter: contrast(1.08) saturate(.92) drop-shadow(0 22px 50px rgba(0,0,0,.44)); }
 .mother-hero__portrait.is-arriving { animation: mother-portrait-arrive 680ms cubic-bezier(.16,1,.3,1) both; }
-.mother-hero__copy { position: absolute; z-index: 2; top: 0; right: 0; bottom: auto; left: 0; width: min(580px, 86vw); min-height: 0; margin-inline: auto; padding-top: clamp(118px, 15vh, 152px); text-align: center; }
+.mother-hero__copy { position: relative; z-index: 2; width: min(580px, 86vw); min-height: 0; margin-inline: auto; padding-top: clamp(118px, 15vh, 152px); text-align: center; }
 .mother-kicker { margin: 0 0 10px; color: var(--mother-gold); font-size: .68rem; letter-spacing: .32em; text-transform: uppercase; }
 .mother-hero h1 { margin: 0; color: var(--mother-white); font-family: var(--mother-serif); font-size: clamp(3.1rem, 7vw, 6.6rem); line-height: .84; font-weight: 500; letter-spacing: .035em; text-shadow: 0 5px 30px rgba(0,0,0,.8); text-transform: uppercase; }
 .mother-hero h1 em { color: var(--mother-gold-soft); font-style: normal; }
@@ -243,7 +243,7 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
   .mother-hero { min-height: 780px; }
   .mother-hero__ambient { background-position: 58% 28%; }
   .mother-hero__portrait { top: 2%; width: 115vw; height: 69%; }
-  .mother-hero__copy { top: 0; right: 0; bottom: auto; left: 0; width: min(580px, 86vw); padding-top: 118px; }
+  .mother-hero__copy { width: min(580px, 86vw); padding-top: 118px; }
   .mother-hero__meta { left: 50%; bottom: 28px; transform: translateX(-50%); width: max-content; gap: 12px; }
   .mother-orbit-node { width: 76px; height: 76px; }
   .mother-orbit-node__sigil, .mother-orbit-node__sigil .sigil-icon { width: 34px; height: 34px; }
