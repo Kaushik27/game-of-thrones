@@ -174,7 +174,7 @@
   }
 
   global.MOTHER_VISUALS = Object.freeze({
-    "jon-snow": "assets/generated/northern-guardian-observatory.png",
+    "jon-snow": "assets/generated/northern-guardian-wide.png",
     "tyrion-lannister": "assets/characters/tyrion-visual.png",
     "daenerys-targaryen": "assets/characters/daenerys-visual.png",
     "theon-greyjoy": "assets/generated/houses/greyjoy-realm-wide.png",
