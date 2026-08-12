@@ -135,6 +135,7 @@ const contracts = [
   , [chronicleSource.includes("const spoilerVisible = records"), "Chronicle must show the complete fan archive"]
   , [chronicleSource.includes("function entryButton") && chronicleSource.includes("Open moment"), "Chronicle cards must expose a resilient click target and visible action cue"]
   , [archiveShellSource.includes("archive-horizon-drift") && archiveShellSource.includes("north-journey-bg.jpg") && archiveShellSource.includes("capital-journey-bg.jpg"), "Archive routes must share a fluid atmospheric backdrop"]
+  , [archiveShellSource.includes("overflow: clip") && archiveShellSource.includes("body.archive-route #app"), "Archive atmosphere must stay inside the page frame"]
   , [peopleSource.includes("observeSpotlightCards") && peopleSource.includes("handleSpotlightPointerMove"), "People spotlight must provide scroll and pointer interaction"]
   , [appSource.includes("houses-page") && appSource.includes("data-house-card"), "Houses must use the cinematic banner directory"]
   , [compassSource.includes("randomDestination"), "the archive compass module remains available for legacy imports"]
@@ -169,7 +170,7 @@ assert.ok(scripts.indexOf("js/quotes.js") < scripts.indexOf("js/quote-curation.j
 assert.ok(scripts.indexOf("js/fan-moments.js") < scripts.indexOf("js/app.js"), "fan moments must load before the router");
 assert.ok(scripts.indexOf("js/raven-wall.js") < scripts.indexOf("js/app.js"), "Memory Wall must load before the router");
 assert.ok(scripts.indexOf("js/global-atmosphere.js") < scripts.indexOf("js/app.js"), "atmosphere must load before route rendering");
-assert.ok(indexSource.includes("css/archive-shell.css?v=archive-shell-3"), "shared archive shell must load in the static entrypoint");
+assert.ok(indexSource.includes("css/archive-shell.css?v=archive-shell-4"), "shared archive shell must load in the static entrypoint");
 assert.ok(indexSource.includes("css/houses.css?v=houses-1"), "houses styling must load in the static entrypoint");
 assert.ok(indexSource.includes("css/what-if.css?v=what-if-1"), "what-if styling must load in the static entrypoint");
 assert.ok(indexSource.includes("css/maesters-desk.css?v=maesters-desk-1"), "maesters desk styling must load in the static entrypoint");

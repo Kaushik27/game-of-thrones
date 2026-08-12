@@ -40,6 +40,7 @@ body.archive-route #site-nav {
 body.archive-route #app {
   position: relative;
   isolation: isolate;
+  overflow: clip;
   background: transparent;
 }
 
