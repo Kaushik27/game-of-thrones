@@ -96,7 +96,7 @@
             return `<span class="mother-connector mother-connector--${entry.position.tone}" style="--line-length:${Math.hypot(dx, dy)}%;--line-angle:${Math.atan2(dy, dx) * 180 / Math.PI}deg" aria-hidden="true"></span>`;
           }).join("")}
           ${entries.map((entry, index) => `
-            <button class="mother-orbit-node mother-orbit-node--${entry.position.tone}${index === 0 ? " is-active" : ""}" type="button" data-mother-house="${safe(entry.house)}" style="--node-x:${entry.position.x}%;--node-y:${entry.position.y};--house-accent:${safe(entry.color)}" aria-pressed="${index === 0}">
+            <button class="mother-orbit-node mother-orbit-node--${entry.position.tone}${index === 0 ? " is-active" : ""}" type="button" data-mother-house="${safe(entry.house)}" style="--node-x:${entry.position.x}%;--node-y:${entry.position.y}%;--house-accent:${safe(entry.color)}" aria-pressed="${index === 0}">
               <span class="mother-orbit-node__halo" aria-hidden="true"></span>
               <span class="mother-orbit-node__sigil">${sigilFor(entry.house, 48)}</span>
               <span class="mother-orbit-node__label">${safe(entry.house)}</span>

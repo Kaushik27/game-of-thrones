@@ -1007,31 +1007,35 @@ function renderFamilyTree(houseName, color) {
   const zoomBehavior = d3.zoom().scaleExtent([0.3, 3]).on("zoom", e => zoomLayer.attr("transform", e.transform));
   svg.call(zoomBehavior);
 
-  const radius = Math.max(170, Math.min(hostWidth, hostHeight) * .36);
-  d3.tree().size([Math.PI * 2, radius])(root);
-  const centerX = hostWidth / 2;
-  const centerY = hostHeight / 2;
-  const radialLayer = zoomLayer.append("g").attr("transform", `translate(${centerX},${centerY})`);
-  const radialLink = d3.linkRadial().angle(d => d.x).radius(d => d.y);
-  radialLayer.selectAll(".tree-link").data(root.links()).join("path")
+  // A readable bloodline should scan like a family tree, not a compass: older
+  // generations sit left, descendants flow right, and every name stays level.
+  // The previous radial layout rotated labels upside-down and left most of the
+  // panel empty on small houses. A compact horizontal tree keeps the drama in
+  // the curves while preserving the familiar genealogy reading order.
+  d3.tree().nodeSize([74, 210])(root);
+  const laidOut = root.descendants();
+  const xExtent = d3.extent(laidOut, d => d.x);
+  const yExtent = d3.extent(laidOut, d => d.y);
+  const treeHeight = Math.max(1, xExtent[1] - xExtent[0]);
+  const treeWidth = Math.max(1, yExtent[1] - yExtent[0]);
+  const offsetX = (hostHeight - treeHeight) / 2 - xExtent[0];
+  const offsetY = Math.max(72, (hostWidth - treeWidth) / 2) - yExtent[0];
+  const treeLayer = zoomLayer.append("g").attr("transform", `translate(${offsetY},${offsetX})`);
+  const treeLink = d3.linkHorizontal().x(d => d.y).y(d => d.x);
+  treeLayer.selectAll(".tree-link").data(root.links()).join("path")
     .attr("class", "tree-link").attr("fill", "none").attr("stroke", d => d.target.data.sigilColor || color)
     .attr("stroke-width", d => d.target.depth === 1 ? 2.2 : 1.35).attr("stroke-opacity", .62)
-    .attr("d", radialLink);
+    .attr("d", treeLink);
 
-  const nodes = radialLayer.selectAll(".tree-node").data(root.descendants()).join("g")
+  const nodes = treeLayer.selectAll(".tree-node").data(root.descendants()).join("g")
     .attr("class", d => `tree-node${d.data.virtual ? " tree-node--root" : ""}`)
-    .attr("transform", d => `rotate(${(d.x * 180 / Math.PI) - 90}) translate(${d.y},0)`)
+    .attr("transform", d => `translate(${d.y},${d.x})`)
     .style("cursor", d => d.data.virtual ? "default" : "pointer");
   nodes.append("circle").attr("class", "tree-node__halo").attr("r", d => d.data.virtual ? 34 : 21).attr("fill", "none").attr("stroke", d => d.data.sigilColor || color).attr("stroke-opacity", .22);
   nodes.append("circle").attr("class", "tree-node__dot").attr("r", d => d.data.virtual ? 15 : 11).attr("fill", d => d.data.sigilColor || color).attr("fill-opacity", d => d.data.status === "dead" ? .42 : .92).attr("stroke", "#0a0f13").attr("stroke-width", 3);
   nodes.append("circle").attr("class", "tree-node__core").attr("r", d => d.data.virtual ? 5 : 3.5).attr("fill", "#f1eadb").attr("fill-opacity", .8);
   nodes.append("text").attr("class", "tree-node__label")
-    .attr("x", d => d.x < Math.PI ? 28 : -28).attr("dy", 4)
-    .attr("text-anchor", d => d.x < Math.PI ? "start" : "end")
-    .attr("transform", d => {
-      const angle = (d.x * 180 / Math.PI) - 90;
-      return `rotate(${d.x < Math.PI ? -angle : 180 - angle})`;
-    })
+    .attr("x", 28).attr("dy", 4).attr("text-anchor", "start")
     .text(d => d.data.name);
   nodes.append("title").text(d => d.data.virtual ? `${houseName} bloodline` : `${d.data.name} — open dossier`);
   nodes.filter(d => !d.data.virtual).on("click", (e, d) => { window.location.hash = "#/character/" + d.data.id; });
@@ -1047,7 +1051,7 @@ function renderFamilyTree(houseName, color) {
     .attr("d", d => {
       const s = posById.get(d.source), t = posById.get(d.target);
       if (!s || !t) return "";
-      const link = d3.linkRadial().angle(p => p.x).radius(p => p.y)({ source: s, target: t });
+      const link = d3.linkHorizontal().x(p => p.y + offsetY).y(p => p.x + offsetX)({ source: s, target: t });
       return link;
     })
     .append("title").text(d => d.label);
