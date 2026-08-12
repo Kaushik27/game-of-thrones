@@ -30,7 +30,7 @@ jobs:
           rsync -a --exclude='.git' --exclude='.github' --exclude='.codex' --exclude='.agents' --exclude='.playwright-mcp' --exclude='audit' --exclude='backend' --exclude='frontend' --exclude='node_modules' --exclude='docs' --exclude='tools' --exclude='tests' --exclude='public-site' ./ public-site/
 
       - name: Upload site
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: public-site
 
