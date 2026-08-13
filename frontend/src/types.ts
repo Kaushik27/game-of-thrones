@@ -73,4 +73,4 @@ export interface DatabaseTable { name: string; displayName: string; recordCount:
 export interface DatabaseTablesResponse { items: DatabaseTable[]; itemsCount: number; }
 export interface DatabaseRecordPage { table: string; items: Record<string, unknown>[]; itemsCount: number; page: number; pageSize: number; pagesCount: number; links: PageLinks; }
 
-export interface ApiTrace { method: string; path: string; status?: number; durationMs?: number; database?: string; state: "loading" | "complete" | "error"; at: number; }
+export interface ApiTrace { method: string; path: string; status?: number; durationMs?: number; database?: string; requestId?: string; state: "loading" | "complete" | "error"; at: number; }

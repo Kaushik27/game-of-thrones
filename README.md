@@ -39,9 +39,10 @@ The project now has a complete portfolio-ready modular-monolith edition while ke
 - 805 persisted domain records seeded from the curated legacy datasets: characters, houses, relationships, episodes, quotes, battles, and events;
 - paginated and filterable `/api/v1` resources with character-to-relationship and quote-to-speaker joins;
 - an interactive request laboratory, live request trace, and read-only Database Explorer at `/database` for teaching how the frontend, backend, and database communicate;
+- the Option 2 Observatory at `/app/`, a responsive map workspace with API-backed house markers, filters, timeline controls, command palette, and deep-linkable selected realms;
 - RFC 9457 error responses, OpenAPI/Swagger documentation, boundary validation, CORS, health endpoints, integration tests, Docker, and CI.
 
-See the [enterprise architecture and local run guide](docs/enterprise-architecture.md) for the migration design.
+See the [enterprise architecture and local run guide](docs/enterprise-architecture.md) for the migration design. The visual acceptance record for the Observatory is in [`design-qa.md`](design-qa.md).
 
 > Deployment truth: GitHub Pages and the Render service root both host the same cinematic edition. The Render container also exposes the API-driven React teaching application at `/app`, alongside the Spring Boot + H2 APIs.
 

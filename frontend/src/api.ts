@@ -29,7 +29,8 @@ async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
       signal: timeoutController.signal
     });
     const trace: ApiTrace = { method: "GET", path, status: response.status, durationMs: Math.round(performance.now() - started),
-      database: response.headers.get("Realm-Data-Source") || undefined, state: response.ok ? "complete" : "error", at: Date.now() };
+      database: response.headers.get("Realm-Data-Source") || undefined, requestId: response.headers.get("Request-Id") || undefined,
+      state: response.ok ? "complete" : "error", at: Date.now() };
     publish(trace);
     tracePublished = true;
     if (!response.ok) {
@@ -38,7 +39,9 @@ async function getJson<T>(path: string, signal?: AbortSignal): Promise<T> {
         ? "The project service is temporarily unavailable."
         : `The project request failed (${response.status}).`));
     }
-    return response.json() as Promise<T>;
+    const body: unknown = await response.json();
+    if (!body || typeof body !== "object") throw new Error("The project service returned an invalid response.");
+    return body as T;
   } catch (error) {
     if (timedOut) throw new Error("The project request timed out. Try again.");
     if ((error as Error).name !== "AbortError" && !tracePublished) {

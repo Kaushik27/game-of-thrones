@@ -1,5 +1,13 @@
 # Final Design QA — Living Encyclopedia
 
+## Option 2 Observatory acceptance
+
+final result: passed
+
+The new `/app/` observatory was verified locally against the Spring Boot service and file-backed H2 database. The dark observatory shell, raven mark, top navigation, filter rail, map canvas, selected-house drawer, timeline, and live status bar match the approved Option 2 direction. Browser checks confirmed API-backed counts and facts (196 people, 12 houses, 9 battles, 34 events), all 12 selectable database houses, Lannister selection with `?house=Lannister` URL state, map style URL state, command-palette navigation to People, and API-backed People loading. Frontend typecheck/tests/build and backend Gradle tests passed.
+
+Presentation-only map labels and marker coordinates are local visual metadata; house facts, counts, characters, events, and records are loaded through REST from H2/Flyway.
+
 ## Findings
 
 No actionable P0, P1, or P2 visual, responsive, interaction, or accessibility findings remain.
