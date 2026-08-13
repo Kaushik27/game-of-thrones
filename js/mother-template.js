@@ -90,7 +90,12 @@
 
   function heraldryFor(house) {
     const slug = String(house || "").toLowerCase().replace(/[^a-z]+/g, "-");
-    return `assets/generated/heraldry/${slug}.png?v=heraldry-2`;
+    const fallback = {
+      "Night's Watch": 'assets/generated/heraldry/night-watch.png',
+      "Free Folk": 'assets/generated/heraldry/free-folk.png',
+      Unaffiliated: 'assets/generated/heraldry/unaffiliated.png'
+    };
+    return `${fallback[house] || `assets/generated/heraldry/${slug}.png`}?v=heraldry-3`;
   }
 
   function quoteFor(character) {
