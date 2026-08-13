@@ -331,6 +331,11 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
   .mother-orbit-node { width: 76px; height: 76px; }
   .mother-orbit-node__sigil, .mother-orbit-node__sigil .sigil-icon { width: 34px; height: 34px; }
   .mother-orbit-node__label { top: calc(100% + 10px); min-width: 86px; font-size: .46rem; }
+  /* The nine medallions compress into one horizontal band on narrow screens.
+     Keep the controls clear and discoverable through their accessible labels
+     rather than letting the engraved captions collide with each other. */
+  body:has(.mother-observatory) .mother-orbit-node__label,
+  body:has(.mother-observatory) .mother-orbit-node__motto { display: none; }
   .mother-rail { width: calc(100% - 28px); min-height: 72px; gap: 14px; }
   .mother-rail__brand { min-width: 0; flex: 1; }
   .mother-rail__links { display: none; }
