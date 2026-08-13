@@ -116,6 +116,15 @@
     const initial = entries[0];
     if (!root || !entries.length) return { destroy() {} };
     const active = { entry: initial };
+    // Warm every realm plate before the first selection so the hero never
+    // flashes, stretches, or appears to load after a house is chosen.
+    if (typeof Image === "function") {
+      entries.forEach(entry => {
+        const preload = new Image();
+        preload.decoding = "async";
+        preload.src = entry.visual;
+      });
+    }
     root.className = "mother-observatory";
     root.innerHTML = `
       <section class="mother-hero" aria-labelledby="mother-title">

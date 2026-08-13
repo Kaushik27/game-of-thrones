@@ -72,3 +72,4 @@ Every route below was opened in the deployed site and captured at 375px, 768px, 
 - The Maps journey now uses distinct scenes for Winterfell, the Wall, King’s Landing, Meereen, and Beyond the Wall. The new Beyond the Wall scene is an original snowy wilderness asset designed for this project.
 - The Houses landing page now opens on a cinematic King’s Landing / Red Keep treatment with a focused feature panel; the orbiting sigil diagram has been removed.
 - Rechecked both routes at 375px, 768px, and 1440px: zero broken images, horizontal overflow, or browser console errors. Every map stop resolved to its intended regional background at all three widths.
+- Reworked the observatory medallions so the transparent control no longer renders a second dark circular plate around the engraved source coin. Removed wallpaper breathing/arrival scaling, preloaded all nine house scenes, and removed map-backdrop scaling so selections swap without the visible expansion/loading lag.

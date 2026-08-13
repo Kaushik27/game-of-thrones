@@ -807,3 +807,62 @@ body:has(.mother-observatory) #site-footer { display: none !important; }
   mix-blend-mode: screen;
   filter: saturate(.9) contrast(1.08) brightness(.96) drop-shadow(0 8px 12px rgba(0,0,0,.5));
 }
+
+/* Final observatory pass: the source coin is the only circular surface.
+   The control itself stays transparent, while the crop removes the dark
+   square canvas around each engraved heraldry image.  Keep the artwork still
+   so selecting a house feels instant instead of expanding through a loading
+   animation. */
+body:has(.mother-observatory) .mother-orbit-node,
+body:has(.mother-observatory) .mother-orbit-node:hover,
+body:has(.mother-observatory) .mother-orbit-node:focus-visible,
+body:has(.mother-observatory) .mother-orbit-node.is-active {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transition: transform 180ms ease, filter 180ms ease;
+}
+body:has(.mother-observatory) .mother-orbit-node__seal {
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  border-radius: 50%;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+body:has(.mother-observatory) .mother-orbit-node__heraldry {
+  inset: -14% !important;
+  width: 128% !important;
+  height: 128% !important;
+  max-width: none !important;
+  object-fit: cover !important;
+  object-position: center;
+  transform: none !important;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  filter: saturate(.9) contrast(1.14) brightness(.98) !important;
+  opacity: 1;
+}
+body:has(.mother-observatory) .mother-orbit-node:hover,
+body:has(.mother-observatory) .mother-orbit-node:focus-visible,
+body:has(.mother-observatory) .mother-orbit-node.is-active {
+  transform: translateY(-3px) scale(1.025);
+}
+body:has(.mother-observatory) .mother-orbit-node:hover .mother-orbit-node__heraldry,
+body:has(.mother-observatory) .mother-orbit-node:focus-visible .mother-orbit-node__heraldry,
+body:has(.mother-observatory) .mother-orbit-node.is-active .mother-orbit-node__heraldry {
+  filter: saturate(.98) contrast(1.16) brightness(1.06) drop-shadow(0 0 13px color-mix(in srgb, var(--house-accent) 34%, transparent)) !important;
+}
+body:has(.mother-observatory) .mother-hero__portrait img {
+  animation: none !important;
+  transform: none !important;
+}
+body:has(.mother-observatory) .mother-hero__portrait.is-arriving {
+  animation: mother-portrait-crossfade 320ms ease both !important;
+}
+@keyframes mother-portrait-crossfade {
+  from { opacity: .68; }
+  to { opacity: 1; }
+}
