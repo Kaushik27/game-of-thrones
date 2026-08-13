@@ -111,14 +111,12 @@
         <div class="mother-hero__rings" aria-hidden="true"><span></span><span></span><span></span></div>
         <div class="mother-hero__portrait" data-mother-portrait><img data-mother-realm-image src="${safe(initial.visual)}" alt="${safe(initial.house)} realm visual" width="1440" height="1024" fetchpriority="high" decoding="async"></div>
         <div class="mother-hero__orbit" aria-label="Choose a house">
-          <button type="button" class="mother-rail-arrow mother-rail-arrow--previous" data-mother-step="-1" aria-label="Previous house">‹</button>
           ${entries.map(entry => {
             const dx = entry.position.x - 50;
             const dy = entry.position.y - 50;
             return `<span class="mother-connector mother-connector--${entry.position.tone}" style="--line-length:${Math.hypot(dx, dy)}%;--line-angle:${Math.atan2(dy, dx) * 180 / Math.PI}deg" aria-hidden="true"></span>`;
           }).join("")}
           ${entries.map((entry, index) => `<button type="button" class="mother-orbit-node mother-orbit-node--${entry.position.tone}${index === 0 ? " is-active" : ""}" data-mother-house="${safe(entry.house)}" style="--node-x:${entry.position.x}%;--node-y:${entry.position.y}%;--house-accent:${safe(entry.color)}" aria-pressed="${index === 0}" aria-label="Select House ${safe(entry.house)}"><span class="mother-orbit-node__halo" aria-hidden="true"></span><span class="mother-orbit-node__seal"><img class="mother-orbit-node__heraldry" src="${heraldryFor(entry.house)}" alt="" width="128" height="128" loading="lazy" decoding="async"><span class="mother-orbit-node__seal-mark" aria-hidden="true"></span></span><span class="mother-orbit-node__label">${safe(entry.house)}</span><span class="mother-orbit-node__motto">${safe(entry.info.words)}</span></button>`).join("")}
-          <button type="button" class="mother-rail-arrow mother-rail-arrow--next" data-mother-step="1" aria-label="Next house">›</button>
         </div>
         <div class="mother-hero__copy">
           <p class="mother-eyebrow">The Raven Wall · a fan-made realm</p>
@@ -141,6 +139,8 @@
     const cta = root.querySelector("[data-mother-cta]");
     const portrait = root.querySelector("[data-mother-portrait]");
     const realmImage = root.querySelector("[data-mother-realm-image]");
+    root.style.setProperty("--mother-current-wallpaper", `url("${initial.visual}")`);
+    document.body.style.setProperty("--mother-current-wallpaper", `url("${initial.visual}")`);
 
     function selectHouse(house) {
       const next = entries.find(entry => entry.house === house) || initial;
@@ -154,6 +154,8 @@
       void portrait.offsetWidth;
       portrait.classList.add("is-arriving");
       realmImage.src = next.visual;
+      root.style.setProperty("--mother-current-wallpaper", `url("${next.visual}")`);
+      document.body.style.setProperty("--mother-current-wallpaper", `url("${next.visual}")`);
       realmImage.alt = `${next.house} realm visual`;
       kicker.textContent = `${next.house} · ${next.info.region}`;
       title.innerHTML = `${safe(next.house)}<br><em>${safe(next.info.words).replace(/!$/, ".")}</em>`;

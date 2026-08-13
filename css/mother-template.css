@@ -348,12 +348,16 @@ body:has(.mother-observatory) .react-nav-shell {
   inset: 0 0 auto;
   z-index: 30;
   min-height: 82px;
-  background: linear-gradient(180deg, rgba(3, 8, 12, .88) 0%, rgba(3, 8, 12, .58) 58%, rgba(3, 8, 12, 0) 100%);
-  border-bottom-color: rgba(212, 168, 94, .18);
+  background: linear-gradient(180deg, rgba(3, 8, 12, .68) 0%, rgba(3, 8, 12, .34) 55%, rgba(3, 8, 12, 0) 100%);
+  border-bottom-color: rgba(212, 168, 94, .12);
   box-shadow: none;
   backdrop-filter: blur(5px) saturate(1.05);
 }
 body:has(.mother-observatory) #app { min-height: 100svh; }
+body:has(.mother-observatory) #site-nav::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, rgba(5, 12, 17, .32), transparent 78%); mask-image: linear-gradient(180deg, #000, transparent); }
+body:has(.mother-observatory) #site-footer { position: relative; overflow: hidden; border-top: 0; background: linear-gradient(180deg, transparent 0%, rgba(4, 9, 13, .42) 34%, rgba(3, 8, 12, .82) 100%); }
+body:has(.mother-observatory) #site-footer::before { content: ""; position: absolute; inset: -35px 0 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, rgba(3, 8, 12, 0), rgba(3, 8, 12, .75)), var(--mother-current-wallpaper, url("../assets/generated/realms/stark-scene-v1.png")) center 84% / cover; opacity: .34; filter: saturate(.6) brightness(.62); mask-image: linear-gradient(180deg, transparent, #000 50%); }
+body:has(.mother-observatory) .mother-rail { position: relative; z-index: 1; min-height: 88px; }
 
 /* Forged-gate CTA: the chevron shoulders and inset hairline make it read as
    a control from the world, not a generic rectangular web button. */
@@ -440,6 +444,10 @@ body:has(.mother-observatory) .mother-orbit-node.is-active { border-color: color
 body:has(.mother-observatory) .mother-orbit-node:hover .mother-orbit-node__sigil,
 body:has(.mother-observatory) .mother-orbit-node:focus-visible .mother-orbit-node__sigil,
 body:has(.mother-observatory) .mother-orbit-node.is-active .mother-orbit-node__sigil { color: color-mix(in srgb, var(--house-accent) 58%, #f3e7bf); }
+
+/* House selection remains available through the medallions themselves; no
+   floating arrows are needed on top of the artwork. */
+body:has(.mother-observatory) .mother-rail-arrow { display: none !important; }
 
 body:has(.mother-observatory) .mother-rail__raven { border-color: rgba(197, 166, 108, .55); background: linear-gradient(145deg, #30302b, #0b0d0d); box-shadow: inset 0 0 0 4px rgba(0, 0, 0, .4); }
 body:has(.mother-observatory) .mother-rail__raven .sigil-icon { width: 22px; height: 22px; color: #d6c497; }
