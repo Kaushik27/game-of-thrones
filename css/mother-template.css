@@ -436,7 +436,7 @@ body:has(.mother-observatory) .mother-orbit-node__sigil .sigil-icon { width: 100
 body:has(.mother-observatory) .mother-orbit-node__sigil .sigil-icon path,
 body:has(.mother-observatory) .mother-orbit-node__sigil .sigil-icon circle,
 body:has(.mother-observatory) .mother-orbit-node__sigil .sigil-icon g { stroke-width: 3.1px; }
-body:has(.mother-observatory) .mother-orbit-node__heraldry { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; filter: saturate(.78) contrast(1.14) brightness(.9); mix-blend-mode: normal; opacity: .98; }
+body:has(.mother-observatory) .mother-orbit-node__heraldry { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; filter: saturate(.78) contrast(1.14) brightness(.9); mix-blend-mode: screen; opacity: .98; }
 body:has(.mother-observatory) .mother-orbit-node:hover .mother-orbit-node__heraldry,
 body:has(.mother-observatory) .mother-orbit-node:focus-visible .mother-orbit-node__heraldry,
 body:has(.mother-observatory) .mother-orbit-node.is-active .mother-orbit-node__heraldry { filter: saturate(.88) contrast(1.2) brightness(1); opacity: 1; }
