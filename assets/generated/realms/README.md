@@ -18,3 +18,7 @@ The `*-scene-v3.png` files are the current cinematic location set. Each is a
 distinct photorealistic establishing scene with no embedded interface, so the
 homepage and house dossiers can fade into the same world without a second
 panel or artificial black seam.
+
+The `*-scene-v4.png` files add a left-third character study to each location.
+They are fictional, screen-realistic interpretations of the house's principal
+figure, leaving the center clear for live HTML copy and controls.

@@ -343,6 +343,92 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
   #app > .page-wrap, #app > .houses-page, #app > .voices-page, #app > .raven-wall, #app > .pi-shell, #app > .world-atlas, #app > .lore-library, #app > .story-atlas, #app > .realm-chronicle, #app > .what-if, #app > .maesters-desk { width: calc(100% - 24px); }
 }
 
+/* Shared Raven Wall frame for the editorial routes. Individual modules keep
+   their own content layout, while this layer gives Houses, History,
+   Chronicles, Maps and Lore one consistent visual grammar. */
+body.realm-route {
+  --route-line: rgba(212, 168, 94, .24);
+  --route-line-strong: rgba(238, 217, 169, .62);
+  --route-surface: rgba(7, 12, 16, .72);
+  background: #03070a;
+}
+body.realm-route #app { position: relative; isolation: isolate; }
+body.realm-route #app::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: 150px;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(2, 6, 9, .72), transparent);
+}
+body.realm-route .houses-page,
+body.realm-route .encyclopedia-feature-host,
+body.realm-route .raven-wall-host {
+  position: relative;
+  z-index: 0;
+  background: linear-gradient(180deg, rgba(3, 8, 12, .1), rgba(3, 8, 12, .5));
+}
+body.realm-route .houses-hero,
+body.realm-route .realm-chronicle__hero,
+body.realm-route .wa-hero,
+body.realm-route .lore-library__hero,
+body.realm-route .raven-wall__masthead {
+  border-color: var(--route-line) !important;
+  box-shadow: inset 0 -1px 0 rgba(238, 217, 169, .12), 0 28px 80px rgba(0, 0, 0, .28) !important;
+}
+body.realm-route .houses-eyebrow,
+body.realm-route .wa-eyebrow,
+body.realm-route .lore-library__eyebrow,
+body.realm-route .realm-chronicle__eyebrow,
+body.realm-route .raven-wall__eyebrow {
+  color: var(--mother-gold-soft) !important;
+  font-family: var(--mother-serif) !important;
+  letter-spacing: .24em !important;
+}
+body.realm-route .houses-hero h1,
+body.realm-route .wa-hero h1,
+body.realm-route .lore-library__hero h1,
+body.realm-route .realm-chronicle__hero h1,
+body.realm-route .raven-wall h1 {
+  font-family: var(--mother-serif) !important;
+  font-weight: 500 !important;
+  letter-spacing: .045em !important;
+  text-shadow: 0 8px 30px rgba(0, 0, 0, .6);
+}
+body.realm-route .houses-card,
+body.realm-route .wa-territory-card,
+body.realm-route .lore-card,
+body.realm-route .lore-feature-card,
+body.realm-route .story-atlas__episode-card,
+body.realm-route .raven-wall__filters,
+body.realm-route .raven-wall__story-card {
+  border-color: var(--route-line) !important;
+  border-radius: 0 !important;
+  background: linear-gradient(145deg, rgba(12, 19, 23, .78), var(--route-surface)) !important;
+  box-shadow: inset 0 1px 0 rgba(238, 217, 169, .08), 0 18px 36px rgba(0, 0, 0, .2) !important;
+}
+body.realm-route .houses-card:hover,
+body.realm-route .wa-territory-card:hover,
+body.realm-route .lore-card:hover,
+body.realm-route .lore-feature-card:hover,
+body.realm-route .story-atlas__episode-card:hover {
+  border-color: var(--route-line-strong) !important;
+  transform: translateY(-3px);
+}
+body.realm-route button,
+body.realm-route .houses-hero__cta,
+body.realm-route a.card {
+  border-radius: 0 !important;
+}
+body.realm-route .houses-hero__cta,
+body.realm-route .wa-hero a,
+body.realm-route .lore-library button,
+body.realm-route .raven-wall button {
+  border-color: var(--route-line-strong);
+  letter-spacing: .16em;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .mother-hero__ambient, .mother-hero__rings span:nth-child(3) { animation: none; }
   .mother-hero__portrait.is-arriving { animation: none; }
@@ -1057,15 +1143,15 @@ body:has(.house-profile-hero) #tree-host .tree-node:focus-visible .tree-node__ca
 body:has(.house-profile-hero) #tree-host .tree-node__label { font-family: var(--mother-serif); font-size: .86rem; letter-spacing: .045em; }
 body:has(.house-profile-hero) #tree-host .tree-node__subline { font-family: var(--mother-serif); font-size: .56rem; letter-spacing: .16em; }
 
-body:has(.house-profile-hero[data-house="Stark"]) .house-profile-hero { background-image: url("../assets/generated/realms/stark-scene-v3.png") !important; }
-body:has(.house-profile-hero[data-house="Lannister"]) .house-profile-hero { background-image: url("../assets/generated/realms/lannister-scene-v3.png") !important; }
-body:has(.house-profile-hero[data-house="Targaryen"]) .house-profile-hero { background-image: url("../assets/generated/realms/targaryen-scene-v3.png") !important; }
-body:has(.house-profile-hero[data-house="Baratheon"]) .house-profile-hero { background-image: url("../assets/generated/realms/baratheon-scene-v3.png") !important; }
-body:has(.house-profile-hero[data-house="Greyjoy"]) .house-profile-hero { background-image: url("../assets/generated/realms/greyjoy-scene-v3.png") !important; }
-body:has(.house-profile-hero[data-house="Tyrell"]) .house-profile-hero { background-image: url("../assets/generated/realms/tyrell-scene-v3.png") !important; }
-body:has(.house-profile-hero[data-house="Tully"]) .house-profile-hero { background-image: url("../assets/generated/realms/tully-scene-v3.png") !important; }
-body:has(.house-profile-hero[data-house="Martell"]) .house-profile-hero { background-image: url("../assets/generated/realms/martell-scene-v3.png") !important; }
-body:has(.house-profile-hero[data-house="Arryn"]) .house-profile-hero { background-image: url("../assets/generated/realms/arryn-scene-v3.png") !important; }
+body:has(.house-profile-hero[data-house="Stark"]) .house-profile-hero { background-image: url("../assets/generated/realms/stark-scene-v4.png") !important; }
+body:has(.house-profile-hero[data-house="Lannister"]) .house-profile-hero { background-image: url("../assets/generated/realms/lannister-scene-v4.png") !important; }
+body:has(.house-profile-hero[data-house="Targaryen"]) .house-profile-hero { background-image: url("../assets/generated/realms/targaryen-scene-v4.png") !important; }
+body:has(.house-profile-hero[data-house="Baratheon"]) .house-profile-hero { background-image: url("../assets/generated/realms/baratheon-scene-v4.png") !important; }
+body:has(.house-profile-hero[data-house="Greyjoy"]) .house-profile-hero { background-image: url("../assets/generated/realms/greyjoy-scene-v4.png") !important; }
+body:has(.house-profile-hero[data-house="Tyrell"]) .house-profile-hero { background-image: url("../assets/generated/realms/tyrell-scene-v4.png") !important; }
+body:has(.house-profile-hero[data-house="Tully"]) .house-profile-hero { background-image: url("../assets/generated/realms/tully-scene-v4.png") !important; }
+body:has(.house-profile-hero[data-house="Martell"]) .house-profile-hero { background-image: url("../assets/generated/realms/martell-scene-v4.png") !important; }
+body:has(.house-profile-hero[data-house="Arryn"]) .house-profile-hero { background-image: url("../assets/generated/realms/arryn-scene-v4.png") !important; }
 
 @media (max-width: 860px) {
   body:has(.house-profile-hero) .house-profile-hero {
@@ -1080,3 +1166,27 @@ body:has(.house-profile-hero[data-house="Arryn"]) .house-profile-hero { backgrou
   body:has(.house-profile-hero) .house-tree-intro { display: block; }
   body:has(.house-profile-hero) .house-tree-intro span { display: block; margin-top: 8px; }
 }
+
+/* Final cascade guard: keep the route frame consistent after module styles. */
+body.realm-route { --route-line: rgba(212,168,94,.24); --route-line-strong: rgba(238,217,169,.62); background: #03070a; }
+body.realm-route .houses-hero,
+body.realm-route .realm-chronicle__hero,
+body.realm-route .wa-hero,
+body.realm-route .lore-library__hero,
+body.realm-route .raven-wall__masthead { border-color: var(--route-line) !important; box-shadow: inset 0 -1px 0 rgba(238,217,169,.12), 0 28px 80px rgba(0,0,0,.28) !important; }
+body.realm-route .houses-card,
+body.realm-route .wa-territory-card,
+body.realm-route .lore-card,
+body.realm-route .lore-feature-card,
+body.realm-route .story-atlas__episode-card,
+body.realm-route .raven-wall__story-card { border-color: var(--route-line) !important; border-radius: 0 !important; background: linear-gradient(145deg, rgba(12,19,23,.78), rgba(7,12,16,.72)) !important; box-shadow: inset 0 1px 0 rgba(238,217,169,.08), 0 18px 36px rgba(0,0,0,.2) !important; }
+body.realm-route .houses-card:hover,
+body.realm-route .wa-territory-card:hover,
+body.realm-route .lore-card:hover,
+body.realm-route .lore-feature-card:hover,
+body.realm-route .story-atlas__episode-card:hover { border-color: var(--route-line-strong) !important; transform: translateY(-3px); }
+body.realm-route .houses-eyebrow,
+body.realm-route .wa-eyebrow,
+body.realm-route .lore-library__eyebrow,
+body.realm-route .realm-chronicle__eyebrow,
+body.realm-route .raven-wall__eyebrow { color: var(--mother-gold-soft) !important; font-family: var(--mother-serif) !important; letter-spacing: .24em !important; }

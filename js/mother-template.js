@@ -35,15 +35,15 @@
   });
 
   const REALM_VISUALS = Object.freeze({
-    Stark: "assets/generated/realms/stark-scene-v3.png?v=realms-realistic-3",
-    Lannister: "assets/generated/realms/lannister-scene-v3.png?v=realms-realistic-3",
-    Targaryen: "assets/generated/realms/targaryen-scene-v3.png?v=realms-realistic-3",
-    Baratheon: "assets/generated/realms/baratheon-scene-v3.png?v=realms-realistic-3",
-    Greyjoy: "assets/generated/realms/greyjoy-scene-v3.png?v=realms-realistic-3",
-    Tyrell: "assets/generated/realms/tyrell-scene-v3.png?v=realms-realistic-3",
-    Tully: "assets/generated/realms/tully-scene-v3.png?v=realms-realistic-3",
-    Martell: "assets/generated/realms/martell-scene-v3.png?v=realms-realistic-3",
-    Arryn: "assets/generated/realms/arryn-scene-v3.png?v=realms-realistic-3"
+    Stark: "assets/generated/realms/stark-scene-v4.png?v=realm-character-4",
+    Lannister: "assets/generated/realms/lannister-scene-v4.png?v=realm-character-4",
+    Targaryen: "assets/generated/realms/targaryen-scene-v4.png?v=realm-character-4",
+    Baratheon: "assets/generated/realms/baratheon-scene-v4.png?v=realm-character-4",
+    Greyjoy: "assets/generated/realms/greyjoy-scene-v4.png?v=realm-character-4",
+    Tyrell: "assets/generated/realms/tyrell-scene-v4.png?v=realm-character-4",
+    Tully: "assets/generated/realms/tully-scene-v4.png?v=realm-character-4",
+    Martell: "assets/generated/realms/martell-scene-v4.png?v=realm-character-4",
+    Arryn: "assets/generated/realms/arryn-scene-v4.png?v=realm-character-4"
   });
 
   function safe(value) {
@@ -152,7 +152,7 @@
           <h1 id="mother-title" data-mother-title>The North<br><em>remembers.</em></h1>
           <p class="mother-hero__quote" data-mother-quote>“${safe(quoteFor(initial.character))}”</p>
           <p class="mother-hero__summary" data-mother-summary>${safe(initial.character?.bio || "Follow the people, houses, and choices that left a mark on the realm.")}</p>
-          <a class="mother-hero__cta" data-mother-cta href="#/house/${safe(initial.house)}"><span>Enter the realm</span><b aria-hidden="true">↗</b></a>
+          <a class="mother-hero__cta" data-mother-cta href="#/house/${safe(initial.house)}" aria-label="Cross the threshold into House ${safe(initial.house)}"><span>Cross the threshold</span><b aria-hidden="true">↗</b></a>
         </div>
         <div class="mother-hero__meta" aria-label="realm facts">
           <span><strong>196</strong> people</span><span><strong>12</strong> banners</span><span><strong>8</strong> seasons</span>
