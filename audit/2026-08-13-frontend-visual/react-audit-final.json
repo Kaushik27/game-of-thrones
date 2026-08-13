@@ -1,0 +1,5522 @@
+{
+  "generatedAt": "2026-08-13T19:09:37.462Z",
+  "base": "https://game-of-thrones-enterprise.onrender.com/app",
+  "results": [
+    {
+      "route": "dashboard",
+      "path": "/",
+      "viewport": "375",
+      "bodyHeight": 2727,
+      "brokenImages": [],
+      "height": 844,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [
+        {
+          "bottom": 202,
+          "cls": "rail-link active",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Overview",
+          "top": 153
+        },
+        {
+          "bottom": 287,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "People\n196",
+          "top": 238
+        },
+        {
+          "bottom": 336,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Houses\n12",
+          "top": 287
+        },
+        {
+          "bottom": 421,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Timeline",
+          "top": 372
+        },
+        {
+          "bottom": 470,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Chronicles",
+          "top": 421
+        },
+        {
+          "bottom": 555,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Battles\n9",
+          "top": 506
+        },
+        {
+          "bottom": 640,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Database",
+          "top": 591
+        },
+        {
+          "bottom": 689,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "How it works",
+          "top": 640
+        },
+        {
+          "bottom": 1720,
+          "cls": "timeline-play",
+          "left": 10,
+          "right": 44,
+          "tag": "button",
+          "text": "▶",
+          "top": 1686
+        }
+      ],
+      "offscreen": [
+        {
+          "bottom": 118,
+          "cls": "observatory-logo compact active",
+          "left": -202,
+          "right": -164,
+          "tag": "a",
+          "text": "The Raven Wall home",
+          "top": 80
+        },
+        {
+          "bottom": -260,
+          "cls": "",
+          "left": 292,
+          "right": 340,
+          "tag": "button",
+          "text": "Reset ↻",
+          "top": -274
+        },
+        {
+          "bottom": -171,
+          "cls": "",
+          "left": 20,
+          "right": 35,
+          "tag": "input",
+          "text": "",
+          "top": -186
+        },
+        {
+          "bottom": -137,
+          "cls": "",
+          "left": 20,
+          "right": 35,
+          "tag": "input",
+          "text": "",
+          "top": -152
+        },
+        {
+          "bottom": -103,
+          "cls": "",
+          "left": 20,
+          "right": 35,
+          "tag": "input",
+          "text": "",
+          "top": -118
+        },
+        {
+          "bottom": -69,
+          "cls": "",
+          "left": 20,
+          "right": 35,
+          "tag": "input",
+          "text": "",
+          "top": -84
+        },
+        {
+          "bottom": -35,
+          "cls": "",
+          "left": 20,
+          "right": 35,
+          "tag": "input",
+          "text": "",
+          "top": -50
+        },
+        {
+          "bottom": -1,
+          "cls": "",
+          "left": 20,
+          "right": 35,
+          "tag": "input",
+          "text": "",
+          "top": -16
+        },
+        {
+          "bottom": -837,
+          "cls": "",
+          "left": 56,
+          "right": 348,
+          "tag": "select",
+          "text": "Regions\nPolitical\nTravel",
+          "top": -874
+        },
+        {
+          "bottom": -834,
+          "cls": "",
+          "left": 18,
+          "right": 53,
+          "tag": "button",
+          "text": "+",
+          "top": -869
+        },
+        {
+          "bottom": -799,
+          "cls": "",
+          "left": 18,
+          "right": 53,
+          "tag": "button",
+          "text": "−",
+          "top": -834
+        },
+        {
+          "bottom": -764,
+          "cls": "",
+          "left": 18,
+          "right": 53,
+          "tag": "button",
+          "text": "◎",
+          "top": -799
+        },
+        {
+          "bottom": -618,
+          "cls": "map-marker",
+          "left": 236,
+          "right": 282,
+          "tag": "button",
+          "text": "Select House Arryn",
+          "top": -660
+        },
+        {
+          "bottom": -451,
+          "cls": "map-marker",
+          "left": 212,
+          "right": 258,
+          "tag": "button",
+          "text": "Select House Baratheon",
+          "top": -493
+        },
+        {
+          "bottom": -855,
+          "cls": "map-marker",
+          "left": 14,
+          "right": 60,
+          "tag": "button",
+          "text": "Select House Free Folk",
+          "top": -897
+        },
+        {
+          "bottom": -604,
+          "cls": "map-marker",
+          "left": 58,
+          "right": 104,
+          "tag": "button",
+          "text": "Select House Greyjoy",
+          "top": -646
+        },
+        {
+          "bottom": -549,
+          "cls": "map-marker",
+          "left": 70,
+          "right": 116,
+          "tag": "button",
+          "text": "Select House Lannister",
+          "top": -591
+        },
+        {
+          "bottom": -312,
+          "cls": "map-marker",
+          "left": 189,
+          "right": 235,
+          "tag": "button",
+          "text": "Select House Martell",
+          "top": -354
+        },
+        {
+          "bottom": -570,
+          "cls": "map-marker",
+          "left": 157,
+          "right": 203,
+          "tag": "button",
+          "text": "Select House Night's Watch",
+          "top": -612
+        },
+        {
+          "bottom": -793,
+          "cls": "map-marker selected",
+          "left": 113,
+          "right": 159,
+          "tag": "button",
+          "text": "Select House Stark",
+          "top": -835
+        },
+        {
+          "bottom": -514,
+          "cls": "map-marker",
+          "left": 185,
+          "right": 231,
+          "tag": "button",
+          "text": "Select House Targaryen",
+          "top": -556
+        },
+        {
+          "bottom": -618,
+          "cls": "map-marker",
+          "left": 125,
+          "right": 171,
+          "tag": "button",
+          "text": "Select House Tully",
+          "top": -660
+        },
+        {
+          "bottom": -416,
+          "cls": "map-marker",
+          "left": 153,
+          "right": 199,
+          "tag": "button",
+          "text": "Select House Tyrell",
+          "top": -458
+        },
+        {
+          "bottom": -374,
+          "cls": "map-marker",
+          "left": 292,
+          "right": 338,
+          "tag": "button",
+          "text": "Select House Unaffiliated",
+          "top": -416
+        },
+        {
+          "bottom": 888,
+          "cls": "drawer-close",
+          "left": 313,
+          "right": 340,
+          "tag": "button",
+          "text": "×",
+          "top": 856
+        },
+        {
+          "bottom": 1146,
+          "cls": "active",
+          "left": 28,
+          "right": 91,
+          "tag": "button",
+          "text": "OVERVIEW",
+          "top": 1110
+        },
+        {
+          "bottom": 1146,
+          "cls": "",
+          "left": 109,
+          "right": 155,
+          "tag": "button",
+          "text": "PEOPLE",
+          "top": 1110
+        },
+        {
+          "bottom": 1146,
+          "cls": "",
+          "left": 173,
+          "right": 225,
+          "tag": "button",
+          "text": "HISTORY",
+          "top": 1110
+        },
+        {
+          "bottom": 1146,
+          "cls": "",
+          "left": 243,
+          "right": 309,
+          "tag": "button",
+          "text": "RELATIONS",
+          "top": 1110
+        },
+        {
+          "bottom": 1332,
+          "cls": "member-row",
+          "left": 28,
+          "right": 333,
+          "tag": "a",
+          "text": "Alys Karstark\nactor unknown\n›",
+          "top": 1270
+        },
+        {
+          "bottom": 1394,
+          "cls": "member-row",
+          "left": 28,
+          "right": 333,
+          "tag": "a",
+          "text": "Alysane Mormont\nactor unknown\n›",
+          "top": 1332
+        },
+        {
+          "bottom": 1456,
+          "cls": "member-row",
+          "left": 28,
+          "right": 333,
+          "tag": "a",
+          "text": "Arya Stark\nMaisie Williams\n›",
+          "top": 1394
+        },
+        {
+          "bottom": 1518,
+          "cls": "member-row",
+          "left": 28,
+          "right": 333,
+          "tag": "a",
+          "text": "Benjen Stark\nJoseph Mawle\n›",
+          "top": 1456
+        },
+        {
+          "bottom": 1587,
+          "cls": "drawer-action",
+          "left": 28,
+          "right": 333,
+          "tag": "a",
+          "text": "View all 35 members\n→",
+          "top": 1536
+        },
+        {
+          "bottom": 1711,
+          "cls": "active",
+          "left": 225,
+          "right": 242,
+          "tag": "button",
+          "text": "",
+          "top": 1694
+        },
+        {
+          "bottom": 1709,
+          "cls": "",
+          "left": 244,
+          "right": 256,
+          "tag": "button",
+          "text": "",
+          "top": 1697
+        },
+        {
+          "bottom": 1709,
+          "cls": "",
+          "left": 260,
+          "right": 272,
+          "tag": "button",
+          "text": "",
+          "top": 1697
+        },
+        {
+          "bottom": 1709,
+          "cls": "",
+          "left": 277,
+          "right": 289,
+          "tag": "button",
+          "text": "",
+          "top": 1697
+        },
+        {
+          "bottom": 1709,
+          "cls": "",
+          "left": 293,
+          "right": 305,
+          "tag": "button",
+          "text": "",
+          "top": 1697
+        },
+        {
+          "bottom": 1709,
+          "cls": "",
+          "left": 310,
+          "right": 322,
+          "tag": "button",
+          "text": "",
+          "top": 1697
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/?verify=final-dashboard-375",
+      "width": 375,
+      "consoleErrors": []
+    },
+    {
+      "route": "dashboard",
+      "path": "/",
+      "viewport": "768",
+      "bodyHeight": 2975,
+      "brokenImages": [],
+      "height": 1024,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [
+        {
+          "bottom": 210,
+          "cls": "rail-link active",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Overview",
+          "top": 161
+        },
+        {
+          "bottom": 295,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "People\n196",
+          "top": 246
+        },
+        {
+          "bottom": 344,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Houses\n12",
+          "top": 295
+        },
+        {
+          "bottom": 429,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Timeline",
+          "top": 380
+        },
+        {
+          "bottom": 478,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Chronicles",
+          "top": 429
+        },
+        {
+          "bottom": 563,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Battles\n9",
+          "top": 514
+        },
+        {
+          "bottom": 648,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Database",
+          "top": 599
+        },
+        {
+          "bottom": 697,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "How it works",
+          "top": 648
+        },
+        {
+          "bottom": 1558,
+          "cls": "timeline-play",
+          "left": 20,
+          "right": 54,
+          "tag": "button",
+          "text": "▶",
+          "top": 1524
+        }
+      ],
+      "offscreen": [
+        {
+          "bottom": 126,
+          "cls": "observatory-logo compact active",
+          "left": -202,
+          "right": -164,
+          "tag": "a",
+          "text": "The Raven Wall home",
+          "top": 88
+        },
+        {
+          "bottom": -382,
+          "cls": "",
+          "left": 685,
+          "right": 733,
+          "tag": "button",
+          "text": "Reset ↻",
+          "top": -396
+        },
+        {
+          "bottom": -292,
+          "cls": "",
+          "left": 20,
+          "right": 35,
+          "tag": "input",
+          "text": "",
+          "top": -307
+        },
+        {
+          "bottom": -258,
+          "cls": "",
+          "left": 20,
+          "right": 35,
+          "tag": "input",
+          "text": "",
+          "top": -273
+        },
+        {
+          "bottom": -224,
+          "cls": "",
+          "left": 20,
+          "right": 35,
+          "tag": "input",
+          "text": "",
+          "top": -239
+        },
+        {
+          "bottom": -190,
+          "cls": "",
+          "left": 20,
+          "right": 35,
+          "tag": "input",
+          "text": "",
+          "top": -205
+        },
+        {
+          "bottom": -156,
+          "cls": "",
+          "left": 20,
+          "right": 35,
+          "tag": "input",
+          "text": "",
+          "top": -171
+        },
+        {
+          "bottom": -122,
+          "cls": "",
+          "left": 20,
+          "right": 35,
+          "tag": "input",
+          "text": "",
+          "top": -137
+        },
+        {
+          "bottom": -14,
+          "cls": "allegiance-row",
+          "left": 20,
+          "right": 733,
+          "tag": "button",
+          "text": "Arryn\n7",
+          "top": -48
+        },
+        {
+          "bottom": 20,
+          "cls": "allegiance-row",
+          "left": 20,
+          "right": 733,
+          "tag": "button",
+          "text": "Baratheon\n11",
+          "top": -14
+        },
+        {
+          "bottom": -1234,
+          "cls": "active",
+          "left": 18,
+          "right": 86,
+          "tag": "button",
+          "text": "Regions",
+          "top": -1269
+        },
+        {
+          "bottom": -1234,
+          "cls": "",
+          "left": 90,
+          "right": 156,
+          "tag": "button",
+          "text": "Political",
+          "top": -1269
+        },
+        {
+          "bottom": -1234,
+          "cls": "",
+          "left": 160,
+          "right": 218,
+          "tag": "button",
+          "text": "Travel",
+          "top": -1269
+        },
+        {
+          "bottom": -1233,
+          "cls": "",
+          "left": 610,
+          "right": 735,
+          "tag": "select",
+          "text": "Regions\nPolitical\nTravel",
+          "top": -1270
+        },
+        {
+          "bottom": -1235,
+          "cls": "",
+          "left": 18,
+          "right": 53,
+          "tag": "button",
+          "text": "+",
+          "top": -1270
+        },
+        {
+          "bottom": -1200,
+          "cls": "",
+          "left": 18,
+          "right": 53,
+          "tag": "button",
+          "text": "−",
+          "top": -1235
+        },
+        {
+          "bottom": -1165,
+          "cls": "",
+          "left": 18,
+          "right": 53,
+          "tag": "button",
+          "text": "◎",
+          "top": -1200
+        },
+        {
+          "bottom": -905,
+          "cls": "map-marker",
+          "left": 505,
+          "right": 580,
+          "tag": "button",
+          "text": "Arryn",
+          "top": -942
+        },
+        {
+          "bottom": -659,
+          "cls": "map-marker",
+          "left": 445,
+          "right": 540,
+          "tag": "button",
+          "text": "Baratheon",
+          "top": -696
+        },
+        {
+          "bottom": -1254,
+          "cls": "map-marker",
+          "left": 32,
+          "right": 125,
+          "tag": "button",
+          "text": "Free Folk",
+          "top": -1291
+        },
+        {
+          "bottom": -885,
+          "cls": "map-marker",
+          "left": 127,
+          "right": 212,
+          "tag": "button",
+          "text": "Greyjoy",
+          "top": -922
+        },
+        {
+          "bottom": -803,
+          "cls": "map-marker",
+          "left": 148,
+          "right": 240,
+          "tag": "button",
+          "text": "Lannister",
+          "top": -840
+        },
+        {
+          "bottom": -454,
+          "cls": "map-marker",
+          "left": 402,
+          "right": 484,
+          "tag": "button",
+          "text": "Martell",
+          "top": -491
+        },
+        {
+          "bottom": -833,
+          "cls": "map-marker",
+          "left": 320,
+          "right": 433,
+          "tag": "button",
+          "text": "Night's Watch",
+          "top": -870
+        },
+        {
+          "bottom": -1162,
+          "cls": "map-marker selected",
+          "left": 249,
+          "right": 321,
+          "tag": "button",
+          "text": "Stark",
+          "top": -1199
+        },
+        {
+          "bottom": -751,
+          "cls": "map-marker",
+          "left": 387,
+          "right": 482,
+          "tag": "button",
+          "text": "Targaryen",
+          "top": -788
+        },
+        {
+          "bottom": -905,
+          "cls": "map-marker",
+          "left": 274,
+          "right": 346,
+          "tag": "button",
+          "text": "Tully",
+          "top": -942
+        },
+        {
+          "bottom": -608,
+          "cls": "map-marker",
+          "left": 330,
+          "right": 406,
+          "tag": "button",
+          "text": "Tyrell",
+          "top": -645
+        },
+        {
+          "bottom": -546,
+          "cls": "map-marker",
+          "left": 606,
+          "right": 710,
+          "tag": "button",
+          "text": "Unaffiliated",
+          "top": -583
+        },
+        {
+          "bottom": 1171,
+          "cls": "member-row",
+          "left": 28,
+          "right": 726,
+          "tag": "a",
+          "text": "Alys Karstark\nactor unknown\n›",
+          "top": 1109
+        },
+        {
+          "bottom": 1233,
+          "cls": "member-row",
+          "left": 28,
+          "right": 726,
+          "tag": "a",
+          "text": "Alysane Mormont\nactor unknown\n›",
+          "top": 1171
+        },
+        {
+          "bottom": 1295,
+          "cls": "member-row",
+          "left": 28,
+          "right": 726,
+          "tag": "a",
+          "text": "Arya Stark\nMaisie Williams\n›",
+          "top": 1233
+        },
+        {
+          "bottom": 1357,
+          "cls": "member-row",
+          "left": 28,
+          "right": 726,
+          "tag": "a",
+          "text": "Benjen Stark\nJoseph Mawle\n›",
+          "top": 1295
+        },
+        {
+          "bottom": 1426,
+          "cls": "drawer-action",
+          "left": 28,
+          "right": 726,
+          "tag": "a",
+          "text": "View all 35 members\n→",
+          "top": 1375
+        },
+        {
+          "bottom": 1550,
+          "cls": "active",
+          "left": 301,
+          "right": 318,
+          "tag": "button",
+          "text": "",
+          "top": 1533
+        },
+        {
+          "bottom": 1547,
+          "cls": "",
+          "left": 357,
+          "right": 369,
+          "tag": "button",
+          "text": "",
+          "top": 1535
+        },
+        {
+          "bottom": 1547,
+          "cls": "",
+          "left": 411,
+          "right": 423,
+          "tag": "button",
+          "text": "",
+          "top": 1535
+        },
+        {
+          "bottom": 1547,
+          "cls": "",
+          "left": 465,
+          "right": 477,
+          "tag": "button",
+          "text": "",
+          "top": 1535
+        },
+        {
+          "bottom": 1547,
+          "cls": "",
+          "left": 520,
+          "right": 532,
+          "tag": "button",
+          "text": "",
+          "top": 1535
+        },
+        {
+          "bottom": 1547,
+          "cls": "",
+          "left": 574,
+          "right": 586,
+          "tag": "button",
+          "text": "",
+          "top": 1535
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/?verify=final-dashboard-768",
+      "width": 768,
+      "consoleErrors": []
+    },
+    {
+      "route": "dashboard",
+      "path": "/",
+      "viewport": "1440",
+      "bodyHeight": 900,
+      "brokenImages": [],
+      "height": 900,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [],
+      "offscreen": [
+        {
+          "bottom": 936,
+          "cls": "",
+          "left": 270,
+          "right": 285,
+          "tag": "input",
+          "text": "",
+          "top": 921
+        },
+        {
+          "bottom": 970,
+          "cls": "",
+          "left": 270,
+          "right": 285,
+          "tag": "input",
+          "text": "",
+          "top": 955
+        },
+        {
+          "bottom": 1004,
+          "cls": "",
+          "left": 270,
+          "right": 285,
+          "tag": "input",
+          "text": "",
+          "top": 989
+        },
+        {
+          "bottom": 1103,
+          "cls": "",
+          "left": 270,
+          "right": 285,
+          "tag": "input",
+          "text": "",
+          "top": 1088
+        },
+        {
+          "bottom": 1137,
+          "cls": "",
+          "left": 270,
+          "right": 285,
+          "tag": "input",
+          "text": "",
+          "top": 1122
+        },
+        {
+          "bottom": 1171,
+          "cls": "",
+          "left": 270,
+          "right": 285,
+          "tag": "input",
+          "text": "",
+          "top": 1156
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/?verify=final-dashboard-1440",
+      "width": 1440,
+      "consoleErrors": []
+    },
+    {
+      "route": "people",
+      "path": "/people",
+      "viewport": "375",
+      "bodyHeight": 13629,
+      "brokenImages": [],
+      "height": 844,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [
+        {
+          "bottom": 202,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Overview",
+          "top": 153
+        },
+        {
+          "bottom": 287,
+          "cls": "rail-link active",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "People\n196",
+          "top": 238
+        },
+        {
+          "bottom": 336,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Houses\n12",
+          "top": 287
+        },
+        {
+          "bottom": 421,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Timeline",
+          "top": 372
+        },
+        {
+          "bottom": 470,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Chronicles",
+          "top": 421
+        },
+        {
+          "bottom": 555,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Battles\n9",
+          "top": 506
+        },
+        {
+          "bottom": 640,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Database",
+          "top": 591
+        },
+        {
+          "bottom": 689,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "How it works",
+          "top": 640
+        }
+      ],
+      "offscreen": [
+        {
+          "bottom": 118,
+          "cls": "observatory-logo compact",
+          "left": -202,
+          "right": -164,
+          "tag": "a",
+          "text": "The Raven Wall home",
+          "top": 80
+        },
+        {
+          "bottom": -11138,
+          "cls": "",
+          "left": 39,
+          "right": 321,
+          "tag": "input",
+          "text": "Search",
+          "top": -11182
+        },
+        {
+          "bottom": -11062,
+          "cls": "",
+          "left": 39,
+          "right": 321,
+          "tag": "select",
+          "text": "All houses\nArryn\nBaratheon\nFree Folk\nGreyjoy\nLannister\nMarte",
+          "top": -11108
+        },
+        {
+          "bottom": -10986,
+          "cls": "",
+          "left": 39,
+          "right": 321,
+          "tag": "select",
+          "text": "All fates\nAlive\nDead\nUnknown",
+          "top": -11032
+        },
+        {
+          "bottom": -10930,
+          "cls": "",
+          "left": 39,
+          "right": 321,
+          "tag": "button",
+          "text": "Search API",
+          "top": -10974
+        },
+        {
+          "bottom": -10243,
+          "cls": "character-card featured",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "AM\nALIVE\n\nLANNISTER\n\nAddam Marbrand\nPortrayed by actor unkno",
+          "top": -10835
+        },
+        {
+          "bottom": -9719,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "AT\nDEAD\n\nTARGARYEN\n\nAegon Targaryen (infant)\nPortrayed by ac",
+          "top": -10243
+        },
+        {
+          "bottom": -9194,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "AG\nALIVE\n\nGREYJOY\n\nAeron Greyjoy\nPortrayed by actor unknown",
+          "top": -9719
+        },
+        {
+          "bottom": -8670,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "AI\nDEAD\n\nTARGARYEN\n\nAerys II Targaryen\nPortrayed by David Ri",
+          "top": -9194
+        },
+        {
+          "bottom": -8145,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "AT\nDEAD\n\nNIGHT'S WATCH\n\nAlliser Thorne\nPortrayed by Owen Tea",
+          "top": -8670
+        },
+        {
+          "bottom": -7621,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "AK\nALIVE\n\nSTARK\n\nAlys Karstark\nPortrayed by actor unknown",
+          "top": -8145
+        },
+        {
+          "bottom": -7096,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "AM\nALIVE\n\nSTARK\n\nAlysane Mormont\nPortrayed by actor unknown",
+          "top": -7621
+        },
+        {
+          "bottom": -6572,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "AL\nDEAD\n\nLANNISTER\n\nAmory Lorch\nPortrayed by Fintan McKeown",
+          "top": -7096
+        },
+        {
+          "bottom": -6047,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "AE\nALIVE\n\nUNAFFILIATED\n\nArchmaester Ebrose\nPortrayed by Jim ",
+          "top": -6572
+        },
+        {
+          "bottom": -5523,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "AH\nDEAD\n\nMARTELL\n\nAreo Hotah\nPortrayed by DeObia Oparei",
+          "top": -6047
+        },
+        {
+          "bottom": -4998,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "AS\nALIVE\n\nSTARK\n\nArya Stark\nPortrayed by Maisie Williams",
+          "top": -5523
+        },
+        {
+          "bottom": -4474,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "AF\nDEAD\n\nBARATHEON\n\nAxell Florent\nPortrayed by actor unknown",
+          "top": -4998
+        },
+        {
+          "bottom": -3949,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BG\nDEAD\n\nGREYJOY\n\nBalon Greyjoy\nPortrayed by Patrick Malahid",
+          "top": -4474
+        },
+        {
+          "bottom": -3425,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BS\nDEAD\n\nTARGARYEN\n\nBarristan Selmy\nPortrayed by Ian McElhin",
+          "top": -3949
+        },
+        {
+          "bottom": -2900,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BS\nDEAD\n\nSTARK\n\nBenjen Stark\nPortrayed by Joseph Mawle",
+          "top": -3425
+        },
+        {
+          "bottom": -2376,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BD\nDEAD\n\nUNAFFILIATED\n\nBeric Dondarrion\nPortrayed by Richard",
+          "top": -2900
+        },
+        {
+          "bottom": -1851,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "B\nDEAD\n\nUNAFFILIATED\n\nBiter\nPortrayed by actor unknown",
+          "top": -2376
+        },
+        {
+          "bottom": -1327,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BW\nDEAD\n\nTULLY\n\nBlack Walder Frey\nPortrayed by Tim Plester",
+          "top": -1851
+        },
+        {
+          "bottom": -802,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BB\nDEAD\n\nLANNISTER\n\nBoros Blount\nPortrayed by actor unknown",
+          "top": -1327
+        },
+        {
+          "bottom": -278,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BM\nDEAD\n\nNIGHT'S WATCH\n\nBowen Marsh\nPortrayed by Clive Mantl",
+          "top": -802
+        },
+        {
+          "bottom": 247,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BS\nALIVE\n\nSTARK\n\nBran Stark\nPortrayed by Isaac Hempstead Wri",
+          "top": -278
+        },
+        {
+          "bottom": 1296,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "B\nALIVE\n\nLANNISTER\n\nBronn\nPortrayed by Jerome Flynn",
+          "top": 771
+        },
+        {
+          "bottom": 1820,
+          "cls": "character-card",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "B\"\nDEAD\n\nTULLY\n\nBrynden \"Blackfish\" Tully\nPortrayed by Clive",
+          "top": 1296
+        },
+        {
+          "bottom": 1899,
+          "cls": "",
+          "left": 42,
+          "right": 144,
+          "tag": "button",
+          "text": "Previous",
+          "top": 1855
+        },
+        {
+          "bottom": 1899,
+          "cls": "",
+          "left": 245,
+          "right": 318,
+          "tag": "button",
+          "text": "Next",
+          "top": 1855
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/people",
+      "width": 375,
+      "consoleErrors": []
+    },
+    {
+      "route": "people",
+      "path": "/people",
+      "viewport": "768",
+      "bodyHeight": 8358,
+      "brokenImages": [],
+      "height": 1024,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [
+        {
+          "bottom": 210,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Overview",
+          "top": 161
+        },
+        {
+          "bottom": 295,
+          "cls": "rail-link active",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "People\n196",
+          "top": 246
+        },
+        {
+          "bottom": 344,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Houses\n12",
+          "top": 295
+        },
+        {
+          "bottom": 429,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Timeline",
+          "top": 380
+        },
+        {
+          "bottom": 478,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Chronicles",
+          "top": 429
+        },
+        {
+          "bottom": 563,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Battles\n9",
+          "top": 514
+        },
+        {
+          "bottom": 648,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Database",
+          "top": 599
+        },
+        {
+          "bottom": 697,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "How it works",
+          "top": 648
+        }
+      ],
+      "offscreen": [
+        {
+          "bottom": 126,
+          "cls": "observatory-logo compact",
+          "left": -202,
+          "right": -164,
+          "tag": "a",
+          "text": "The Raven Wall home",
+          "top": 88
+        },
+        {
+          "bottom": -6252,
+          "cls": "",
+          "left": 59,
+          "right": 371,
+          "tag": "input",
+          "text": "Search",
+          "top": -6296
+        },
+        {
+          "bottom": -6250,
+          "cls": "",
+          "left": 383,
+          "right": 694,
+          "tag": "select",
+          "text": "All houses\nArryn\nBaratheon\nFree Folk\nGreyjoy\nLannister\nMarte",
+          "top": -6296
+        },
+        {
+          "bottom": -6174,
+          "cls": "",
+          "left": 59,
+          "right": 371,
+          "tag": "select",
+          "text": "All fates\nAlive\nDead\nUnknown",
+          "top": -6220
+        },
+        {
+          "bottom": -6174,
+          "cls": "",
+          "left": 383,
+          "right": 694,
+          "tag": "button",
+          "text": "Search API",
+          "top": -6218
+        },
+        {
+          "bottom": -5072,
+          "cls": "character-card featured",
+          "left": 39,
+          "right": 715,
+          "tag": "a",
+          "text": "AM\nALIVE\n\nLANNISTER\n\nAddam Marbrand\nPortrayed by actor unkno",
+          "top": -6079
+        },
+        {
+          "bottom": -4529,
+          "cls": "character-card",
+          "left": 39,
+          "right": 377,
+          "tag": "a",
+          "text": "AT\nDEAD\n\nTARGARYEN\n\nAegon Targaryen (infant)\nPortrayed by ac",
+          "top": -5072
+        },
+        {
+          "bottom": -4529,
+          "cls": "character-card",
+          "left": 377,
+          "right": 715,
+          "tag": "a",
+          "text": "AG\nALIVE\n\nGREYJOY\n\nAeron Greyjoy\nPortrayed by actor unknown",
+          "top": -5072
+        },
+        {
+          "bottom": -3986,
+          "cls": "character-card",
+          "left": 39,
+          "right": 377,
+          "tag": "a",
+          "text": "AI\nDEAD\n\nTARGARYEN\n\nAerys II Targaryen\nPortrayed by David Ri",
+          "top": -4529
+        },
+        {
+          "bottom": -3986,
+          "cls": "character-card",
+          "left": 377,
+          "right": 715,
+          "tag": "a",
+          "text": "AT\nDEAD\n\nNIGHT'S WATCH\n\nAlliser Thorne\nPortrayed by Owen Tea",
+          "top": -4529
+        },
+        {
+          "bottom": -3444,
+          "cls": "character-card",
+          "left": 39,
+          "right": 377,
+          "tag": "a",
+          "text": "AK\nALIVE\n\nSTARK\n\nAlys Karstark\nPortrayed by actor unknown",
+          "top": -3986
+        },
+        {
+          "bottom": -3444,
+          "cls": "character-card",
+          "left": 377,
+          "right": 715,
+          "tag": "a",
+          "text": "AM\nALIVE\n\nSTARK\n\nAlysane Mormont\nPortrayed by actor unknown",
+          "top": -3986
+        },
+        {
+          "bottom": -2901,
+          "cls": "character-card",
+          "left": 39,
+          "right": 377,
+          "tag": "a",
+          "text": "AL\nDEAD\n\nLANNISTER\n\nAmory Lorch\nPortrayed by Fintan McKeown",
+          "top": -3444
+        },
+        {
+          "bottom": -2901,
+          "cls": "character-card",
+          "left": 377,
+          "right": 715,
+          "tag": "a",
+          "text": "AE\nALIVE\n\nUNAFFILIATED\n\nArchmaester Ebrose\nPortrayed by Jim ",
+          "top": -3444
+        },
+        {
+          "bottom": -2358,
+          "cls": "character-card",
+          "left": 39,
+          "right": 377,
+          "tag": "a",
+          "text": "AH\nDEAD\n\nMARTELL\n\nAreo Hotah\nPortrayed by DeObia Oparei",
+          "top": -2901
+        },
+        {
+          "bottom": -2358,
+          "cls": "character-card",
+          "left": 377,
+          "right": 715,
+          "tag": "a",
+          "text": "AS\nALIVE\n\nSTARK\n\nArya Stark\nPortrayed by Maisie Williams",
+          "top": -2901
+        },
+        {
+          "bottom": -1815,
+          "cls": "character-card",
+          "left": 39,
+          "right": 377,
+          "tag": "a",
+          "text": "AF\nDEAD\n\nBARATHEON\n\nAxell Florent\nPortrayed by actor unknown",
+          "top": -2358
+        },
+        {
+          "bottom": -1815,
+          "cls": "character-card",
+          "left": 377,
+          "right": 715,
+          "tag": "a",
+          "text": "BG\nDEAD\n\nGREYJOY\n\nBalon Greyjoy\nPortrayed by Patrick Malahid",
+          "top": -2358
+        },
+        {
+          "bottom": -1273,
+          "cls": "character-card",
+          "left": 39,
+          "right": 377,
+          "tag": "a",
+          "text": "BS\nDEAD\n\nTARGARYEN\n\nBarristan Selmy\nPortrayed by Ian McElhin",
+          "top": -1815
+        },
+        {
+          "bottom": -1273,
+          "cls": "character-card",
+          "left": 377,
+          "right": 715,
+          "tag": "a",
+          "text": "BS\nDEAD\n\nSTARK\n\nBenjen Stark\nPortrayed by Joseph Mawle",
+          "top": -1815
+        },
+        {
+          "bottom": -730,
+          "cls": "character-card",
+          "left": 39,
+          "right": 377,
+          "tag": "a",
+          "text": "BD\nDEAD\n\nUNAFFILIATED\n\nBeric Dondarrion\nPortrayed by Richard",
+          "top": -1273
+        },
+        {
+          "bottom": -730,
+          "cls": "character-card",
+          "left": 377,
+          "right": 715,
+          "tag": "a",
+          "text": "B\nDEAD\n\nUNAFFILIATED\n\nBiter\nPortrayed by actor unknown",
+          "top": -1273
+        },
+        {
+          "bottom": -187,
+          "cls": "character-card",
+          "left": 39,
+          "right": 377,
+          "tag": "a",
+          "text": "BW\nDEAD\n\nTULLY\n\nBlack Walder Frey\nPortrayed by Tim Plester",
+          "top": -730
+        },
+        {
+          "bottom": -187,
+          "cls": "character-card",
+          "left": 377,
+          "right": 715,
+          "tag": "a",
+          "text": "BB\nDEAD\n\nLANNISTER\n\nBoros Blount\nPortrayed by actor unknown",
+          "top": -730
+        },
+        {
+          "bottom": 356,
+          "cls": "character-card",
+          "left": 39,
+          "right": 377,
+          "tag": "a",
+          "text": "BM\nDEAD\n\nNIGHT'S WATCH\n\nBowen Marsh\nPortrayed by Clive Mantl",
+          "top": -187
+        },
+        {
+          "bottom": 356,
+          "cls": "character-card",
+          "left": 377,
+          "right": 715,
+          "tag": "a",
+          "text": "BS\nALIVE\n\nSTARK\n\nBran Stark\nPortrayed by Isaac Hempstead Wri",
+          "top": -187
+        },
+        {
+          "bottom": 1441,
+          "cls": "character-card",
+          "left": 39,
+          "right": 377,
+          "tag": "a",
+          "text": "B\"\nDEAD\n\nTULLY\n\nBrynden \"Blackfish\" Tully\nPortrayed by Clive",
+          "top": 898
+        },
+        {
+          "bottom": 1520,
+          "cls": "",
+          "left": 238,
+          "right": 340,
+          "tag": "button",
+          "text": "Previous",
+          "top": 1476
+        },
+        {
+          "bottom": 1520,
+          "cls": "",
+          "left": 442,
+          "right": 515,
+          "tag": "button",
+          "text": "Next",
+          "top": 1476
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/people",
+      "width": 768,
+      "consoleErrors": []
+    },
+    {
+      "route": "people",
+      "path": "/people",
+      "viewport": "1440",
+      "bodyHeight": 3941,
+      "brokenImages": [],
+      "height": 900,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [],
+      "offscreen": [
+        {
+          "bottom": -2332,
+          "cls": "",
+          "left": 343,
+          "right": 707,
+          "tag": "input",
+          "text": "Search",
+          "top": -2376
+        },
+        {
+          "bottom": -2330,
+          "cls": "",
+          "left": 719,
+          "right": 980,
+          "tag": "select",
+          "text": "All houses\nArryn\nBaratheon\nFree Folk\nGreyjoy\nLannister\nMarte",
+          "top": -2376
+        },
+        {
+          "bottom": -2330,
+          "cls": "",
+          "left": 992,
+          "right": 1200,
+          "tag": "select",
+          "text": "All fates\nAlive\nDead\nUnknown",
+          "top": -2376
+        },
+        {
+          "bottom": -2330,
+          "cls": "",
+          "left": 1212,
+          "right": 1332,
+          "tag": "button",
+          "text": "Search API",
+          "top": -2374
+        },
+        {
+          "bottom": -1326,
+          "cls": "character-card featured",
+          "left": 323,
+          "right": 838,
+          "tag": "a",
+          "text": "AM\nALIVE\n\nLANNISTER\n\nAddam Marbrand\nPortrayed by actor unkno",
+          "top": -2235
+        },
+        {
+          "bottom": -1769,
+          "cls": "character-card",
+          "left": 838,
+          "right": 1096,
+          "tag": "a",
+          "text": "AT\nDEAD\n\nTARGARYEN\n\nAegon Targaryen (infant)\nPortrayed by ac",
+          "top": -2235
+        },
+        {
+          "bottom": -1769,
+          "cls": "character-card",
+          "left": 1096,
+          "right": 1353,
+          "tag": "a",
+          "text": "AG\nALIVE\n\nGREYJOY\n\nAeron Greyjoy\nPortrayed by actor unknown",
+          "top": -2235
+        },
+        {
+          "bottom": -1326,
+          "cls": "character-card",
+          "left": 838,
+          "right": 1096,
+          "tag": "a",
+          "text": "AI\nDEAD\n\nTARGARYEN\n\nAerys II Targaryen\nPortrayed by David Ri",
+          "top": -1769
+        },
+        {
+          "bottom": -1326,
+          "cls": "character-card",
+          "left": 1096,
+          "right": 1353,
+          "tag": "a",
+          "text": "AT\nDEAD\n\nNIGHT'S WATCH\n\nAlliser Thorne\nPortrayed by Owen Tea",
+          "top": -1769
+        },
+        {
+          "bottom": -884,
+          "cls": "character-card",
+          "left": 323,
+          "right": 581,
+          "tag": "a",
+          "text": "AK\nALIVE\n\nSTARK\n\nAlys Karstark\nPortrayed by actor unknown",
+          "top": -1326
+        },
+        {
+          "bottom": -884,
+          "cls": "character-card",
+          "left": 581,
+          "right": 838,
+          "tag": "a",
+          "text": "AM\nALIVE\n\nSTARK\n\nAlysane Mormont\nPortrayed by actor unknown",
+          "top": -1326
+        },
+        {
+          "bottom": -884,
+          "cls": "character-card",
+          "left": 838,
+          "right": 1096,
+          "tag": "a",
+          "text": "AL\nDEAD\n\nLANNISTER\n\nAmory Lorch\nPortrayed by Fintan McKeown",
+          "top": -1326
+        },
+        {
+          "bottom": -884,
+          "cls": "character-card",
+          "left": 1096,
+          "right": 1353,
+          "tag": "a",
+          "text": "AE\nALIVE\n\nUNAFFILIATED\n\nArchmaester Ebrose\nPortrayed by Jim ",
+          "top": -1326
+        },
+        {
+          "bottom": -441,
+          "cls": "character-card",
+          "left": 323,
+          "right": 581,
+          "tag": "a",
+          "text": "AH\nDEAD\n\nMARTELL\n\nAreo Hotah\nPortrayed by DeObia Oparei",
+          "top": -884
+        },
+        {
+          "bottom": -441,
+          "cls": "character-card",
+          "left": 581,
+          "right": 838,
+          "tag": "a",
+          "text": "AS\nALIVE\n\nSTARK\n\nArya Stark\nPortrayed by Maisie Williams",
+          "top": -884
+        },
+        {
+          "bottom": -441,
+          "cls": "character-card",
+          "left": 838,
+          "right": 1096,
+          "tag": "a",
+          "text": "AF\nDEAD\n\nBARATHEON\n\nAxell Florent\nPortrayed by actor unknown",
+          "top": -884
+        },
+        {
+          "bottom": -441,
+          "cls": "character-card",
+          "left": 1096,
+          "right": 1353,
+          "tag": "a",
+          "text": "BG\nDEAD\n\nGREYJOY\n\nBalon Greyjoy\nPortrayed by Patrick Malahid",
+          "top": -884
+        },
+        {
+          "bottom": 2,
+          "cls": "character-card",
+          "left": 323,
+          "right": 581,
+          "tag": "a",
+          "text": "BS\nDEAD\n\nTARGARYEN\n\nBarristan Selmy\nPortrayed by Ian McElhin",
+          "top": -441
+        },
+        {
+          "bottom": 2,
+          "cls": "character-card",
+          "left": 581,
+          "right": 838,
+          "tag": "a",
+          "text": "BS\nDEAD\n\nSTARK\n\nBenjen Stark\nPortrayed by Joseph Mawle",
+          "top": -441
+        },
+        {
+          "bottom": 2,
+          "cls": "character-card",
+          "left": 838,
+          "right": 1096,
+          "tag": "a",
+          "text": "BD\nDEAD\n\nUNAFFILIATED\n\nBeric Dondarrion\nPortrayed by Richard",
+          "top": -441
+        },
+        {
+          "bottom": 2,
+          "cls": "character-card",
+          "left": 1096,
+          "right": 1353,
+          "tag": "a",
+          "text": "B\nDEAD\n\nUNAFFILIATED\n\nBiter\nPortrayed by actor unknown",
+          "top": -441
+        },
+        {
+          "bottom": 911,
+          "cls": "character-card",
+          "left": 323,
+          "right": 581,
+          "tag": "a",
+          "text": "Bo\nALIVE\n\nUNAFFILIATED\n\nBrienne of Tarth\nPortrayed by Gwendo",
+          "top": 444
+        },
+        {
+          "bottom": 911,
+          "cls": "character-card",
+          "left": 581,
+          "right": 838,
+          "tag": "a",
+          "text": "B\nALIVE\n\nLANNISTER\n\nBronn\nPortrayed by Jerome Flynn",
+          "top": 444
+        },
+        {
+          "bottom": 911,
+          "cls": "character-card",
+          "left": 838,
+          "right": 1096,
+          "tag": "a",
+          "text": "B\"\nDEAD\n\nTULLY\n\nBrynden \"Blackfish\" Tully\nPortrayed by Clive",
+          "top": 444
+        },
+        {
+          "bottom": 990,
+          "cls": "",
+          "left": 699,
+          "right": 801,
+          "tag": "button",
+          "text": "Previous",
+          "top": 946
+        },
+        {
+          "bottom": 990,
+          "cls": "",
+          "left": 903,
+          "right": 976,
+          "tag": "button",
+          "text": "Next",
+          "top": 946
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/people",
+      "width": 1440,
+      "consoleErrors": []
+    },
+    {
+      "route": "character-arya",
+      "path": "/people/arya-stark",
+      "viewport": "375",
+      "bodyHeight": 6055,
+      "brokenImages": [],
+      "height": 844,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [
+        {
+          "bottom": 202,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Overview",
+          "top": 153
+        },
+        {
+          "bottom": 287,
+          "cls": "rail-link active",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "People\n196",
+          "top": 238
+        },
+        {
+          "bottom": 336,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Houses\n12",
+          "top": 287
+        },
+        {
+          "bottom": 421,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Timeline",
+          "top": 372
+        },
+        {
+          "bottom": 470,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Chronicles",
+          "top": 421
+        },
+        {
+          "bottom": 555,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Battles\n9",
+          "top": 506
+        },
+        {
+          "bottom": 640,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Database",
+          "top": 591
+        },
+        {
+          "bottom": 689,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "How it works",
+          "top": 640
+        }
+      ],
+      "offscreen": [
+        {
+          "bottom": 118,
+          "cls": "observatory-logo compact",
+          "left": -202,
+          "right": -164,
+          "tag": "a",
+          "text": "The Raven Wall home",
+          "top": 80
+        },
+        {
+          "bottom": -4700,
+          "cls": "back-link",
+          "left": 18,
+          "right": 85,
+          "tag": "a",
+          "text": "← All people",
+          "top": -4714
+        },
+        {
+          "bottom": -3536,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BOND · FRIEND\nJon Snow\n\nclose bond",
+          "top": -3701
+        },
+        {
+          "bottom": -3371,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BOND · PROTECTOR\nSandor Clegane\n\nprotected on the road",
+          "top": -3536
+        },
+        {
+          "bottom": -3206,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BOND · FRIEND\nGendry Baratheon\n\ntraveled together",
+          "top": -3371
+        },
+        {
+          "bottom": -3041,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BOND · MENTOR\nSyrio Forel\n\n\"water dancing\" teacher",
+          "top": -3206
+        },
+        {
+          "bottom": -2876,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BOND · MENTOR\nJaqen H'ghar\n\nFaceless Man trainer",
+          "top": -3041
+        },
+        {
+          "bottom": -2711,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BOND · MENTOR\nThe Kindly Man\n\ntrained her at the House of Bl",
+          "top": -2876
+        },
+        {
+          "bottom": -2546,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BOND · MENTOR\nIzembaro\n\nemployed her in his troupe",
+          "top": -2711
+        },
+        {
+          "bottom": -2381,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BOND · PROTECTOR\nLady Crane\n\nsheltered and healed",
+          "top": -2546
+        },
+        {
+          "bottom": -2216,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BOND · FRIEND\nMycah\n\nfriends",
+          "top": -2381
+        },
+        {
+          "bottom": -2051,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BOND · FRIEND\nHot Pie\n\ntraveled together",
+          "top": -2216
+        },
+        {
+          "bottom": -1886,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BOND · FRIEND\nGendry Baratheon\n\ntraveled together",
+          "top": -2051
+        },
+        {
+          "bottom": -1721,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BOND · PROTECTOR\nYoren\n\nsmuggled her out of King's Landing",
+          "top": -1886
+        },
+        {
+          "bottom": -1556,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BOND · PROTECTOR\nBeric Dondarrion\n\ncaptured then freed",
+          "top": -1721
+        },
+        {
+          "bottom": -1391,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "BOND · FRIEND\nBrienne of Tarth\n\ntested her in combat, became",
+          "top": -1556
+        },
+        {
+          "bottom": -1226,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "CONFLICT · KILLED\nMeryn Trant\n\nkilled",
+          "top": -1391
+        },
+        {
+          "bottom": -1061,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "CONFLICT · KILLED\nThe Tickler\n\nkilled",
+          "top": -1226
+        },
+        {
+          "bottom": -896,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "CONFLICT · KILLED\nPolliver\n\nkilled with his own sword",
+          "top": -1061
+        },
+        {
+          "bottom": -731,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "CONFLICT · KILLED\nWalder Frey\n\nkilled in revenge for the Red",
+          "top": -896
+        },
+        {
+          "bottom": -566,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "CONFLICT · KILLED\nLothar Frey\n\nbaked into a pie",
+          "top": -731
+        },
+        {
+          "bottom": -401,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "CONFLICT · KILLED\nBlack Walder Frey\n\npoisoned",
+          "top": -566
+        },
+        {
+          "bottom": -236,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "CONFLICT · KILLED\nPetyr \"Littlefinger\" Baelish\n\ncondemned an",
+          "top": -401
+        },
+        {
+          "bottom": -71,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "CONFLICT · ENEMY\nThe Waif\n\nrival assassin",
+          "top": -236
+        },
+        {
+          "bottom": 94,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "CONFLICT · KILLED\nThe Waif\n\nkilled",
+          "top": -71
+        },
+        {
+          "bottom": 919,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "FAMILY · SIBLING\nBran Stark\n\nsiblings",
+          "top": 754
+        },
+        {
+          "bottom": 1084,
+          "cls": "",
+          "left": 19,
+          "right": 342,
+          "tag": "a",
+          "text": "FAMILY · SIBLING\nRickon Stark\n\nsiblings",
+          "top": 919
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/people/arya-stark?verify=final-character-arya-375",
+      "width": 375,
+      "consoleErrors": []
+    },
+    {
+      "route": "character-arya",
+      "path": "/people/arya-stark",
+      "viewport": "768",
+      "bodyHeight": 2757,
+      "brokenImages": [],
+      "height": 1024,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [
+        {
+          "bottom": 210,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Overview",
+          "top": 161
+        },
+        {
+          "bottom": 295,
+          "cls": "rail-link active",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "People\n196",
+          "top": 246
+        },
+        {
+          "bottom": 344,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Houses\n12",
+          "top": 295
+        },
+        {
+          "bottom": 429,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Timeline",
+          "top": 380
+        },
+        {
+          "bottom": 478,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Chronicles",
+          "top": 429
+        },
+        {
+          "bottom": 563,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Battles\n9",
+          "top": 514
+        },
+        {
+          "bottom": 648,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Database",
+          "top": 599
+        },
+        {
+          "bottom": 697,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "How it works",
+          "top": 648
+        }
+      ],
+      "offscreen": [
+        {
+          "bottom": 126,
+          "cls": "observatory-logo compact",
+          "left": -202,
+          "right": -164,
+          "tag": "a",
+          "text": "The Raven Wall home",
+          "top": 88
+        },
+        {
+          "bottom": -939,
+          "cls": "back-link",
+          "left": 38,
+          "right": 106,
+          "tag": "a",
+          "text": "← All people",
+          "top": -953
+        },
+        {
+          "bottom": 34,
+          "cls": "",
+          "left": 39,
+          "right": 264,
+          "tag": "a",
+          "text": "BOND · FRIEND\nJon Snow\n\nclose bond",
+          "top": -131
+        },
+        {
+          "bottom": 34,
+          "cls": "",
+          "left": 264,
+          "right": 490,
+          "tag": "a",
+          "text": "BOND · PROTECTOR\nSandor Clegane\n\nprotected on the road",
+          "top": -131
+        },
+        {
+          "bottom": 34,
+          "cls": "",
+          "left": 490,
+          "right": 715,
+          "tag": "a",
+          "text": "BOND · FRIEND\nGendry Baratheon\n\ntraveled together",
+          "top": -131
+        },
+        {
+          "bottom": 1189,
+          "cls": "",
+          "left": 39,
+          "right": 264,
+          "tag": "a",
+          "text": "CONFLICT · ENEMY\nThe Waif\n\nrival assassin",
+          "top": 1024
+        },
+        {
+          "bottom": 1189,
+          "cls": "",
+          "left": 264,
+          "right": 490,
+          "tag": "a",
+          "text": "CONFLICT · KILLED\nThe Waif\n\nkilled",
+          "top": 1024
+        },
+        {
+          "bottom": 1189,
+          "cls": "",
+          "left": 490,
+          "right": 715,
+          "tag": "a",
+          "text": "CONFLICT · KILLED\nThe Night King\n\nkilled with Valyrian steel",
+          "top": 1024
+        },
+        {
+          "bottom": 1354,
+          "cls": "",
+          "left": 39,
+          "right": 264,
+          "tag": "a",
+          "text": "FAMILY · PARENT\nEddard \"Ned\" Stark\n\nfather of",
+          "top": 1189
+        },
+        {
+          "bottom": 1354,
+          "cls": "",
+          "left": 264,
+          "right": 490,
+          "tag": "a",
+          "text": "FAMILY · SIBLING\nRobb Stark\n\nsiblings",
+          "top": 1189
+        },
+        {
+          "bottom": 1354,
+          "cls": "",
+          "left": 490,
+          "right": 715,
+          "tag": "a",
+          "text": "FAMILY · SIBLING\nSansa Stark\n\nsiblings",
+          "top": 1189
+        },
+        {
+          "bottom": 1519,
+          "cls": "",
+          "left": 39,
+          "right": 264,
+          "tag": "a",
+          "text": "FAMILY · SIBLING\nBran Stark\n\nsiblings",
+          "top": 1354
+        },
+        {
+          "bottom": 1519,
+          "cls": "",
+          "left": 264,
+          "right": 490,
+          "tag": "a",
+          "text": "FAMILY · SIBLING\nRickon Stark\n\nsiblings",
+          "top": 1354
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/people/arya-stark?verify=final-character-arya-768",
+      "width": 768,
+      "consoleErrors": []
+    },
+    {
+      "route": "character-arya",
+      "path": "/people/arya-stark",
+      "viewport": "1440",
+      "bodyHeight": 2786,
+      "brokenImages": [],
+      "height": 900,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [],
+      "offscreen": [
+        {
+          "bottom": -1107,
+          "cls": "back-link",
+          "left": 322,
+          "right": 389,
+          "tag": "a",
+          "text": "← All people",
+          "top": -1121
+        },
+        {
+          "bottom": -105,
+          "cls": "",
+          "left": 323,
+          "right": 666,
+          "tag": "a",
+          "text": "BOND · FRIEND\nJon Snow\n\nclose bond",
+          "top": -270
+        },
+        {
+          "bottom": -105,
+          "cls": "",
+          "left": 666,
+          "right": 1010,
+          "tag": "a",
+          "text": "BOND · PROTECTOR\nSandor Clegane\n\nprotected on the road",
+          "top": -270
+        },
+        {
+          "bottom": -105,
+          "cls": "",
+          "left": 1010,
+          "right": 1353,
+          "tag": "a",
+          "text": "BOND · FRIEND\nGendry Baratheon\n\ntraveled together",
+          "top": -270
+        },
+        {
+          "bottom": 60,
+          "cls": "",
+          "left": 323,
+          "right": 666,
+          "tag": "a",
+          "text": "BOND · MENTOR\nSyrio Forel\n\n\"water dancing\" teacher",
+          "top": -105
+        },
+        {
+          "bottom": 60,
+          "cls": "",
+          "left": 666,
+          "right": 1010,
+          "tag": "a",
+          "text": "BOND · MENTOR\nJaqen H'ghar\n\nFaceless Man trainer",
+          "top": -105
+        },
+        {
+          "bottom": 60,
+          "cls": "",
+          "left": 1010,
+          "right": 1353,
+          "tag": "a",
+          "text": "BOND · MENTOR\nThe Kindly Man\n\ntrained her at the House of Bl",
+          "top": -105
+        },
+        {
+          "bottom": 1050,
+          "cls": "",
+          "left": 323,
+          "right": 666,
+          "tag": "a",
+          "text": "CONFLICT · ENEMY\nThe Waif\n\nrival assassin",
+          "top": 885
+        },
+        {
+          "bottom": 1050,
+          "cls": "",
+          "left": 666,
+          "right": 1010,
+          "tag": "a",
+          "text": "CONFLICT · KILLED\nThe Waif\n\nkilled",
+          "top": 885
+        },
+        {
+          "bottom": 1050,
+          "cls": "",
+          "left": 1010,
+          "right": 1353,
+          "tag": "a",
+          "text": "CONFLICT · KILLED\nThe Night King\n\nkilled with Valyrian steel",
+          "top": 885
+        },
+        {
+          "bottom": 1215,
+          "cls": "",
+          "left": 323,
+          "right": 666,
+          "tag": "a",
+          "text": "FAMILY · PARENT\nEddard \"Ned\" Stark\n\nfather of",
+          "top": 1050
+        },
+        {
+          "bottom": 1215,
+          "cls": "",
+          "left": 666,
+          "right": 1010,
+          "tag": "a",
+          "text": "FAMILY · SIBLING\nRobb Stark\n\nsiblings",
+          "top": 1050
+        },
+        {
+          "bottom": 1215,
+          "cls": "",
+          "left": 1010,
+          "right": 1353,
+          "tag": "a",
+          "text": "FAMILY · SIBLING\nSansa Stark\n\nsiblings",
+          "top": 1050
+        },
+        {
+          "bottom": 1380,
+          "cls": "",
+          "left": 323,
+          "right": 666,
+          "tag": "a",
+          "text": "FAMILY · SIBLING\nBran Stark\n\nsiblings",
+          "top": 1215
+        },
+        {
+          "bottom": 1380,
+          "cls": "",
+          "left": 666,
+          "right": 1010,
+          "tag": "a",
+          "text": "FAMILY · SIBLING\nRickon Stark\n\nsiblings",
+          "top": 1215
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/people/arya-stark?verify=final-character-arya-1440",
+      "width": 1440,
+      "consoleErrors": []
+    },
+    {
+      "route": "houses",
+      "path": "/houses",
+      "viewport": "375",
+      "bodyHeight": 6532,
+      "brokenImages": [],
+      "height": 844,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [
+        {
+          "bottom": 202,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Overview",
+          "top": 153
+        },
+        {
+          "bottom": 287,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "People\n196",
+          "top": 238
+        },
+        {
+          "bottom": 336,
+          "cls": "rail-link active",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Houses\n12",
+          "top": 287
+        },
+        {
+          "bottom": 421,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Timeline",
+          "top": 372
+        },
+        {
+          "bottom": 470,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Chronicles",
+          "top": 421
+        },
+        {
+          "bottom": 555,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Battles\n9",
+          "top": 506
+        },
+        {
+          "bottom": 640,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Database",
+          "top": 591
+        },
+        {
+          "bottom": 689,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "How it works",
+          "top": 640
+        }
+      ],
+      "offscreen": [
+        {
+          "bottom": 118,
+          "cls": "observatory-logo compact",
+          "left": -202,
+          "right": -164,
+          "tag": "a",
+          "text": "The Raven Wall home",
+          "top": 80
+        },
+        {
+          "bottom": -4328,
+          "cls": "",
+          "left": 54,
+          "right": 174,
+          "tag": "a",
+          "text": "View house members →",
+          "top": -4341
+        },
+        {
+          "bottom": -3832,
+          "cls": "",
+          "left": 54,
+          "right": 174,
+          "tag": "a",
+          "text": "View house members →",
+          "top": -3845
+        },
+        {
+          "bottom": -3310,
+          "cls": "",
+          "left": 54,
+          "right": 174,
+          "tag": "a",
+          "text": "View house members →",
+          "top": -3323
+        },
+        {
+          "bottom": -2814,
+          "cls": "",
+          "left": 54,
+          "right": 174,
+          "tag": "a",
+          "text": "View house members →",
+          "top": -2827
+        },
+        {
+          "bottom": -2318,
+          "cls": "",
+          "left": 54,
+          "right": 174,
+          "tag": "a",
+          "text": "View house members →",
+          "top": -2331
+        },
+        {
+          "bottom": -1796,
+          "cls": "",
+          "left": 54,
+          "right": 174,
+          "tag": "a",
+          "text": "View house members →",
+          "top": -1809
+        },
+        {
+          "bottom": -1274,
+          "cls": "",
+          "left": 54,
+          "right": 174,
+          "tag": "a",
+          "text": "View house members →",
+          "top": -1287
+        },
+        {
+          "bottom": -796,
+          "cls": "",
+          "left": 54,
+          "right": 174,
+          "tag": "a",
+          "text": "View house members →",
+          "top": -809
+        },
+        {
+          "bottom": -288,
+          "cls": "",
+          "left": 54,
+          "right": 174,
+          "tag": "a",
+          "text": "View house members →",
+          "top": -301
+        },
+        {
+          "bottom": 1164,
+          "cls": "",
+          "left": 54,
+          "right": 174,
+          "tag": "a",
+          "text": "View house members →",
+          "top": 1151
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/houses?verify=final-houses-375",
+      "width": 375,
+      "consoleErrors": []
+    },
+    {
+      "route": "houses",
+      "path": "/houses",
+      "viewport": "768",
+      "bodyHeight": 3553,
+      "brokenImages": [],
+      "height": 1024,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [
+        {
+          "bottom": 210,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Overview",
+          "top": 161
+        },
+        {
+          "bottom": 295,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "People\n196",
+          "top": 246
+        },
+        {
+          "bottom": 344,
+          "cls": "rail-link active",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Houses\n12",
+          "top": 295
+        },
+        {
+          "bottom": 429,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Timeline",
+          "top": 380
+        },
+        {
+          "bottom": 478,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Chronicles",
+          "top": 429
+        },
+        {
+          "bottom": 563,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Battles\n9",
+          "top": 514
+        },
+        {
+          "bottom": 648,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Database",
+          "top": 599
+        },
+        {
+          "bottom": 697,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "How it works",
+          "top": 648
+        }
+      ],
+      "offscreen": [
+        {
+          "bottom": 126,
+          "cls": "observatory-logo compact",
+          "left": -202,
+          "right": -164,
+          "tag": "a",
+          "text": "The Raven Wall home",
+          "top": 88
+        },
+        {
+          "bottom": -1237,
+          "cls": "",
+          "left": 74,
+          "right": 194,
+          "tag": "a",
+          "text": "View house members →",
+          "top": -1250
+        },
+        {
+          "bottom": -1219,
+          "cls": "",
+          "left": 421,
+          "right": 540,
+          "tag": "a",
+          "text": "View house members →",
+          "top": -1232
+        },
+        {
+          "bottom": -697,
+          "cls": "",
+          "left": 74,
+          "right": 194,
+          "tag": "a",
+          "text": "View house members →",
+          "top": -710
+        },
+        {
+          "bottom": -741,
+          "cls": "",
+          "left": 421,
+          "right": 540,
+          "tag": "a",
+          "text": "View house members →",
+          "top": -754
+        },
+        {
+          "bottom": -201,
+          "cls": "",
+          "left": 74,
+          "right": 194,
+          "tag": "a",
+          "text": "View house members →",
+          "top": -214
+        },
+        {
+          "bottom": -175,
+          "cls": "",
+          "left": 421,
+          "right": 540,
+          "tag": "a",
+          "text": "View house members →",
+          "top": -188
+        },
+        {
+          "bottom": 1351,
+          "cls": "",
+          "left": 74,
+          "right": 194,
+          "tag": "a",
+          "text": "View house members →",
+          "top": 1338
+        },
+        {
+          "bottom": 1333,
+          "cls": "",
+          "left": 421,
+          "right": 540,
+          "tag": "a",
+          "text": "View house members →",
+          "top": 1320
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/houses?verify=final-houses-768",
+      "width": 768,
+      "consoleErrors": []
+    },
+    {
+      "route": "houses",
+      "path": "/houses",
+      "viewport": "1440",
+      "bodyHeight": 2582,
+      "brokenImages": [],
+      "height": 900,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [],
+      "offscreen": [
+        {
+          "bottom": -221,
+          "cls": "",
+          "left": 358,
+          "right": 478,
+          "tag": "a",
+          "text": "View house members →",
+          "top": -234
+        },
+        {
+          "bottom": -203,
+          "cls": "",
+          "left": 707,
+          "right": 827,
+          "tag": "a",
+          "text": "View house members →",
+          "top": -216
+        },
+        {
+          "bottom": -177,
+          "cls": "",
+          "left": 1056,
+          "right": 1176,
+          "tag": "a",
+          "text": "View house members →",
+          "top": -190
+        },
+        {
+          "bottom": 1345,
+          "cls": "",
+          "left": 358,
+          "right": 478,
+          "tag": "a",
+          "text": "View house members →",
+          "top": 1332
+        },
+        {
+          "bottom": 1363,
+          "cls": "",
+          "left": 707,
+          "right": 827,
+          "tag": "a",
+          "text": "View house members →",
+          "top": 1350
+        },
+        {
+          "bottom": 1345,
+          "cls": "",
+          "left": 1056,
+          "right": 1176,
+          "tag": "a",
+          "text": "View house members →",
+          "top": 1332
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/houses?verify=final-houses-1440",
+      "width": 1440,
+      "consoleErrors": []
+    },
+    {
+      "route": "stories",
+      "path": "/stories",
+      "viewport": "375",
+      "bodyHeight": 10673,
+      "brokenImages": [],
+      "height": 844,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [
+        {
+          "bottom": 202,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Overview",
+          "top": 153
+        },
+        {
+          "bottom": 287,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "People\n196",
+          "top": 238
+        },
+        {
+          "bottom": 336,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Houses\n12",
+          "top": 287
+        },
+        {
+          "bottom": 421,
+          "cls": "rail-link active",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Timeline",
+          "top": 372
+        },
+        {
+          "bottom": 470,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Chronicles",
+          "top": 421
+        },
+        {
+          "bottom": 555,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Battles\n9",
+          "top": 506
+        },
+        {
+          "bottom": 640,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Database",
+          "top": 591
+        },
+        {
+          "bottom": 689,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "How it works",
+          "top": 640
+        }
+      ],
+      "offscreen": [
+        {
+          "bottom": 118,
+          "cls": "observatory-logo compact",
+          "left": -202,
+          "right": -164,
+          "tag": "a",
+          "text": "The Raven Wall home",
+          "top": 80
+        },
+        {
+          "bottom": -8423,
+          "cls": "active",
+          "left": 18,
+          "right": 66,
+          "tag": "button",
+          "text": "All",
+          "top": -8465
+        },
+        {
+          "bottom": -8423,
+          "cls": "",
+          "left": 74,
+          "right": 122,
+          "tag": "button",
+          "text": "S1",
+          "top": -8465
+        },
+        {
+          "bottom": -8423,
+          "cls": "",
+          "left": 130,
+          "right": 178,
+          "tag": "button",
+          "text": "S2",
+          "top": -8465
+        },
+        {
+          "bottom": -8423,
+          "cls": "",
+          "left": 186,
+          "right": 234,
+          "tag": "button",
+          "text": "S3",
+          "top": -8465
+        },
+        {
+          "bottom": -8423,
+          "cls": "",
+          "left": 242,
+          "right": 290,
+          "tag": "button",
+          "text": "S4",
+          "top": -8465
+        },
+        {
+          "bottom": -8373,
+          "cls": "",
+          "left": 18,
+          "right": 66,
+          "tag": "button",
+          "text": "S5",
+          "top": -8415
+        },
+        {
+          "bottom": -8373,
+          "cls": "",
+          "left": 74,
+          "right": 122,
+          "tag": "button",
+          "text": "S6",
+          "top": -8415
+        },
+        {
+          "bottom": -8373,
+          "cls": "",
+          "left": 130,
+          "right": 178,
+          "tag": "button",
+          "text": "S7",
+          "top": -8415
+        },
+        {
+          "bottom": -8373,
+          "cls": "",
+          "left": 186,
+          "right": 234,
+          "tag": "button",
+          "text": "S8",
+          "top": -8415
+        },
+        {
+          "bottom": 1628,
+          "cls": "",
+          "left": 42,
+          "right": 144,
+          "tag": "button",
+          "text": "Previous",
+          "top": 1584
+        },
+        {
+          "bottom": 1628,
+          "cls": "",
+          "left": 245,
+          "right": 318,
+          "tag": "button",
+          "text": "Next",
+          "top": 1584
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/stories?verify=final-stories-375",
+      "width": 375,
+      "consoleErrors": []
+    },
+    {
+      "route": "stories",
+      "path": "/stories",
+      "viewport": "768",
+      "bodyHeight": 8535,
+      "brokenImages": [],
+      "height": 1024,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [
+        {
+          "bottom": 210,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Overview",
+          "top": 161
+        },
+        {
+          "bottom": 295,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "People\n196",
+          "top": 246
+        },
+        {
+          "bottom": 344,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Houses\n12",
+          "top": 295
+        },
+        {
+          "bottom": 429,
+          "cls": "rail-link active",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Timeline",
+          "top": 380
+        },
+        {
+          "bottom": 478,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Chronicles",
+          "top": 429
+        },
+        {
+          "bottom": 563,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Battles\n9",
+          "top": 514
+        },
+        {
+          "bottom": 648,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Database",
+          "top": 599
+        },
+        {
+          "bottom": 697,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "How it works",
+          "top": 648
+        }
+      ],
+      "offscreen": [
+        {
+          "bottom": 126,
+          "cls": "observatory-logo compact",
+          "left": -202,
+          "right": -164,
+          "tag": "a",
+          "text": "The Raven Wall home",
+          "top": 88
+        },
+        {
+          "bottom": -6436,
+          "cls": "active",
+          "left": 38,
+          "right": 86,
+          "tag": "button",
+          "text": "All",
+          "top": -6478
+        },
+        {
+          "bottom": -6436,
+          "cls": "",
+          "left": 94,
+          "right": 142,
+          "tag": "button",
+          "text": "S1",
+          "top": -6478
+        },
+        {
+          "bottom": -6436,
+          "cls": "",
+          "left": 150,
+          "right": 198,
+          "tag": "button",
+          "text": "S2",
+          "top": -6478
+        },
+        {
+          "bottom": -6436,
+          "cls": "",
+          "left": 206,
+          "right": 254,
+          "tag": "button",
+          "text": "S3",
+          "top": -6478
+        },
+        {
+          "bottom": -6436,
+          "cls": "",
+          "left": 262,
+          "right": 310,
+          "tag": "button",
+          "text": "S4",
+          "top": -6478
+        },
+        {
+          "bottom": -6436,
+          "cls": "",
+          "left": 318,
+          "right": 366,
+          "tag": "button",
+          "text": "S5",
+          "top": -6478
+        },
+        {
+          "bottom": -6436,
+          "cls": "",
+          "left": 374,
+          "right": 422,
+          "tag": "button",
+          "text": "S6",
+          "top": -6478
+        },
+        {
+          "bottom": -6436,
+          "cls": "",
+          "left": 430,
+          "right": 478,
+          "tag": "button",
+          "text": "S7",
+          "top": -6478
+        },
+        {
+          "bottom": -6436,
+          "cls": "",
+          "left": 486,
+          "right": 534,
+          "tag": "button",
+          "text": "S8",
+          "top": -6478
+        },
+        {
+          "bottom": 1554,
+          "cls": "",
+          "left": 238,
+          "right": 340,
+          "tag": "button",
+          "text": "Previous",
+          "top": 1510
+        },
+        {
+          "bottom": 1554,
+          "cls": "",
+          "left": 442,
+          "right": 515,
+          "tag": "button",
+          "text": "Next",
+          "top": 1510
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/stories?verify=final-stories-768",
+      "width": 768,
+      "consoleErrors": []
+    },
+    {
+      "route": "stories",
+      "path": "/stories",
+      "viewport": "1440",
+      "bodyHeight": 5979,
+      "brokenImages": [],
+      "height": 900,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [],
+      "offscreen": [
+        {
+          "bottom": -4283,
+          "cls": "active",
+          "left": 322,
+          "right": 370,
+          "tag": "button",
+          "text": "All",
+          "top": -4325
+        },
+        {
+          "bottom": -4283,
+          "cls": "",
+          "left": 378,
+          "right": 426,
+          "tag": "button",
+          "text": "S1",
+          "top": -4325
+        },
+        {
+          "bottom": -4283,
+          "cls": "",
+          "left": 434,
+          "right": 482,
+          "tag": "button",
+          "text": "S2",
+          "top": -4325
+        },
+        {
+          "bottom": -4283,
+          "cls": "",
+          "left": 490,
+          "right": 538,
+          "tag": "button",
+          "text": "S3",
+          "top": -4325
+        },
+        {
+          "bottom": -4283,
+          "cls": "",
+          "left": 546,
+          "right": 594,
+          "tag": "button",
+          "text": "S4",
+          "top": -4325
+        },
+        {
+          "bottom": -4283,
+          "cls": "",
+          "left": 602,
+          "right": 650,
+          "tag": "button",
+          "text": "S5",
+          "top": -4325
+        },
+        {
+          "bottom": -4283,
+          "cls": "",
+          "left": 658,
+          "right": 706,
+          "tag": "button",
+          "text": "S6",
+          "top": -4325
+        },
+        {
+          "bottom": -4283,
+          "cls": "",
+          "left": 714,
+          "right": 762,
+          "tag": "button",
+          "text": "S7",
+          "top": -4325
+        },
+        {
+          "bottom": -4283,
+          "cls": "",
+          "left": 770,
+          "right": 818,
+          "tag": "button",
+          "text": "S8",
+          "top": -4325
+        },
+        {
+          "bottom": 1118,
+          "cls": "",
+          "left": 699,
+          "right": 801,
+          "tag": "button",
+          "text": "Previous",
+          "top": 1074
+        },
+        {
+          "bottom": 1118,
+          "cls": "",
+          "left": 903,
+          "right": 976,
+          "tag": "button",
+          "text": "Next",
+          "top": 1074
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/stories?verify=final-stories-1440",
+      "width": 1440,
+      "consoleErrors": []
+    },
+    {
+      "route": "battles",
+      "path": "/battles",
+      "viewport": "375",
+      "bodyHeight": 6579,
+      "brokenImages": [],
+      "height": 844,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [
+        {
+          "bottom": 202,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Overview",
+          "top": 153
+        },
+        {
+          "bottom": 287,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "People\n196",
+          "top": 238
+        },
+        {
+          "bottom": 336,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Houses\n12",
+          "top": 287
+        },
+        {
+          "bottom": 421,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Timeline",
+          "top": 372
+        },
+        {
+          "bottom": 470,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Chronicles",
+          "top": 421
+        },
+        {
+          "bottom": 555,
+          "cls": "rail-link active",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Battles\n9",
+          "top": 506
+        },
+        {
+          "bottom": 640,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Database",
+          "top": 591
+        },
+        {
+          "bottom": 689,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "How it works",
+          "top": 640
+        }
+      ],
+      "offscreen": [
+        {
+          "bottom": 118,
+          "cls": "observatory-logo compact",
+          "left": -202,
+          "right": -164,
+          "tag": "a",
+          "text": "The Raven Wall home",
+          "top": 80
+        },
+        {
+          "bottom": -4752,
+          "cls": "active",
+          "left": 18,
+          "right": 66,
+          "tag": "button",
+          "text": "All",
+          "top": -4794
+        },
+        {
+          "bottom": -4752,
+          "cls": "",
+          "left": 74,
+          "right": 122,
+          "tag": "button",
+          "text": "S1",
+          "top": -4794
+        },
+        {
+          "bottom": -4752,
+          "cls": "",
+          "left": 130,
+          "right": 178,
+          "tag": "button",
+          "text": "S2",
+          "top": -4794
+        },
+        {
+          "bottom": -4752,
+          "cls": "",
+          "left": 186,
+          "right": 234,
+          "tag": "button",
+          "text": "S3",
+          "top": -4794
+        },
+        {
+          "bottom": -4752,
+          "cls": "",
+          "left": 242,
+          "right": 290,
+          "tag": "button",
+          "text": "S4",
+          "top": -4794
+        },
+        {
+          "bottom": -4702,
+          "cls": "",
+          "left": 18,
+          "right": 66,
+          "tag": "button",
+          "text": "S5",
+          "top": -4744
+        },
+        {
+          "bottom": -4702,
+          "cls": "",
+          "left": 74,
+          "right": 122,
+          "tag": "button",
+          "text": "S6",
+          "top": -4744
+        },
+        {
+          "bottom": -4702,
+          "cls": "",
+          "left": 130,
+          "right": 178,
+          "tag": "button",
+          "text": "S7",
+          "top": -4744
+        },
+        {
+          "bottom": -4702,
+          "cls": "",
+          "left": 186,
+          "right": 234,
+          "tag": "button",
+          "text": "S8",
+          "top": -4744
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/battles?verify=final-battles-375",
+      "width": 375,
+      "consoleErrors": []
+    },
+    {
+      "route": "battles",
+      "path": "/battles",
+      "viewport": "768",
+      "bodyHeight": 4612,
+      "brokenImages": [],
+      "height": 1024,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [
+        {
+          "bottom": 210,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Overview",
+          "top": 161
+        },
+        {
+          "bottom": 295,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "People\n196",
+          "top": 246
+        },
+        {
+          "bottom": 344,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Houses\n12",
+          "top": 295
+        },
+        {
+          "bottom": 429,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Timeline",
+          "top": 380
+        },
+        {
+          "bottom": 478,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Chronicles",
+          "top": 429
+        },
+        {
+          "bottom": 563,
+          "cls": "rail-link active",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Battles\n9",
+          "top": 514
+        },
+        {
+          "bottom": 648,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Database",
+          "top": 599
+        },
+        {
+          "bottom": 697,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "How it works",
+          "top": 648
+        }
+      ],
+      "offscreen": [
+        {
+          "bottom": 126,
+          "cls": "observatory-logo compact",
+          "left": -202,
+          "right": -164,
+          "tag": "a",
+          "text": "The Raven Wall home",
+          "top": 88
+        },
+        {
+          "bottom": -2961,
+          "cls": "active",
+          "left": 38,
+          "right": 86,
+          "tag": "button",
+          "text": "All",
+          "top": -3003
+        },
+        {
+          "bottom": -2961,
+          "cls": "",
+          "left": 94,
+          "right": 142,
+          "tag": "button",
+          "text": "S1",
+          "top": -3003
+        },
+        {
+          "bottom": -2961,
+          "cls": "",
+          "left": 150,
+          "right": 198,
+          "tag": "button",
+          "text": "S2",
+          "top": -3003
+        },
+        {
+          "bottom": -2961,
+          "cls": "",
+          "left": 206,
+          "right": 254,
+          "tag": "button",
+          "text": "S3",
+          "top": -3003
+        },
+        {
+          "bottom": -2961,
+          "cls": "",
+          "left": 262,
+          "right": 310,
+          "tag": "button",
+          "text": "S4",
+          "top": -3003
+        },
+        {
+          "bottom": -2961,
+          "cls": "",
+          "left": 318,
+          "right": 366,
+          "tag": "button",
+          "text": "S5",
+          "top": -3003
+        },
+        {
+          "bottom": -2961,
+          "cls": "",
+          "left": 374,
+          "right": 422,
+          "tag": "button",
+          "text": "S6",
+          "top": -3003
+        },
+        {
+          "bottom": -2961,
+          "cls": "",
+          "left": 430,
+          "right": 478,
+          "tag": "button",
+          "text": "S7",
+          "top": -3003
+        },
+        {
+          "bottom": -2961,
+          "cls": "",
+          "left": 486,
+          "right": 534,
+          "tag": "button",
+          "text": "S8",
+          "top": -3003
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/battles?verify=final-battles-768",
+      "width": 768,
+      "consoleErrors": []
+    },
+    {
+      "route": "battles",
+      "path": "/battles",
+      "viewport": "1440",
+      "bodyHeight": 5046,
+      "brokenImages": [],
+      "height": 900,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [],
+      "offscreen": [
+        {
+          "bottom": -3475,
+          "cls": "active",
+          "left": 322,
+          "right": 370,
+          "tag": "button",
+          "text": "All",
+          "top": -3517
+        },
+        {
+          "bottom": -3475,
+          "cls": "",
+          "left": 378,
+          "right": 426,
+          "tag": "button",
+          "text": "S1",
+          "top": -3517
+        },
+        {
+          "bottom": -3475,
+          "cls": "",
+          "left": 434,
+          "right": 482,
+          "tag": "button",
+          "text": "S2",
+          "top": -3517
+        },
+        {
+          "bottom": -3475,
+          "cls": "",
+          "left": 490,
+          "right": 538,
+          "tag": "button",
+          "text": "S3",
+          "top": -3517
+        },
+        {
+          "bottom": -3475,
+          "cls": "",
+          "left": 546,
+          "right": 594,
+          "tag": "button",
+          "text": "S4",
+          "top": -3517
+        },
+        {
+          "bottom": -3475,
+          "cls": "",
+          "left": 602,
+          "right": 650,
+          "tag": "button",
+          "text": "S5",
+          "top": -3517
+        },
+        {
+          "bottom": -3475,
+          "cls": "",
+          "left": 658,
+          "right": 706,
+          "tag": "button",
+          "text": "S6",
+          "top": -3517
+        },
+        {
+          "bottom": -3475,
+          "cls": "",
+          "left": 714,
+          "right": 762,
+          "tag": "button",
+          "text": "S7",
+          "top": -3517
+        },
+        {
+          "bottom": -3475,
+          "cls": "",
+          "left": 770,
+          "right": 818,
+          "tag": "button",
+          "text": "S8",
+          "top": -3517
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/battles?verify=final-battles-1440",
+      "width": 1440,
+      "consoleErrors": []
+    },
+    {
+      "route": "quotes",
+      "path": "/quotes",
+      "viewport": "375",
+      "bodyHeight": 7292,
+      "brokenImages": [],
+      "height": 844,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [
+        {
+          "bottom": 202,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Overview",
+          "top": 153
+        },
+        {
+          "bottom": 287,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "People\n196",
+          "top": 238
+        },
+        {
+          "bottom": 336,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Houses\n12",
+          "top": 287
+        },
+        {
+          "bottom": 421,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Timeline",
+          "top": 372
+        },
+        {
+          "bottom": 470,
+          "cls": "rail-link active",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Chronicles",
+          "top": 421
+        },
+        {
+          "bottom": 555,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Battles\n9",
+          "top": 506
+        },
+        {
+          "bottom": 640,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Database",
+          "top": 591
+        },
+        {
+          "bottom": 689,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "How it works",
+          "top": 640
+        }
+      ],
+      "offscreen": [
+        {
+          "bottom": 118,
+          "cls": "observatory-logo compact",
+          "left": -202,
+          "right": -164,
+          "tag": "a",
+          "text": "The Raven Wall home",
+          "top": 80
+        },
+        {
+          "bottom": -5498,
+          "cls": "active",
+          "left": 18,
+          "right": 66,
+          "tag": "button",
+          "text": "All",
+          "top": -5540
+        },
+        {
+          "bottom": -5498,
+          "cls": "",
+          "left": 74,
+          "right": 122,
+          "tag": "button",
+          "text": "S1",
+          "top": -5540
+        },
+        {
+          "bottom": -5498,
+          "cls": "",
+          "left": 130,
+          "right": 178,
+          "tag": "button",
+          "text": "S2",
+          "top": -5540
+        },
+        {
+          "bottom": -5498,
+          "cls": "",
+          "left": 186,
+          "right": 234,
+          "tag": "button",
+          "text": "S3",
+          "top": -5540
+        },
+        {
+          "bottom": -5498,
+          "cls": "",
+          "left": 242,
+          "right": 290,
+          "tag": "button",
+          "text": "S4",
+          "top": -5540
+        },
+        {
+          "bottom": -5448,
+          "cls": "",
+          "left": 18,
+          "right": 66,
+          "tag": "button",
+          "text": "S5",
+          "top": -5490
+        },
+        {
+          "bottom": -5448,
+          "cls": "",
+          "left": 74,
+          "right": 122,
+          "tag": "button",
+          "text": "S6",
+          "top": -5490
+        },
+        {
+          "bottom": -5448,
+          "cls": "",
+          "left": 130,
+          "right": 178,
+          "tag": "button",
+          "text": "S7",
+          "top": -5490
+        },
+        {
+          "bottom": -5448,
+          "cls": "",
+          "left": 186,
+          "right": 234,
+          "tag": "button",
+          "text": "S8",
+          "top": -5490
+        },
+        {
+          "bottom": -5149,
+          "cls": "",
+          "left": 54,
+          "right": 306,
+          "tag": "a",
+          "text": "Eddard \"Ned\" Stark",
+          "top": -5163
+        },
+        {
+          "bottom": -4839,
+          "cls": "",
+          "left": 54,
+          "right": 306,
+          "tag": "a",
+          "text": "Arya Stark",
+          "top": -4853
+        },
+        {
+          "bottom": -4529,
+          "cls": "",
+          "left": 54,
+          "right": 306,
+          "tag": "a",
+          "text": "Arya Stark",
+          "top": -4543
+        },
+        {
+          "bottom": -4199,
+          "cls": "",
+          "left": 54,
+          "right": 306,
+          "tag": "a",
+          "text": "Varys",
+          "top": -4213
+        },
+        {
+          "bottom": -3889,
+          "cls": "",
+          "left": 54,
+          "right": 306,
+          "tag": "a",
+          "text": "Petyr \"Littlefinger\" Baelish",
+          "top": -3903
+        },
+        {
+          "bottom": -3560,
+          "cls": "",
+          "left": 54,
+          "right": 306,
+          "tag": "a",
+          "text": "Sandor Clegane",
+          "top": -3574
+        },
+        {
+          "bottom": -3250,
+          "cls": "",
+          "left": 54,
+          "right": 306,
+          "tag": "a",
+          "text": "Olenna Tyrell",
+          "top": -3264
+        },
+        {
+          "bottom": -2940,
+          "cls": "",
+          "left": 54,
+          "right": 306,
+          "tag": "a",
+          "text": "Tywin Lannister",
+          "top": -2954
+        },
+        {
+          "bottom": -2630,
+          "cls": "",
+          "left": 54,
+          "right": 306,
+          "tag": "a",
+          "text": "Jaime Lannister",
+          "top": -2644
+        },
+        {
+          "bottom": -2320,
+          "cls": "",
+          "left": 54,
+          "right": 306,
+          "tag": "a",
+          "text": "Hodor (Wylis)",
+          "top": -2334
+        },
+        {
+          "bottom": -1990,
+          "cls": "",
+          "left": 54,
+          "right": 306,
+          "tag": "a",
+          "text": "Samwell Tarly",
+          "top": -2004
+        },
+        {
+          "bottom": -1680,
+          "cls": "",
+          "left": 54,
+          "right": 306,
+          "tag": "a",
+          "text": "Eddard \"Ned\" Stark",
+          "top": -1694
+        },
+        {
+          "bottom": -1351,
+          "cls": "",
+          "left": 54,
+          "right": 306,
+          "tag": "a",
+          "text": "Brienne of Tarth",
+          "top": -1365
+        },
+        {
+          "bottom": -1041,
+          "cls": "",
+          "left": 54,
+          "right": 306,
+          "tag": "a",
+          "text": "Melisandre",
+          "top": -1055
+        },
+        {
+          "bottom": -646,
+          "cls": "",
+          "left": 54,
+          "right": 306,
+          "tag": "a",
+          "text": "Bronn",
+          "top": -660
+        },
+        {
+          "bottom": -336,
+          "cls": "",
+          "left": 54,
+          "right": 306,
+          "tag": "a",
+          "text": "Khal Drogo",
+          "top": -350
+        },
+        {
+          "bottom": -26,
+          "cls": "",
+          "left": 54,
+          "right": 306,
+          "tag": "a",
+          "text": "Robb Stark",
+          "top": -40
+        },
+        {
+          "bottom": 1073,
+          "cls": "",
+          "left": 54,
+          "right": 306,
+          "tag": "a",
+          "text": "Jorah Mormont",
+          "top": 1059
+        },
+        {
+          "bottom": 1209,
+          "cls": "",
+          "left": 42,
+          "right": 144,
+          "tag": "button",
+          "text": "Previous",
+          "top": 1165
+        },
+        {
+          "bottom": 1209,
+          "cls": "",
+          "left": 245,
+          "right": 318,
+          "tag": "button",
+          "text": "Next",
+          "top": 1165
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/quotes?verify=final-quotes-375",
+      "width": 375,
+      "consoleErrors": []
+    },
+    {
+      "route": "quotes",
+      "path": "/quotes",
+      "viewport": "768",
+      "bodyHeight": 4597,
+      "brokenImages": [],
+      "height": 1024,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [
+        {
+          "bottom": 210,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Overview",
+          "top": 161
+        },
+        {
+          "bottom": 295,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "People\n196",
+          "top": 246
+        },
+        {
+          "bottom": 344,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Houses\n12",
+          "top": 295
+        },
+        {
+          "bottom": 429,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Timeline",
+          "top": 380
+        },
+        {
+          "bottom": 478,
+          "cls": "rail-link active",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Chronicles",
+          "top": 429
+        },
+        {
+          "bottom": 563,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Battles\n9",
+          "top": 514
+        },
+        {
+          "bottom": 648,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Database",
+          "top": 599
+        },
+        {
+          "bottom": 697,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "How it works",
+          "top": 648
+        }
+      ],
+      "offscreen": [
+        {
+          "bottom": 126,
+          "cls": "observatory-logo compact",
+          "left": -202,
+          "right": -164,
+          "tag": "a",
+          "text": "The Raven Wall home",
+          "top": 88
+        },
+        {
+          "bottom": -2752,
+          "cls": "active",
+          "left": 38,
+          "right": 86,
+          "tag": "button",
+          "text": "All",
+          "top": -2794
+        },
+        {
+          "bottom": -2752,
+          "cls": "",
+          "left": 94,
+          "right": 142,
+          "tag": "button",
+          "text": "S1",
+          "top": -2794
+        },
+        {
+          "bottom": -2752,
+          "cls": "",
+          "left": 150,
+          "right": 198,
+          "tag": "button",
+          "text": "S2",
+          "top": -2794
+        },
+        {
+          "bottom": -2752,
+          "cls": "",
+          "left": 206,
+          "right": 254,
+          "tag": "button",
+          "text": "S3",
+          "top": -2794
+        },
+        {
+          "bottom": -2752,
+          "cls": "",
+          "left": 262,
+          "right": 310,
+          "tag": "button",
+          "text": "S4",
+          "top": -2794
+        },
+        {
+          "bottom": -2752,
+          "cls": "",
+          "left": 318,
+          "right": 366,
+          "tag": "button",
+          "text": "S5",
+          "top": -2794
+        },
+        {
+          "bottom": -2752,
+          "cls": "",
+          "left": 374,
+          "right": 422,
+          "tag": "button",
+          "text": "S6",
+          "top": -2794
+        },
+        {
+          "bottom": -2752,
+          "cls": "",
+          "left": 430,
+          "right": 478,
+          "tag": "button",
+          "text": "S7",
+          "top": -2794
+        },
+        {
+          "bottom": -2752,
+          "cls": "",
+          "left": 486,
+          "right": 534,
+          "tag": "button",
+          "text": "S8",
+          "top": -2794
+        },
+        {
+          "bottom": -2453,
+          "cls": "",
+          "left": 74,
+          "right": 679,
+          "tag": "a",
+          "text": "Eddard \"Ned\" Stark",
+          "top": -2467
+        },
+        {
+          "bottom": -2143,
+          "cls": "",
+          "left": 74,
+          "right": 341,
+          "tag": "a",
+          "text": "Arya Stark",
+          "top": -2157
+        },
+        {
+          "bottom": -2143,
+          "cls": "",
+          "left": 412,
+          "right": 679,
+          "tag": "a",
+          "text": "Arya Stark",
+          "top": -2157
+        },
+        {
+          "bottom": -1833,
+          "cls": "",
+          "left": 74,
+          "right": 341,
+          "tag": "a",
+          "text": "Varys",
+          "top": -1847
+        },
+        {
+          "bottom": -1833,
+          "cls": "",
+          "left": 412,
+          "right": 679,
+          "tag": "a",
+          "text": "Petyr \"Littlefinger\" Baelish",
+          "top": -1847
+        },
+        {
+          "bottom": -1523,
+          "cls": "",
+          "left": 74,
+          "right": 341,
+          "tag": "a",
+          "text": "Sandor Clegane",
+          "top": -1537
+        },
+        {
+          "bottom": -1523,
+          "cls": "",
+          "left": 412,
+          "right": 679,
+          "tag": "a",
+          "text": "Olenna Tyrell",
+          "top": -1537
+        },
+        {
+          "bottom": -1213,
+          "cls": "",
+          "left": 74,
+          "right": 679,
+          "tag": "a",
+          "text": "Tywin Lannister",
+          "top": -1227
+        },
+        {
+          "bottom": -903,
+          "cls": "",
+          "left": 74,
+          "right": 341,
+          "tag": "a",
+          "text": "Jaime Lannister",
+          "top": -917
+        },
+        {
+          "bottom": -903,
+          "cls": "",
+          "left": 412,
+          "right": 679,
+          "tag": "a",
+          "text": "Hodor (Wylis)",
+          "top": -917
+        },
+        {
+          "bottom": -574,
+          "cls": "",
+          "left": 74,
+          "right": 341,
+          "tag": "a",
+          "text": "Samwell Tarly",
+          "top": -588
+        },
+        {
+          "bottom": -574,
+          "cls": "",
+          "left": 412,
+          "right": 679,
+          "tag": "a",
+          "text": "Eddard \"Ned\" Stark",
+          "top": -588
+        },
+        {
+          "bottom": -244,
+          "cls": "",
+          "left": 74,
+          "right": 341,
+          "tag": "a",
+          "text": "Brienne of Tarth",
+          "top": -258
+        },
+        {
+          "bottom": -244,
+          "cls": "",
+          "left": 412,
+          "right": 679,
+          "tag": "a",
+          "text": "Melisandre",
+          "top": -258
+        },
+        {
+          "bottom": 1164,
+          "cls": "",
+          "left": 74,
+          "right": 341,
+          "tag": "a",
+          "text": "Jorah Mormont",
+          "top": 1150
+        },
+        {
+          "bottom": 1300,
+          "cls": "",
+          "left": 238,
+          "right": 340,
+          "tag": "button",
+          "text": "Previous",
+          "top": 1256
+        },
+        {
+          "bottom": 1300,
+          "cls": "",
+          "left": 442,
+          "right": 515,
+          "tag": "button",
+          "text": "Next",
+          "top": 1256
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/quotes?verify=final-quotes-768",
+      "width": 768,
+      "consoleErrors": []
+    },
+    {
+      "route": "quotes",
+      "path": "/quotes",
+      "viewport": "1440",
+      "bodyHeight": 3648,
+      "brokenImages": [],
+      "height": 900,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [],
+      "offscreen": [
+        {
+          "bottom": -1969,
+          "cls": "active",
+          "left": 322,
+          "right": 370,
+          "tag": "button",
+          "text": "All",
+          "top": -2011
+        },
+        {
+          "bottom": -1969,
+          "cls": "",
+          "left": 378,
+          "right": 426,
+          "tag": "button",
+          "text": "S1",
+          "top": -2011
+        },
+        {
+          "bottom": -1969,
+          "cls": "",
+          "left": 434,
+          "right": 482,
+          "tag": "button",
+          "text": "S2",
+          "top": -2011
+        },
+        {
+          "bottom": -1969,
+          "cls": "",
+          "left": 490,
+          "right": 538,
+          "tag": "button",
+          "text": "S3",
+          "top": -2011
+        },
+        {
+          "bottom": -1969,
+          "cls": "",
+          "left": 546,
+          "right": 594,
+          "tag": "button",
+          "text": "S4",
+          "top": -2011
+        },
+        {
+          "bottom": -1969,
+          "cls": "",
+          "left": 602,
+          "right": 650,
+          "tag": "button",
+          "text": "S5",
+          "top": -2011
+        },
+        {
+          "bottom": -1969,
+          "cls": "",
+          "left": 658,
+          "right": 706,
+          "tag": "button",
+          "text": "S6",
+          "top": -2011
+        },
+        {
+          "bottom": -1969,
+          "cls": "",
+          "left": 714,
+          "right": 762,
+          "tag": "button",
+          "text": "S7",
+          "top": -2011
+        },
+        {
+          "bottom": -1969,
+          "cls": "",
+          "left": 770,
+          "right": 818,
+          "tag": "button",
+          "text": "S8",
+          "top": -2011
+        },
+        {
+          "bottom": -1670,
+          "cls": "",
+          "left": 358,
+          "right": 974,
+          "tag": "a",
+          "text": "Eddard \"Ned\" Stark",
+          "top": -1684
+        },
+        {
+          "bottom": -1670,
+          "cls": "",
+          "left": 1045,
+          "right": 1317,
+          "tag": "a",
+          "text": "Arya Stark",
+          "top": -1684
+        },
+        {
+          "bottom": -1360,
+          "cls": "",
+          "left": 358,
+          "right": 630,
+          "tag": "a",
+          "text": "Arya Stark",
+          "top": -1374
+        },
+        {
+          "bottom": -1360,
+          "cls": "",
+          "left": 701,
+          "right": 974,
+          "tag": "a",
+          "text": "Varys",
+          "top": -1374
+        },
+        {
+          "bottom": -1360,
+          "cls": "",
+          "left": 1045,
+          "right": 1317,
+          "tag": "a",
+          "text": "Petyr \"Littlefinger\" Baelish",
+          "top": -1374
+        },
+        {
+          "bottom": -1050,
+          "cls": "",
+          "left": 358,
+          "right": 630,
+          "tag": "a",
+          "text": "Sandor Clegane",
+          "top": -1064
+        },
+        {
+          "bottom": -1050,
+          "cls": "",
+          "left": 701,
+          "right": 974,
+          "tag": "a",
+          "text": "Olenna Tyrell",
+          "top": -1064
+        },
+        {
+          "bottom": -740,
+          "cls": "",
+          "left": 358,
+          "right": 974,
+          "tag": "a",
+          "text": "Tywin Lannister",
+          "top": -754
+        },
+        {
+          "bottom": -740,
+          "cls": "",
+          "left": 1045,
+          "right": 1317,
+          "tag": "a",
+          "text": "Jaime Lannister",
+          "top": -754
+        },
+        {
+          "bottom": -430,
+          "cls": "",
+          "left": 358,
+          "right": 630,
+          "tag": "a",
+          "text": "Hodor (Wylis)",
+          "top": -444
+        },
+        {
+          "bottom": -430,
+          "cls": "",
+          "left": 701,
+          "right": 974,
+          "tag": "a",
+          "text": "Samwell Tarly",
+          "top": -444
+        },
+        {
+          "bottom": -430,
+          "cls": "",
+          "left": 1045,
+          "right": 1317,
+          "tag": "a",
+          "text": "Eddard \"Ned\" Stark",
+          "top": -444
+        },
+        {
+          "bottom": -101,
+          "cls": "",
+          "left": 358,
+          "right": 630,
+          "tag": "a",
+          "text": "Brienne of Tarth",
+          "top": -115
+        },
+        {
+          "bottom": -101,
+          "cls": "",
+          "left": 701,
+          "right": 974,
+          "tag": "a",
+          "text": "Melisandre",
+          "top": -115
+        },
+        {
+          "bottom": 965,
+          "cls": "",
+          "left": 358,
+          "right": 630,
+          "tag": "a",
+          "text": "Jorah Mormont",
+          "top": 951
+        },
+        {
+          "bottom": 1101,
+          "cls": "",
+          "left": 699,
+          "right": 801,
+          "tag": "button",
+          "text": "Previous",
+          "top": 1057
+        },
+        {
+          "bottom": 1101,
+          "cls": "",
+          "left": 903,
+          "right": 976,
+          "tag": "button",
+          "text": "Next",
+          "top": 1057
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/quotes?verify=final-quotes-1440",
+      "width": 1440,
+      "consoleErrors": []
+    },
+    {
+      "route": "database",
+      "path": "/database",
+      "viewport": "375",
+      "bodyHeight": 2919,
+      "brokenImages": [],
+      "height": 844,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [
+        {
+          "bottom": 202,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Overview",
+          "top": 153
+        },
+        {
+          "bottom": 287,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "People\n196",
+          "top": 238
+        },
+        {
+          "bottom": 336,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Houses\n12",
+          "top": 287
+        },
+        {
+          "bottom": 421,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Timeline",
+          "top": 372
+        },
+        {
+          "bottom": 470,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Chronicles",
+          "top": 421
+        },
+        {
+          "bottom": 555,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Battles\n9",
+          "top": 506
+        },
+        {
+          "bottom": 640,
+          "cls": "rail-link active",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Database",
+          "top": 591
+        },
+        {
+          "bottom": 689,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "How it works",
+          "top": 640
+        }
+      ],
+      "offscreen": [
+        {
+          "bottom": 118,
+          "cls": "observatory-logo compact",
+          "left": -202,
+          "right": -164,
+          "tag": "a",
+          "text": "The Raven Wall home",
+          "top": 80
+        },
+        {
+          "bottom": -521,
+          "cls": "selected",
+          "left": 18,
+          "right": 342,
+          "tag": "button",
+          "text": "Characters\ncharacter_records · 196 records",
+          "top": -626
+        },
+        {
+          "bottom": -406,
+          "cls": "",
+          "left": 18,
+          "right": 342,
+          "tag": "button",
+          "text": "Houses\nhouses · 12 records",
+          "top": -511
+        },
+        {
+          "bottom": -291,
+          "cls": "",
+          "left": 18,
+          "right": 342,
+          "tag": "button",
+          "text": "Relationships\nrelationships · 437 records",
+          "top": -396
+        },
+        {
+          "bottom": -176,
+          "cls": "",
+          "left": 18,
+          "right": 342,
+          "tag": "button",
+          "text": "Episodes\nepisodes · 73 records",
+          "top": -281
+        },
+        {
+          "bottom": -61,
+          "cls": "",
+          "left": 18,
+          "right": 342,
+          "tag": "button",
+          "text": "Quotes\nquotes · 44 records",
+          "top": -166
+        },
+        {
+          "bottom": 54,
+          "cls": "",
+          "left": 18,
+          "right": 342,
+          "tag": "button",
+          "text": "Battles\nbattles · 9 records",
+          "top": -51
+        },
+        {
+          "bottom": 1011,
+          "cls": "",
+          "left": 18,
+          "right": 342,
+          "tag": "button",
+          "text": "Previous",
+          "top": 967
+        },
+        {
+          "bottom": 1109,
+          "cls": "",
+          "left": 18,
+          "right": 342,
+          "tag": "button",
+          "text": "Next",
+          "top": 1065
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/database?verify=final-database-375",
+      "width": 375,
+      "consoleErrors": []
+    },
+    {
+      "route": "database",
+      "path": "/database",
+      "viewport": "768",
+      "bodyHeight": 2263,
+      "brokenImages": [],
+      "height": 1024,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [
+        {
+          "bottom": 210,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Overview",
+          "top": 161
+        },
+        {
+          "bottom": 295,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "People\n196",
+          "top": 246
+        },
+        {
+          "bottom": 344,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Houses\n12",
+          "top": 295
+        },
+        {
+          "bottom": 429,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Timeline",
+          "top": 380
+        },
+        {
+          "bottom": 478,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Chronicles",
+          "top": 429
+        },
+        {
+          "bottom": 563,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Battles\n9",
+          "top": 514
+        },
+        {
+          "bottom": 648,
+          "cls": "rail-link active",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Database",
+          "top": 599
+        },
+        {
+          "bottom": 697,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "How it works",
+          "top": 648
+        }
+      ],
+      "offscreen": [
+        {
+          "bottom": 126,
+          "cls": "observatory-logo compact",
+          "left": -202,
+          "right": -164,
+          "tag": "a",
+          "text": "The Raven Wall home",
+          "top": 88
+        },
+        {
+          "bottom": 1542,
+          "cls": "",
+          "left": 38,
+          "right": 141,
+          "tag": "button",
+          "text": "Previous",
+          "top": 1498
+        },
+        {
+          "bottom": 1542,
+          "cls": "",
+          "left": 642,
+          "right": 715,
+          "tag": "button",
+          "text": "Next",
+          "top": 1498
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/database?verify=final-database-768",
+      "width": 768,
+      "consoleErrors": []
+    },
+    {
+      "route": "database",
+      "path": "/database",
+      "viewport": "1440",
+      "bodyHeight": 1744,
+      "brokenImages": [],
+      "height": 900,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [],
+      "offscreen": [
+        {
+          "bottom": 1324,
+          "cls": "",
+          "left": 322,
+          "right": 424,
+          "tag": "button",
+          "text": "Previous",
+          "top": 1280
+        },
+        {
+          "bottom": 1324,
+          "cls": "",
+          "left": 1280,
+          "right": 1353,
+          "tag": "button",
+          "text": "Next",
+          "top": 1280
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/database?verify=final-database-1440",
+      "width": 1440,
+      "consoleErrors": []
+    },
+    {
+      "route": "architecture",
+      "path": "/architecture",
+      "viewport": "375",
+      "bodyHeight": 3271,
+      "brokenImages": [],
+      "height": 844,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [
+        {
+          "bottom": 202,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Overview",
+          "top": 153
+        },
+        {
+          "bottom": 287,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "People\n196",
+          "top": 238
+        },
+        {
+          "bottom": 336,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Houses\n12",
+          "top": 287
+        },
+        {
+          "bottom": 421,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Timeline",
+          "top": 372
+        },
+        {
+          "bottom": 470,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Chronicles",
+          "top": 421
+        },
+        {
+          "bottom": 555,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Battles\n9",
+          "top": 506
+        },
+        {
+          "bottom": 640,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Database",
+          "top": 591
+        },
+        {
+          "bottom": 689,
+          "cls": "rail-link active",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "How it works",
+          "top": 640
+        }
+      ],
+      "offscreen": [
+        {
+          "bottom": 118,
+          "cls": "observatory-logo compact",
+          "left": -202,
+          "right": -164,
+          "tag": "a",
+          "text": "The Raven Wall home",
+          "top": 80
+        },
+        {
+          "bottom": -1054,
+          "cls": "",
+          "left": 64,
+          "right": 296,
+          "tag": "select",
+          "text": "/api/v1/statistics\n/api/v1/characters?pageSize=3&house=Stark",
+          "top": -1102
+        },
+        {
+          "bottom": -998,
+          "cls": "",
+          "left": 64,
+          "right": 232,
+          "tag": "button",
+          "text": "Send GET request",
+          "top": -1042
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/architecture?verify=final-architecture-375",
+      "width": 375,
+      "consoleErrors": []
+    },
+    {
+      "route": "architecture",
+      "path": "/architecture",
+      "viewport": "768",
+      "bodyHeight": 2415,
+      "brokenImages": [],
+      "height": 1024,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [
+        {
+          "bottom": 210,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Overview",
+          "top": 161
+        },
+        {
+          "bottom": 295,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "People\n196",
+          "top": 246
+        },
+        {
+          "bottom": 344,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Houses\n12",
+          "top": 295
+        },
+        {
+          "bottom": 429,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Timeline",
+          "top": 380
+        },
+        {
+          "bottom": 478,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Chronicles",
+          "top": 429
+        },
+        {
+          "bottom": 563,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Battles\n9",
+          "top": 514
+        },
+        {
+          "bottom": 648,
+          "cls": "rail-link",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "Database",
+          "top": 599
+        },
+        {
+          "bottom": 697,
+          "cls": "rail-link active",
+          "left": -220,
+          "right": -1,
+          "tag": "a",
+          "text": "How it works",
+          "top": 648
+        }
+      ],
+      "offscreen": [
+        {
+          "bottom": 126,
+          "cls": "observatory-logo compact",
+          "left": -202,
+          "right": -164,
+          "tag": "a",
+          "text": "The Raven Wall home",
+          "top": 88
+        }
+      ],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/architecture?verify=final-architecture-768",
+      "width": 768,
+      "consoleErrors": []
+    },
+    {
+      "route": "architecture",
+      "path": "/architecture",
+      "viewport": "1440",
+      "bodyHeight": 2117,
+      "brokenImages": [],
+      "height": 900,
+      "horizontalOverflow": false,
+      "intentionalOffscreen": [],
+      "offscreen": [],
+      "title": "Game of Thrones",
+      "url": "https://game-of-thrones-enterprise.onrender.com/app/architecture?verify=final-architecture-1440",
+      "width": 1440,
+      "consoleErrors": []
+    }
+  ]
+}
