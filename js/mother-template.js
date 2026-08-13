@@ -197,7 +197,7 @@
         <div class="mother-rail__links">
           <a href="#/houses">Houses</a><a href="#/characters">People</a><a href="#/quotes">Voices</a><a href="#/map">Maps</a><a href="#/lore">Lore</a>
         </div>
-        <a class="mother-rail__arrow" href="#/quotes" aria-label="Open Voices">→</a>
+        <a class="mother-rail__arrow" href="#/quotes" aria-label="Open Voices">↗</a>
       </div>`);
   }
 

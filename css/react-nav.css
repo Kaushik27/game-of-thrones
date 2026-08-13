@@ -14,10 +14,10 @@
   gap: 8px;
   min-height: 58px;
   padding: 10px 20px;
-  background: linear-gradient(90deg, rgba(7, 10, 13, .96), rgba(16, 15, 14, .88), rgba(7, 10, 13, .96));
+  background: linear-gradient(180deg, rgba(3, 8, 12, .72), rgba(3, 8, 12, .36) 64%, rgba(3, 8, 12, 0));
   border-bottom: 1px solid rgba(212, 175, 55, .22);
-  box-shadow: 0 16px 38px rgba(0, 0, 0, .2);
-  backdrop-filter: blur(14px) saturate(1.1);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, .16);
+  backdrop-filter: blur(8px) saturate(1.05);
   animation: react-nav-arrive 500ms var(--ease-out, cubic-bezier(.16, 1, .3, 1)) both;
 }
 
@@ -51,6 +51,9 @@
 }
 .react-nav-shell .nav-links a:hover::after,
 .react-nav-shell .nav-links a.active::after { transform: scaleX(1); }
+
+/* The navigation is a horizon line, not a separate black application bar. */
+.react-nav-shell::after { content: ""; position: absolute; inset: 0 0 -34px; z-index: -1; pointer-events: none; background: linear-gradient(180deg, rgba(3,8,12,.28), transparent 86%); mask-image: linear-gradient(180deg, #000 0 34%, transparent 100%); }
 
 .react-nav-shell .nav-search { margin-left: auto; }
 .react-nav-shell .nav-atmosphere {

@@ -14,7 +14,10 @@ const APP_ROUTES = [
   { pattern: /^\/houses$/, view: viewHouses },
   { pattern: /^\/house\/([^/]+)$/, view: viewHouse },
   { pattern: /^\/map$/, view: viewMap },
+  { pattern: /^\/maps$/, view: viewMap },
   { pattern: /^\/chronicle$/, view: viewChronicle },
+  { pattern: /^\/history$/, view: viewChronicle },
+  { pattern: /^\/chronicles$/, view: viewTimeline },
   { pattern: /^\/what-if$/, view: viewWhatIf },
   { pattern: /^\/desk$/, view: viewMaestersDesk },
   { pattern: /^\/episode\/([^/]+)$/, view: viewTimeline },
@@ -891,7 +894,7 @@ function viewHouse(app, params) {
       <div id="house-header" class="hero illustrated ambient-glow house-profile-hero" style="--glow-color:${color};">
         <div class="hero-scene">${houseSceneSVG(color, info.sigil)}</div>
         ${representativeVisual ? `<div class="house-profile-hero__portrait" aria-hidden="true" style="background-image:linear-gradient(90deg, rgba(5,10,15,.98), rgba(5,10,15,.28)),url('${escapeHTML(representativeVisual)}')"></div>` : ""}
-        <div id="house-sigil-big" style="width:92px;height:92px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid ${color};background:${color}1c;color:${color};flex-shrink:0;">${sigilSVG(info.sigil, { size: 46 })}</div>
+        <div id="house-sigil-big" class="house-profile-hero__heraldry" style="--house-accent:${color};"><img src="${escapeHTML(window.MotherTemplate?.heraldryFor?.(houseName) || `assets/generated/heraldry/${houseName.toLowerCase()}.png?v=heraldry-2`)}" alt="${escapeHTML(houseName)} heraldic medallion" width="128" height="128" loading="eager" decoding="async"></div>
         <div>
           <p class="house-profile-hero__eyebrow">A banner, a bloodline, a cost</p>
           <h1 class="display" style="color:${color}">House ${escapeHTML(houseName)}</h1>
@@ -1038,9 +1041,9 @@ function renderFamilyTree(houseName, color) {
     .attr("aria-label", d => d.data.virtual ? `${houseName} bloodline` : `Open dossier for ${d.data.name}`)
     .style("cursor", d => d.data.virtual ? "default" : "pointer");
   nodes.append("rect").attr("class", "tree-node__card")
-    .attr("x", d => d.data.virtual ? -58 : 28).attr("y", -27)
-    .attr("width", d => d.data.virtual ? 116 : 194).attr("height", 54)
-    .attr("rx", 7).attr("fill", "rgba(7,15,22,.82)")
+    .attr("x", d => d.data.virtual ? -68 : 28).attr("y", d => d.data.virtual ? -30 : -31)
+    .attr("width", d => d.data.virtual ? 136 : 222).attr("height", d => d.data.virtual ? 60 : 62)
+    .attr("rx", 2).attr("fill", "rgba(7,15,22,.82)")
     .attr("stroke", d => d.data.sigilColor || color).attr("stroke-opacity", d => d.data.virtual ? .65 : .28);
   nodes.append("circle").attr("class", "tree-node__halo").attr("r", d => d.data.virtual ? 34 : 27).attr("fill", "none").attr("stroke", d => d.data.sigilColor || color).attr("stroke-opacity", .34);
   nodes.append("circle").attr("class", "tree-node__dot").attr("r", d => d.data.virtual ? 15 : 25).attr("fill", d => d.data.sigilColor || color).attr("fill-opacity", d => d.data.status === "dead" ? .42 : .92).attr("stroke", "#0a0f13").attr("stroke-width", 3);
