@@ -112,7 +112,7 @@
             const dy = entry.position.y - 50;
             return `<span class="mother-connector mother-connector--${entry.position.tone}" style="--line-length:${Math.hypot(dx, dy)}%;--line-angle:${Math.atan2(dy, dx) * 180 / Math.PI}deg" aria-hidden="true"></span>`;
           }).join("")}
-          ${entries.map((entry, index) => `<button type="button" class="mother-orbit-node mother-orbit-node--${entry.position.tone}${index === 0 ? " is-active" : ""}" data-mother-house="${safe(entry.house)}" style="--node-x:${entry.position.x}%;--node-y:${entry.position.y}%;--house-accent:${safe(entry.color)}" aria-pressed="${index === 0}" aria-label="Select House ${safe(entry.house)}"><span class="mother-orbit-node__halo" aria-hidden="true"></span><span class="mother-orbit-node__sigil">${sigilFor(entry.house, 42)}</span><span class="mother-orbit-node__label">${safe(entry.house)}</span></button>`).join("")}
+          ${entries.map((entry, index) => `<button type="button" class="mother-orbit-node mother-orbit-node--${entry.position.tone}${index === 0 ? " is-active" : ""}" data-mother-house="${safe(entry.house)}" style="--node-x:${entry.position.x}%;--node-y:${entry.position.y}%;--house-accent:${safe(entry.color)}" aria-pressed="${index === 0}" aria-label="Select House ${safe(entry.house)}"><span class="mother-orbit-node__halo" aria-hidden="true"></span><span class="mother-orbit-node__seal"><span class="mother-orbit-node__sigil">${sigilFor(entry.house, 42)}</span><span class="mother-orbit-node__seal-mark" aria-hidden="true"></span></span><span class="mother-orbit-node__label">${safe(entry.house)}</span><span class="mother-orbit-node__motto">${safe(entry.info.words)}</span></button>`).join("")}
           <button type="button" class="mother-rail-arrow mother-rail-arrow--next" data-mother-step="1" aria-label="Next house">›</button>
         </div>
         <div class="mother-hero__copy">
@@ -186,7 +186,7 @@
     if (!footer || footer.querySelector(".mother-rail")) return;
     footer.insertAdjacentHTML("afterbegin", `
       <div class="mother-rail" aria-label="realm shortcuts">
-        <a class="mother-rail__brand" href="#/" aria-label="Return to the Realm Observatory"><span class="mother-rail__raven">✦</span><span><b>The Raven Wall</b><small>fan-made realm</small></span></a>
+        <a class="mother-rail__brand" href="#/" aria-label="Return to the Realm Observatory"><span class="mother-rail__raven">${sigilFor("Arryn", 22)}</span><span><b>The Raven Wall</b><small>fan-made realm</small></span></a>
         <div class="mother-rail__links">
           <a href="#/houses">Houses</a><a href="#/characters">People</a><a href="#/quotes">Voices</a><a href="#/map">Maps</a><a href="#/lore">Lore</a>
         </div>
