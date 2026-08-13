@@ -349,6 +349,123 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
 }
 
 /* ------------------------------------------------------------------------
+   Layout guard: the realm medallions are a real interaction rail, not
+   artwork to be clipped at the viewport edges.  A nine-column grid gives
+   every house the same footprint and keeps the engraved source coin wholly
+   visible at common desktop widths.
+   ------------------------------------------------------------------------ */
+@media (min-width: 861px) {
+  body:has(.mother-observatory) .mother-hero__orbit {
+    inset: auto 0 0;
+    display: grid;
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    align-items: start;
+    height: 190px;
+    padding: 10px clamp(24px, 4.5vw, 82px) 0;
+    gap: clamp(3px, 1vw, 18px);
+    pointer-events: none;
+  }
+
+  body:has(.mother-observatory) .mother-connector { display: none; }
+
+  body:has(.mother-observatory) .mother-orbit-node {
+    position: relative;
+    inset: auto;
+    justify-self: center;
+    width: clamp(94px, 7.2vw, 136px);
+    height: clamp(94px, 7.2vw, 136px);
+    transform: none;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    pointer-events: auto;
+  }
+
+  body:has(.mother-observatory) .mother-orbit-node:hover,
+  body:has(.mother-observatory) .mother-orbit-node:focus-visible,
+  body:has(.mother-observatory) .mother-orbit-node.is-active {
+    transform: translateY(-4px) scale(1.04);
+  }
+
+  body:has(.mother-observatory) .mother-orbit-node__seal {
+    inset: 0;
+    overflow: visible;
+  }
+
+  body:has(.mother-observatory) .mother-orbit-node__heraldry {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: center;
+    transform: none;
+    border-radius: 50%;
+    mix-blend-mode: screen;
+  }
+
+  body:has(.mother-observatory) .mother-orbit-node__label {
+    top: calc(100% + 10px);
+    min-width: 0;
+    width: max-content;
+  }
+
+  body:has(.mother-observatory) .mother-orbit-node__motto {
+    top: calc(100% + 28px);
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 860px) {
+  body:has(.mother-observatory) .mother-hero__orbit {
+    inset: auto 0 0;
+    display: flex;
+    align-items: flex-start;
+    height: 142px;
+    padding: 10px 24px 0;
+    gap: 16px;
+    overflow-x: auto;
+    overflow-y: visible;
+    scrollbar-width: none;
+    pointer-events: auto;
+  }
+
+  body:has(.mother-observatory) .mother-hero__orbit::-webkit-scrollbar { display: none; }
+  body:has(.mother-observatory) .mother-connector { display: none; }
+
+  body:has(.mother-observatory) .mother-orbit-node {
+    position: relative;
+    inset: auto;
+    flex: 0 0 66px;
+    width: 66px !important;
+    height: 66px !important;
+    transform: none;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  body:has(.mother-observatory) .mother-orbit-node:hover,
+  body:has(.mother-observatory) .mother-orbit-node:focus-visible,
+  body:has(.mother-observatory) .mother-orbit-node.is-active {
+    transform: translateY(-3px) scale(1.04);
+  }
+
+  body:has(.mother-observatory) .mother-orbit-node__seal,
+  body:has(.mother-observatory) .mother-orbit-node__heraldry {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    transform: none;
+    mix-blend-mode: screen;
+  }
+}
+
+/* ------------------------------------------------------------------------
    Final observatory polish
    Keep the homepage navigation in the image plane instead of presenting it
    as a separate black slab. The feathered gradient protects legibility while
@@ -582,4 +699,111 @@ body:has(.mother-observatory) .mother-hero__cta:hover {
     width: 52px !important;
     height: 52px !important;
   }
+}
+
+/* Last-in-file layout guard. Keep this block after the legacy overrides above
+   so the nine source coins cannot be re-expanded or clipped by an older rule. */
+@media (min-width: 861px) {
+  body:has(.mother-observatory) .mother-hero__orbit {
+    inset: auto 0 0;
+    display: grid;
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    align-items: start;
+    height: 190px;
+    padding: 10px clamp(24px, 4.5vw, 82px) 0;
+    gap: clamp(3px, 1vw, 18px);
+    pointer-events: none;
+  }
+  body:has(.mother-observatory) .mother-connector { display: none; }
+  body:has(.mother-observatory) .mother-orbit-node {
+    position: relative;
+    inset: auto;
+    justify-self: center;
+    width: clamp(94px, 7.2vw, 136px) !important;
+    height: clamp(94px, 7.2vw, 136px) !important;
+    transform: none;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    pointer-events: auto;
+  }
+  body:has(.mother-observatory) .mother-orbit-node:hover,
+  body:has(.mother-observatory) .mother-orbit-node:focus-visible,
+  body:has(.mother-observatory) .mother-orbit-node.is-active { transform: translateY(-4px) scale(1.04); }
+  body:has(.mother-observatory) .mother-orbit-node__seal { inset: 0; overflow: visible; }
+  body:has(.mother-observatory) .mother-orbit-node__heraldry {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: center;
+    transform: none;
+    border-radius: 50%;
+    mix-blend-mode: screen;
+  }
+  body:has(.mother-observatory) .mother-orbit-node__label { top: calc(100% + 10px); min-width: 0; width: max-content; }
+  body:has(.mother-observatory) .mother-orbit-node__motto { top: calc(100% + 28px); max-width: 130px; overflow: hidden; text-overflow: ellipsis; }
+}
+
+@media (max-width: 860px) {
+  body:has(.mother-observatory) .mother-hero__orbit {
+    inset: auto 0 0;
+    display: flex;
+    align-items: flex-start;
+    height: 142px;
+    padding: 10px 24px 0;
+    gap: 16px;
+    overflow-x: auto;
+    overflow-y: visible;
+    scrollbar-width: none;
+    pointer-events: auto;
+  }
+  body:has(.mother-observatory) .mother-hero__orbit::-webkit-scrollbar { display: none; }
+  body:has(.mother-observatory) .mother-connector { display: none; }
+  body:has(.mother-observatory) .mother-orbit-node {
+    position: relative;
+    inset: auto;
+    flex: 0 0 66px;
+    width: 66px !important;
+    height: 66px !important;
+    transform: none;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  body:has(.mother-observatory) .mother-orbit-node:hover,
+  body:has(.mother-observatory) .mother-orbit-node:focus-visible,
+  body:has(.mother-observatory) .mother-orbit-node.is-active { transform: translateY(-3px) scale(1.04); }
+  body:has(.mother-observatory) .mother-orbit-node__seal,
+  body:has(.mother-observatory) .mother-orbit-node__heraldry {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    transform: none;
+    mix-blend-mode: screen;
+  }
+}
+
+/* The observatory ends with the wallpaper; the generic site footer should
+   not leave a second empty slab beneath the medallions. */
+body:has(.mother-observatory) #site-footer { display: none !important; }
+
+/* House profiles use the same contained source coin as the home rail. */
+.house-profile-hero__heraldry { overflow: visible; border: 0; background: transparent; box-shadow: none; transform: none; }
+.house-profile-hero__heraldry::before { display: none; }
+.house-profile-hero__heraldry img,
+.house-profile-hero__heraldry img[src*="night-watch"],
+.house-profile-hero__heraldry img[src*="free-folk"],
+.house-profile-hero__heraldry img[src*="unaffiliated"] {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  transform: none;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  filter: saturate(.9) contrast(1.08) brightness(.96) drop-shadow(0 8px 12px rgba(0,0,0,.5));
 }

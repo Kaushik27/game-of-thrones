@@ -12,11 +12,11 @@
     Stark: "jon-snow",
     Lannister: "tyrion-lannister",
     Targaryen: "daenerys-targaryen",
-    Baratheon: "gendry-baratheon",
     Greyjoy: "theon-greyjoy",
     Tyrell: "margaery-tyrell",
-    Martell: "doran-martell",
     Tully: "edmure-tully",
+    Baratheon: "gendry-baratheon",
+    Martell: "doran-martell",
     Arryn: "robin-arryn"
   });
 
@@ -50,6 +50,13 @@
     return typeof global.escapeHTML === "function"
       ? global.escapeHTML(value == null ? "" : String(value))
       : String(value == null ? "" : value).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+  }
+
+  // CSS custom properties containing url() resolve relative to the stylesheet
+  // that consumes them. Resolve realm artwork against the document instead so
+  // the same path works from / locally and from the GitHub Pages project base.
+  function documentAssetUrl(path) {
+    try { return new URL(path, document.baseURI).href; } catch { return path; }
   }
 
   function houseEntries() {
@@ -144,8 +151,8 @@
     const cta = root.querySelector("[data-mother-cta]");
     const portrait = root.querySelector("[data-mother-portrait]");
     const realmImage = root.querySelector("[data-mother-realm-image]");
-    root.style.setProperty("--mother-current-wallpaper", `url("${initial.visual}")`);
-    document.body.style.setProperty("--mother-current-wallpaper", `url("${initial.visual}")`);
+    root.style.setProperty("--mother-current-wallpaper", `url("${documentAssetUrl(initial.visual)}")`);
+    document.body.style.setProperty("--mother-current-wallpaper", `url("${documentAssetUrl(initial.visual)}")`);
 
     function selectHouse(house) {
       const next = entries.find(entry => entry.house === house) || initial;
@@ -159,8 +166,8 @@
       void portrait.offsetWidth;
       portrait.classList.add("is-arriving");
       realmImage.src = next.visual;
-      root.style.setProperty("--mother-current-wallpaper", `url("${next.visual}")`);
-      document.body.style.setProperty("--mother-current-wallpaper", `url("${next.visual}")`);
+      root.style.setProperty("--mother-current-wallpaper", `url("${documentAssetUrl(next.visual)}")`);
+      document.body.style.setProperty("--mother-current-wallpaper", `url("${documentAssetUrl(next.visual)}")`);
       realmImage.alt = `${next.house} realm visual`;
       kicker.textContent = `${next.house} · ${next.info.region}`;
       title.innerHTML = `${safe(next.house)}<br><em>${safe(next.info.words).replace(/!$/, ".")}</em>`;
