@@ -13,3 +13,8 @@ The `*-v2.png` files are the current master plates. They share a locked
 The `*-scene-v1.png` files are the current scene-only plates. They contain no
 interface text or controls; the house rail, labels, glow, and CTA are rendered
 once as live HTML over the scene.
+
+The `*-scene-v3.png` files are the current cinematic location set. Each is a
+distinct photorealistic establishing scene with no embedded interface, so the
+homepage and house dossiers can fade into the same world without a second
+panel or artificial black seam.

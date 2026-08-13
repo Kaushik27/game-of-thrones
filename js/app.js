@@ -898,7 +898,7 @@ function viewHouse(app, params) {
 
   app.innerHTML = `
     <div class="page-wrap">
-      <div id="house-header" class="hero illustrated ambient-glow house-profile-hero" style="--glow-color:${color};">
+      <div id="house-header" class="hero illustrated ambient-glow house-profile-hero" data-house="${escapeHTML(houseName)}" style="--glow-color:${color};">
         <div class="hero-scene">${houseSceneSVG(color, info.sigil)}</div>
         ${representativeVisual ? `<div class="house-profile-hero__portrait" aria-hidden="true" style="background-image:linear-gradient(90deg, rgba(5,10,15,.98), rgba(5,10,15,.28)),url('${escapeHTML(representativeVisual)}')"></div>` : ""}
         <div id="house-sigil-big" class="house-profile-hero__heraldry" style="--house-accent:${color};"><img src="${escapeHTML(window.MotherTemplate?.heraldryFor?.(houseName) || `assets/generated/heraldry/${houseName.toLowerCase()}.png?v=heraldry-2`)}" alt="${escapeHTML(houseName)} heraldic medallion" width="128" height="128" loading="eager" decoding="async"></div>

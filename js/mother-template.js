@@ -35,15 +35,15 @@
   });
 
   const REALM_VISUALS = Object.freeze({
-    Stark: "assets/generated/realms/stark-scene-v1.png",
-    Lannister: "assets/generated/realms/lannister-scene-v1.png",
-    Targaryen: "assets/generated/realms/targaryen-scene-v1.png",
-    Baratheon: "assets/generated/realms/baratheon-scene-v1.png",
-    Greyjoy: "assets/generated/realms/greyjoy-scene-v1.png",
-    Tyrell: "assets/generated/realms/tyrell-scene-v1.png",
-    Tully: "assets/generated/realms/tully-scene-v1.png",
-    Martell: "assets/generated/realms/martell-scene-v1.png",
-    Arryn: "assets/generated/realms/arryn-scene-v1.png"
+    Stark: "assets/generated/realms/stark-scene-v3.png?v=realms-realistic-3",
+    Lannister: "assets/generated/realms/lannister-scene-v3.png?v=realms-realistic-3",
+    Targaryen: "assets/generated/realms/targaryen-scene-v3.png?v=realms-realistic-3",
+    Baratheon: "assets/generated/realms/baratheon-scene-v3.png?v=realms-realistic-3",
+    Greyjoy: "assets/generated/realms/greyjoy-scene-v3.png?v=realms-realistic-3",
+    Tyrell: "assets/generated/realms/tyrell-scene-v3.png?v=realms-realistic-3",
+    Tully: "assets/generated/realms/tully-scene-v3.png?v=realms-realistic-3",
+    Martell: "assets/generated/realms/martell-scene-v3.png?v=realms-realistic-3",
+    Arryn: "assets/generated/realms/arryn-scene-v3.png?v=realms-realistic-3"
   });
 
   function safe(value) {

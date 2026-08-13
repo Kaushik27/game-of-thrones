@@ -866,3 +866,217 @@ body:has(.mother-observatory) .mother-hero__portrait.is-arriving {
   from { opacity: .68; }
   to { opacity: 1; }
 }
+
+/* ------------------------------------------------------------------------
+   Courtly atmosphere pass
+   The shell is one continuous image plane. Profiles and genealogy read as
+   illuminated manuscript sections instead of contemporary dashboard cards.
+   ------------------------------------------------------------------------ */
+body:has(.mother-observatory) {
+  background: #020609;
+}
+body:has(.mother-observatory) .react-nav-shell {
+  background: linear-gradient(180deg, rgba(2, 6, 9, .94) 0%, rgba(2, 6, 9, .58) 62%, rgba(2, 6, 9, 0) 100%) !important;
+  border-bottom: 0 !important;
+  backdrop-filter: blur(3px) saturate(1.05);
+}
+body:has(.mother-observatory) .mother-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: clamp(120px, 18vh, 210px);
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(2, 6, 9, .86), rgba(2, 6, 9, .42) 45%, transparent 100%);
+}
+body:has(.mother-observatory) .mother-hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 1;
+  height: clamp(150px, 22vh, 260px);
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 0%, rgba(2, 6, 9, .28) 38%, #020609 100%);
+}
+body:has(.mother-observatory) .mother-hero__portrait::after {
+  background: linear-gradient(90deg, rgba(2, 6, 9, .3), transparent 30%, transparent 70%, rgba(2, 6, 9, .3));
+}
+body:has(.mother-observatory) .mother-hero__copy { z-index: 4; }
+body:has(.mother-observatory) .mother-hero__cta {
+  width: min(34vw, 420px);
+  height: 82px;
+  color: var(--mother-gold-soft);
+  background: transparent;
+  letter-spacing: .27em;
+  transition: background 220ms ease, transform 220ms ease, color 220ms ease;
+}
+body:has(.mother-observatory) .mother-hero__cta::before {
+  inset: 15px 0;
+  border-top: 1px solid rgba(238, 217, 169, .82);
+  border-bottom: 1px solid rgba(238, 217, 169, .82);
+  clip-path: none;
+  background: linear-gradient(90deg, transparent, rgba(212, 168, 94, .08) 22%, rgba(212, 168, 94, .08) 78%, transparent);
+}
+body:has(.mother-observatory) .mother-hero__cta::after {
+  bottom: 0;
+  padding: 0 8px;
+  background: transparent;
+}
+body:has(.mother-observatory) .mother-hero__cta:hover,
+body:has(.mother-observatory) .mother-hero__cta:focus-visible {
+  color: #fff7e2;
+  background: linear-gradient(90deg, transparent, rgba(212, 168, 94, .1), transparent);
+  transform: translate(-50%, -50%) translateY(-3px);
+}
+
+/* The dossier is a full-bleed scene with editorial copy anchored to its
+   lower edge. The old one-pixel panel is deliberately removed. */
+body:has(.house-profile-hero) .page-wrap { overflow: visible; }
+body:has(.house-profile-hero) .house-profile-hero {
+  position: relative;
+  display: grid !important;
+  grid-template-columns: minmax(112px, 160px) minmax(0, 1fr) !important;
+  align-items: end;
+  gap: clamp(24px, 4vw, 64px);
+  width: 100vw !important;
+  min-height: clamp(430px, 64svh, 690px);
+  margin: 0 calc(50% - 50vw) !important;
+  padding: clamp(150px, 23vh, 230px) clamp(24px, 9vw, 150px) clamp(54px, 8vh, 86px) !important;
+  overflow: hidden;
+  isolation: isolate;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background-color: #03080c !important;
+  background-position: center !important;
+  background-size: cover !important;
+}
+body:has(.house-profile-hero) .house-profile-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(3, 8, 12, .94) 0%, rgba(3, 8, 12, .68) 34%, rgba(3, 8, 12, .14) 72%, rgba(3, 8, 12, .52) 100%), linear-gradient(180deg, rgba(3, 8, 12, .28), transparent 42%, rgba(3, 8, 12, .9) 100%);
+}
+body:has(.house-profile-hero) .house-profile-hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  z-index: -1;
+  height: 34%;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(3, 8, 12, .9));
+}
+body:has(.house-profile-hero) .house-profile-hero .hero-scene { display: none; }
+body:has(.house-profile-hero) .house-profile-hero__portrait {
+  inset: 0 !important;
+  z-index: -3 !important;
+  width: 100% !important;
+  opacity: .16 !important;
+  background-position: center 25% !important;
+  background-size: cover !important;
+  mask-image: none !important;
+  mix-blend-mode: screen;
+}
+body:has(.house-profile-hero) .house-profile-hero > div:last-child { grid-column: 2; grid-row: 1; }
+body:has(.house-profile-hero) .house-profile-hero__heraldry {
+  width: clamp(112px, 12vw, 164px);
+  height: clamp(112px, 12vw, 164px);
+  align-self: end;
+  border: 0 !important;
+  border-radius: 50%;
+  background: transparent !important;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, .45) !important;
+}
+body:has(.house-profile-hero) .house-profile-hero__heraldry img {
+  filter: saturate(.94) contrast(1.1) brightness(1.02) drop-shadow(0 8px 14px rgba(0,0,0,.55)) !important;
+  mix-blend-mode: normal !important;
+}
+body:has(.house-profile-hero) .house-profile-hero__eyebrow {
+  color: rgba(238, 217, 169, .8);
+  font-family: var(--mother-serif);
+  font-size: .7rem;
+  letter-spacing: .28em;
+}
+body:has(.house-profile-hero) .house-profile-hero .display {
+  font-size: clamp(3rem, 7vw, 7.2rem);
+  line-height: .84;
+  letter-spacing: .04em;
+  text-shadow: 0 8px 36px rgba(0,0,0,.8);
+}
+body:has(.house-profile-hero) .house-profile-hero .script-accent {
+  margin-top: 18px;
+  color: var(--mother-gold-soft) !important;
+  font-size: clamp(1.3rem, 2.2vw, 2rem);
+}
+body:has(.house-profile-hero) .house-profile-hero > div:last-child > div:last-child {
+  display: flex;
+  gap: 22px !important;
+  margin-top: 22px !important;
+  padding-top: 16px;
+  border-top: 1px solid rgba(212, 168, 94, .26);
+  color: rgba(241, 237, 227, .66) !important;
+  font-family: var(--mother-serif);
+  letter-spacing: .03em;
+}
+body:has(.house-profile-hero) .tabs { border-top: 1px solid rgba(212,168,94,.22); }
+body:has(.house-profile-hero) .house-tree-intro {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 0 16px;
+  border-bottom: 1px solid rgba(212, 168, 94, .2);
+  font-family: var(--mother-serif);
+}
+body:has(.house-profile-hero) .house-tree-intro strong { color: var(--mother-gold-soft); font-size: 1.2rem; letter-spacing: .08em; }
+body:has(.house-profile-hero) #tree-host {
+  height: min(68svh, 660px) !important;
+  min-height: 470px;
+  margin-top: 22px;
+  overflow: hidden !important;
+  border: 0 !important;
+  border-top: 1px solid rgba(212,168,94,.22) !important;
+  border-bottom: 1px solid rgba(212,168,94,.16) !important;
+  border-radius: 0 !important;
+  background: radial-gradient(ellipse at 50% 46%, rgba(73, 103, 119, .16), transparent 46%), linear-gradient(180deg, rgba(3,8,12,.15), rgba(3,8,12,.72)) !important;
+  box-shadow: inset 0 0 120px rgba(0,0,0,.48) !important;
+}
+body:has(.house-profile-hero) #tree-host .tree-node__card {
+  fill: rgba(4, 8, 11, .48);
+  stroke: rgba(212, 168, 94, .28);
+  stroke-width: .8px;
+  filter: drop-shadow(0 8px 14px rgba(0,0,0,.32));
+}
+body:has(.house-profile-hero) #tree-host .tree-node:hover .tree-node__card,
+body:has(.house-profile-hero) #tree-host .tree-node:focus-visible .tree-node__card {
+  fill: rgba(19, 28, 32, .72);
+  stroke: var(--mother-gold-soft);
+}
+body:has(.house-profile-hero) #tree-host .tree-node__label { font-family: var(--mother-serif); font-size: .86rem; letter-spacing: .045em; }
+body:has(.house-profile-hero) #tree-host .tree-node__subline { font-family: var(--mother-serif); font-size: .56rem; letter-spacing: .16em; }
+
+body:has(.house-profile-hero[data-house="Stark"]) .house-profile-hero { background-image: url("../assets/generated/realms/stark-scene-v3.png") !important; }
+body:has(.house-profile-hero[data-house="Lannister"]) .house-profile-hero { background-image: url("../assets/generated/realms/lannister-scene-v3.png") !important; }
+body:has(.house-profile-hero[data-house="Targaryen"]) .house-profile-hero { background-image: url("../assets/generated/realms/targaryen-scene-v3.png") !important; }
+body:has(.house-profile-hero[data-house="Baratheon"]) .house-profile-hero { background-image: url("../assets/generated/realms/baratheon-scene-v3.png") !important; }
+body:has(.house-profile-hero[data-house="Greyjoy"]) .house-profile-hero { background-image: url("../assets/generated/realms/greyjoy-scene-v3.png") !important; }
+body:has(.house-profile-hero[data-house="Tyrell"]) .house-profile-hero { background-image: url("../assets/generated/realms/tyrell-scene-v3.png") !important; }
+body:has(.house-profile-hero[data-house="Tully"]) .house-profile-hero { background-image: url("../assets/generated/realms/tully-scene-v3.png") !important; }
+body:has(.house-profile-hero[data-house="Martell"]) .house-profile-hero { background-image: url("../assets/generated/realms/martell-scene-v3.png") !important; }
+body:has(.house-profile-hero[data-house="Arryn"]) .house-profile-hero { background-image: url("../assets/generated/realms/arryn-scene-v3.png") !important; }
+
+@media (max-width: 860px) {
+  body:has(.house-profile-hero) .house-profile-hero {
+    grid-template-columns: 76px minmax(0, 1fr) !important;
+    min-height: 420px;
+    padding: 118px 22px 42px !important;
+    gap: 18px;
+  }
+  body:has(.house-profile-hero) .house-profile-hero__heraldry { width: 76px; height: 76px; }
+  body:has(.house-profile-hero) .house-profile-hero .display { font-size: clamp(2.45rem, 10vw, 4.8rem); }
+  body:has(.house-profile-hero) .house-profile-hero > div:last-child > div:last-child { display: grid; gap: 7px !important; margin-top: 15px !important; }
+  body:has(.house-profile-hero) .house-tree-intro { display: block; }
+  body:has(.house-profile-hero) .house-tree-intro span { display: block; margin-top: 8px; }
+}
