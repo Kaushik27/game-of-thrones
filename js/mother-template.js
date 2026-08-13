@@ -90,7 +90,7 @@
 
   function heraldryFor(house) {
     const slug = String(house || "").toLowerCase().replace(/[^a-z]+/g, "-");
-    return `assets/generated/heraldry/${slug}.png`;
+    return `assets/generated/heraldry/${slug}.png?v=heraldry-2`;
   }
 
   function quoteFor(character) {

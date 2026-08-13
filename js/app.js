@@ -855,7 +855,7 @@ function viewHouses(app) {
       <span class="houses-card__wash" aria-hidden="true"></span>
       ${representativeArt}
       <span class="houses-card__index" aria-hidden="true">${String(houses.indexOf(h) + 1).padStart(2, "0")}</span>
-      <span class="houses-card__sigil"><img src="${escapeHTML(window.MotherTemplate?.heraldryFor?.(h) || `assets/generated/heraldry/${h.toLowerCase()}.png`)}" alt="" width="78" height="78" loading="lazy" decoding="async"></span>
+      <span class="houses-card__sigil"><img src="${escapeHTML(window.MotherTemplate?.heraldryFor?.(h) || `assets/generated/heraldry/${h.toLowerCase()}.png?v=heraldry-2`)}" alt="" width="78" height="78" loading="lazy" decoding="async"></span>
       <span class="houses-card__region">${escapeHTML(info.region)}</span>
       <h3>${escapeHTML(h)}</h3>
       ${representative ? `<span class="houses-card__representative">${escapeHTML(representative.name)} · representative study</span>` : ""}
