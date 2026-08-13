@@ -165,8 +165,8 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
 .voices-page, .voices-shell { background: transparent !important; }
 
 /* Realm Observatory home ----------------------------------------------- */
-.mother-observatory { width: 100%; min-height: calc(100svh - 82px); overflow: hidden; }
-.mother-hero { position: relative; min-height: calc(100svh - 82px); isolation: isolate; overflow: clip; background: linear-gradient(180deg, rgba(4,10,15,.08), rgba(3,8,12,.94)); }
+.mother-observatory { width: 100%; min-height: 100svh; overflow: hidden; }
+.mother-hero { position: relative; min-height: 100svh; isolation: isolate; overflow: clip; background: linear-gradient(180deg, rgba(4,10,15,.08), rgba(3,8,12,.94)); }
 .mother-hero__ambient { position: absolute; inset: 0; z-index: -2; background: radial-gradient(circle at 50% 42%, rgba(66, 91, 109, .2), transparent 46%), linear-gradient(180deg, rgba(3,8,12,.08), rgba(3,8,12,.72)); opacity: 0; pointer-events: none; }
 .mother-hero__ambient::after { position: absolute; inset: 0; content: ""; background: linear-gradient(90deg, rgba(3,8,12,.45), transparent 28%, transparent 72%, rgba(3,8,12,.5)), linear-gradient(180deg, rgba(3,8,12,.08), transparent 42%, rgba(3,8,12,.86) 100%); }
 .mother-hero__rings { display: none; position: absolute; z-index: -1; width: min(70vw, 900px); aspect-ratio: 1; left: 50%; top: 47%; transform: translate(-50%, -50%); border: 1px solid rgba(212,168,94,.17); border-radius: 50%; pointer-events: none; }
@@ -319,7 +319,7 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
   .react-nav-shell .brand { min-width: 0; }
   .react-nav-shell .brand-title { font-size: 1rem; }
   .react-nav-shell .nav-links { order: 4; }
-  .mother-hero { min-height: 780px; }
+  .mother-hero { min-height: 100svh; }
   .mother-hero__ambient { background-position: 58% 28%; }
   .mother-hero__portrait { inset: 0; width: 100%; height: 100%; }
   .mother-hero__copy { padding-top: 27vh; }
@@ -833,15 +833,17 @@ body:has(.mother-observatory) .mother-orbit-node__seal {
   box-shadow: none !important;
 }
 body:has(.mother-observatory) .mother-orbit-node__heraldry {
-  inset: -14% !important;
-  width: 128% !important;
-  height: 128% !important;
+  inset: -18% !important;
+  width: 136% !important;
+  height: 136% !important;
   max-width: none !important;
   object-fit: cover !important;
   object-position: center;
   transform: none !important;
   border-radius: 50%;
   mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(circle at center, #000 0 45%, rgba(0, 0, 0, .9) 51%, transparent 60%);
+  mask-image: radial-gradient(circle at center, #000 0 45%, rgba(0, 0, 0, .9) 51%, transparent 60%);
   filter: saturate(.9) contrast(1.14) brightness(.98) !important;
   opacity: 1;
 }
