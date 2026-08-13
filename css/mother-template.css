@@ -329,6 +329,7 @@ body #site-nav:has(.react-nav-shell) { display: block !important; visibility: vi
   .mother-hero__cta { top: 68%; width: min(70vw, 340px); height: 62px; }
   .mother-hero__meta { left: 50%; bottom: 28px; transform: translateX(-50%); width: max-content; gap: 12px; }
   .mother-orbit-node { width: 76px; height: 76px; }
+  body:has(.mother-observatory) .mother-orbit-node { width: 52px; height: 52px; }
   .mother-orbit-node__sigil, .mother-orbit-node__sigil .sigil-icon { width: 34px; height: 34px; }
   .mother-orbit-node__label { top: calc(100% + 10px); min-width: 86px; font-size: .46rem; }
   /* The nine medallions compress into one horizontal band on narrow screens.

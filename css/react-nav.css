@@ -120,6 +120,14 @@
   .react-nav-shell .nav-raven__label { display: none; }
 }
 
+@media (max-width: 600px) {
+  .react-nav-shell { flex-wrap: nowrap; min-height: 58px; padding: 8px 12px; }
+  .react-nav-shell .brand { min-width: 0; flex: 1 1 auto; }
+  .react-nav-shell .brand-title { min-width: 0; overflow: hidden; white-space: nowrap; }
+  .react-nav-shell .nav-raven { display: none; }
+  .react-nav-shell .nav-toggle { flex: 0 0 auto; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .react-nav-shell { animation: none; }
   .react-nav-shell .brand::after,
