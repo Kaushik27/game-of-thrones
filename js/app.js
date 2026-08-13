@@ -812,18 +812,25 @@ function viewHouses(app) {
   app.innerHTML = `
     <section class="houses-page" aria-labelledby="houses-title">
       <header class="houses-hero">
+        <div class="houses-hero__scene" aria-hidden="true">
+          <div class="houses-hero__scene-image"></div>
+          <div class="houses-hero__scene-vignette"></div>
+        </div>
         <div class="houses-hero__copy">
-          <p class="houses-eyebrow">The banners that outlived their kings</p>
-          <h1 id="houses-title">The realm<br><em>is inherited.</em></h1>
-          <p class="houses-hero__dek">Every sigil carries a promise. Every promise has a cost. Enter the houses as a living network of words, seats, bloodlines, and endings.</p>
+          <p class="houses-eyebrow">The capital remembers every banner</p>
+          <h1 id="houses-title">The houses<br><em>of Westeros.</em></h1>
+          <p class="houses-hero__dek">From the Red Keep to the Wall, every house carries a promise, a seat, and a price. Enter a dossier to see the bloodline behind the banner.</p>
           <div class="houses-hero__actions">
-            <a class="houses-hero__cta" href="#/house/Stark">Open House Stark <span aria-hidden="true">↗</span></a>
-            <span class="houses-hero__hint">Choose a banner to begin</span>
+            <a class="houses-hero__cta" href="#/house/Lannister">Open House Lannister <span aria-hidden="true">↗</span></a>
+            <span class="houses-hero__hint">Choose a dossier to begin</span>
           </div>
         </div>
-        <div class="houses-hero__sigils" aria-hidden="true">
-          ${houses.slice(0, 6).map((house, index) => `<span class="houses-hero__sigil houses-hero__sigil--${index + 1}" style="--house-accent:${HOUSE_COLORS[house]}">${sigilSVG(HOUSE_INFO[house].sigil, { size: 30 })}</span>`).join("")}
-        </div>
+        <aside class="houses-hero__feature" aria-label="King's Landing feature">
+          <p class="houses-eyebrow">King's Landing · The capital</p>
+          <h2>The Red Keep</h2>
+          <p>Where crowns are made, alliances are traded, and every corridor keeps a secret.</p>
+          <span>Capital archive · ${houses.length} banners</span>
+        </aside>
         <dl class="houses-hero__facts" aria-label="House directory summary">
           <div><dt>${houses.length}</dt><dd>banners</dd></div>
           <div><dt>${characters.length}</dt><dd>people indexed</dd></div>

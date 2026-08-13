@@ -66,3 +66,9 @@ Every route below was opened in the deployed site and captured at 375px, 768px, 
 - Prevented root realm medallion captions from colliding on small screens and reduced mobile node dimensions.
 - Kept the mobile navigation shell on one row and removed the nonessential raven action at narrow widths.
 - Bumped static stylesheet and navigation bundle cache keys so GitHub Pages serves the corrected CSS/JS.
+
+## Regional visual refresh
+
+- The Maps journey now uses distinct scenes for Winterfell, the Wall, King’s Landing, Meereen, and Beyond the Wall. The new Beyond the Wall scene is an original snowy wilderness asset designed for this project.
+- The Houses landing page now opens on a cinematic King’s Landing / Red Keep treatment with a focused feature panel; the orbiting sigil diagram has been removed.
+- Rechecked both routes at 375px, 768px, and 1440px: zero broken images, horizontal overflow, or browser console errors. Every map stop resolved to its intended regional background at all three widths.

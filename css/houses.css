@@ -155,3 +155,82 @@
   .houses-hero::before, .houses-hero__sigil { animation: none; }
   .houses-card, .houses-card.reveal { transform: none; transition-duration: .01ms; }
 }
+
+/* Cinematic house landing: the capital is the point of entry, not a diagram. */
+.houses-hero {
+  grid-template-columns: minmax(0, 1.08fr) minmax(270px, .72fr);
+  min-height: min(740px, 84svh);
+  padding-top: clamp(126px, 15vw, 196px);
+  background: #070d12;
+}
+.houses-hero__scene,
+.houses-hero__scene-image,
+.houses-hero__scene-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.houses-hero__scene { z-index: -2; overflow: hidden; }
+.houses-hero__scene-image {
+  background: url('../assets/ui/capital-journey-bg.jpg') center 42% / cover no-repeat;
+  filter: saturate(.8) contrast(1.12) brightness(.6);
+  transform: scale(1.045);
+  animation: houses-capital-drift 28s ease-in-out infinite alternate;
+}
+.houses-hero__scene-vignette {
+  background:
+    linear-gradient(90deg, rgba(4, 9, 14, .98) 0%, rgba(4, 9, 14, .78) 33%, rgba(4, 9, 14, .22) 72%, rgba(4, 9, 14, .76) 100%),
+    linear-gradient(180deg, rgba(4, 9, 14, .24), rgba(4, 9, 14, .12) 45%, rgba(4, 9, 14, .9));
+}
+.houses-hero__copy { max-width: 700px; }
+.houses-hero__feature {
+  align-self: center;
+  justify-self: end;
+  width: min(330px, 100%);
+  padding: 25px 24px 22px;
+  border: 1px solid rgba(211, 174, 97, .34);
+  border-left: 2px solid rgba(211, 174, 97, .76);
+  background: linear-gradient(145deg, rgba(7, 13, 18, .78), rgba(7, 11, 15, .44));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .34), inset 0 0 40px rgba(211, 174, 97, .04);
+  backdrop-filter: blur(4px);
+}
+.houses-hero__feature h2 {
+  margin: 13px 0 10px;
+  color: var(--houses-paper);
+  font: 500 clamp(1.9rem, 3vw, 3rem)/.95 'Cormorant Garamond', Georgia, serif;
+  letter-spacing: -.03em;
+}
+.houses-hero__feature p:not(.houses-eyebrow) {
+  margin: 0;
+  color: #d1ccc1;
+  font: italic 1.12rem/1.25 'Cormorant Garamond', Georgia, serif;
+}
+.houses-hero__feature > span {
+  display: block;
+  margin-top: 21px;
+  color: var(--houses-gold);
+  font-size: .59rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+.houses-hero__sigils { display: none; }
+@keyframes houses-capital-drift {
+  from { transform: scale(1.045) translate3d(-.6%, 0, 0); }
+  to { transform: scale(1.085) translate3d(.8%, -1%, 0); }
+}
+
+@media (max-width: 720px) {
+  .houses-hero { min-height: 780px; padding-top: 124px; }
+  .houses-hero__feature { width: min(100%, 360px); margin: 48px 0 24px; }
+  .houses-hero__scene-image { background-position: 62% center; }
+}
+
+@media (max-width: 460px) {
+  .houses-hero { min-height: 820px; }
+  .houses-hero__feature { margin-top: 42px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .houses-hero__scene-image { animation: none; }
+}

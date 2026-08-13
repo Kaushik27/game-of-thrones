@@ -39,10 +39,10 @@
   });
   const WORLD_STOPS = Object.freeze([
     { id: "winterfell", label: "Winterfell", region: "The North", image: "assets/ui/north-journey-bg.jpg", momentId: "ice-before-execution", quote: "The things we do for love.", story: "The road begins under a grey sky, where family is still a kind of power.", detail: "The Starks leave home and the realm starts to tilt.", href: "#/timeline?season=1&mode=consequences" },
-    { id: "the-wall", label: "The Wall", region: "The edge of the world", image: "assets/ui/north-journey-bg.jpg", momentId: "army-of-the-dead", quote: "The night is dark and full of terrors.", story: "North becomes a direction, then a duty, then a warning.", detail: "The last watch keeps its promise while the living look away.", href: "#/map?season=1" },
+    { id: "the-wall", label: "The Wall", region: "The edge of the world", image: "assets/ui/border-journey-bg.png", momentId: "army-of-the-dead", quote: "The night is dark and full of terrors.", story: "North becomes a direction, then a duty, then a warning.", detail: "The last watch keeps its promise while the living look away.", href: "#/map?season=1" },
     { id: "kings-landing", label: "King's Landing", region: "The capital", image: "assets/ui/capital-journey-bg.jpg", momentId: "tyrion-trial", quote: "When you play the game of thrones, you win or you die.", story: "Every corridor has a witness. Every crown has a price.", detail: "Power changes hands long before the throne moves.", href: "#/timeline?season=2&mode=power" },
     { id: "meereen", label: "Meereen", region: "Across the Narrow Sea", image: "assets/ui/essos-journey-bg.jpg", momentId: "fire-and-ash", quote: "I am not going to stop the wheel. I'm going to break the wheel.", story: "A queen crosses the world and discovers that liberation has an afterlife.", detail: "The city becomes a test of what conquest is meant to leave behind.", href: "#/character/daenerys-targaryen" },
-    { id: "beyond-the-wall", label: "Beyond the Wall", region: "The long night", image: "assets/ui/north-journey-bg.jpg", momentId: "hold-the-door", quote: "There is only one war that matters, the war between the living and the dead.", story: "The map falls away. The story becomes survival.", detail: "At the end of the road, the realm remembers what it was built to protect.", href: "#/timeline?season=8&mode=consequences" }
+    { id: "beyond-the-wall", label: "Beyond the Wall", region: "The long night", image: "assets/ui/beyond-the-wall-journey-bg.png", momentId: "hold-the-door", quote: "There is only one war that matters, the war between the living and the dead.", story: "The map falls away. The story becomes survival.", detail: "At the end of the road, the realm remembers what it was built to protect.", href: "#/timeline?season=8&mode=consequences" }
   ]);
 
   let nextInstanceId = 0;
@@ -444,13 +444,16 @@
       const stop = WORLD_STOPS[journeyStopIndex];
       const memory = Array.isArray(window.FAN_MOMENTS) ? window.FAN_MOMENTS.find(moment => moment.id === stop.momentId) : null;
       journeyStage.dataset.stop = stop.id;
-      journeyBackdrop.style.backgroundImage = `url("${memory && memory.image ? memory.image : stop.image}")`;
+      // The journey stop owns the regional atmosphere. Memory cards still
+      // supply the editorial quote and detail, but they must not collapse
+      // Winterfell, the Wall, and the frozen lands beyond it into one image.
+      journeyBackdrop.style.backgroundImage = `url("${stop.image}")`;
       journeyStory.innerHTML = `<p class="world-journey-film__chapter">Stop 0${journeyStopIndex + 1} · ${escapeMarkup(stop.region)}</p><h3>${escapeMarkup(stop.label)}</h3><blockquote>“${escapeMarkup(memory ? memory.line : stop.quote)}”</blockquote><p>${escapeMarkup(memory ? memory.fanNote : stop.story)}</p><small>${escapeMarkup(memory ? `${memory.title} · ${memory.consequence}` : stop.detail)}</small><a class="wa-link world-journey-film__link" href="${escapeMarkup(memory ? `#/quotes?quote=${memory.quoteId}` : stop.href)}" data-wa-nav="${escapeMarkup(memory ? `#/quotes?quote=${memory.quoteId}` : stop.href)}">Follow this moment <span aria-hidden="true">↗</span></a>`;
       wrapper.querySelectorAll("[data-world-stop]").forEach((button, buttonIndex) => button.setAttribute("aria-current", String(buttonIndex === journeyStopIndex)));
       if (announceStop) announce(`${stop.label} journey stop selected.`);
     }
 
-    if (typeof Image === "function") WORLD_STOPS.forEach(stop => { const image = new Image(); image.decoding = "async"; const memory = Array.isArray(window.FAN_MOMENTS) ? window.FAN_MOMENTS.find(moment => moment.id === stop.momentId) : null; image.src = memory && memory.image ? memory.image : stop.image; });
+    if (typeof Image === "function") WORLD_STOPS.forEach(stop => { const image = new Image(); image.decoding = "async"; image.src = stop.image; });
     function stopJourneyPlayback() {
       if (journeyTimer) window.clearInterval(journeyTimer);
       journeyTimer = 0;
