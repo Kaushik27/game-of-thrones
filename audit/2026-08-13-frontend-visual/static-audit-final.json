@@ -6,15 +6,7 @@
     "state": {
       "brokenImages": [],
       "horizontalOverflow": false,
-      "offscreenHorizontal": [
-        {
-          "cls": "mother-orbit-node mother-orbit-node--frost",
-          "left": 310,
-          "right": 388,
-          "tag": "BUTTON",
-          "text": "Select House Arryn"
-        }
-      ],
+      "offscreenHorizontal": [],
       "scrollWidth": 375,
       "text": "✦\nTHE RAVEN WALL\n/\nMENU\nCurrent section: Realms\n\nTHE RAVEN WALL · A FAN-MADE REALM\n\nTHE REALM OBSERVATORY\n\nTHE NORTH\nREM",
       "title": "Game of Thrones",
