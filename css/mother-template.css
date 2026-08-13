@@ -833,18 +833,16 @@ body:has(.mother-observatory) .mother-orbit-node__seal {
   box-shadow: none !important;
 }
 body:has(.mother-observatory) .mother-orbit-node__heraldry {
-  inset: -18% !important;
-  width: 136% !important;
-  height: 136% !important;
+  inset: -3% !important;
+  width: 106% !important;
+  height: 106% !important;
   max-width: none !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   object-position: center;
   transform: none !important;
   border-radius: 50%;
-  mix-blend-mode: screen;
-  -webkit-mask-image: radial-gradient(circle at center, #000 0 45%, rgba(0, 0, 0, .9) 51%, transparent 60%);
-  mask-image: radial-gradient(circle at center, #000 0 45%, rgba(0, 0, 0, .9) 51%, transparent 60%);
-  filter: saturate(.9) contrast(1.14) brightness(.98) !important;
+  mix-blend-mode: normal;
+  filter: saturate(.92) contrast(1.1) brightness(1.02) !important;
   opacity: 1;
 }
 body:has(.mother-observatory) .mother-orbit-node:hover,

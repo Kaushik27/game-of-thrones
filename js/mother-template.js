@@ -102,7 +102,11 @@
       "Free Folk": 'assets/generated/heraldry/free-folk.png',
       Unaffiliated: 'assets/generated/heraldry/unaffiliated.png'
     };
-    return `${fallback[house] || `assets/generated/heraldry/${slug}.png`}?v=heraldry-3`;
+    const hdHouses = new Set(['Stark', 'Lannister', 'Targaryen', 'Greyjoy', 'Tyrell', 'Tully', 'Baratheon', 'Martell', 'Arryn']);
+    const source = hdHouses.has(house)
+      ? `assets/generated/heraldry/hd/${slug}.png`
+      : (fallback[house] || `assets/generated/heraldry/${slug}.png`);
+    return `${source}?v=heraldry-hd-1`;
   }
 
   function quoteFor(character) {
@@ -123,6 +127,9 @@
         const preload = new Image();
         preload.decoding = "async";
         preload.src = entry.visual;
+        const medallion = new Image();
+        medallion.decoding = "async";
+        medallion.src = heraldryFor(entry.house);
       });
     }
     root.className = "mother-observatory";
@@ -137,7 +144,7 @@
             const dy = entry.position.y - 50;
             return `<span class="mother-connector mother-connector--${entry.position.tone}" style="--line-length:${Math.hypot(dx, dy)}%;--line-angle:${Math.atan2(dy, dx) * 180 / Math.PI}deg" aria-hidden="true"></span>`;
           }).join("")}
-          ${entries.map((entry, index) => `<button type="button" class="mother-orbit-node mother-orbit-node--${entry.position.tone}${index === 0 ? " is-active" : ""}" data-mother-house="${safe(entry.house)}" style="--node-x:${entry.position.x}%;--node-y:${entry.position.y}%;--house-accent:${safe(entry.color)}" aria-pressed="${index === 0}" aria-label="Select House ${safe(entry.house)}"><span class="mother-orbit-node__halo" aria-hidden="true"></span><span class="mother-orbit-node__seal"><img class="mother-orbit-node__heraldry" src="${heraldryFor(entry.house)}" alt="" width="128" height="128" loading="lazy" decoding="async"><span class="mother-orbit-node__seal-mark" aria-hidden="true"></span></span><span class="mother-orbit-node__label">${safe(entry.house)}</span><span class="mother-orbit-node__motto">${safe(entry.info.words)}</span></button>`).join("")}
+          ${entries.map((entry, index) => `<button type="button" class="mother-orbit-node mother-orbit-node--${entry.position.tone}${index === 0 ? " is-active" : ""}" data-mother-house="${safe(entry.house)}" style="--node-x:${entry.position.x}%;--node-y:${entry.position.y}%;--house-accent:${safe(entry.color)}" aria-pressed="${index === 0}" aria-label="Select House ${safe(entry.house)}"><span class="mother-orbit-node__halo" aria-hidden="true"></span><span class="mother-orbit-node__seal"><img class="mother-orbit-node__heraldry" src="${heraldryFor(entry.house)}" alt="" width="128" height="128" loading="eager" decoding="async"><span class="mother-orbit-node__seal-mark" aria-hidden="true"></span></span><span class="mother-orbit-node__label">${safe(entry.house)}</span><span class="mother-orbit-node__motto">${safe(entry.info.words)}</span></button>`).join("")}
         </div>
         <div class="mother-hero__copy">
           <p class="mother-eyebrow">The Raven Wall · a fan-made realm</p>
