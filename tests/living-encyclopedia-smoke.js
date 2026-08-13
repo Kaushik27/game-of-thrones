@@ -171,7 +171,7 @@ assert.ok(scripts.indexOf("js/fan-moments.js") < scripts.indexOf("js/app.js"), "
 assert.ok(scripts.indexOf("js/raven-wall.js") < scripts.indexOf("js/app.js"), "Memory Wall must load before the router");
 assert.ok(scripts.indexOf("js/global-atmosphere.js") < scripts.indexOf("js/app.js"), "atmosphere must load before route rendering");
 assert.ok(indexSource.includes("css/realm-shell.css?v=realm-shell-4"), "shared realm shell must load in the static entrypoint");
-assert.ok(indexSource.includes("css/houses.css?v=houses-2"), "houses styling must load in the static entrypoint");
+assert.ok(indexSource.includes("css/houses.css?v=houses-3"), "houses styling must load in the static entrypoint");
 assert.ok(indexSource.includes("css/what-if.css?v=what-if-1"), "what-if styling must load in the static entrypoint");
 assert.ok(indexSource.includes("css/maesters-desk.css?v=maesters-desk-1"), "maesters desk styling must load in the static entrypoint");
 assert.ok(scripts.indexOf("js/what-if-data.js") < scripts.indexOf("js/what-if.js"), "what-if data must load before its module");

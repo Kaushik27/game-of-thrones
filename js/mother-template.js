@@ -88,6 +88,11 @@
     return typeof sigilSVG === "function" ? sigilSVG(info?.sigil || "none", { size: size || 52 }) : "";
   }
 
+  function heraldryFor(house) {
+    const slug = String(house || "").toLowerCase().replace(/[^a-z]+/g, "-");
+    return `assets/generated/heraldry/${slug}.png`;
+  }
+
   function quoteFor(character) {
     const quoteData = typeof quotes !== "undefined" && Array.isArray(quotes) ? quotes : [];
     const match = quoteData.find(quote => quote.characterId === character?.id) || quoteData.find(quote => /shield that guards/i.test(quote.text || ""));
@@ -112,7 +117,7 @@
             const dy = entry.position.y - 50;
             return `<span class="mother-connector mother-connector--${entry.position.tone}" style="--line-length:${Math.hypot(dx, dy)}%;--line-angle:${Math.atan2(dy, dx) * 180 / Math.PI}deg" aria-hidden="true"></span>`;
           }).join("")}
-          ${entries.map((entry, index) => `<button type="button" class="mother-orbit-node mother-orbit-node--${entry.position.tone}${index === 0 ? " is-active" : ""}" data-mother-house="${safe(entry.house)}" style="--node-x:${entry.position.x}%;--node-y:${entry.position.y}%;--house-accent:${safe(entry.color)}" aria-pressed="${index === 0}" aria-label="Select House ${safe(entry.house)}"><span class="mother-orbit-node__halo" aria-hidden="true"></span><span class="mother-orbit-node__seal"><span class="mother-orbit-node__sigil">${sigilFor(entry.house, 42)}</span><span class="mother-orbit-node__seal-mark" aria-hidden="true"></span></span><span class="mother-orbit-node__label">${safe(entry.house)}</span><span class="mother-orbit-node__motto">${safe(entry.info.words)}</span></button>`).join("")}
+          ${entries.map((entry, index) => `<button type="button" class="mother-orbit-node mother-orbit-node--${entry.position.tone}${index === 0 ? " is-active" : ""}" data-mother-house="${safe(entry.house)}" style="--node-x:${entry.position.x}%;--node-y:${entry.position.y}%;--house-accent:${safe(entry.color)}" aria-pressed="${index === 0}" aria-label="Select House ${safe(entry.house)}"><span class="mother-orbit-node__halo" aria-hidden="true"></span><span class="mother-orbit-node__seal"><img class="mother-orbit-node__heraldry" src="${heraldryFor(entry.house)}" alt="" width="128" height="128" loading="lazy" decoding="async"><span class="mother-orbit-node__seal-mark" aria-hidden="true"></span></span><span class="mother-orbit-node__label">${safe(entry.house)}</span><span class="mother-orbit-node__motto">${safe(entry.info.words)}</span></button>`).join("")}
           <button type="button" class="mother-rail-arrow mother-rail-arrow--next" data-mother-step="1" aria-label="Next house">›</button>
         </div>
         <div class="mother-hero__copy">
@@ -202,5 +207,5 @@
     "gendry-baratheon": "assets/generated/baratheon-realm-wide-v2.png",
     "margaery-tyrell": "assets/generated/tyrell-realm-wide-v2.png"
   });
-  global.MotherTemplate = Object.freeze({ mountHome, installRail, houseEntries });
+  global.MotherTemplate = Object.freeze({ mountHome, installRail, houseEntries, heraldryFor });
 })(window, document);
