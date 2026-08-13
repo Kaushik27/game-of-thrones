@@ -8,6 +8,10 @@ The new `/app/` observatory was verified locally against the Spring Boot service
 
 Presentation-only map labels and marker coordinates are local visual metadata; house facts, counts, characters, events, and records are loaded through REST from H2/Flyway.
 
+## Hosted route regression check — 2026-08-13
+
+The hosted `/app/` route and all eight child routes were opened directly on Render. Each rendered its expected heading/content, none fell through to the 404 route, and the browser reported no console errors. House selection, map-style URL state, command palette navigation, and character deep links worked. A first pass exposed the fixed status bar overlapping the dashboard timeline play control; application content now reserves the status-bar height so the play button remains clickable.
+
 ## Findings
 
 No actionable P0, P1, or P2 visual, responsive, interaction, or accessibility findings remain.
