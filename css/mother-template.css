@@ -468,6 +468,107 @@ body:has(.mother-observatory) .mother-rail-arrow { display: none !important; }
 body:has(.mother-observatory) .mother-rail__raven { border-color: rgba(197, 166, 108, .55); background: linear-gradient(145deg, #30302b, #0b0d0d); box-shadow: inset 0 0 0 4px rgba(0, 0, 0, .4); }
 body:has(.mother-observatory) .mother-rail__raven .sigil-icon { width: 22px; height: 22px; color: #d6c497; }
 
+/* ------------------------------------------------------------------------
+   Visual QA correction: the source medallions already contain their own
+   engraved rim. Scale them inside the transparent control so the source
+   canvas cannot read as a second black plate. The control remains the
+   keyboard/focus target; only the artwork is cropped to the coin edge.
+   ------------------------------------------------------------------------ */
+body:has(.mother-observatory) .mother-orbit-node__seal {
+  overflow: hidden;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: none;
+}
+body:has(.mother-observatory) .mother-orbit-node__heraldry {
+  inset: -9%;
+  width: 118%;
+  height: 118%;
+  max-width: none;
+  object-fit: cover;
+  border-radius: 50%;
+  filter: saturate(.86) contrast(1.12) brightness(.88);
+  mix-blend-mode: screen;
+  opacity: 1;
+}
+body:has(.mother-observatory) .mother-orbit-node:hover .mother-orbit-node__heraldry,
+body:has(.mother-observatory) .mother-orbit-node:focus-visible .mother-orbit-node__heraldry,
+body:has(.mother-observatory) .mother-orbit-node.is-active .mother-orbit-node__heraldry {
+  filter: saturate(.92) contrast(1.16) brightness(1.04) drop-shadow(0 0 14px color-mix(in srgb, var(--house-accent) 38%, transparent));
+}
+
+/* A hairline-and-diamond gate lets the wallpaper continue behind the CTA;
+   the action still has a clear hit area and a stronger royal silhouette. */
+body:has(.mother-observatory) .mother-hero__cta {
+  width: min(32vw, 390px);
+  height: 76px;
+  border: 0;
+  clip-path: none;
+  background: transparent;
+  box-shadow: none;
+}
+body:has(.mother-observatory) .mother-hero__cta::before {
+  inset: 13px 0;
+  border: 0;
+  border-top: 1px solid rgba(238, 217, 169, .82);
+  border-bottom: 1px solid rgba(238, 217, 169, .82);
+  background: linear-gradient(90deg, transparent, rgba(212, 168, 94, .08) 18%, rgba(212, 168, 94, .08) 82%, transparent);
+  clip-path: polygon(0 18px, 18px 0, calc(100% - 18px) 0, 100% 18px, 100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%, 0 calc(100% - 18px));
+}
+body:has(.mother-observatory) .mother-hero__cta::after {
+  bottom: 1px;
+  padding: 0 7px;
+  background: transparent;
+  color: var(--mother-gold-soft);
+  font-size: .52rem;
+}
+body:has(.mother-observatory) .mother-hero__cta:hover {
+  background: linear-gradient(90deg, transparent, rgba(212, 168, 94, .08), transparent);
+  box-shadow: none;
+}
+
+/* House dossiers use the same coin treatment as the realm rail. */
+.house-profile-hero {
+  grid-template-columns: 144px minmax(0, 1fr) !important;
+}
+.house-profile-hero__heraldry {
+  display: grid;
+  width: 136px;
+  height: 136px;
+  place-items: center;
+  overflow: hidden;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, .42);
+  transform: none;
+}
+.house-profile-hero__heraldry::before { display: none; }
+.house-profile-hero__heraldry img {
+  display: block;
+  width: 118%;
+  height: 118%;
+  max-width: none;
+  transform: translate(-9%, -9%);
+  object-fit: cover;
+  border-radius: 50%;
+  filter: saturate(.86) contrast(1.12) brightness(.92);
+  mix-blend-mode: screen;
+}
+
+.house-profile-hero__heraldry img[src*="night-watch"],
+.house-profile-hero__heraldry img[src*="free-folk"],
+.house-profile-hero__heraldry img[src*="unaffiliated"] {
+  mix-blend-mode: multiply;
+}
+
+@media (max-width: 860px) {
+  .house-profile-hero { grid-template-columns: 96px minmax(0, 1fr) !important; }
+  .house-profile-hero > #house-sigil-big { width: 92px !important; height: 92px !important; }
+  .house-profile-hero__heraldry img { width: 118%; height: 118%; transform: translate(-9%, -9%); }
+}
+
 @media (max-width: 860px) {
   body:has(.mother-observatory) .react-nav-shell { position: absolute; min-height: 70px; }
   #tree-host { min-height: 460px; }
