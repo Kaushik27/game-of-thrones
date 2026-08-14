@@ -1217,37 +1217,54 @@ body.realm-route .raven-wall__eyebrow { color: var(--mother-gold-soft) !importan
    while the shared shell keeps the same ink/bronze reading contrast. */
 body[data-route="/history"]::before,
 body[data-route="/chronicle"]::before {
-  background-image: linear-gradient(115deg, rgba(2, 8, 12, .88), rgba(2, 8, 12, .48)), url("../assets/generated/routes/history-wallpaper.png");
+  background-image: linear-gradient(115deg, rgba(2, 8, 12, .88), rgba(2, 8, 12, .48)), url("../assets/generated/routes/history-wallpaper-v2.png");
 }
 body[data-route="/chronicles"]::before,
 body[data-route="/timeline"]::before {
-  background-image: linear-gradient(115deg, rgba(2, 8, 12, .9), rgba(2, 8, 12, .5)), url("../assets/generated/routes/chronicles-wallpaper.png");
+  background-image: linear-gradient(115deg, rgba(2, 8, 12, .9), rgba(2, 8, 12, .5)), url("../assets/generated/routes/chronicles-wallpaper-v2.png");
 }
 body[data-route="/map"]::before,
 body[data-route="/maps"]::before {
-  background-image: linear-gradient(115deg, rgba(2, 8, 12, .88), rgba(2, 8, 12, .48)), url("../assets/generated/routes/maps-wallpaper.png");
+  background-image: linear-gradient(115deg, rgba(2, 8, 12, .88), rgba(2, 8, 12, .48)), url("../assets/generated/routes/maps-wallpaper-v2.png");
+}
+body[data-route="/citadel"]::before {
+  background-image: linear-gradient(115deg, rgba(2, 8, 12, .9), rgba(2, 8, 12, .48)), url("../assets/generated/routes/citadel-wallpaper-v2.png");
 }
 body[data-route="/lore"]::before {
   background-image: linear-gradient(115deg, rgba(2, 8, 12, .9), rgba(2, 8, 12, .48)), url("../assets/generated/routes/lore-wallpaper.png");
 }
 body[data-route="/history"] .realm-chronicle__hero,
 body[data-route="/chronicle"] .realm-chronicle__hero {
-  background-image: linear-gradient(90deg, rgba(4, 12, 18, .88), rgba(7, 16, 23, .54)), url("../assets/generated/routes/history-wallpaper.png") !important;
+  background-image: linear-gradient(90deg, rgba(4, 12, 18, .88), rgba(7, 16, 23, .54)), url("../assets/generated/routes/history-wallpaper-v2.png") !important;
   background-position: center !important;
 }
 body[data-route="/chronicles"] .story-atlas__hero {
-  background-image: linear-gradient(90deg, rgba(4, 12, 18, .9), rgba(7, 16, 23, .54)), url("../assets/generated/routes/chronicles-wallpaper.png") !important;
+  background-image: linear-gradient(90deg, rgba(4, 12, 18, .9), rgba(7, 16, 23, .54)), url("../assets/generated/routes/chronicles-wallpaper-v2.png") !important;
   background-position: center !important;
 }
-body[data-route="/chronicles"] .raven-wall {
-  background-image: linear-gradient(180deg, rgba(4, 10, 15, .72), rgba(4, 10, 15, .9)), url("../assets/generated/routes/chronicles-wallpaper.png") !important;
+body[data-route="/chronicles"] .raven-wall,
+body[data-route="/timeline"] .raven-wall {
+  background-image: linear-gradient(180deg, rgba(4, 10, 15, .72), rgba(4, 10, 15, .9)), url("../assets/generated/routes/chronicles-wallpaper-v2.png") !important;
   background-position: center !important;
   background-size: cover !important;
 }
 body[data-route="/map"] .wa-hero,
 body[data-route="/maps"] .wa-hero {
-  background-image: linear-gradient(90deg, rgba(4, 12, 18, .84), rgba(7, 16, 23, .48)), url("../assets/generated/routes/maps-wallpaper.png") !important;
+  background-image: linear-gradient(90deg, rgba(4, 12, 18, .72), rgba(7, 16, 23, .32)), url("../assets/generated/routes/maps-wallpaper-v2.png") !important;
   background-position: center !important;
+}
+body[data-route="/citadel"] .citadel-records {
+  background-image: linear-gradient(180deg, rgba(3, 8, 11, .48), rgba(3, 8, 11, .76)), url("../assets/generated/routes/citadel-wallpaper-v2.png");
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+}
+body[data-route="/citadel"] .citadel-records::before {
+  background-image: none;
+  opacity: 0;
+}
+body[data-route="/citadel"] .citadel-records::after {
+  background: linear-gradient(180deg, rgba(3, 7, 9, .08), rgba(3, 7, 9, .56) 76%), radial-gradient(circle at 50% 25%, transparent 0 30%, rgba(0, 0, 0, .28) 82%);
 }
 body[data-route="/lore"] .lore-library__hero {
   background-image: linear-gradient(90deg, rgba(4, 12, 18, .88), rgba(7, 16, 23, .5)), url("../assets/generated/routes/lore-wallpaper.png") !important;
@@ -1256,9 +1273,11 @@ body[data-route="/lore"] .lore-library__hero {
 body[data-route="/history"] .realm-chronicle__hero,
 body[data-route="/chronicle"] .realm-chronicle__hero,
 body[data-route="/chronicles"] .story-atlas__hero,
+body[data-route="/timeline"] .story-atlas__hero,
 body[data-route="/map"] .wa-hero,
 body[data-route="/maps"] .wa-hero,
-body[data-route="/lore"] .lore-library__hero {
+body[data-route="/lore"] .lore-library__hero,
+body[data-route="/citadel"] .citadel-hero {
   min-height: clamp(360px, 46vw, 620px);
   border-color: rgba(238, 217, 169, .28) !important;
 }
@@ -1296,12 +1315,12 @@ body:has(.house-profile-hero) .house-profile-hero__portrait {
   opacity: 1 !important;
   transform: none !important;
   transform-origin: center;
-  background-position: center top !important;
-  background-size: cover !important;
+  background-position: 64% top !important;
+  background-size: 108% auto !important;
   background-repeat: no-repeat !important;
   mask-image: none !important;
   mix-blend-mode: normal !important;
-  filter: saturate(.9) contrast(1.05) brightness(.86);
+  filter: saturate(.94) contrast(1.06) brightness(.94);
 }
 body:has(.house-profile-hero) .house-profile-hero__portrait--photo {
   inset: auto 0 0 auto !important;
@@ -1343,6 +1362,20 @@ body:has(.house-profile-hero) .house-profile-hero .display {
   text-shadow: 0 8px 36px rgba(0,0,0,.88), 0 0 24px rgba(3,8,12,.72);
 }
 
+/* House title accents stay within the antique bronze palette while retaining
+   a distinct heraldic cue. The Tyrell treatment is intentionally olive-gold
+   rather than saturated green so it reads against the cinematic scene. */
+body:has(.house-profile-hero[data-house="Tyrell"]) .house-profile-hero .display,
+body:has(.house-profile-hero[data-house="Tyrell"]) .house-profile-hero .script-accent { color: #c4b96b !important; }
+body:has(.house-profile-hero[data-house="Stark"]) .house-profile-hero .display { color: #d7dde2 !important; }
+body:has(.house-profile-hero[data-house="Lannister"]) .house-profile-hero .display { color: #d6ad5e !important; }
+body:has(.house-profile-hero[data-house="Targaryen"]) .house-profile-hero .display { color: #c77a70 !important; }
+body:has(.house-profile-hero[data-house="Greyjoy"]) .house-profile-hero .display { color: #9fb3b5 !important; }
+body:has(.house-profile-hero[data-house="Tully"]) .house-profile-hero .display { color: #a9c1d6 !important; }
+body:has(.house-profile-hero[data-house="Baratheon"]) .house-profile-hero .display { color: #d7b96c !important; }
+body:has(.house-profile-hero[data-house="Martell"]) .house-profile-hero .display { color: #e0a16c !important; }
+body:has(.house-profile-hero[data-house="Arryn"]) .house-profile-hero .display { color: #c2d3df !important; }
+
 /* Bloodline board: generation rails and compact dossier cards keep the graph
    readable at its first paint while preserving D3 zoom and keyboard links. */
 body:has(.house-profile-hero) #tree-host .tree-generation {
@@ -1368,8 +1401,8 @@ body:has(.house-profile-hero) #tree-host .cross-link { stroke-dasharray: 4 5; op
     padding: 110px 22px 42px !important;
   }
   body:has(.house-profile-hero) .house-profile-hero__portrait {
-    opacity: .82 !important;
-    background-size: auto 100% !important;
+    opacity: .9 !important;
+    background-size: auto 104% !important;
     background-position: 78% top !important;
   }
   body:has(.house-profile-hero) .house-profile-hero > div:last-child {
