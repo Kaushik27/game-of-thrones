@@ -32,6 +32,14 @@ const APP_ROUTES = [
 
 let activeViewHandle = null;
 
+if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
+
+function resetRouteScroll() {
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}
+
 function registerActiveView(handle) {
   if (!handle || typeof handle.destroy !== "function") return;
   activeViewHandle = handle;
@@ -69,10 +77,13 @@ function router() {
     const m = path.match(route.pattern);
     if (m) {
       recordEngagement("route_view", { path, query: query.toString() });
-      window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+      resetRouteScroll();
       route.view(app, m.slice(1), query);
       renderNav();
       observeReveals(app);
+      // A route can focus its first control while mounting; reset again after
+      // that paint so browser restoration cannot strand the view below nav.
+      requestAnimationFrame(resetRouteScroll);
       return;
     }
   }

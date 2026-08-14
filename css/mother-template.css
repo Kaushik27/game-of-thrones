@@ -1620,3 +1620,32 @@ body:has(.house-profile-hero[data-house]) .house-profile-hero__portrait {
   }
   body:has(.house-profile-hero) .house-profile-hero::before { background:linear-gradient(90deg, rgba(3,8,12,.96) 0%, rgba(3,8,12,.82) 42%, rgba(3,8,12,.38) 100%), linear-gradient(180deg, rgba(3,8,12,.3), transparent 54%, rgba(3,8,12,.9) 100%) !important; }
 }
+
+/* Final visual guardrails -------------------------------------------------
+   Keep the observatory inside the first viewport after the shared header so
+   its heraldic rail is never clipped at the fold. Profile plates use a top
+   camera anchor: the generated artwork can lose the lower body, but a face
+   must never disappear above the frame. */
+body:has(.mother-observatory) .mother-observatory,
+body:has(.mother-observatory) .mother-hero,
+body:has(.mother-observatory) #app {
+  min-height: calc(100svh - 87px) !important;
+}
+body:has(.mother-observatory) .mother-hero {
+  height: calc(100svh - 87px);
+  overflow: hidden;
+}
+body:has(.house-profile-hero[data-house]) .house-profile-hero__portrait {
+  background-position: var(--portrait-x) top !important;
+}
+@media (max-width: 860px) {
+  body:has(.mother-observatory) .mother-observatory,
+  body:has(.mother-observatory) .mother-hero,
+  body:has(.mother-observatory) #app {
+    min-height: calc(100svh - 70px) !important;
+  }
+  body:has(.mother-observatory) .mother-hero { height: calc(100svh - 70px); }
+  body:has(.house-profile-hero[data-house]) .house-profile-hero__portrait {
+    background-position: var(--portrait-mobile-x) top !important;
+  }
+}
