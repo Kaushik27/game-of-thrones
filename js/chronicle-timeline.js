@@ -152,7 +152,13 @@
               <h1 id="chronicle-title">The Realm<br><em>remembers.</em></h1>
               <p class="realm-chronicle__dek">A living timeline of the fires, promises, and betrayals that made Westeros feel older than any one king.</p>
             </div>
-            <div class="realm-chronicle__hero-mark" aria-hidden="true"><span>AC</span><strong>01</strong><small>the first<br>page</small></div>
+            <figure class="realm-chronicle__hero-visual">
+              <img src="assets/generated/routes/chronicles-wallpaper-v2.png" alt="A candlelit chronicle table beneath a storm-dark sky" fetchpriority="high">
+              <span class="realm-chronicle__hero-visual-veil" aria-hidden="true"></span>
+              <span class="realm-chronicle__hero-visual-label">THE LONG MEMORY · 01</span>
+              <span class="realm-chronicle__hero-mark" aria-hidden="true"><span>AC</span><strong>01</strong><small>the first<br>page</small></span>
+              <figcaption>Read the realm as a living record.</figcaption>
+            </figure>
             <dl class="realm-chronicle__facts" aria-label="Chronicle summary"><div><dt>${records.length}</dt><dd>kept moments</dd></div><div><dt>8k+</dt><dd>years of memory</dd></div><div><dt>1</dt><dd>realm in pieces</dd></div></dl>
           </header>
           <div class="realm-chronicle__toolbar" aria-label="Chronicle filters">

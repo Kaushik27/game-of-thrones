@@ -196,7 +196,7 @@ assert.ok(scripts.indexOf("js/lore-data.js") < scripts.indexOf("js/lore-library.
 assert.ok(scripts.indexOf("js/story-atlas.js") < scripts.indexOf("js/app.js"), "feature modules must load before the router");
 assert.ok(scripts.indexOf("js/chronicle-data.js") < scripts.indexOf("js/chronicle-timeline.js"), "chronicle data must load before the module");
 assert.ok(scripts.indexOf("js/chronicle-timeline.js") < scripts.indexOf("js/app.js"), "chronicle module must load before the router");
-assert.ok(indexSource.includes("css/realm-chronicle.css?v=realm-chronicle-2"), "chronicle styling must load in the static entrypoint");
+assert.ok(indexSource.includes("css/realm-chronicle.css?v=realm-chronicle-3"), "chronicle styling must load in the static entrypoint");
 assert.ok(indexSource.includes("css/citadel-records.css"), "Citadel styling must load in the static entrypoint");
 assert.ok(scripts.indexOf("js/citadel-records-data.js") < scripts.indexOf("js/citadel-records.js"), "Citadel assets must load in dependency order");
 

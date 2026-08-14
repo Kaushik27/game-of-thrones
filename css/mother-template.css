@@ -1307,7 +1307,7 @@ body:has(.house-profile-hero) .house-profile-hero__portrait {
   z-index: -1 !important;
   width: auto !important;
   opacity: 1 !important;
-  background-position: var(--portrait-x) top !important;
+  background-position: var(--portrait-x) bottom !important;
   background-size: auto var(--portrait-scale) !important;
   background-repeat: no-repeat !important;
   mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, .2) 12%, rgba(0, 0, 0, .86) 31%, #000 48%, #000 100%) !important;
@@ -1340,7 +1340,7 @@ body[data-route="/citadel"] .citadel-records { background-image: linear-gradient
   body:has(.house-profile-hero) .house-profile-hero__portrait {
     inset: 0 !important;
     width: 100% !important;
-    background-position: var(--portrait-mobile-x) top !important;
+    background-position: var(--portrait-mobile-x) bottom !important;
     background-size: auto var(--portrait-mobile-scale) !important;
     mask-image: linear-gradient(90deg, rgba(0, 0, 0, .8) 0%, rgba(0, 0, 0, .76) 34%, rgba(0, 0, 0, .42) 64%, rgba(0, 0, 0, .92) 100%) !important;
     opacity: .72 !important;
@@ -1562,6 +1562,57 @@ body[data-route="/chronicles"] .raven-wall { background-image:linear-gradient(18
 body[data-route="/map"] .wa-hero,
 body[data-route="/maps"] .wa-hero { background-image:linear-gradient(90deg, rgba(4,12,18,.64), rgba(7,16,23,.22)), url("../assets/generated/routes/maps-wallpaper-v2.png") !important; }
 body[data-route="/citadel"] .citadel-records { background-image:linear-gradient(180deg, rgba(3,8,11,.36), rgba(3,8,11,.68)), url("../assets/generated/routes/citadel-wallpaper-v2.png") !important; }
+
+/* One navigation contract: every public route uses the same Raven Wall bar.
+   Route modules may own their hero, but they must not turn the header into a
+   floating, transparent, or differently sized application shell. */
+#site-nav,
+#site-nav:has(.react-nav-shell),
+body.realm-journey-route #site-nav,
+body.realm-journey-route:not(.realm-journey-route--started) #site-nav,
+body.realm-journey-route.realm-journey-route--started #site-nav {
+  position: sticky !important;
+  inset: auto 0 auto !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
+  pointer-events: auto !important;
+  background: linear-gradient(180deg, rgba(3, 8, 12, .96), rgba(3, 8, 12, .88)) !important;
+  border-bottom: 1px solid rgba(212, 168, 94, .24) !important;
+  box-shadow: 0 14px 38px rgba(0, 0, 0, .22) !important;
+  backdrop-filter: blur(12px) saturate(1.08) !important;
+}
+#site-nav .react-nav-shell {
+  position: relative !important;
+  min-height: 70px !important;
+  background: transparent !important;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+/* Canonical portrait stage: every house uses the same right-hand gate and
+   height, while source-specific scale is calibrated to the subject's framing
+   so a tall full-body plate and a distant balcony portrait read uniformly. */
+body:has(.house-profile-hero[data-house]) .house-profile-hero__portrait {
+  inset: 0 0 0 44% !important;
+  width: auto !important;
+  height: 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: var(--portrait-x) bottom !important;
+  background-size: auto var(--portrait-scale) !important;
+}
+@media (max-width: 860px) {
+  body:has(.house-profile-hero[data-house]) .house-profile-hero__portrait {
+    inset: 0 !important;
+    width: 100% !important;
+    background-position: var(--portrait-mobile-x) bottom !important;
+    background-size: auto var(--portrait-mobile-scale) !important;
+  }
+}
 @media (max-width:860px) {
   body:has(.house-profile-hero) .house-profile-hero__portrait {
     inset:0 !important; width:100% !important; opacity:.72 !important; background-position:var(--portrait-mobile-x) top !important; background-size:auto var(--portrait-mobile-scale) !important;

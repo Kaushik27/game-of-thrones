@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 const LINKS = [
   { href: "#/", label: "Realms", matches: ["#/"] },
   { href: "#/houses", label: "Houses", matches: ["#/houses", "#/house/", "#/characters", "#/character/"] },
-  { href: "#/chronicle", label: "History", matches: ["#/chronicle"] },
+  { href: "#/chronicle", label: "Chronicle", matches: ["#/chronicle", "#/history"] },
   { href: "#/timeline", label: "Chronicles", section: "chronicles" },
   { href: "#/citadel", label: "Citadel", matches: ["#/citadel"] },
   { href: "#/map", label: "Maps", matches: ["#/map", "#/maps"] },
