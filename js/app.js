@@ -894,14 +894,33 @@ function viewHouse(app, params) {
 
   const members = charactersByHouse(houseName);
   const evs = eventsForHouse(houseName);
-  const representative = window.MotherTemplate?.houseEntries?.().find(entry => entry.house === houseName)?.character || members[0] || null;
-  const representativeVisual = representative ? (window.MOTHER_VISUALS?.[representative.id] || cinematicVisualFor(representative.id)) : "";
+  const representativeIds = {
+    Stark: "jon-snow", Lannister: "tyrion-lannister", Targaryen: "daenerys-targaryen",
+    Greyjoy: "theon-greyjoy", Tyrell: "margaery-tyrell", Tully: "edmure-tully",
+    Baratheon: "gendry-baratheon", Martell: "doran-martell", Arryn: "robin-arryn"
+  };
+  const profileVisuals = {
+    Stark: "assets/generated/northern-guardian-wide.png",
+    Lannister: "assets/generated/tyrion-lannister-wide.png",
+    Targaryen: "assets/generated/targaryen-realm-wide-v2.png",
+    Greyjoy: "assets/generated/greyjoy-realm-wide-v2.png",
+    Tyrell: "assets/generated/tyrell-realm-wide-v2.png",
+    Baratheon: "assets/generated/baratheon-realm-wide-v2.png",
+    Tully: "assets/generated/tully-realm-wide-v3.png",
+    Martell: "assets/generated/martell-realm-wide-v3.png",
+    Arryn: "assets/generated/arryn-realm-wide-v3.png"
+  };
+  const representative = getCharacter(representativeIds[houseName]) || members[0] || null;
+  const representativePhoto = representative && typeof actorPhotoFor === "function" ? actorPhotoFor(representative.id) : null;
+  const wideVisual = profileVisuals[houseName] || (representative && (window.MOTHER_VISUALS?.[representative.id] || cinematicVisualFor(representative.id)));
+  const representativeVisual = representative ? (wideVisual || representativePhoto?.file || "") : "";
+  const representativeVisualClass = wideVisual ? "" : (representativePhoto?.file ? " house-profile-hero__portrait--photo" : "");
 
   app.innerHTML = `
     <div class="page-wrap">
       <div id="house-header" class="hero illustrated ambient-glow house-profile-hero" data-house="${escapeHTML(houseName)}" style="--glow-color:${color};">
         <div class="hero-scene">${houseSceneSVG(color, info.sigil)}</div>
-        ${representativeVisual ? `<div class="house-profile-hero__portrait" aria-hidden="true" style="background-image:linear-gradient(90deg, rgba(5,10,15,.98), rgba(5,10,15,.28)),url('${escapeHTML(representativeVisual)}')"></div>` : ""}
+        ${representativeVisual ? `<div class="house-profile-hero__portrait${representativeVisualClass}" aria-hidden="true" style="background-image:url('${escapeHTML(representativeVisual)}')"></div>` : ""}
         <div id="house-sigil-big" class="house-profile-hero__heraldry" style="--house-accent:${color};"><img src="${escapeHTML(window.MotherTemplate?.heraldryFor?.(houseName) || `assets/generated/heraldry/${houseName.toLowerCase()}.png?v=heraldry-2`)}" alt="${escapeHTML(houseName)} heraldic medallion" width="128" height="128" loading="eager" decoding="async"></div>
         <div>
           <p class="house-profile-hero__eyebrow">A banner, a bloodline, a cost</p>
@@ -1013,6 +1032,7 @@ function renderFamilyTree(houseName, color) {
   }
   const root = d3.hierarchy(hierarchy);
   const hostWidth = host.clientWidth || 900, hostHeight = host.clientHeight || 560;
+  const compactViewport = hostWidth < 600;
   const svg = d3.select(host).append("svg").attr("width", "100%").attr("height", "100%").attr("viewBox", `0 0 ${hostWidth} ${hostHeight}`);
   const zoomLayer = svg.append("g");
   const zoomBehavior = d3.zoom().scaleExtent([0.3, 3]).on("zoom", e => zoomLayer.attr("transform", e.transform));
@@ -1026,15 +1046,43 @@ function renderFamilyTree(houseName, color) {
   // Give the genealogy a deliberate left-to-right reading order. The node
   // spacing is intentionally generous because each person now carries a
   // small portrait card rather than a dot-and-label pair.
-  d3.tree().nodeSize([92, 238])(root);
+  const nodeCardWidth = 196;
+  const nodeGap = 196;
+  d3.tree().nodeSize([96, nodeGap])(root);
   const laidOut = root.descendants();
   const xExtent = d3.extent(laidOut, d => d.x);
   const yExtent = d3.extent(laidOut, d => d.y);
   const treeHeight = Math.max(1, xExtent[1] - xExtent[0]);
   const treeWidth = Math.max(1, yExtent[1] - yExtent[0]);
-  const offsetX = (hostHeight - treeHeight) / 2 - xExtent[0];
-  const offsetY = Math.max(72, (hostWidth - treeWidth) / 2) - yExtent[0];
-  const treeLayer = zoomLayer.append("g").attr("transform", `translate(${offsetY},${offsetX})`);
+  const graphWidth = treeWidth + nodeCardWidth + 48;
+  const graphHeight = treeHeight + 96;
+  const preferredScale = Math.min(1, (hostWidth - 44) / graphWidth, (hostHeight - 44) / graphHeight);
+  // Keep dossier cards legible at first paint. On compact screens the board
+  // becomes a deliberate scroll canvas; on desktop we use a readable floor
+  // instead of shrinking a large bloodline into an unreadable postage stamp.
+  const fitScale = compactViewport ? 1 : Math.max(.58, preferredScale);
+  const canvasWidth = compactViewport ? graphWidth + 48 : Math.max(hostWidth, graphWidth * fitScale + 48);
+  const canvasHeight = compactViewport ? graphHeight + 48 : Math.max(hostHeight, graphHeight * fitScale + 48);
+  svg.attr("width", compactViewport || canvasWidth > hostWidth ? canvasWidth : "100%")
+    .attr("height", compactViewport || canvasHeight > hostHeight ? canvasHeight : "100%")
+    .attr("viewBox", `0 0 ${canvasWidth} ${canvasHeight}`);
+  const offsetX = 24 + (canvasHeight - graphHeight * fitScale) / 2 - xExtent[0] * fitScale;
+  const offsetY = 24 + (canvasWidth - graphWidth * fitScale) / 2 - yExtent[0] * fitScale;
+  const treeLayer = zoomLayer.append("g").attr("transform", `translate(${offsetY},${offsetX}) scale(${fitScale})`);
+
+  const generationNames = ["FOUNDERS", "SECOND GENERATION", "DESCENDANTS", "LATER BRANCHES"];
+  const maxDepth = d3.max(laidOut, d => d.depth) || 0;
+  treeLayer.selectAll(".tree-generation").data(d3.range(maxDepth + 1)).join("text")
+    .attr("class", "tree-generation")
+    .attr("x", depth => depth * nodeGap)
+    .attr("y", xExtent[0] - 42)
+    .text(depth => generationNames[depth] || `GENERATION ${depth + 1}`);
+  treeLayer.selectAll(".tree-generation-rule").data(d3.range(maxDepth + 1)).join("line")
+    .attr("class", "tree-generation-rule")
+    .attr("x1", depth => depth * nodeGap)
+    .attr("x2", depth => depth * nodeGap)
+    .attr("y1", xExtent[0] - 24)
+    .attr("y2", xExtent[1] + 28);
   const treeLink = d3.linkHorizontal().x(d => d.y).y(d => d.x);
   treeLayer.selectAll(".tree-link").data(root.links()).join("path")
     .attr("class", "tree-link").attr("fill", "none").attr("stroke", d => d.target.data.sigilColor || color)
@@ -1050,7 +1098,7 @@ function renderFamilyTree(houseName, color) {
     .style("cursor", d => d.data.virtual ? "default" : "pointer");
   nodes.append("rect").attr("class", "tree-node__card")
     .attr("x", d => d.data.virtual ? -68 : 28).attr("y", d => d.data.virtual ? -30 : -31)
-    .attr("width", d => d.data.virtual ? 136 : 222).attr("height", d => d.data.virtual ? 60 : 62)
+    .attr("width", d => d.data.virtual ? 136 : nodeCardWidth).attr("height", d => d.data.virtual ? 60 : 62)
     .attr("rx", 2).attr("fill", "rgba(7,15,22,.82)")
     .attr("stroke", d => d.data.sigilColor || color).attr("stroke-opacity", d => d.data.virtual ? .65 : .28);
   nodes.append("circle").attr("class", "tree-node__halo").attr("r", d => d.data.virtual ? 34 : 27).attr("fill", "none").attr("stroke", d => d.data.sigilColor || color).attr("stroke-opacity", .34);
@@ -1092,7 +1140,7 @@ function renderFamilyTree(houseName, color) {
   const drawnIds = new Set(root.descendants().filter(d => !d.data.virtual).map(d => d.data.id));
   const posById = new Map(root.descendants().filter(d => !d.data.virtual).map(d => [d.data.id, d]));
   const crossLinks = relations.filter(r => r.type !== "family" && drawnIds.has(r.source) && drawnIds.has(r.target));
-  zoomLayer.selectAll(".cross-link").data(crossLinks).join("path")
+  treeLayer.selectAll(".cross-link").data(crossLinks).join("path")
     .attr("fill", "none")
     .attr("stroke", d => RELATION_STYLE[d.type].color)
     .attr("stroke-dasharray", d => RELATION_STYLE[d.type].dash)
@@ -1100,7 +1148,7 @@ function renderFamilyTree(houseName, color) {
     .attr("d", d => {
       const s = posById.get(d.source), t = posById.get(d.target);
       if (!s || !t) return "";
-      const link = d3.linkHorizontal().x(p => p.y + offsetY).y(p => p.x + offsetX)({ source: s, target: t });
+      const link = d3.linkHorizontal().x(p => p.y).y(p => p.x)({ source: s, target: t });
       return link;
     })
     .append("title").text(d => d.label);
