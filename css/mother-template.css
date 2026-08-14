@@ -1165,15 +1165,15 @@ body:has(.house-profile-hero) #tree-host .tree-node:focus-visible .tree-node__ca
 body:has(.house-profile-hero) #tree-host .tree-node__label { font-family: var(--mother-serif); font-size: .86rem; letter-spacing: .045em; }
 body:has(.house-profile-hero) #tree-host .tree-node__subline { font-family: var(--mother-serif); font-size: .56rem; letter-spacing: .16em; }
 
-body:has(.house-profile-hero[data-house="Stark"]) .house-profile-hero { background-image: url("../assets/generated/realms/stark-scene-v5.png") !important; }
-body:has(.house-profile-hero[data-house="Lannister"]) .house-profile-hero { background-image: url("../assets/generated/realms/lannister-scene-v5.png") !important; }
-body:has(.house-profile-hero[data-house="Targaryen"]) .house-profile-hero { background-image: url("../assets/generated/realms/targaryen-scene-v5.png") !important; }
-body:has(.house-profile-hero[data-house="Baratheon"]) .house-profile-hero { background-image: url("../assets/generated/realms/baratheon-scene-v5.png") !important; }
-body:has(.house-profile-hero[data-house="Greyjoy"]) .house-profile-hero { background-image: url("../assets/generated/realms/greyjoy-scene-v5.png") !important; }
-body:has(.house-profile-hero[data-house="Tyrell"]) .house-profile-hero { background-image: url("../assets/generated/realms/tyrell-scene-v5.png") !important; }
-body:has(.house-profile-hero[data-house="Tully"]) .house-profile-hero { background-image: url("../assets/generated/realms/tully-scene-v5.png") !important; }
-body:has(.house-profile-hero[data-house="Martell"]) .house-profile-hero { background-image: url("../assets/generated/realms/martell-scene-v5.png") !important; }
-body:has(.house-profile-hero[data-house="Arryn"]) .house-profile-hero { background-image: url("../assets/generated/realms/arryn-scene-v5.png") !important; }
+body:has(.house-profile-hero[data-house="Stark"]) .house-profile-hero { background-image: url("../assets/generated/realms/stark-scene-v3.png") !important; }
+body:has(.house-profile-hero[data-house="Lannister"]) .house-profile-hero { background-image: url("../assets/generated/realms/lannister-scene-v3.png") !important; }
+body:has(.house-profile-hero[data-house="Targaryen"]) .house-profile-hero { background-image: url("../assets/generated/realms/targaryen-scene-v3.png") !important; }
+body:has(.house-profile-hero[data-house="Baratheon"]) .house-profile-hero { background-image: url("../assets/generated/realms/baratheon-scene-v3.png") !important; }
+body:has(.house-profile-hero[data-house="Greyjoy"]) .house-profile-hero { background-image: url("../assets/generated/realms/greyjoy-scene-v3.png") !important; }
+body:has(.house-profile-hero[data-house="Tyrell"]) .house-profile-hero { background-image: url("../assets/generated/realms/tyrell-scene-v3.png") !important; }
+body:has(.house-profile-hero[data-house="Tully"]) .house-profile-hero { background-image: url("../assets/generated/realms/tully-scene-v3.png") !important; }
+body:has(.house-profile-hero[data-house="Martell"]) .house-profile-hero { background-image: url("../assets/generated/realms/martell-scene-v3.png") !important; }
+body:has(.house-profile-hero[data-house="Arryn"]) .house-profile-hero { background-image: url("../assets/generated/realms/arryn-scene-v3.png") !important; }
 
 @media (max-width: 860px) {
   body:has(.house-profile-hero) .house-profile-hero {
