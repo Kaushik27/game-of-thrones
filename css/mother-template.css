@@ -1282,6 +1282,121 @@ body[data-route="/citadel"] .citadel-hero {
   border-color: rgba(238, 217, 169, .28) !important;
 }
 
+/* Portrait stage: the source illustrations use different camera distances.
+   Give every dossier the same right-hand stage and tune only the artwork scale
+   so heads stay clear while the heraldry and editorial copy remain anchored. */
+body:has(.house-profile-hero) .house-profile-hero {
+  --portrait-scale: 112%;
+  --portrait-x: 84%;
+  --portrait-mobile-scale: 112%;
+  --portrait-mobile-x: 82%;
+  isolation: isolate;
+  background-color: #03080c !important;
+}
+body:has(.house-profile-hero[data-house="Stark"]) .house-profile-hero { --portrait-scale: 108%; --portrait-x: 82%; --portrait-mobile-scale: 108%; --portrait-mobile-x: 82%; }
+body:has(.house-profile-hero[data-house="Lannister"]) .house-profile-hero { --portrait-scale: 120%; --portrait-x: 84%; --portrait-mobile-scale: 118%; --portrait-mobile-x: 84%; }
+body:has(.house-profile-hero[data-house="Targaryen"]) .house-profile-hero { --portrait-scale: 146%; --portrait-x: 85%; --portrait-mobile-scale: 136%; --portrait-mobile-x: 85%; }
+body:has(.house-profile-hero[data-house="Greyjoy"]) .house-profile-hero { --portrait-scale: 128%; --portrait-x: 84%; --portrait-mobile-scale: 124%; --portrait-mobile-x: 84%; }
+body:has(.house-profile-hero[data-house="Tyrell"]) .house-profile-hero { --portrait-scale: 154%; --portrait-x: 85%; --portrait-mobile-scale: 140%; --portrait-mobile-x: 85%; }
+body:has(.house-profile-hero[data-house="Tully"]) .house-profile-hero { --portrait-scale: 106%; --portrait-x: 82%; --portrait-mobile-scale: 106%; --portrait-mobile-x: 82%; }
+body:has(.house-profile-hero[data-house="Baratheon"]) .house-profile-hero { --portrait-scale: 136%; --portrait-x: 85%; --portrait-mobile-scale: 132%; --portrait-mobile-x: 85%; }
+body:has(.house-profile-hero[data-house="Martell"]) .house-profile-hero { --portrait-scale: 122%; --portrait-x: 84%; --portrait-mobile-scale: 118%; --portrait-mobile-x: 84%; }
+body:has(.house-profile-hero[data-house="Arryn"]) .house-profile-hero { --portrait-scale: 108%; --portrait-x: 82%; --portrait-mobile-scale: 108%; --portrait-mobile-x: 82%; }
+body:has(.house-profile-hero) .house-profile-hero__portrait {
+  inset: 0 0 0 44% !important;
+  z-index: -1 !important;
+  width: auto !important;
+  opacity: 1 !important;
+  background-position: var(--portrait-x) top !important;
+  background-size: auto var(--portrait-scale) !important;
+  background-repeat: no-repeat !important;
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, .2) 12%, rgba(0, 0, 0, .86) 31%, #000 48%, #000 100%) !important;
+  mix-blend-mode: normal !important;
+  filter: saturate(.96) contrast(1.06) brightness(.94) !important;
+}
+body:has(.house-profile-hero) .house-profile-hero::before {
+  z-index: -2 !important;
+  background: linear-gradient(90deg, rgba(3, 8, 12, .96) 0%, rgba(3, 8, 12, .78) 31%, rgba(3, 8, 12, .18) 66%, rgba(3, 8, 12, .38) 100%), linear-gradient(180deg, rgba(3, 8, 12, .25), transparent 48%, rgba(3, 8, 12, .9) 100%) !important;
+}
+body:has(.house-profile-hero) .house-profile-hero::after {
+  z-index: 0 !important;
+  height: 28% !important;
+  background: linear-gradient(180deg, transparent, rgba(3, 8, 12, .9)) !important;
+}
+body:has(.house-profile-hero) .house-profile-hero > #house-sigil-big,
+body:has(.house-profile-hero) .house-profile-hero > div:last-child { z-index: 2 !important; }
+
+/* Make the route art read as a deliberate part of each page instead of a
+   nearly-black texture behind the content. */
+body[data-route="/history"] .realm-chronicle__hero,
+body[data-route="/chronicle"] .realm-chronicle__hero { background-image: linear-gradient(90deg, rgba(4, 12, 18, .74), rgba(7, 16, 23, .28)), url("../assets/generated/routes/history-wallpaper-v2.png") !important; }
+body[data-route="/timeline"] .raven-wall,
+body[data-route="/chronicles"] .raven-wall { background-image: linear-gradient(180deg, rgba(4, 10, 15, .58), rgba(4, 10, 15, .78)), url("../assets/generated/routes/chronicles-wallpaper-v2.png") !important; }
+body[data-route="/map"] .wa-hero,
+body[data-route="/maps"] .wa-hero { background-image: linear-gradient(90deg, rgba(4, 12, 18, .64), rgba(7, 16, 23, .22)), url("../assets/generated/routes/maps-wallpaper-v2.png") !important; }
+body[data-route="/citadel"] .citadel-records { background-image: linear-gradient(180deg, rgba(3, 8, 11, .36), rgba(3, 8, 11, .68)), url("../assets/generated/routes/citadel-wallpaper-v2.png") !important; }
+
+@media (max-width: 860px) {
+  body:has(.house-profile-hero) .house-profile-hero__portrait {
+    inset: 0 !important;
+    width: 100% !important;
+    background-position: var(--portrait-mobile-x) top !important;
+    background-size: auto var(--portrait-mobile-scale) !important;
+    mask-image: linear-gradient(90deg, rgba(0, 0, 0, .8) 0%, rgba(0, 0, 0, .76) 34%, rgba(0, 0, 0, .42) 64%, rgba(0, 0, 0, .92) 100%) !important;
+    opacity: .72 !important;
+  }
+  body:has(.house-profile-hero) .house-profile-hero::before {
+    background: linear-gradient(90deg, rgba(3, 8, 12, .96) 0%, rgba(3, 8, 12, .82) 42%, rgba(3, 8, 12, .38) 100%), linear-gradient(180deg, rgba(3, 8, 12, .3), transparent 54%, rgba(3, 8, 12, .9) 100%) !important;
+  }
+}
+
+/* Final portrait-stage cascade: this must remain last so legacy module rules
+   cannot expand one house's artwork back across the entire profile banner. */
+body:has(.house-profile-hero) .house-profile-hero {
+  --portrait-scale: 112%; --portrait-x: 84%;
+  --portrait-mobile-scale: 112%; --portrait-mobile-x: 82%;
+  background-color: #03080c !important;
+}
+body:has(.house-profile-hero[data-house="Stark"]) .house-profile-hero { --portrait-scale:108%; --portrait-x:82%; --portrait-mobile-scale:108%; --portrait-mobile-x:82%; }
+body:has(.house-profile-hero[data-house="Lannister"]) .house-profile-hero { --portrait-scale:120%; --portrait-x:84%; --portrait-mobile-scale:118%; --portrait-mobile-x:84%; }
+body:has(.house-profile-hero[data-house="Targaryen"]) .house-profile-hero { --portrait-scale:146%; --portrait-x:85%; --portrait-mobile-scale:136%; --portrait-mobile-x:85%; }
+body:has(.house-profile-hero[data-house="Greyjoy"]) .house-profile-hero { --portrait-scale:128%; --portrait-x:84%; --portrait-mobile-scale:124%; --portrait-mobile-x:84%; }
+body:has(.house-profile-hero[data-house="Tyrell"]) .house-profile-hero { --portrait-scale:154%; --portrait-x:85%; --portrait-mobile-scale:140%; --portrait-mobile-x:85%; }
+body:has(.house-profile-hero[data-house="Tully"]) .house-profile-hero { --portrait-scale:106%; --portrait-x:82%; --portrait-mobile-scale:106%; --portrait-mobile-x:82%; }
+body:has(.house-profile-hero[data-house="Baratheon"]) .house-profile-hero { --portrait-scale:136%; --portrait-x:85%; --portrait-mobile-scale:132%; --portrait-mobile-x:85%; }
+body:has(.house-profile-hero[data-house="Martell"]) .house-profile-hero { --portrait-scale:122%; --portrait-x:84%; --portrait-mobile-scale:118%; --portrait-mobile-x:84%; }
+body:has(.house-profile-hero[data-house="Arryn"]) .house-profile-hero { --portrait-scale:108%; --portrait-x:82%; --portrait-mobile-scale:108%; --portrait-mobile-x:82%; }
+body:has(.house-profile-hero) .house-profile-hero__portrait {
+  inset: 0 0 0 44% !important; width: auto !important; z-index: -1 !important;
+  opacity: 1 !important; background-position: var(--portrait-x) top !important;
+  background-size: auto var(--portrait-scale) !important; background-repeat: no-repeat !important;
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.2) 12%, rgba(0,0,0,.86) 31%, #000 48%, #000 100%) !important;
+  mix-blend-mode: normal !important; filter: saturate(.96) contrast(1.06) brightness(.94) !important;
+}
+body:has(.house-profile-hero) .house-profile-hero::before {
+  z-index: -2 !important;
+  background: linear-gradient(90deg, rgba(3,8,12,.96) 0%, rgba(3,8,12,.78) 31%, rgba(3,8,12,.18) 66%, rgba(3,8,12,.38) 100%), linear-gradient(180deg, rgba(3,8,12,.25), transparent 48%, rgba(3,8,12,.9) 100%) !important;
+}
+body:has(.house-profile-hero) .house-profile-hero::after { z-index: 0 !important; height: 28% !important; background: linear-gradient(180deg, transparent, rgba(3,8,12,.9)) !important; }
+
+body[data-route="/history"] .realm-chronicle__hero,
+body[data-route="/chronicle"] .realm-chronicle__hero { background-image: linear-gradient(90deg, rgba(4,12,18,.74), rgba(7,16,23,.28)), url("../assets/generated/routes/history-wallpaper-v2.png") !important; }
+body[data-route="/timeline"] .raven-wall,
+body[data-route="/chronicles"] .raven-wall { background-image: linear-gradient(180deg, rgba(4,10,15,.58), rgba(4,10,15,.78)), url("../assets/generated/routes/chronicles-wallpaper-v2.png") !important; }
+body[data-route="/map"] .wa-hero,
+body[data-route="/maps"] .wa-hero { background-image: linear-gradient(90deg, rgba(4,12,18,.64), rgba(7,16,23,.22)), url("../assets/generated/routes/maps-wallpaper-v2.png") !important; }
+body[data-route="/citadel"] .citadel-records { background-image: linear-gradient(180deg, rgba(3,8,11,.36), rgba(3,8,11,.68)), url("../assets/generated/routes/citadel-wallpaper-v2.png") !important; }
+
+@media (max-width: 860px) {
+  body:has(.house-profile-hero) .house-profile-hero__portrait {
+    inset: 0 !important; width: 100% !important; opacity: .72 !important;
+    background-position: var(--portrait-mobile-x) top !important;
+    background-size: auto var(--portrait-mobile-scale) !important;
+    mask-image: linear-gradient(90deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,.76) 34%, rgba(0,0,0,.42) 64%, rgba(0,0,0,.92) 100%) !important;
+  }
+  body:has(.house-profile-hero) .house-profile-hero::before { background: linear-gradient(90deg, rgba(3,8,12,.96) 0%, rgba(3,8,12,.82) 42%, rgba(3,8,12,.38) 100%), linear-gradient(180deg, rgba(3,8,12,.3), transparent 54%, rgba(3,8,12,.9) 100%) !important; }
+}
+
 /* The profile plate is intentionally a shallow cinematic banner. Anchor the
    source artwork near its sky line so the character's head never disappears
    when a wide desktop container crops the vertical excess. */
@@ -1412,4 +1527,45 @@ body:has(.house-profile-hero) #tree-host .cross-link { stroke-dasharray: 4 5; op
   body:has(.house-profile-hero) .house-profile-hero__heraldry { width: 78px; height: 78px; }
   body:has(.house-profile-hero) .house-profile-hero .display { color: var(--mother-white) !important; font-size: clamp(2.4rem, 10vw, 4.6rem); }
   body:has(.house-profile-hero) #tree-host { height: min(72svh, 620px) !important; min-height: 500px; overflow: auto !important; }
+}
+
+/* Final portrait-stage cascade: legacy module rules above must not expand one
+   house's artwork back across the entire profile banner. */
+body:has(.house-profile-hero) .house-profile-hero {
+  --portrait-scale:112%; --portrait-x:84%; --portrait-mobile-scale:112%; --portrait-mobile-x:82%;
+  background-color:#03080c !important;
+}
+body:has(.house-profile-hero[data-house="Stark"]) .house-profile-hero { --portrait-scale:108%; --portrait-x:82%; --portrait-mobile-scale:108%; --portrait-mobile-x:82%; }
+body:has(.house-profile-hero[data-house="Lannister"]) .house-profile-hero { --portrait-scale:120%; --portrait-x:84%; --portrait-mobile-scale:118%; --portrait-mobile-x:84%; }
+body:has(.house-profile-hero[data-house="Targaryen"]) .house-profile-hero { --portrait-scale:146%; --portrait-x:85%; --portrait-mobile-scale:136%; --portrait-mobile-x:85%; }
+body:has(.house-profile-hero[data-house="Greyjoy"]) .house-profile-hero { --portrait-scale:128%; --portrait-x:84%; --portrait-mobile-scale:124%; --portrait-mobile-x:84%; }
+body:has(.house-profile-hero[data-house="Tyrell"]) .house-profile-hero { --portrait-scale:154%; --portrait-x:85%; --portrait-mobile-scale:140%; --portrait-mobile-x:85%; }
+body:has(.house-profile-hero[data-house="Tully"]) .house-profile-hero { --portrait-scale:106%; --portrait-x:82%; --portrait-mobile-scale:106%; --portrait-mobile-x:82%; }
+body:has(.house-profile-hero[data-house="Baratheon"]) .house-profile-hero { --portrait-scale:136%; --portrait-x:85%; --portrait-mobile-scale:132%; --portrait-mobile-x:85%; }
+body:has(.house-profile-hero[data-house="Martell"]) .house-profile-hero { --portrait-scale:122%; --portrait-x:84%; --portrait-mobile-scale:118%; --portrait-mobile-x:84%; }
+body:has(.house-profile-hero[data-house="Arryn"]) .house-profile-hero { --portrait-scale:108%; --portrait-x:82%; --portrait-mobile-scale:108%; --portrait-mobile-x:82%; }
+body:has(.house-profile-hero) .house-profile-hero__portrait {
+  inset:0 0 0 44% !important; width:auto !important; z-index:-1 !important; opacity:1 !important;
+  background-position:var(--portrait-x) top !important; background-size:auto var(--portrait-scale) !important; background-repeat:no-repeat !important;
+  mask-image:linear-gradient(90deg, transparent 0%, rgba(0,0,0,.2) 12%, rgba(0,0,0,.86) 31%, #000 48%, #000 100%) !important;
+  mix-blend-mode:normal !important; filter:saturate(.96) contrast(1.06) brightness(.94) !important;
+}
+body:has(.house-profile-hero) .house-profile-hero::before {
+  z-index:-2 !important;
+  background:linear-gradient(90deg, rgba(3,8,12,.96) 0%, rgba(3,8,12,.78) 31%, rgba(3,8,12,.18) 66%, rgba(3,8,12,.38) 100%), linear-gradient(180deg, rgba(3,8,12,.25), transparent 48%, rgba(3,8,12,.9) 100%) !important;
+}
+body:has(.house-profile-hero) .house-profile-hero::after { z-index:0 !important; height:28% !important; background:linear-gradient(180deg, transparent, rgba(3,8,12,.9)) !important; }
+body[data-route="/history"] .realm-chronicle__hero,
+body[data-route="/chronicle"] .realm-chronicle__hero { background-image:linear-gradient(90deg, rgba(4,12,18,.74), rgba(7,16,23,.28)), url("../assets/generated/routes/history-wallpaper-v2.png") !important; }
+body[data-route="/timeline"] .raven-wall,
+body[data-route="/chronicles"] .raven-wall { background-image:linear-gradient(180deg, rgba(4,10,15,.58), rgba(4,10,15,.78)), url("../assets/generated/routes/chronicles-wallpaper-v2.png") !important; }
+body[data-route="/map"] .wa-hero,
+body[data-route="/maps"] .wa-hero { background-image:linear-gradient(90deg, rgba(4,12,18,.64), rgba(7,16,23,.22)), url("../assets/generated/routes/maps-wallpaper-v2.png") !important; }
+body[data-route="/citadel"] .citadel-records { background-image:linear-gradient(180deg, rgba(3,8,11,.36), rgba(3,8,11,.68)), url("../assets/generated/routes/citadel-wallpaper-v2.png") !important; }
+@media (max-width:860px) {
+  body:has(.house-profile-hero) .house-profile-hero__portrait {
+    inset:0 !important; width:100% !important; opacity:.72 !important; background-position:var(--portrait-mobile-x) top !important; background-size:auto var(--portrait-mobile-scale) !important;
+    mask-image:linear-gradient(90deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,.76) 34%, rgba(0,0,0,.42) 64%, rgba(0,0,0,.92) 100%) !important;
+  }
+  body:has(.house-profile-hero) .house-profile-hero::before { background:linear-gradient(90deg, rgba(3,8,12,.96) 0%, rgba(3,8,12,.82) 42%, rgba(3,8,12,.38) 100%), linear-gradient(180deg, rgba(3,8,12,.3), transparent 54%, rgba(3,8,12,.9) 100%) !important; }
 }
