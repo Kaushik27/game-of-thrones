@@ -77,7 +77,7 @@ function router() {
     }
   }
   app.innerHTML = `<div class="page-wrap"><div class="empty-state">Page not found. <a href="#/">Go home</a></div></div>`;
-  document.title = "Not Found — Game of Thrones";
+  document.title = "Not Found — The Raven Wall";
   renderNav();
 }
 
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ---------- shared small helpers ----------
-function setTitle(t) { document.title = t + " — Game of Thrones"; }
+function setTitle(t) { document.title = t + " — The Raven Wall"; }
 
 function recordEngagement(eventName, detail = {}) {
   const payload = { eventName: String(eventName || "unknown"), detail, at: new Date().toISOString() };
@@ -189,7 +189,7 @@ function replaceHashQuery(path, updates) {
 // HOME
 // ==========================================================================
 function viewHome(app, params, query) {
-  document.title = "Game of Thrones";
+  document.title = "The Raven Wall · A fan-made realm";
   const requestedSeason = Number(query.get("season"));
   let rememberedSeason = 6;
   try { rememberedSeason = Number(window.sessionStorage.getItem("got-last-season")) || 6; } catch (error) { /* optional */ }

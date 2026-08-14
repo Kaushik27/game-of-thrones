@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "scripts": {
     "build:react-nav": "esbuild src/react-nav-entry.jsx --bundle --minify --define:process.env.NODE_ENV=\\\"production\\\" --format=iife --outfile=js/react-nav.bundle.js",
-    "check": "node --check js/react-nav.bundle.js && node tests/living-encyclopedia-smoke.js",
+    "check": "node --check js/react-nav.bundle.js && node tests/living-encyclopedia-smoke.js && npm run check:contract && node tests/site-contract-smoke.js",
+    "check:contract": "node scripts/check-realm-contract.mjs",
     "enterprise:web": "npm --prefix frontend run dev",
     "enterprise:api": "./backend/gradlew -p backend bootRun",
     "enterprise:build": "npm --prefix frontend run test && npm --prefix frontend run build && ./backend/gradlew -p backend clean test bootJar",

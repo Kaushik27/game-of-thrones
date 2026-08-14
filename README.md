@@ -105,6 +105,8 @@ Deep links work directly on GitHub Pages, so a character, episode, battle, quote
 
 The root-level application remains the cinematic edition deployed to GitHub Pages and the Render service root. The enterprise edition lives in `frontend/` and `backend/`; the same container serves it from `/app` and exposes the REST API under `/api/v1`.
 
+The migration boundary and data ownership are documented in [`docs/realm-architecture-contract.md`](docs/realm-architecture-contract.md). Run `npm run check:contract` after changing curated records or database seeds to detect drift between the two editions.
+
 ```text
 index.html                 shared shell and entrypoint
 js/app.js                  hash router and route composition

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "editorialSource": "js/",
+  "apiBase": "/api/v1",
+  "surfaces": {
+    "public": "/",
+    "records": "/app/"
+  },
+  "collections": {
+    "characters": 196,
+    "houses": 12,
+    "episodes": 73,
+    "quotes": 44,
+    "battles": 9,
+    "events": 34
+  }
+}
