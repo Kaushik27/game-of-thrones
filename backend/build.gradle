@@ -48,6 +48,18 @@ tasks.named('processResources') {
 	from('../index.html') {
 		into 'static'
 	}
+	from('../realm-contract.json') {
+		into 'static'
+	}
+	from('../robots.txt') {
+		into 'static'
+	}
+	from('../sitemap.xml') {
+		into 'static'
+	}
+	from('../site.webmanifest') {
+		into 'static'
+	}
 	from('../css') {
 		into 'static/css'
 	}

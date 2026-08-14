@@ -11,6 +11,7 @@ WORKDIR /workspace
 COPY backend ./backend
 COPY --from=frontend-build /workspace/frontend/dist ./frontend/dist
 COPY index.html ./index.html
+COPY realm-contract.json robots.txt sitemap.xml site.webmanifest ./
 COPY css ./css
 COPY js ./js
 COPY vendor ./vendor
