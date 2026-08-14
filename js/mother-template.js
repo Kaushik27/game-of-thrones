@@ -35,15 +35,15 @@
   });
 
   const REALM_VISUALS = Object.freeze({
-    Stark: "assets/generated/realms/stark-scene-v4.png?v=realm-character-4",
-    Lannister: "assets/generated/realms/lannister-scene-v4.png?v=realm-character-4",
-    Targaryen: "assets/generated/realms/targaryen-scene-v4.png?v=realm-character-4",
-    Baratheon: "assets/generated/realms/baratheon-scene-v4.png?v=realm-character-4",
-    Greyjoy: "assets/generated/realms/greyjoy-scene-v4.png?v=realm-character-4",
-    Tyrell: "assets/generated/realms/tyrell-scene-v4.png?v=realm-character-4",
-    Tully: "assets/generated/realms/tully-scene-v4.png?v=realm-character-4",
-    Martell: "assets/generated/realms/martell-scene-v4.png?v=realm-character-4",
-    Arryn: "assets/generated/realms/arryn-scene-v4.png?v=realm-character-4"
+    Stark: "assets/generated/realms/stark-scene-v5.png?v=realm-character-5",
+    Lannister: "assets/generated/realms/lannister-scene-v5.png?v=realm-character-5",
+    Targaryen: "assets/generated/realms/targaryen-scene-v5.png?v=realm-character-5",
+    Baratheon: "assets/generated/realms/baratheon-scene-v5.png?v=realm-character-5",
+    Greyjoy: "assets/generated/realms/greyjoy-scene-v5.png?v=realm-character-5",
+    Tyrell: "assets/generated/realms/tyrell-scene-v5.png?v=realm-character-5",
+    Tully: "assets/generated/realms/tully-scene-v5.png?v=realm-character-5",
+    Martell: "assets/generated/realms/martell-scene-v5.png?v=realm-character-5",
+    Arryn: "assets/generated/realms/arryn-scene-v5.png?v=realm-character-5"
   });
 
   function safe(value) {
@@ -137,7 +137,7 @@
       <section class="mother-hero" aria-labelledby="mother-title">
         <div class="mother-hero__ambient" aria-hidden="true"></div>
         <div class="mother-hero__rings" aria-hidden="true"><span></span><span></span><span></span></div>
-        <div class="mother-hero__portrait" data-mother-portrait><img data-mother-realm-image src="${safe(initial.visual)}" alt="${safe(initial.house)} realm visual" width="1440" height="1024" fetchpriority="high" decoding="async"></div>
+        <div class="mother-hero__portrait" data-mother-portrait><img data-mother-realm-image src="${safe(initial.visual)}" alt="${safe(initial.house)} realm visual" width="1774" height="887" fetchpriority="high" decoding="async"></div>
         <div class="mother-hero__orbit" aria-label="Choose a house">
           ${entries.map(entry => {
             const dx = entry.position.x - 50;
@@ -190,7 +190,7 @@
       quote.textContent = `“${quoteFor(next.character)}”`;
       summary.textContent = next.character?.bio || `${next.info.seat} · ${next.info.rulerEnd}`;
       cta.href = `#/house/${encodeURIComponent(next.house)}`;
-      cta.querySelector("span").textContent = "Enter the realm";
+      cta.querySelector("span").textContent = "Cross the threshold";
       if (typeof recordEngagement === "function") recordEngagement("mother_house_select", { house: next.house });
     }
 

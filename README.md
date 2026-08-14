@@ -61,6 +61,7 @@ Open the [live site](https://kaushik27.github.io/game-of-thrones/) and let the o
 - **Explore** — a scroll-driven prologue, quote interludes, and the eight-season Realm Journey.
 - **People** — portrait-led spotlights, relationship constellations, dossiers, comparisons, and a searchable cast directory.
 - **World** — a seasonal map and a camera journey from Winterfell to the Wall, King's Landing, Meereen, and beyond.
+- **Citadel Records** — a map-first fan record connecting places, houses, bloodlines, turning points, voices, throne claims, mysteries, and clearly marked book/show divergences.
 - **Voices** — powerful lines with speaker, episode context, house, mood, and a path back to the scene.
 - **Chronicle** — fifteen fan-curated turning points from the Long Night to the fall of the Iron Throne.
 - **Lore** — connected dossiers for factions, faiths, magic, artifacts, politics, and prophecy.
@@ -81,6 +82,7 @@ The numbers are only the index. The point is the feeling behind them: the choice
 | [`#/characters`](https://kaushik27.github.io/game-of-thrones/#/characters) | People Intelligence: spotlight, constellation, directory, dossiers, comparisons |
 | [`#/character/jon-snow`](https://kaushik27.github.io/game-of-thrones/#/character/jon-snow) | A four-chapter character entrance, relations, voice, and personal timeline |
 | [`#/map`](https://kaushik27.github.io/game-of-thrones/#/map) | Living map, journeys, power records, and regional lore |
+| [`#/citadel`](https://kaushik27.github.io/game-of-thrones/#/citadel) | Map-first Citadel Records: places, bloodlines, canon/divergence, claims, voices, and mysteries |
 | [`#/timeline`](https://kaushik27.github.io/game-of-thrones/#/timeline) | Episode Atlas for all 73 episodes, themes, consequences, people, houses, battles, and quotes |
 | [`#/quotes`](https://kaushik27.github.io/game-of-thrones/#/quotes) | Voices of the Realm and its remembered lines |
 | [`#/chronicle`](https://kaushik27.github.io/game-of-thrones/#/chronicle) | Illustrated fan chronology of the long story |

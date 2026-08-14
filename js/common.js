@@ -10,7 +10,8 @@ const NAV_LINKS = [
   { href: "#/characters", label: "People", matches: ["#/characters", "#/character/"] },
   { href: "#/timeline", label: "Memory Wall", matches: ["#/timeline", "#/battles", "#/episode/"] },
   { href: "#/quotes", label: "Voices", matches: ["#/quotes"] },
-  { href: "#/map", label: "World", matches: ["#/map", "#/houses", "#/house/"] },
+  { href: "#/citadel", label: "Citadel", matches: ["#/citadel"] },
+  { href: "#/map", label: "World", matches: ["#/map", "#/maps", "#/houses", "#/house/"] },
   { href: "#/lore", label: "Lore", matches: ["#/lore"] },
   { href: "#/what-if", label: "What If", matches: ["#/what-if"] },
   { href: "#/desk", label: "Desk", matches: ["#/desk"] }

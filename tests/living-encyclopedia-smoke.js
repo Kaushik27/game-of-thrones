@@ -13,6 +13,7 @@ vm.createContext(context);
 [
   "js/data.js", "js/events.js", "js/episodes.js", "js/battles.js", "js/quotes.js",
   "js/quote-curation.js", "js/fan-moments.js", "js/lore-data.js", "js/chronicle-data.js", "js/what-if-data.js"
+  , "js/citadel-records-data.js"
 ]
   .forEach(relativePath => vm.runInContext(read(relativePath), context, { filename: relativePath }));
 
@@ -28,6 +29,10 @@ const loreEntries = value("LORE_ENTRIES");
 const fanMoments = value("window.FAN_MOMENTS");
 const chronicle = value("window.REALM_CHRONICLE");
 const whatIfs = value("window.WHAT_IFS");
+const citadelLocations = value("window.CITADEL_LOCATIONS");
+const citadelDivergences = value("window.CITADEL_DIVERGENCES");
+const citadelClaimants = value("window.CITADEL_CLAIMANTS");
+const citadelMysteries = value("window.CITADEL_MYSTERIES");
 
 assert.equal(characters.length, 196, "character catalogue changed unexpectedly");
 assert.equal(episodes.length, 73, "episode catalogue must contain all 73 episodes");
@@ -41,6 +46,10 @@ assert.equal(new Set(loreEntries.map(entry => entry.category)).size, 6, "lore li
 assert.equal(fanMoments.length, 7, "fan memory reel must retain its seven editorial anchors");
 assert.equal(chronicle.length, 15, "realm chronicle must retain its fifteen illustrated moments");
 assert.equal(whatIfs.length, 6, "what-if chamber must retain its six fan branches");
+assert.equal(citadelLocations.length, 9, "Citadel must retain nine narrative map stops");
+assert.ok(citadelDivergences.length >= 6, "Citadel must expose clearly marked book/show divergences");
+assert.equal(citadelClaimants.length, 5, "Citadel must retain the claimant ranking set");
+assert.ok(citadelMysteries.length >= 4, "Citadel must retain unresolved mystery records");
 whatIfs.forEach(record => {
   assert.ok(record.id && record.title && record.premise, "what-if branches need stable identity and premise");
   assert.ok(record.branches.length >= 3, `${record.id} needs multiple consequences`);
@@ -97,6 +106,8 @@ const chronicleSource = read("js/chronicle-timeline.js");
 const compassSource = read("js/realm-compass.js");
 const whatIfSource = read("js/what-if.js");
 const deskSource = read("js/maesters-desk.js");
+const citadelSource = read("js/citadel-records.js");
+const citadelDataSource = read("js/citadel-records-data.js");
 
 const contracts = [
   [appSource.includes('initialEventId: query.get("event") || ""'), "app must pass event deep links to StoryAtlas"],
@@ -142,6 +153,10 @@ const contracts = [
   , [ravenSource.includes('key: "what-if"') && ravenSource.includes("getWhatIfs"), "global search must index fan counterfactual branches"]
   , [whatIfSource.includes("WhatIfChamber") && whatIfSource.includes("Fan speculation"), "realm must provide a clearly labeled counterfactual chamber"]
   , [deskSource.includes("MaestersDesk") && deskSource.includes("Image provenance"), "realm must provide a source and provenance desk"]
+  , [appSource.includes("viewCitadel") && appSource.includes("CitadelRecords.mount"), "Citadel route must mount its unified records experience"]
+  , [citadelSource.includes("data-stop-id") && citadelSource.includes("data-panel-target"), "Citadel must provide interactive map pins and section navigation"]
+  , [citadelSource.includes("data-claim-weight") && citadelSource.includes("CITADEL_CLAIMANTS"), "Citadel must provide an adjustable claimant ranking"]
+  , [citadelDataSource.includes("BOOK DIVERGENCE") && citadelDataSource.includes("SHOW CANON"), "Citadel divergence data must label adaptation context"]
 ];
 contracts.forEach(([condition, message]) => assert.ok(condition, message));
 
@@ -182,6 +197,8 @@ assert.ok(scripts.indexOf("js/story-atlas.js") < scripts.indexOf("js/app.js"), "
 assert.ok(scripts.indexOf("js/chronicle-data.js") < scripts.indexOf("js/chronicle-timeline.js"), "chronicle data must load before the module");
 assert.ok(scripts.indexOf("js/chronicle-timeline.js") < scripts.indexOf("js/app.js"), "chronicle module must load before the router");
 assert.ok(indexSource.includes("css/realm-chronicle.css?v=realm-chronicle-2"), "chronicle styling must load in the static entrypoint");
+assert.ok(indexSource.includes("css/citadel-records.css"), "Citadel styling must load in the static entrypoint");
+assert.ok(scripts.indexOf("js/citadel-records-data.js") < scripts.indexOf("js/citadel-records.js"), "Citadel assets must load in dependency order");
 
 console.log(JSON.stringify({
   characters: characters.length,

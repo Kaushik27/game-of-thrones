@@ -6,7 +6,8 @@ const LINKS = [
   { href: "#/houses", label: "Houses", matches: ["#/houses", "#/house/", "#/characters", "#/character/"] },
   { href: "#/chronicle", label: "History", matches: ["#/chronicle"] },
   { href: "#/timeline", label: "Chronicles", section: "chronicles" },
-  { href: "#/map", label: "Maps", matches: ["#/map"] },
+  { href: "#/citadel", label: "Citadel", matches: ["#/citadel"] },
+  { href: "#/map", label: "Maps", matches: ["#/map", "#/maps"] },
   { href: "#/lore", label: "Lore", matches: ["#/lore"] }
 ];
 

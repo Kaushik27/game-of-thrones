@@ -35,7 +35,21 @@
 }
 .react-nav-shell .brand:hover::after { width: 100%; transform: scaleX(.55); }
 
-.react-nav-shell .nav-links { display: flex; gap: 2px; flex: 1; flex-wrap: wrap; }
+.react-nav-shell .nav-links {
+  display: flex;
+  gap: clamp(0px, .35vw, 6px);
+  flex: 1 1 auto;
+  flex-wrap: nowrap;
+  min-width: 0;
+  white-space: nowrap;
+}
+.react-nav-shell .nav-links a {
+  flex: 0 1 auto;
+  min-width: 0;
+  padding-inline: clamp(8px, .85vw, 14px);
+  font-size: clamp(.62rem, .7vw, .76rem);
+  letter-spacing: .12em;
+}
 .react-nav-shell .nav-links a { position: relative; }
 .react-nav-shell .nav-links a::after {
   content: "";

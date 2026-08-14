@@ -15,6 +15,7 @@ const APP_ROUTES = [
   { pattern: /^\/house\/([^/]+)$/, view: viewHouse },
   { pattern: /^\/map$/, view: viewMap },
   { pattern: /^\/maps$/, view: viewMap },
+  { pattern: /^\/citadel$/, view: viewCitadel },
   { pattern: /^\/chronicle$/, view: viewChronicle },
   { pattern: /^\/history$/, view: viewChronicle },
   { pattern: /^\/chronicles$/, view: viewTimeline },
@@ -829,7 +830,7 @@ function viewHouses(app) {
           <p class="houses-eyebrow">King's Landing · The capital</p>
           <h2>The Red Keep</h2>
           <p>Where crowns are made, alliances are traded, and every corridor keeps a secret.</p>
-          <span>Capital archive · ${houses.length} banners</span>
+          <span>Capital record · ${houses.length} banners</span>
         </aside>
         <dl class="houses-hero__facts" aria-label="House directory summary">
           <div><dt>${houses.length}</dt><dd>banners</dd></div>
@@ -1413,6 +1414,21 @@ function viewMap(app, params, query) {
   } catch (error) {
     console.error("The World experience could not be mounted.", error);
     viewMapLegacy(app, params, query);
+  }
+}
+
+function viewCitadel(app, params, query) {
+  setTitle("Citadel Records");
+  if (!window.CitadelRecords) {
+    app.innerHTML = `<div class="page-wrap"><div class="empty-state">The Citadel records are unavailable. <a href="#/map">Open the living map</a>.</div></div>`;
+    return;
+  }
+  app.innerHTML = `<div id="citadel-records-root" class="encyclopedia-feature-host"></div>`;
+  try {
+    registerActiveView(window.CitadelRecords.mount(document.getElementById("citadel-records-root"), { onNavigate: navigateFeatureTarget }));
+  } catch (error) {
+    console.error("The Citadel records could not be mounted.", error);
+    app.innerHTML = `<div class="page-wrap"><div class="empty-state">The records could not be opened. <a href="#/map">Return to the map</a>.</div></div>`;
   }
 }
 

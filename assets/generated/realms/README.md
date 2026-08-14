@@ -20,5 +20,10 @@ homepage and house dossiers can fade into the same world without a second
 panel or artificial black seam.
 
 The `*-scene-v4.png` files add a left-third character study to each location.
+
+The current `*-scene-v5.png` plates replace them in the live shell. They use a
+2:1 cinematic crop with deliberate headroom and a full-figure silhouette so
+the character remains intact when the profile banner is cropped at desktop or
+mobile widths. The central negative space stays clear for the HTML copy.
 They are fictional, screen-realistic interpretations of the house's principal
 figure, leaving the center clear for live HTML copy and controls.
