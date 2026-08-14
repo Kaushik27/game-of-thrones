@@ -14,6 +14,7 @@ COPY index.html ./index.html
 COPY realm-contract.json robots.txt sitemap.xml site.webmanifest ./
 COPY css ./css
 COPY js ./js
+COPY assets ./assets
 COPY vendor ./vendor
 RUN ./backend/gradlew -p backend clean bootJar --no-daemon
 
