@@ -1239,6 +1239,11 @@ body[data-route="/chronicles"] .story-atlas__hero {
   background-image: linear-gradient(90deg, rgba(4, 12, 18, .9), rgba(7, 16, 23, .54)), url("../assets/generated/routes/chronicles-wallpaper.png") !important;
   background-position: center !important;
 }
+body[data-route="/chronicles"] .raven-wall {
+  background-image: linear-gradient(180deg, rgba(4, 10, 15, .72), rgba(4, 10, 15, .9)), url("../assets/generated/routes/chronicles-wallpaper.png") !important;
+  background-position: center !important;
+  background-size: cover !important;
+}
 body[data-route="/map"] .wa-hero,
 body[data-route="/maps"] .wa-hero {
   background-image: linear-gradient(90deg, rgba(4, 12, 18, .84), rgba(7, 16, 23, .48)), url("../assets/generated/routes/maps-wallpaper.png") !important;
