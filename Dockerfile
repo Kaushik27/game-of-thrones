@@ -6,7 +6,7 @@ COPY frontend ./frontend
 COPY assets ./assets
 RUN npm --prefix frontend run build
 
-FROM eclipse-temurin:21-jdk-alpine AS backend-build
+FROM eclipse-temurin:25-jdk-alpine AS backend-build
 WORKDIR /workspace
 COPY backend ./backend
 COPY --from=frontend-build /workspace/frontend/dist ./frontend/dist
